@@ -9,15 +9,15 @@ package models;
  * @author 58412
  */
 public class Estudiante extends Persona {
-    private Asignatura[] asignaturas;
-    private Seccion[] secciones;
-    private Periodo PeriodoAcademico; 
+    private final Asignatura[] asignaturas;
+    private final Seccion[] secciones;
+    private final PeriodoAcademico periodo; 
 
-    public Estudiante(Asignatura[] asignaturas, Seccion[] secciones, Periodo PeriodoAcademico, int cedula, String nombre, String apellido, String correo) {
+    public Estudiante(Asignatura[] asignaturas, Seccion[] secciones, PeriodoAcademico periodo, int cedula, String nombre, String apellido, String correo) {
         super(cedula, nombre, apellido, correo);
         this.asignaturas = asignaturas;
         this.secciones = secciones;
-        this.PeriodoAcademico = PeriodoAcademico;
+        this.periodo = periodo;
     }
 
   
