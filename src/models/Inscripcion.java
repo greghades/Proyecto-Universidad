@@ -10,4 +10,26 @@ package models;
  */
 public class Inscripcion {
     
+    private final PeriodoAcademico periodo;
+    private final Asignatura[] asignaturas;
+    private final Seccion seccion;
+
+    public Inscripcion(PeriodoAcademico periodo, Asignatura[] asignaturas, Seccion seccion) {
+        this.periodo = periodo;
+        this.asignaturas = asignaturas;
+        this.seccion = seccion;
+    }
+
+    public PeriodoAcademico getPeriodo() {
+        return periodo;
+    }
+
+    public Asignatura[] getAsignaturas() {
+        return asignaturas;
+    }
+
+    public Seccion getSeccion() {
+        return seccion;
+    }
+    
 }
