@@ -1,4 +1,5 @@
 package views;
+import sql.ConexionSQL;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,10 +15,13 @@ public class JFrame_AsignarNota extends javax.swing.JFrame {
     /**
      * Creates new form JFrame_ConsultarNota
      */
+    ConexionSQL conn = new ConexionSQL();
+    
     public JFrame_AsignarNota() {
         initComponents();
 
         // Aqui va toda la logica programatica que quiera agegarse
+        conn.conectar();
     }
 
     /**
