@@ -16,10 +16,21 @@ Yaslin Vreugdenhil.
  */
 package controllers;
 
+import sql.ConexionSQL;
+import views.JFrame_Inscripcion;
+
 /**
  *
  * @author User
  */
 public class Inicio {
     
+public static void main(String[] args) {
+    // Perform any pre-initialization tasks here (optional)
+     
+    ConexionSQL conn = new ConexionSQL();
+    conn.conectar();
+    JFrame_Inscripcion frame = new JFrame_Inscripcion();
+    frame.setVisible(true);
+  }
 }

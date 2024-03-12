@@ -5,7 +5,20 @@
         <group>
             <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/controllers/Inicio.java</file>
             <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/sql/ConexionSQL.java</file>
-            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/views/JFrame_AsignarNota.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/controllers/SubjectSelection.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/controllers/SubjectCellRenderer.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Persona.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Seccion.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Subject.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Carrera.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Universidad.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Asignatura.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Inscripcion.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Decanato.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/views/JFrame_Inscripcion.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Estudiante.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/PeriodoAcademico.java</file>
+            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/Proyecto-Universidad/src/models/Profesor.java</file>
         </group>
     </open-files>
 </project-private>
