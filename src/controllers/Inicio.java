@@ -16,7 +16,10 @@ Yaslin Vreugdenhil.
  */
 package controllers;
 
+import static controllers.Inscripcion.inscripcionJF;
+import javax.swing.JFrame;
 import sql.ConexionSQL;
+import views.JFrame_Inicio;
 import views.JFrame_Inscripcion;
 
 /**
@@ -25,12 +28,22 @@ import views.JFrame_Inscripcion;
  */
 public class Inicio {
     
-public static void main(String[] args) {
-    // Perform any pre-initialization tasks here (optional)
-     
-    ConexionSQL conn = new ConexionSQL();
-    conn.conectar();
-    JFrame_Inscripcion frame = new JFrame_Inscripcion();
-    frame.setVisible(true);
-  }
+    public static JFrame_Inicio inicioJF;
+    
+    public static void main(String[] args) {
+        // Perform any pre-initialization tasks here (optional)
+
+        ConexionSQL conn = new ConexionSQL();
+        conn.conectar();
+        inicioJF = new JFrame_Inicio();
+        inicioJF.setVisible(true);
+      }
+
+    public void openInscripcionFrame() {
+        if (inscripcionJF == null) {
+            inscripcionJF = new JFrame_Inscripcion();
+        }
+        inicioJF.setVisible(false);
+        inscripcionJF.setVisible(true);
+    }
 }
