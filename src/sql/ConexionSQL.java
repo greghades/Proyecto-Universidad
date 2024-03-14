@@ -18,6 +18,8 @@ package sql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
+import java.awt.*;
+import java.sql.*;
 
 /**
  *
@@ -35,8 +37,23 @@ public class ConexionSQL {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, user, pass);
             JOptionPane.showMessageDialog(null, "conexion exitosa", "conexion", JOptionPane.INFORMATION_MESSAGE);
+//            consultarTabla();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "conexion fallida"+e, "conexion", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "conexion fallida "+e, "conexion", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void consultarTabla() {
+        try {
+        // Crear una declaración SQL
+        Statement statement = conn.createStatement();
+
+        // Ejecutar una consulta SQL
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM tabla");
+        
+        System.out.println("Cedula boton texto!" + resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
