@@ -26,7 +26,7 @@ public class InicioController {
   public InicioController() {
     inicioFrame = new InicioFrame(this); // Create InicioFrame with reference to this controller
     inicioFrame.setVisible(true); // Make InicioFrame visible
-    System.out.println("InicioController init");
+//    System.out.println("InicioController init");
   }
 
   public static InicioController getInstance() {
@@ -34,7 +34,7 @@ public class InicioController {
       instance = new InicioController();
     }
     
-    System.out.println("InicioController getInstance");
+//    System.out.println("InicioController getInstance");
     return instance;
   }
   

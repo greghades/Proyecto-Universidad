@@ -1,32 +1,31 @@
+/*
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
+ */
+
 package views;
 import controllers.InscripcionController;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import models.Subject;
-import sql.ConexionSQL;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
-/**
- *
- * @author User
- */
 public class InscripcionFrame extends javax.swing.JFrame {
-    /**
-     * Creates new form JFrame_Inscripcion
-     */
-    
     public InscripcionController controller;
 
   public InscripcionFrame(InscripcionController controller) {
@@ -382,7 +381,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cedula_textfieldActionPerformed
 
     private void cedula_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_buttonActionPerformed
-        
+        controller.connection.consultarTabla();
     }//GEN-LAST:event_cedula_buttonActionPerformed
 
     private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed

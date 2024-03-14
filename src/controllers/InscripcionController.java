@@ -1,15 +1,30 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package controllers;
+import sql.ConexionSQL;
 import views.InscripcionFrame;
 
 public class InscripcionController {
     
-private static InscripcionController instance; // Singleton instance
-  public InscripcionFrame inscripcionFrame;
-  private InicioController inicioController; // Reference to InicioController
+    private static InscripcionController instance; // Singleton instance
+    public ConexionSQL connection;
+    public InscripcionFrame inscripcionFrame;
+    public InicioController inicioController; // Reference to InicioController
 
   private InscripcionController() {
     inscripcionFrame = new InscripcionFrame(this);
@@ -21,6 +36,10 @@ private static InscripcionController instance; // Singleton instance
       instance = new InscripcionController();
     }
     return instance;
+  }
+  
+  public void obtenerMaterias() {
+      connection.consultarTabla();
   }
 
   public void showInscripcionFrame() {
@@ -34,5 +53,9 @@ private static InscripcionController instance; // Singleton instance
 
   public void setInicioController(InicioController inicioController) {
     this.inicioController = inicioController; // Set reference
+  }
+  
+  public void setConnection(ConexionSQL conexion) {
+    this.connection = conexion; // Set reference
   }
 }
