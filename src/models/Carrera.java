@@ -23,40 +23,54 @@ package models;
  */
 public class Carrera {
     
-    private final int id;
-    private final String nombre;
-    private final Seccion[] secciones;
-    private final PeriodoAcademico[] periodos;
+    private String id;
+    private String nombre;
+    private Seccion[] secciones;
+    private PeriodoAcademico[] periodos;
 
-    public Carrera(int id, String nombre, Seccion[] secciones, PeriodoAcademico[] periodos) {
+    public Carrera(String id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
+    public Carrera(String id, String nombre, Seccion[] secciones, PeriodoAcademico[] periodos) {
         this.id = id;
         this.nombre = nombre;
         this.secciones = secciones;
         this.periodos = periodos;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Seccion[] getSecciones() {
         return secciones;
+    }
+
+    public void setSecciones(Seccion[] secciones) {
+        this.secciones = secciones;
     }
 
     public PeriodoAcademico[] getPeriodos() {
         return periodos;
     }
-    
-    /*public Estudiante[] listarMejoresEstudiantes() {
-        
+
+    public void setPeriodos(PeriodoAcademico[] periodos) {
+        this.periodos = periodos;
     }
-    
-    public Estudiante[] listarEstudiantesPromedio() {
-        
-    }*/
+
     
 }

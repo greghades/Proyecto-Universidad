@@ -37,10 +37,6 @@ public class InscripcionController {
     }
     return instance;
   }
-  
-  public void obtenerMaterias() {
-      connection.consultarTabla();
-  }
 
   public void showInscripcionFrame() {
     inscripcionFrame.setVisible(true); // Show InscripcionFrame

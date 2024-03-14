@@ -17,74 +17,91 @@ Yaslin Vreugdenhil.
 
 package models;
 
+import java.util.Objects;
+
 /**
  *
  * @author 58412
  */
 public class Asignatura {
-    private int id;
-    private float nota;
-    private boolean esRetirada;
-    private Seccion[] secciones;
-    private PeriodoAcademico periodoAcademico;
-    private Profesor profesor;
+    private String id;
+    private String nombre;
+    private int creditos;
+    private String pre_requisito;
+    private boolean inclusion = false;
+    private String seccion;
 
-    public Asignatura(int id, float nota, boolean esRetirada, Seccion[] secciones, PeriodoAcademico periodoAcademico, Profesor profesor) {
+    public Asignatura(String id, String nombre, int creditos, String pre_requisito) {
         this.id = id;
-        this.nota = nota;
-        this.esRetirada = esRetirada;
-        this.secciones = secciones;
-        this.periodoAcademico = periodoAcademico;
-        this.profesor = profesor;
+        this.nombre = nombre;
+        this.creditos = creditos;
+        this.pre_requisito = pre_requisito;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public float getNota() {
-        return nota;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNota(float nota) {
-        this.nota = nota;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public boolean isEsRetirada() {
-        return esRetirada;
+    public int getCreditos() {
+        return creditos;
     }
 
-    public void setEsRetirada(boolean esRetirada) {
-        this.esRetirada = esRetirada;
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
     }
 
-    public Seccion[] getSecciones() {
-        return secciones;
+    public String getPre_requisito() {
+        return pre_requisito;
     }
 
-    public void setSecciones(Seccion[] secciones) {
-        this.secciones = secciones;
+    public void setPre_requisito(String pre_requisito) {
+        this.pre_requisito = pre_requisito;
     }
 
-    public PeriodoAcademico getPeriodoAcademico() {
-        return periodoAcademico;
+    public boolean isInclusion() {
+        return inclusion;
     }
 
-    public void setPeriodoAcademico(PeriodoAcademico periodoAcademico) {
-        this.periodoAcademico = periodoAcademico;
+    public void setInclusion(boolean inclusion) {
+        this.inclusion = inclusion;
     }
 
-    public Profesor getProfesor() {
-        return profesor;
+    public String getSeccion() {
+        return seccion;
     }
 
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
     
+    
+
+      @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Asignatura asignatura = (Asignatura) o;
+    return creditos == asignatura.creditos &&
+            inclusion == asignatura.inclusion &&
+            Objects.equals(nombre, asignatura.nombre) &&
+            Objects.equals(seccion, asignatura.seccion);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(nombre, creditos, inclusion, seccion);
+  }
     
 }

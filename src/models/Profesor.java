@@ -23,8 +23,8 @@ public class Profesor extends Persona {
     private  Asignatura[] asignaturas;
     private  Seccion[] secciones;
 
-    public Profesor(Asignatura[] asignaturas, Seccion[] secciones, int cedula, String nombre, String apellido, String correo) {
-        super(cedula, nombre, apellido, correo);
+    public Profesor(Asignatura[] asignaturas, Seccion[] secciones, String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
+        super(cedula, nombre, apellido, correo, edad, sexo);
         this.asignaturas = asignaturas;
         this.secciones = secciones;
     }
@@ -45,39 +45,6 @@ public class Profesor extends Persona {
         this.secciones = secciones;
     }
 
-    
-    public int getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-    
     public void calificarEstudiante(float nota, Estudiante estudiante){
         
     

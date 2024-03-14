@@ -19,6 +19,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.*;
 
 public class ConexionSQL {
     Connection conn = null;
@@ -42,43 +46,97 @@ public class ConexionSQL {
         }
     }
     
-    public void consultarTabla() {
+    private void checkConnection() {
         try {
-        // Creación de la consulta
-        String query = "SELECT * FROM public.\"Asignaturas\"";
-
-        // Creación de la sentencia
-        Statement statement = conn.createStatement();
-
-        // Ejecución de la consulta
-        ResultSet resultSet = statement.executeQuery(query);
-
-        // Recorrido de los resultados
-        while (resultSet.next()) {
-            // Obtención de los valores de las columnas
-            int idAsignatura = resultSet.getInt("id_asignatura");
-            String nombreAsignatura = resultSet.getString("nombre_asignatura");
-            String preRequisito = resultSet.getString("pre_requisito");
-            int credito = resultSet.getInt("credito");
-            String retirada = resultSet.getString("retirada");
-
-            // Impresión de los valores
-            System.out.println("ID Asignatura: " + idAsignatura);
-            System.out.println("Nombre Asignatura: " + nombreAsignatura);
-            System.out.println("Pre-requisito: " + preRequisito);
-            System.out.println("Crédito: " + credito);
-            System.out.println("Retirada: " + retirada);
-            System.out.println();
-        }
-
-        // Cierre de la conexión
-        conn.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            if (conn.isClosed()) {
+                conectar();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+           // Creación de la consulta
+//        String bigQuery = ;
+//        "SELECT * FROM public.\"Estudiantes\" WHERE id_estudiante = '%s'"
+//"""
+//                          SELECT 
+//                              e.id_estudiante, 
+//                              e.nombre_completo, 
+//                              e.edad, 
+//                              e.correo, 
+//                              c.nombre_carrera
+//                          FROM public."Estudiantes" AS e
+//                          INNER JOIN public."Carreras" AS c ON e.id_carrera = c.id_carrera
+//                          WHERE e.id_estudiante = '%s'""" 
+    
+    public SearchResult obtenerDatosDeInscripcion(String id) {
+        
+        checkConnection();
+        try {
+        String query = String.format("SELECT * FROM public.\"Estudiantes\" WHERE id_estudiante = '%s'", id);
 
+        
+//        System.out.println("Estudiante: " + id + " " + query);
+
+        Statement statement = conn.createStatement();
+        ResultSet estudianteSet = statement.executeQuery(query);
+
+        Estudiante estudiante = null;
+        
+        while (estudianteSet.next()) {
+           String idEstudiante = estudianteSet.getString("id_estudiante");
+           String idCarrera = estudianteSet.getString("id_carrera"); // Assuming id_carrera is an integer
+           String nombreCompleto = estudianteSet.getString("nombre_completo");
+           int edad = estudianteSet.getInt("edad");
+           String correo = estudianteSet.getString("correo");
+           String sexo = estudianteSet.getString("sexo");
+
+           estudiante = new Estudiante(idCarrera, idEstudiante, nombreCompleto, "", correo, edad, sexo);
+        }
+        
+//           System.out.println("Estudiante created: " + estudiante.getCedula());
+        
+        String asignaturasQuery = "SELECT * FROM public.\"Asignaturas\"";
+        ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
+        
+        ArrayList<Asignatura> asignaturasList = new ArrayList<>(); 
+
+        while (asignaturasSet.next()) {
+          String idAsignatura = asignaturasSet.getString("id_asignatura");
+          String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
+          String preRequisito = asignaturasSet.getString("pre_requisito");
+          int credito = asignaturasSet.getInt("credito");
+
+          Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito);
+          asignaturasList.add(asignatura);
+        }
+
+//        Asignatura[] asignaturas = asignaturasList.toArray(new Asignatura[asignaturasList.size()]);
+//        System.out.println("Asignaturas created: " + asignaturas[0].getNombre());
+        
+        String carreraQuery = String.format("SELECT * FROM public.\"Carreras\" WHERE id_carrera = '%s'", estudiante.getIdCarrera());
+        ResultSet carreraSet = statement.executeQuery(carreraQuery);
+        
+        Carrera carrera = null;
+        
+        while (carreraSet.next()) {
+            String idCarrera = carreraSet.getString("id_carrera");
+            String nombreCarrera = carreraSet.getString("nombre_carrera");
+            
+            carrera = new Carrera(idCarrera, nombreCarrera);
+        }
+        
+//        System.out.println("Carrera created: " + carrera.getNombre());
+        
+        return new SearchResult(estudiante, carrera, asignaturasList);
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public void cerrar() {
         try {
             conn.close();

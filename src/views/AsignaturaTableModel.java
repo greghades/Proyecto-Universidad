@@ -18,20 +18,25 @@ Yaslin Vreugdenhil.
 package views;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
-import models.Subject;
+import models.Asignatura;
 
-public class SubjectTableModel extends AbstractTableModel {
+public class AsignaturaTableModel extends AbstractTableModel {
 
-  private final List<Subject> subjects;
+  private final List<Asignatura> asignaturas;
   private static final String[] columnNames = {"Materia", "Carga Academica", "Inclusion", "Seccion"};
 
-  public SubjectTableModel(List<Subject> subjects) {
-    this.subjects = subjects;
+  public AsignaturaTableModel(List<Asignatura> asignaturas) {
+    this.asignaturas = asignaturas;
   }
 
+  public void removeRow(int row) {
+    // remove a row from your internal data structure
+    fireTableRowsDeleted(row, row);
+}
+  
   @Override
   public int getRowCount() {
-    return subjects.size();
+    return asignaturas.size();
   }
 
   @Override
@@ -46,12 +51,12 @@ public class SubjectTableModel extends AbstractTableModel {
 
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
-    Subject subject = subjects.get(rowIndex);
+    Asignatura asignatura = asignaturas.get(rowIndex);
       return switch (columnIndex) {
-          case 0 -> subject.getMateria();
-          case 1 -> subject.getCargaAcademica();
-          case 2 -> subject.isInclusion();
-          case 3 -> subject.getSeccion();
+          case 0 -> asignatura.getNombre();
+          case 1 -> asignatura.getCreditos();
+          case 2 -> asignatura.isInclusion();
+          case 3 -> asignatura.getSeccion();
           default -> null;
       };
   }
@@ -74,7 +79,7 @@ public class SubjectTableModel extends AbstractTableModel {
 
   @Override
   public void setValueAt(Object value, int rowIndex, int columnIndex) {
-    Subject subject = subjects.get(rowIndex);
+    Asignatura subject = asignaturas.get(rowIndex);
     switch (columnIndex) {
       case 2 -> {
           subject.setInclusion((boolean) value);
@@ -87,8 +92,8 @@ public class SubjectTableModel extends AbstractTableModel {
     }
   }
 
-  public void addSubject(Subject subject) {
-    subjects.add(subject);
-    fireTableRowsInserted(subjects.size() - 1, subjects.size() - 1); // Update table
+  public void addSubject(Asignatura subject) {
+    asignaturas.add(subject);
+    fireTableRowsInserted(asignaturas.size() - 1, asignaturas.size() - 1); // Update table
   }
 }
