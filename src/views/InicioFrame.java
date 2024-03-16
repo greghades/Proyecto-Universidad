@@ -16,22 +16,25 @@ Yaslin Vreugdenhil.
  */
 
 package views;
-
 import javax.swing.*;
 import controllers.InicioController;
 import java.awt.event.*;
 
 public class InicioFrame extends javax.swing.JFrame {
-  
-  public InicioController controller; // Reference to the controller
 
-  public InicioFrame(InicioController controller) {
-    super("Inicio");
-    this.controller = controller;
+    public InicioController controller; // Reference to the controller
 
-    initComponents();
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  }
+    public InicioFrame(InicioController controller) {
+        super("Inicio");
+        this.controller = controller;
+        initComponents();
+        agregarListener(controller);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void agregarListener(ActionListener accion) {
+        inscripcion_button.addActionListener(accion);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,7 +137,7 @@ public class InicioFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inscripcion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscripcion_buttonActionPerformed
-        controller.showInscripcionFrame();    
+
     }//GEN-LAST:event_inscripcion_buttonActionPerformed
 
     private void reporte1_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte1_buttonActionPerformed

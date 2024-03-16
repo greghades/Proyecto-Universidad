@@ -15,7 +15,7 @@ Yaslin Vreugdenhil.
 29561929
  */
 
-package views;
+package util;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.JLabel;

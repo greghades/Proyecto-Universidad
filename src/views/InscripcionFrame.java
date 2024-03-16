@@ -16,43 +16,48 @@ Yaslin Vreugdenhil.
  */
 
 package views;
+import util.AsignaturaTableModel;
+import util.SeccionCellRenderer;
+import util.SeccionCellEditor;
 import controllers.InscripcionController;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.List;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import models.Asignatura;
-import models.SearchResult;
 
 public class InscripcionFrame extends javax.swing.JFrame {
+
     public InscripcionController controller;
 
-  public InscripcionFrame(InscripcionController controller) {
-    super("Inscripción");
-    this.controller = controller;
-    
-    initComponents();
-    displayUI(false);
-//    inscripcion_button.setVisible(false);
-  }
+    public InscripcionFrame(InscripcionController controller) {
+        super("Inscripción");
+        this.controller = controller;
 
-    private void displayUI(boolean should) {
+        initComponents();
+        displayUI(false);
+        agregarListeners(controller);
+
+    }
+
+    public void displayUI(boolean should) {
         info_panel.setVisible(should);
         table_panel.setVisible(should);
         inscripcion_button.setVisible(should);
     }
-    
-    private void setupTable(List<Asignatura> asignaturas) {
-        
+
+    public void setupTable(List<Asignatura> asignaturas) {
+
         if (materias_table.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = materias_table.getColumnModel();
             while (columnModel.getColumnCount() > 0) {
-            TableColumn column = columnModel.getColumn(0); // Get the first column
-            columnModel.removeColumn(column); 
+                TableColumn column = columnModel.getColumn(0); // Get the first column
+                columnModel.removeColumn(column);
             }
         }
-        
+
         AsignaturaTableModel model = new AsignaturaTableModel(asignaturas);
         materias_table.setModel(model);
 
@@ -60,21 +65,27 @@ public class InscripcionFrame extends javax.swing.JFrame {
         int seccionColumnIndex = columnModel.getColumnCount() - 1;
         TableColumn seccionColumn = columnModel.getColumn(seccionColumnIndex);
         seccionColumn.setCellEditor(new SeccionCellEditor());
-        seccionColumn.setCellRenderer(new SeccionCellRenderer());        
+        seccionColumn.setCellRenderer(new SeccionCellRenderer());
 
         // Set the preferred width for the first column
         TableColumn firstColumn = columnModel.getColumn(0);
         firstColumn.setPreferredWidth(150);
-        
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        for(int x=0;x<materias_table.getColumnCount();x++){
-            if(x != 2) {            
-             materias_table.getColumnModel().getColumn(x).setCellRenderer( centerRenderer );
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int x = 0; x < materias_table.getColumnCount(); x++) {
+            if (x != 2) {
+                materias_table.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
             }
         }
     }
 
+    private void agregarListeners(ActionListener accion) {
+        cedula_button.addActionListener(accion);
+        back_button.addActionListener(accion);
+        inscripcion_button.addActionListener(accion);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -134,7 +145,6 @@ public class InscripcionFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(title_panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(title_panelLayout.createSequentialGroup()
@@ -246,12 +256,11 @@ public class InscripcionFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(carrera_label, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                    .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(correo_label, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                        .addComponent(correo_title_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(nombre_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(nombre_title_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(carrera_title_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(correo_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                    .addComponent(correo_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nombre_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nombre_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(carrera_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(edad_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -355,17 +364,16 @@ public class InscripcionFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(inscripcion_button, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
-                    .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(body_panelLayout.createSequentialGroup()
-                            .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(body_panelLayout.createSequentialGroup()
-                                    .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(body_panelLayout.createSequentialGroup()
+                        .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(body_panelLayout.createSequentialGroup()
+                                .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         body_panelLayout.setVerticalGroup(
@@ -414,28 +422,55 @@ public class InscripcionFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void cedula_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_textfieldActionPerformed
 
     }//GEN-LAST:event_cedula_textfieldActionPerformed
 
+    public void setCarrera(String text) {
+        this.carrera_label.setText(text);
+    }
+
+    public void setCorreo(String text) {
+        this.correo_label.setText(text);
+    }
+
+    public void setEdad(String text) {
+        this.edad_label.setText(text);
+    }
+
+    public void setNombre(String text) {
+        this.nombre_label.setText(text);
+    }
+
+    public void setSexo(String text) {
+        this.sex_label.setText(text);
+    }
+
+    public String getCedula() {
+        return cedula_textfield.getText();
+    }
+
+    public JButton getBack_button() {
+        return back_button;
+    }
+
+    public JButton getCedula_button() {
+        return cedula_button;
+    }
+
+    public JButton getInscripcion_button() {
+        return inscripcion_button;
+    }
+    
+    
+
     private void cedula_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_buttonActionPerformed
-        SearchResult info = controller.connection.obtenerDatosDeInscripcion(cedula_textfield.getText());
-        System.out.println(info);
-        
-        carrera_label.setText(info.getCarrera().getNombre());
-        correo_label.setText(info.getEstudiante().getCorreo());
-        edad_label.setText(String.valueOf(info.getEstudiante().getEdad()));
-        nombre_label.setText(info.getEstudiante().getNombre());
-        sex_label.setText(info.getEstudiante().getSexo());
-        
-        setupTable(info.getAsignaturas());
-        displayUI(true);
-        
+
     }//GEN-LAST:event_cedula_buttonActionPerformed
 
     private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-        controller.showInicioFrame();
+
     }//GEN-LAST:event_back_buttonActionPerformed
 
     private void inscripcion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscripcion_buttonActionPerformed

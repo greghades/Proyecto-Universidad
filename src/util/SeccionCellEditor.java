@@ -15,7 +15,7 @@ Yaslin Vreugdenhil.
 29561929
  */
 
-package views;
+package util;
 import java.awt.Component;
 import java.util.EventObject;
 import javax.swing.JComboBox;

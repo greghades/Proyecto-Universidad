@@ -39,10 +39,12 @@ public class ConexionSQL {
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, user, pass);
-            JOptionPane.showMessageDialog(null, "conexion exitosa", "conexion", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "conexion exitosa", "conexion", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("conexion exitosa");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "conexion fallida "+e, "conexion", JOptionPane.ERROR_MESSAGE);
+            System.out.println("conexion fallida");
+//            JOptionPane.showMessageDialog(null, "conexion fallida "+e, "conexion", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -115,6 +117,10 @@ public class ConexionSQL {
 //        Asignatura[] asignaturas = asignaturasList.toArray(new Asignatura[asignaturasList.size()]);
 //        System.out.println("Asignaturas created: " + asignaturas[0].getNombre());
         
+        if (estudiante == null) {
+            return null;
+        }
+
         String carreraQuery = String.format("SELECT * FROM public.\"Carreras\" WHERE id_carrera = '%s'", estudiante.getIdCarrera());
         ResultSet carreraSet = statement.executeQuery(carreraQuery);
         

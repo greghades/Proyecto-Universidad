@@ -15,7 +15,7 @@ Yaslin Vreugdenhil.
 29561929
  */
 
-package views;
+package util;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import models.Asignatura;
