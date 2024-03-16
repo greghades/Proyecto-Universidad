@@ -18,16 +18,19 @@ Yaslin Vreugdenhil.
 package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import util.PantallaCompleta;
 import views.InicioFrame;
 
 public class InicioController implements ActionListener {
 
-    private static InicioController instance; // Singleton instance
+    private static InicioController instance;
     public InicioFrame inicioFrame;
     public InscripcionController inscripcionController;
 
     public InicioController() {
-        inicioFrame = new InicioFrame(this); // Create InicioFrame with reference to this controller
+        inicioFrame = new InicioFrame(this);
+        PantallaCompleta pantallaCompleta = new PantallaCompleta();
+        pantallaCompleta.setPantallaCompleta(inicioFrame);
         inicioFrame.setVisible(true);
     }
 
@@ -35,22 +38,21 @@ public class InicioController implements ActionListener {
         if (instance == null) {
             instance = new InicioController();
         }
-
-//    System.out.println("InicioController getInstance");
         return instance;
     }
 
     public void showInicioFrame() {
-        inicioFrame.setVisible(true); // Show InscripcionFrame
+        inicioFrame.setVisible(true);
+
     }
 
     private void showInscripcionFrame() {
-        inicioFrame.setVisible(false); // Hide InicioFrame
-        inscripcionController.showInscripcionFrame(); // Delegate to InscripcionController
+        inicioFrame.setVisible(false);
+        inscripcionController.showInscripcionFrame();
     }
 
     public void setInscripcionController(InscripcionController inscripcionController) {
-        this.inscripcionController = inscripcionController; // Set reference
+        this.inscripcionController = inscripcionController;
     }
 
     @Override

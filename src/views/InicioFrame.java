@@ -14,8 +14,8 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package views;
+
 import javax.swing.*;
 import controllers.InicioController;
 import java.awt.event.*;
@@ -25,7 +25,7 @@ public class InicioFrame extends javax.swing.JFrame {
     public InicioController controller; // Reference to the controller
 
     public InicioFrame(InicioController controller) {
-        super("Inicio");
+        super("Proyecto: Universidad Central de Lara");
         this.controller = controller;
         initComponents();
         agregarListener(controller);
@@ -44,7 +44,10 @@ public class InicioFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        title_panel = new javax.swing.JPanel();
+        title_label2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         inscripcion_button = new javax.swing.JButton();
         title_label = new javax.swing.JLabel();
@@ -54,7 +57,34 @@ public class InicioFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
+        title_panel.setBackground(new java.awt.Color(58, 159, 220));
+        title_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
+        title_label2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        title_label2.setForeground(new java.awt.Color(255, 255, 255));
+        title_label2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title_label2.setText("Bienvenido");
+
+        javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
+        title_panel.setLayout(title_panelLayout);
+        title_panelLayout.setHorizontalGroup(
+            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(title_panelLayout.createSequentialGroup()
+                .addGap(189, 189, 189)
+                .addComponent(title_label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(176, 176, 176))
+        );
+        title_panelLayout.setVerticalGroup(
+            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, title_panelLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(title_label2)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(58, 159, 220), 2, true));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         inscripcion_button.setBackground(new java.awt.Color(58, 159, 220));
         inscripcion_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -66,9 +96,18 @@ public class InicioFrame extends javax.swing.JFrame {
                 inscripcion_buttonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 27;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 54, 0, 0);
+        jPanel1.add(inscripcion_button, gridBagConstraints);
 
         title_label.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         title_label.setText("Proyecto Universidad");
+        jPanel1.add(title_label, new java.awt.GridBagConstraints());
 
         reporte1_button.setBackground(new java.awt.Color(58, 159, 220));
         reporte1_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -80,6 +119,14 @@ public class InicioFrame extends javax.swing.JFrame {
                 reporte1_buttonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 158;
+        gridBagConstraints.ipady = 27;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 54, 0, 0);
+        jPanel1.add(reporte1_button, gridBagConstraints);
 
         reporte2_button.setBackground(new java.awt.Color(58, 159, 220));
         reporte2_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -91,46 +138,37 @@ public class InicioFrame extends javax.swing.JFrame {
                 reporte2_buttonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inscripcion_button, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reporte1_button, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reporte2_button, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(title_label)
-                .addGap(18, 18, 18)
-                .addComponent(inscripcion_button, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(reporte1_button, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(reporte2_button, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 158;
+        gridBagConstraints.ipady = 27;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 54, 6, 0);
+        jPanel1.add(reporte2_button, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .addGap(8, 8, 8))
         );
 
         pack();
@@ -155,5 +193,7 @@ public class InicioFrame extends javax.swing.JFrame {
     private javax.swing.JButton reporte1_button;
     private javax.swing.JButton reporte2_button;
     private javax.swing.JLabel title_label;
+    private javax.swing.JLabel title_label2;
+    private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
 }

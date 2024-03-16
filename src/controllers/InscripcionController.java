@@ -21,18 +21,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import models.SearchResult;
 import sql.ConexionSQL;
+import util.PantallaCompleta;
 import views.InscripcionFrame;
 
 public class InscripcionController implements ActionListener {
 
-    private static InscripcionController instance; // Singleton instance
+    private static InscripcionController instance;
     public ConexionSQL connection;
     public InscripcionFrame inscripcionFrame;
-    public InicioController inicioController; // Reference to InicioController
+    public InicioController inicioController;
 
     private InscripcionController() {
         inscripcionFrame = new InscripcionFrame(this);
-        inscripcionFrame.setVisible(false); // Initially hide InscripcionFrame
+        PantallaCompleta pantallaCompleta = new PantallaCompleta();
+        pantallaCompleta.setPantallaCompleta(inscripcionFrame);
+        inscripcionFrame.setVisible(false);
     }
 
     public static InscripcionController getInstance() {
@@ -43,20 +46,22 @@ public class InscripcionController implements ActionListener {
     }
 
     public void showInscripcionFrame() {
-        inscripcionFrame.setVisible(true); // Show InscripcionFrame
+        PantallaCompleta pantallaCompleta = new PantallaCompleta();
+        pantallaCompleta.setPantallaCompleta(inscripcionFrame);
+        inscripcionFrame.setVisible(true);
     }
 
     private void showInicioFrame() {
-        inscripcionFrame.setVisible(false); // Hide InscripcionFrame
-        inicioController.showInicioFrame(); // Delegate to InicioController
+        inscripcionFrame.setVisible(false);
+        inicioController.showInicioFrame();
     }
 
     public void setInicioController(InicioController inicioController) {
-        this.inicioController = inicioController; // Set reference
+        this.inicioController = inicioController;
     }
 
     public void setConnection(ConexionSQL conexion) {
-        this.connection = conexion; // Set reference
+        this.connection = conexion;
     }
 
     private void obtenerDatos() {
