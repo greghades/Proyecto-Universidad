@@ -20,23 +20,17 @@ import java.util.ArrayList;
 
 public class SearchResult {
     private Estudiante estudiante;
-    private Carrera carrera;
     private ArrayList<Asignatura> asignaturas;
 
-    public SearchResult(Estudiante estudiante, Carrera carrera, ArrayList<Asignatura> asignaturas) {
+    public SearchResult(Estudiante estudiante, ArrayList<Asignatura> asignaturas) {
         this.estudiante = estudiante;
-        this.carrera = carrera;
         this.asignaturas = asignaturas;
     }
 
     public Estudiante getEstudiante() {
         return estudiante;
     }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
+    
     public ArrayList<Asignatura> getAsignaturas() {
         return asignaturas;
     }

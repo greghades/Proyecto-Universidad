@@ -15,140 +15,100 @@ Yaslin Vreugdenhil.
 29561929
  */
 package sql;
+
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.*;
 
 public class ConexionSQL {
-    Connection conn = null;
-    String db = "universidad";
-    String url = "jdbc:postgresql://localhost:5432/"+db;
-    String user = "postgres";
-    String pass = "";
+
+    private Connection conn = null;
+    private Statement statement;
+    private final String db = "universidad";
+    private final String url = "jdbc:postgresql://localhost:5432/" + db;
+    private final String user = "postgres";
+    private final String pass = "";
 
     public ConexionSQL() {
         conectar();
     }
-    
+
     private void conectar() {
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, user, pass);
-//            JOptionPane.showMessageDialog(null, "conexion exitosa", "conexion", JOptionPane.INFORMATION_MESSAGE);
+            statement = conn.createStatement();
             System.out.println("conexion exitosa");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println("conexion fallida");
-//            JOptionPane.showMessageDialog(null, "conexion fallida "+e, "conexion", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void checkConnection() {
+
+    public Estudiante getEstudiante(String id) {
         try {
-            if (conn.isClosed()) {
-                conectar();
+            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
+            ResultSet bigSet = statement.executeQuery(query);
+            Estudiante estudiante = null;
+
+            while (bigSet.next()) {
+                String cedula = bigSet.getString("id_estudiante");
+                String nombreCompleto = bigSet.getString("nombre_completo");
+                int edad = bigSet.getInt("edad");
+                String correo = bigSet.getString("correo");
+                String sexo = bigSet.getString("sexo");
+                String carrera = bigSet.getString("nombre_carrera");
+
+                estudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConexionSQL.class.getName()).log(Level.SEVERE, null, ex);
+
+            return estudiante;
+        } catch (SQLException e) {
+            return null;
         }
     }
-    
-           // Creación de la consulta
-//        String bigQuery = ;
-//        "SELECT * FROM public.\"Estudiantes\" WHERE id_estudiante = '%s'"
-//"""
-//                          SELECT 
-//                              e.id_estudiante, 
-//                              e.nombre_completo, 
-//                              e.edad, 
-//                              e.correo, 
-//                              c.nombre_carrera
-//                          FROM public."Estudiantes" AS e
-//                          INNER JOIN public."Carreras" AS c ON e.id_carrera = c.id_carrera
-//                          WHERE e.id_estudiante = '%s'""" 
-    
-    public SearchResult obtenerDatosDeInscripcion(String id) {
-        
-        checkConnection();
+
+    private ArrayList<Asignatura> getAsignaturas() {
         try {
-        String query = String.format("SELECT * FROM public.\"Estudiantes\" WHERE id_estudiante = '%s'", id);
+            String asignaturasQuery = "SELECT * FROM public.\"Asignaturas\"";
+            ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
 
-        
-//        System.out.println("Estudiante: " + id + " " + query);
+            ArrayList<Asignatura> asignaturasList = new ArrayList<>();
 
-        Statement statement = conn.createStatement();
-        ResultSet estudianteSet = statement.executeQuery(query);
+            while (asignaturasSet.next()) {
+                String idAsignatura = asignaturasSet.getString("id_asignatura");
+                String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
+                String preRequisito = asignaturasSet.getString("pre_requisito");
+                int credito = asignaturasSet.getInt("credito");
 
-        Estudiante estudiante = null;
-        
-        while (estudianteSet.next()) {
-           String idEstudiante = estudianteSet.getString("id_estudiante");
-           String idCarrera = estudianteSet.getString("id_carrera"); // Assuming id_carrera is an integer
-           String nombreCompleto = estudianteSet.getString("nombre_completo");
-           int edad = estudianteSet.getInt("edad");
-           String correo = estudianteSet.getString("correo");
-           String sexo = estudianteSet.getString("sexo");
-
-           estudiante = new Estudiante(idCarrera, idEstudiante, nombreCompleto, "", correo, edad, sexo);
+                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito);
+                asignaturasList.add(asignatura);
+            }
+            return asignaturasList;
+        } catch (SQLException e) {
+            return null;
         }
-        
-//           System.out.println("Estudiante created: " + estudiante.getCedula());
-        
-        String asignaturasQuery = "SELECT * FROM public.\"Asignaturas\"";
-        ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
-        
-        ArrayList<Asignatura> asignaturasList = new ArrayList<>(); 
+    }
 
-        while (asignaturasSet.next()) {
-          String idAsignatura = asignaturasSet.getString("id_asignatura");
-          String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
-          String preRequisito = asignaturasSet.getString("pre_requisito");
-          int credito = asignaturasSet.getInt("credito");
-
-          Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito);
-          asignaturasList.add(asignatura);
-        }
-
-//        Asignatura[] asignaturas = asignaturasList.toArray(new Asignatura[asignaturasList.size()]);
-//        System.out.println("Asignaturas created: " + asignaturas[0].getNombre());
-        
+    public SearchResult obtenerDatosDeInscripcion(String id) {
+        Estudiante estudiante = getEstudiante(id);
+        ArrayList<Asignatura> asignaturasList = getAsignaturas();
         if (estudiante == null) {
             return null;
-        }
-
-        String carreraQuery = String.format("SELECT * FROM public.\"Carreras\" WHERE id_carrera = '%s'", estudiante.getIdCarrera());
-        ResultSet carreraSet = statement.executeQuery(carreraQuery);
-        
-        Carrera carrera = null;
-        
-        while (carreraSet.next()) {
-            String idCarrera = carreraSet.getString("id_carrera");
-            String nombreCarrera = carreraSet.getString("nombre_carrera");
-            
-            carrera = new Carrera(idCarrera, nombreCarrera);
-        }
-        
-//        System.out.println("Carrera created: " + carrera.getNombre());
-        
-        return new SearchResult(estudiante, carrera, asignaturasList);
-        
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+        } else {
+            return new SearchResult(estudiante, asignaturasList);
         }
     }
-    
+
     public void cerrar() {
         try {
             conn.close();
             JOptionPane.showMessageDialog(null, "desconexion exitosa", "desconexion", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "desconexion fallida"+e, "desconexion", JOptionPane.ERROR_MESSAGE);
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "desconexion fallida" + e, "desconexion", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

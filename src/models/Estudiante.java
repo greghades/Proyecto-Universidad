@@ -24,11 +24,11 @@ package models;
  * @author 58412
  */
 public class Estudiante extends Persona {
-    private String idCarrera;
+    private String carrera;
 
-    public Estudiante(String idCarrera, String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
+    public Estudiante(String carrera, String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
         super(cedula, nombre, apellido, correo, edad, sexo);
-        this.idCarrera = idCarrera;
+        this.carrera = carrera;
     }
     
     
@@ -53,11 +53,11 @@ public class Estudiante extends Persona {
 //        }  
 //    }
 
-    public String getIdCarrera() {
-        return idCarrera;
+    public String getCarrera() {
+        return carrera;
     }
 
-    public void setIdCarrera(String idCarrera) {
-        this.idCarrera = idCarrera;
+    public void setCarrera(String idCarrera) {
+        this.carrera = idCarrera;
     }
 }

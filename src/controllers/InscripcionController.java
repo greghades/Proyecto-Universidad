@@ -66,12 +66,11 @@ public class InscripcionController implements ActionListener {
         }
 
         SearchResult info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
-        System.out.println(info);
 
         if (info == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun estudiante con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
-            inscripcionFrame.setCarrera(info.getCarrera().getNombre());
+            inscripcionFrame.setCarrera(info.getEstudiante().getCarrera());
             inscripcionFrame.setCorreo(info.getEstudiante().getCorreo());
             inscripcionFrame.setEdad(String.valueOf(info.getEstudiante().getEdad()));
             inscripcionFrame.setNombre(info.getEstudiante().getNombre());
