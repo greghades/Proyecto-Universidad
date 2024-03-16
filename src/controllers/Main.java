@@ -23,10 +23,14 @@ public class Main {
      public static void main(String[] args) {
     InicioController inicioController = InicioController.getInstance();
     InscripcionController inscripcionController = InscripcionController.getInstance();
+    ListaSeccionController listaSeccionController = ListaSeccionController.getInstance();
     
     ConexionSQL connection = new ConexionSQL();
     inicioController.setInscripcionController(inscripcionController);
+    inicioController.setListaSeccionController(listaSeccionController);
     inscripcionController.setInicioController(inicioController);// Establish references between controllers
+    listaSeccionController.setInicioController(inicioController);
+    
     inscripcionController.setConnection(connection);
   }
 }

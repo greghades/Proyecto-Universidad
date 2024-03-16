@@ -28,14 +28,24 @@ public class InicioFrame extends javax.swing.JFrame {
         super("Proyecto: Universidad Central de Lara");
         this.controller = controller;
         initComponents();
-        agregarListener(controller);
+        agregarListeners(controller);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void agregarListener(ActionListener accion) {
+    private void agregarListeners(ActionListener accion) {
         inscripcion_button.addActionListener(accion);
+        reporte1_button.addActionListener(accion);
     }
 
+    public JButton getReporte1_button() {
+        return reporte1_button;
+    }
+
+    public JButton getInscripcion_button() {
+        return inscripcion_button;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

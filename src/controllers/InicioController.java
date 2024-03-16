@@ -26,6 +26,8 @@ public class InicioController implements ActionListener {
     private static InicioController instance;
     public InicioFrame inicioFrame;
     public InscripcionController inscripcionController;
+    public ListaSeccionController listaSeccionController;
+    
 
     public InicioController() {
         inicioFrame = new InicioFrame(this);
@@ -50,13 +52,26 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         inscripcionController.showInscripcionFrame();
     }
+    
+    private void showListaSeccionFrame() {
+        inicioFrame.setVisible(false);
+        listaSeccionController.showListaSeccionFrame();
+    }
 
     public void setInscripcionController(InscripcionController inscripcionController) {
         this.inscripcionController = inscripcionController;
     }
-
+  
+    public void setListaSeccionController(ListaSeccionController listaSeccionController) {
+        this.listaSeccionController = listaSeccionController;
+    }
+    
     @Override
-    public void actionPerformed(ActionEvent arg0) {
-        showInscripcionFrame();
+    public void actionPerformed(ActionEvent button) {
+        if(button.getSource() == inicioFrame.getReporte1_button()){
+            showListaSeccionFrame();
+        } else if(button.getSource() == inicioFrame.getInscripcion_button()){
+            showInscripcionFrame();
+        }
     }
 }
