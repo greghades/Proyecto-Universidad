@@ -27,7 +27,7 @@ public class InicioController implements ActionListener {
     public InicioFrame inicioFrame;
     public InscripcionController inscripcionController;
     public ListaSeccionController listaSeccionController;
-    
+    public RetirodeMateriasController retirodeMateriasController;
 
     public InicioController() {
         inicioFrame = new InicioFrame(this);
@@ -57,7 +57,10 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         listaSeccionController.showListaSeccionFrame();
     }
-
+    private void showRetirodeMateriasFrame(){
+         inicioFrame.setVisible(false);
+         retirodeMateriasController.showRetirodeMateriasFrame();
+    }
     public void setInscripcionController(InscripcionController inscripcionController) {
         this.inscripcionController = inscripcionController;
     }
@@ -65,7 +68,9 @@ public class InicioController implements ActionListener {
     public void setListaSeccionController(ListaSeccionController listaSeccionController) {
         this.listaSeccionController = listaSeccionController;
     }
-    
+    public void setRetirodeMateriasController(RetirodeMateriasController retirodeMateriasController){
+        this.retirodeMateriasController= retirodeMateriasController;
+    }
     @Override
     public void actionPerformed(ActionEvent button) {
         if(button.getSource() == inicioFrame.getReporte1_button()){
@@ -73,5 +78,9 @@ public class InicioController implements ActionListener {
         } else if(button.getSource() == inicioFrame.getInscripcion_button()){
             showInscripcionFrame();
         }
+        else if(button.getSource()==inicioFrame.getRetirarMaterias_button()){
+        showRetirodeMateriasFrame();}
     }
+
+    
 }

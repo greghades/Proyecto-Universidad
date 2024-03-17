@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/proyecto/src/views/SeccionCellRenderer.java</file>
-            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/proyecto/src/views/InscripcionFrame.java</file>
-            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/proyecto/src/views/SeccionCellEditor.java</file>
-            <file>file:/C:/Users/User/Desktop/Universidad/Laboratorio%20I/proyecto/src/views/InicioFrame.java</file>
+            <file>file:/D:/Documentos%20UCLA/Laboratorio%20I/Pryecto/Proyecto-Universidad/src/views/ListaSeccionFrame.java</file>
+            <file>file:/D:/Documentos%20UCLA/Laboratorio%20I/Pryecto/Proyecto-Universidad/src/controllers/RetirodeMateriasController.java</file>
+            <file>file:/D:/Documentos%20UCLA/Laboratorio%20I/Pryecto/Proyecto-Universidad/src/views/RetirodeMateriasFrame.java</file>
+            <file>file:/D:/Documentos%20UCLA/Laboratorio%20I/Pryecto/Proyecto-Universidad/src/controllers/ListaSeccionController.java</file>
+            <file>file:/D:/Documentos%20UCLA/Laboratorio%20I/Pryecto/Proyecto-Universidad/src/views/InicioFrame.java</file>
         </group>
     </open-files>
 </project-private>

@@ -35,6 +35,7 @@ public class InicioFrame extends javax.swing.JFrame {
     private void agregarListeners(ActionListener accion) {
         inscripcion_button.addActionListener(accion);
         reporte1_button.addActionListener(accion);
+        retirarMaterias_button.addActionListener(accion);
     }
 
     public JButton getReporte1_button() {
@@ -45,6 +46,9 @@ public class InicioFrame extends javax.swing.JFrame {
         return inscripcion_button;
     }
     
+   public JButton getRetirarMaterias_button(){
+       return retirarMaterias_button;
+   }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +67,7 @@ public class InicioFrame extends javax.swing.JFrame {
         title_label = new javax.swing.JLabel();
         reporte1_button = new javax.swing.JButton();
         reporte2_button = new javax.swing.JButton();
+        retirarMaterias_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -94,6 +99,8 @@ public class InicioFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(58, 159, 220), 2, true));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         inscripcion_button.setBackground(new java.awt.Color(58, 159, 220));
@@ -157,18 +164,30 @@ public class InicioFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 54, 6, 0);
         jPanel1.add(reporte2_button, gridBagConstraints);
 
+        retirarMaterias_button.setBackground(new java.awt.Color(153, 204, 255));
+        retirarMaterias_button.setForeground(new java.awt.Color(102, 102, 102));
+        retirarMaterias_button.setText("Retirar materias");
+        retirarMaterias_button.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        retirarMaterias_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retirarMaterias_buttonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_END;
+        jPanel1.add(retirarMaterias_button, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
@@ -184,17 +203,21 @@ public class InicioFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inscripcion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscripcion_buttonActionPerformed
-
-    }//GEN-LAST:event_inscripcion_buttonActionPerformed
+    private void reporte2_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte2_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reporte2_buttonActionPerformed
 
     private void reporte1_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte1_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_reporte1_buttonActionPerformed
 
-    private void reporte2_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporte2_buttonActionPerformed
+    private void inscripcion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscripcion_buttonActionPerformed
+
+    }//GEN-LAST:event_inscripcion_buttonActionPerformed
+
+    private void retirarMaterias_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarMaterias_buttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_reporte2_buttonActionPerformed
+    }//GEN-LAST:event_retirarMaterias_buttonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -202,6 +225,7 @@ public class InicioFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton reporte1_button;
     private javax.swing.JButton reporte2_button;
+    private javax.swing.JButton retirarMaterias_button;
     private javax.swing.JLabel title_label;
     private javax.swing.JLabel title_label2;
     private javax.swing.JPanel title_panel;
