@@ -18,11 +18,11 @@ Yaslin Vreugdenhil.
 package models;
 import java.util.ArrayList;
 
-public class SearchResult {
+public class InscripcionInfo {
     private Estudiante estudiante;
     private ArrayList<Asignatura> asignaturas;
 
-    public SearchResult(Estudiante estudiante, ArrayList<Asignatura> asignaturas) {
+    public InscripcionInfo(Estudiante estudiante, ArrayList<Asignatura> asignaturas) {
         this.estudiante = estudiante;
         this.asignaturas = asignaturas;
     }
@@ -33,6 +33,10 @@ public class SearchResult {
     
     public ArrayList<Asignatura> getAsignaturas() {
         return asignaturas;
+    }
+    
+    public void setAsignatura(int index, Asignatura value) {
+        this.asignaturas.set(index, value);
     }
     
     public boolean hasAllInfo() {

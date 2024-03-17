@@ -62,9 +62,8 @@ public class ConexionSQL {
                 String sexo = bigSet.getString("sexo");
                 String nombreCarrera = bigSet.getString("nombre_carrera");
                 String idCarrera = bigSet.getString("id_carrera");
-                
-                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
 
+                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
                 estudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
             }
 
@@ -84,10 +83,10 @@ public class ConexionSQL {
             while (asignaturasSet.next()) {
                 String idAsignatura = asignaturasSet.getString("id_asignatura");
                 String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
-                String preRequisito = asignaturasSet.getString("pre_requisito");
-                int credito = asignaturasSet.getInt("credito");
+                int cargaAcademica = asignaturasSet.getInt("carga_academica");
+                boolean esRetirada = asignaturasSet.getBoolean("retirada");
 
-                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito, "1");
+                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAcademica, esRetirada);
                 asignaturasList.add(asignatura);
             }
             return asignaturasList;
@@ -96,16 +95,18 @@ public class ConexionSQL {
         }
     }
 
-    public SearchResult obtenerDatosDeInscripcion(String id) {
+    public InscripcionInfo obtenerDatosDeInscripcion(String id) {
         Estudiante estudiante = getEstudiante(id);
         if (estudiante == null) {
             return null;
         }
         ArrayList<Asignatura> asignaturasList = getAsignaturasParaInscripcion(estudiante.getCarrera().getId());
-        
-        System.out.println("asignaturas:" + asignaturasList.get(0).getSeccion());
 
-        return new SearchResult(estudiante, asignaturasList);
+        if (asignaturasList != null) {
+            return new InscripcionInfo(estudiante, asignaturasList);
+        } else {
+            return null;
+        }
     }
 
     public void cerrar() {

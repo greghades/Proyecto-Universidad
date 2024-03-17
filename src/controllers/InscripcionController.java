@@ -18,7 +18,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import models.SearchResult;
+import models.*;
 import sql.ConexionSQL;
 import util.CheckableCellEventListener;
 import util.PantallaCompleta;
@@ -30,6 +30,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public ConexionSQL connection;
     public InscripcionFrame inscripcionFrame;
     public InicioController inicioController;
+    private InscripcionInfo info;
 
     private InscripcionController() {
         inscripcionFrame = new InscripcionFrame(this);
@@ -70,7 +71,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             return;
         }
 
-        SearchResult info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
+        this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
 
         System.out.println(info);
         if (info == null) {
@@ -92,15 +93,18 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             showInicioFrame();
         } else if (button.getSource() == inscripcionFrame.getCedula_button()) {
             mostrarDatos();
-        } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {
-            System.out.println("Inscripcion tap");
+        } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {   
+            for (int index = 0; index < this.info.getAsignaturas().size(); index++) {
+                System.out.println("Asignatura: " + info.getAsignaturas().get(index).getNombre() + ", Inscribir: " + info.getAsignaturas().get(index).esRetirada());
+            }
         }
     }
 
     @Override
     public void onCheckboxValueChanged(int row, boolean value) {
         // Implementar la lógica para manejar el cambio de valor del checkbox
-        System.out.println("Fila: " + row + ", Valor: " + value);
+        Asignatura asignaturaSeleccionada = info.getAsignaturas().get(row);
+        asignaturaSeleccionada.setInclusion(value);
+        this.info.setAsignatura(row, asignaturaSeleccionada);
     }
-
 }

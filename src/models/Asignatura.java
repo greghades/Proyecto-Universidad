@@ -26,17 +26,14 @@ import java.util.Objects;
 public class Asignatura {
     private String id;
     private String nombre;
-    private int creditos;
-    private String pre_requisito;
-    private boolean inclusion = false;
-    private String seccion;
+    private int cargaAcademica;
+    private boolean esRetirada;
 
-    public Asignatura(String id, String nombre, int creditos, String pre_requisito, String seccion) {
+    public Asignatura(String id, String nombre, int carga, boolean esRetirada) {
         this.id = id;
         this.nombre = nombre;
-        this.creditos = creditos;
-        this.pre_requisito = pre_requisito;
-        this.seccion = seccion;
+        this.cargaAcademica = carga;
+        this.esRetirada = esRetirada;
     }
 
     public String getId() {
@@ -55,54 +52,35 @@ public class Asignatura {
         this.nombre = nombre;
     }
 
-    public int getCreditos() {
-        return creditos;
+    public boolean esRetirada() {
+        return esRetirada;
     }
 
-    public void setCreditos(int creditos) {
-        this.creditos = creditos;
+    public void setInclusion(boolean estado) {
+        this.esRetirada = estado;
     }
 
-    public String getPre_requisito() {
-        return pre_requisito;
+    public int getCargaAcademica() {
+        return cargaAcademica;
     }
 
-    public void setPre_requisito(String pre_requisito) {
-        this.pre_requisito = pre_requisito;
-    }
-
-    public boolean isInclusion() {
-        return inclusion;
-    }
-
-    public void setInclusion(boolean inclusion) {
-        this.inclusion = inclusion;
-    }
-
-    public String getSeccion() {
-        return seccion;
-    }
-
-    public void setSeccion(String seccion) {
-        this.seccion = seccion;
+    public void setCargaAcademica(int cargaAcademica) {
+        this.cargaAcademica = cargaAcademica;
     }
     
-    
-
       @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Asignatura asignatura = (Asignatura) o;
-    return creditos == asignatura.creditos &&
-            inclusion == asignatura.inclusion &&
-            Objects.equals(nombre, asignatura.nombre) &&
-            Objects.equals(seccion, asignatura.seccion);
+          return Objects.equals(id, asignatura.id)
+                  && Objects.equals(nombre, asignatura.nombre)
+                  && esRetirada == asignatura.esRetirada;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nombre, creditos, inclusion, seccion);
+    return Objects.hash(id, nombre, esRetirada);
   }
     
 }

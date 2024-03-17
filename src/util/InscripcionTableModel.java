@@ -23,7 +23,7 @@ import models.Asignatura;
 public class InscripcionTableModel extends AbstractTableModel {
 
     private final List<Asignatura> asignaturas;
-    private static final String[] columnNames = {"Materia", "Carga Academica", "Seccion", "Inscribir"};
+    private static final String[] columnNames = {"ID", "Asignatura", "Carga academica", "Inscribir"};
     private final CheckableCellEventListener listener;
 
     public InscripcionTableModel(List<Asignatura> asignaturas, CheckableCellEventListener listener) {
@@ -56,13 +56,13 @@ public class InscripcionTableModel extends AbstractTableModel {
         Asignatura asignatura = asignaturas.get(rowIndex);
         return switch (columnIndex) {
             case 0 ->
-                asignatura.getNombre();
+                asignatura.getId();
             case 1 ->
-                asignatura.getCreditos();
+                asignatura.getNombre();
             case 2 ->
-                asignatura.getSeccion();
+                asignatura.getCargaAcademica();
             case 3 ->
-                asignatura.isInclusion();
+                asignatura.esRetirada();
             default ->
                 null;
         };
@@ -74,9 +74,9 @@ public class InscripcionTableModel extends AbstractTableModel {
             case 0 ->
                 String.class;
             case 1 ->
-                Integer.class;
-            case 2 ->
                 String.class;
+            case 2 ->
+                Integer.class;
             case 3 ->
                 Boolean.class;
             default ->
@@ -93,10 +93,6 @@ public class InscripcionTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         Asignatura subject = asignaturas.get(rowIndex);
         switch (columnIndex) {
-            case 2 -> {
-                subject.setSeccion((String) value);
-                fireTableCellUpdated(rowIndex, columnIndex); // Update table
-            }
             case 3 -> {
                 subject.setInclusion((boolean) value);
                 fireTableCellUpdated(rowIndex, columnIndex); // Update table
