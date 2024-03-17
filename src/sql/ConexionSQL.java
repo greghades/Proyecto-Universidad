@@ -109,6 +109,47 @@ public class ConexionSQL {
         }
     }
 
+    public Profesor getProfesor(String idAsignatura) {
+        try {
+            String query = String.format("SELECT p.id_profesor, p.nombre_completo FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s'", idAsignatura);
+            ResultSet profesorSet = statement.executeQuery(query);
+            Profesor profesor = null;
+            
+            while (profesorSet.next()) {
+                String cedula = profesorSet.getString("id_profesor");
+                String nombre = profesorSet.getString("nombre_completo");
+                System.out.println("profe: " + cedula + nombre);
+
+                ArrayList<Seccion> secciones = getSecciones(idAsignatura);
+                profesor = new Profesor(secciones, cedula, nombre);
+            }
+
+            return profesor;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    private ArrayList<Seccion> getSecciones(String idAsignatura) {
+        try {
+            String query = String.format("SELECT s.id_seccion, s.numero_seccion, s.limite_estudiantes FROM public.\"Secciones\" s INNER JOIN public.\"Profesor_asignatura_seccion\" psa ON s.id_seccion = psa.id_seccion WHERE psa.id_asignatura = '%s'", idAsignatura);
+            ResultSet seccionesSet = statement.executeQuery(query);
+            
+            ArrayList<Seccion> secciones = new ArrayList<>();
+                while (seccionesSet.next()) {
+                    String id = seccionesSet.getString("id_seccion");
+                    int cupos = seccionesSet.getInt("limite_estudiantes");
+                    int numeroSeccion = seccionesSet.getInt("numero_seccion");
+
+                    System.out.println("seccion: " + id + numeroSeccion);
+                    secciones.add(new Seccion(id, cupos, numeroSeccion));
+                }
+                return secciones;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
     public void cerrar() {
         try {
             conn.close();

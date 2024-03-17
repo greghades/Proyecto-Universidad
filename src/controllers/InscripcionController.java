@@ -105,6 +105,11 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         // Implementar la lógica para manejar el cambio de valor del checkbox
         Asignatura asignaturaSeleccionada = info.getAsignaturas().get(row);
         asignaturaSeleccionada.setInclusion(value);
-        this.info.setAsignatura(row, asignaturaSeleccionada);
+        info.setAsignatura(row, asignaturaSeleccionada);
+        
+        // Obtener nombre de profesor
+        Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId());
+//        System.out.println("ID: " + profesor.getCedula()+ ", Nombre: " + profesor.getNombre() + ", Secciones: " + profesor.getSecciones().toString());
+        
     }
 }

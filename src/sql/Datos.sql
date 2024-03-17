@@ -152,22 +152,18 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
 
 CREATE TABLE "Secciones" (
   "id_seccion" varchar(25) NOT NULL,
-  "id_carrera" varchar(25) NOT NULL,
   "numero_seccion" integer,
   "limite_estudiantes" integer,
-  PRIMARY KEY ("id_seccion"),
-  CONSTRAINT "FK_Secciones.id_carrera"
-    FOREIGN KEY ("id_carrera")
-      REFERENCES "Carreras"("id_carrera")
+  PRIMARY KEY ("id_seccion")
 );
 
-INSERT INTO public."Secciones" (id_seccion,id_carrera,numero_seccion,limite_estudiantes) VALUES
-    ('SEC-001','CAR-001',1,32),
-    ('SEC-002','CAR-001',2,32),
-    ('SEC-003','CAR-002',1,32),
-    ('SEC-004','CAR-002',2,32),
-    ('SEC-005','CAR-003',1,32),
-    ('SEC-006','CAR-003',2,32);
+INSERT INTO public."Secciones" (id_seccion,numero_seccion,limite_estudiantes) VALUES
+    ('SEC-001',1,32),
+    ('SEC-002',2,32),
+    ('SEC-003',1,32),
+    ('SEC-004',2,32),
+    ('SEC-005',1,32),
+    ('SEC-006',2,32);
 
 CREATE TABLE "Profesor_asignatura_seccion" (
   "id_profesor_asignatura" varchar(25) NOT NULL,
@@ -188,38 +184,42 @@ CREATE TABLE "Profesor_asignatura_seccion" (
 
 INSERT INTO public."Profesor_asignatura_seccion" (id_profesor_asignatura, id_profesor, id_asignatura, id_seccion) VALUES
     ('PAS-001', 'PRO-001', 'ASI-001', 'SEC-001'),
-    ('PAS-002', 'PRO-002', 'ASI-002', 'SEC-002'),
-    ('PAS-003', 'PRO-003', 'ASI-003', 'SEC-003'),
-    ('PAS-004', 'PRO-004', 'ASI-004', 'SEC-004'),
-    ('PAS-005', 'PRO-005', 'ASI-005', 'SEC-005'),
-    ('PAS-006', 'PRO-006', 'ASI-006', 'SEC-006'),
-    ('PAS-007', 'PRO-007', 'ASI-007', 'SEC-001'),
-    ('PAS-008', 'PRO-008', 'ASI-008', 'SEC-002'),
-    ('PAS-009', 'PRO-009', 'ASI-009', 'SEC-003'),
-    ('PAS-010', 'PRO-010', 'ASI-010', 'SEC-004'),
-    ('PAS-011', 'PRO-001', 'ASI-011', 'SEC-005'),
-    ('PAS-012', 'PRO-002', 'ASI-012', 'SEC-006'),
-    ('PAS-013', 'PRO-006', 'ASI-013', 'SEC-001'),
-    ('PAS-014', 'PRO-008', 'ASI-014', 'SEC-002'),
-    ('PAS-015', 'PRO-008', 'ASI-015', 'SEC-003'),
-    ('PAS-016', 'PRO-010', 'ASI-016', 'SEC-004'),
+    ('PAS-002', 'PRO-001', 'ASI-001', 'SEC-002'),
+    ('PAS-003', 'PRO-002', 'ASI-002', 'SEC-003'),
+    ('PAS-004', 'PRO-002', 'ASI-002', 'SEC-004'),
+    ('PAS-005', 'PRO-003', 'ASI-003', 'SEC-005'),
+    ('PAS-006', 'PRO-003', 'ASI-003', 'SEC-006'),
 
-    ('PAS-017', 'PRO-001', 'ASI-001', 'SEC-002'),
-    ('PAS-018', 'PRO-002', 'ASI-002', 'SEC-001'),
-    ('PAS-019', 'PRO-006', 'ASI-004', 'SEC-005'),
-    ('PAS-020', 'PRO-006', 'ASI-005', 'SEC-006'),
-    ('PAS-021', 'PRO-006', 'ASI-006', 'SEC-001'),
-    ('PAS-022', 'PRO-001', 'ASI-007', 'SEC-002'),
-    ('PAS-023', 'PRO-006', 'ASI-008', 'SEC-003'),
-    ('PAS-024', 'PRO-003', 'ASI-009', 'SEC-004'),
-    ('PAS-025', 'PRO-007', 'ASI-010', 'SEC-005'),
-    ('PAS-026', 'PRO-007', 'ASI-011', 'SEC-006'),
-    ('PAS-027', 'PRO-001', 'ASI-012', 'SEC-001'),
-    ('PAS-028', 'PRO-006', 'ASI-013', 'SEC-002'),
-    ('PAS-029', 'PRO-008', 'ASI-014', 'SEC-003'),
-    ('PAS-030', 'PRO-008', 'ASI-015', 'SEC-004'),
-    ('PAS-031', 'PRO-010', 'ASI-016', 'SEC-005'),
-    ('PAS-032', 'PRO-009', 'ASI-001', 'SEC-006');
+    ('PAS-007', 'PRO-004', 'ASI-004', 'SEC-001'),
+    ('PAS-008', 'PRO-004', 'ASI-004', 'SEC-002'),
+    ('PAS-009', 'PRO-005', 'ASI-005', 'SEC-003'),
+    ('PAS-010', 'PRO-005', 'ASI-005', 'SEC-004'),
+    ('PAS-011', 'PRO-006', 'ASI-006', 'SEC-005'),
+    ('PAS-012', 'PRO-006', 'ASI-006', 'SEC-006'),
+
+    ('PAS-013', 'PRO-007', 'ASI-007', 'SEC-001'),
+    ('PAS-014', 'PRO-007', 'ASI-007', 'SEC-002'),
+    ('PAS-015', 'PRO-008', 'ASI-008', 'SEC-003'),
+    ('PAS-016', 'PRO-008', 'ASI-008', 'SEC-004'),
+    ('PAS-017', 'PRO-009', 'ASI-009', 'SEC-005'),
+    ('PAS-018', 'PRO-009', 'ASI-009', 'SEC-006'),
+
+    ('PAS-019', 'PRO-010', 'ASI-010', 'SEC-001'),
+    ('PAS-020', 'PRO-010', 'ASI-010', 'SEC-002'),
+    ('PAS-021', 'PRO-001', 'ASI-011', 'SEC-003'),
+    ('PAS-022', 'PRO-002', 'ASI-011', 'SEC-004'),
+    ('PAS-023', 'PRO-003', 'ASI-012', 'SEC-005'),
+    ('PAS-024', 'PRO-004', 'ASI-012', 'SEC-006'),
+
+    ('PAS-025', 'PRO-005', 'ASI-013', 'SEC-001'),
+    ('PAS-026', 'PRO-006', 'ASI-013', 'SEC-002'),
+    ('PAS-027', 'PRO-007', 'ASI-014', 'SEC-003'),
+    ('PAS-028', 'PRO-008', 'ASI-014', 'SEC-004'),
+    ('PAS-029', 'PRO-009', 'ASI-015', 'SEC-005'),
+    ('PAS-030', 'PRO-010', 'ASI-015', 'SEC-006'),
+    
+    ('PAS-031', 'PRO-001', 'ASI-016', 'SEC-001'),
+    ('PAS-032', 'PRO-002', 'ASI-016', 'SEC-002');
 
 CREATE TABLE "Periodo_academico" (
   "id_periodo" varchar(25) NOT NULL,

@@ -21,23 +21,21 @@ package models;
  * @author 58412
  */
 public class Seccion {
-    private int id;
+    private String id;
     private int cupo;
-    private Estudiante estudiante;
-    private Profesor profesor;
+    private int numero;
 
-    public Seccion(int id, int cupo, Estudiante estudiante, Profesor profesor) {
+    public Seccion(String id, int cupo, int numero) {
         this.id = id;
         this.cupo = cupo;
-        this.estudiante = estudiante;
-        this.profesor = profesor;
+        this.numero = numero;
     }
-
-    public int getId() {
+    
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,24 +47,13 @@ public class Seccion {
         this.cupo = cupo;
     }
 
-    public Estudiante getEstudiante() {
-        return estudiante;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
-    public Profesor getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }
     
-    public Estudiante listarEstudiantesPromedio(){
-        
-        return this.estudiante;
-    }
 }

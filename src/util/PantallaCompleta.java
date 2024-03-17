@@ -26,7 +26,7 @@ import javax.swing.JFrame;
 public class PantallaCompleta {
         public void setPantallaCompleta(JFrame frame) {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            Insets insets = new Insets(100, 500, 100, 500);
+            Insets insets = new Insets(100, 200, 100, 200);
             Dimension adjustedSize = new Dimension(
                     screenSize.width - insets.left - insets.right,
                     screenSize.height - insets.top - insets.bottom

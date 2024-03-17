@@ -14,20 +14,18 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package models;
 
-
 public class Persona {
-    
+
     protected String cedula;
     protected String nombre;
     protected String apellido;
     protected String correo;
     protected int edad;
     protected String sexo;
-    
-    public Persona(String cedula, String nombre,String apellido, String correo, int edad, String sexo){
+
+    public Persona(String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
         super();
         this.cedula = cedula;
         this.nombre = nombre;
@@ -35,6 +33,12 @@ public class Persona {
         this.correo = correo;
         this.edad = edad;
         this.sexo = sexo;
+    }
+
+    public Persona(String cedula, String nombre) {
+        super();
+        this.cedula = cedula;
+        this.nombre = nombre;
     }
 
     public int getEdad() {
@@ -84,6 +88,5 @@ public class Persona {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
-    
+
 }
