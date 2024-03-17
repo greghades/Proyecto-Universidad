@@ -14,7 +14,6 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package util;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -23,11 +22,11 @@ import javax.swing.table.TableCellRenderer;
 
 public class SeccionCellRenderer implements TableCellRenderer {
 
-  @Override
-  public Component getTableCellRendererComponent(JTable table, Object value,
-                                                 boolean isSelected, boolean hasFocus,
-                                                 int row, int column) {
-    JLabel label = new JLabel(value == null ? "" : value.toString());
-    return label;
-  }
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus,
+            int row, int column) {
+        JLabel label = new JLabel(value == null ? "" : value.toString());
+        return label;
+    }
 }

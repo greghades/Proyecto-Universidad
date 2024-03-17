@@ -64,7 +64,7 @@ public class InscripcionController implements ActionListener {
         this.connection = conexion;
     }
 
-    private void obtenerDatos() {
+    private void mostrarDatos() {
         if ("Cedula".equals(inscripcionFrame.getCedula()) || inscripcionFrame.getCedula().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
@@ -90,7 +90,7 @@ public class InscripcionController implements ActionListener {
         if (button.getSource() == inscripcionFrame.getBack_button()) {
             showInicioFrame();
         } else if (button.getSource() == inscripcionFrame.getCedula_button()) {
-            obtenerDatos();
+            mostrarDatos();
         } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {
             System.out.println("Inscripcion tap");
         }

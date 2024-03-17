@@ -31,11 +31,12 @@ public class Asignatura {
     private boolean inclusion = false;
     private String seccion;
 
-    public Asignatura(String id, String nombre, int creditos, String pre_requisito) {
+    public Asignatura(String id, String nombre, int creditos, String pre_requisito, String seccion) {
         this.id = id;
         this.nombre = nombre;
         this.creditos = creditos;
         this.pre_requisito = pre_requisito;
+        this.seccion = seccion;
     }
 
     public String getId() {

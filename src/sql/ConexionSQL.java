@@ -31,7 +31,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "gr3g0r1j053y3p3z4rt34g4";
+    private final String pass = "";
 
     public ConexionSQL() {
         conectar();
@@ -82,9 +82,10 @@ public class ConexionSQL {
                 String idAsignatura = asignaturasSet.getString("id_asignatura");
                 String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
                 String preRequisito = asignaturasSet.getString("pre_requisito");
+//                String seccion = asignaturasSet.getString("seccion");
                 int credito = asignaturasSet.getInt("credito");
 
-                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito);
+                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito, "1");
                 asignaturasList.add(asignatura);
             }
             return asignaturasList;
@@ -96,6 +97,9 @@ public class ConexionSQL {
     public SearchResult obtenerDatosDeInscripcion(String id) {
         Estudiante estudiante = getEstudiante(id);
         ArrayList<Asignatura> asignaturasList = getAsignaturas();
+        
+        System.out.println("asignaturas:" + asignaturasList.get(0).getSeccion());
+        
         if (estudiante == null) {
             return null;
         } else {

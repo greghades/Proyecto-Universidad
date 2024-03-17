@@ -23,7 +23,7 @@ import models.Asignatura;
 public class AsignaturaTableModel extends AbstractTableModel {
 
   private final List<Asignatura> asignaturas;
-  private static final String[] columnNames = {"Materia", "Carga Academica", "Inclusion", "Seccion"};
+  private static final String[] columnNames = {"Materia", "Carga Academica", "Seccion", "Inscribir"};
 
   public AsignaturaTableModel(List<Asignatura> asignaturas) {
     this.asignaturas = asignaturas;
@@ -55,8 +55,8 @@ public class AsignaturaTableModel extends AbstractTableModel {
       return switch (columnIndex) {
           case 0 -> asignatura.getNombre();
           case 1 -> asignatura.getCreditos();
-          case 2 -> asignatura.isInclusion();
-          case 3 -> asignatura.getSeccion();
+          case 2 -> asignatura.getSeccion();
+          case 3 -> asignatura.isInclusion();
           default -> null;
       };
   }
@@ -66,15 +66,15 @@ public class AsignaturaTableModel extends AbstractTableModel {
       return switch (columnIndex) {
           case 0 -> String.class;
           case 1 -> Integer.class;
-          case 2 -> Boolean.class;
-          case 3 -> String.class;
+          case 2 -> String.class;
+          case 3 -> Boolean.class;
           default -> null;
       };
   }
 
   @Override
   public boolean isCellEditable(int rowIndex, int columnIndex) {
-    return columnIndex == 2 || columnIndex == 3; // Editable checkboxes and toggle lists
+    return columnIndex == 3; // Editable checkboxes and toggle lists
   }
 
   @Override
@@ -82,18 +82,17 @@ public class AsignaturaTableModel extends AbstractTableModel {
     Asignatura subject = asignaturas.get(rowIndex);
     switch (columnIndex) {
       case 2 -> {
-          subject.setInclusion((boolean) value);
+          subject.setSeccion((String) value);
           fireTableCellUpdated(rowIndex, columnIndex); // Update table
           }
       case 3 -> {
-          subject.setSeccion((String) value);
+          subject.setInclusion((boolean) value);
           fireTableCellUpdated(rowIndex, columnIndex); // Update table
           }
     }
   }
 
   public void addSubject(Asignatura subject) {
-    asignaturas.add(subject);
-    fireTableRowsInserted(asignaturas.size() - 1, asignaturas.size() - 1); // Update table
+      
   }
 }
