@@ -14,17 +14,17 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import models.SearchResult;
 import sql.ConexionSQL;
+import util.CheckableCellEventListener;
 import util.PantallaCompleta;
 import views.InscripcionFrame;
 
-public class InscripcionController implements ActionListener {
+public class InscripcionController implements ActionListener, CheckableCellEventListener {
 
     private static InscripcionController instance;
     public ConexionSQL connection;
@@ -72,10 +72,11 @@ public class InscripcionController implements ActionListener {
 
         SearchResult info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
 
+        System.out.println(info);
         if (info == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun estudiante con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
-            inscripcionFrame.setCarrera(info.getEstudiante().getCarrera());
+            inscripcionFrame.setCarrera(info.getEstudiante().getCarrera().getNombre());
             inscripcionFrame.setCorreo(info.getEstudiante().getCorreo());
             inscripcionFrame.setEdad(String.valueOf(info.getEstudiante().getEdad()));
             inscripcionFrame.setNombre(info.getEstudiante().getNombre());
@@ -95,4 +96,11 @@ public class InscripcionController implements ActionListener {
             System.out.println("Inscripcion tap");
         }
     }
+
+    @Override
+    public void onCheckboxValueChanged(int row, boolean value) {
+        // Implementar la lógica para manejar el cambio de valor del checkbox
+        System.out.println("Fila: " + row + ", Valor: " + value);
+    }
+
 }

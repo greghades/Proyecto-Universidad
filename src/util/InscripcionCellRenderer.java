@@ -15,12 +15,13 @@ Yaslin Vreugdenhil.
 29561929
  */
 package util;
+
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.table.TableCellRenderer;
 
-public class SeccionCellRenderer implements TableCellRenderer {
+public class InscripcionCellRenderer implements TableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,

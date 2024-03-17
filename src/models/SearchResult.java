@@ -34,4 +34,8 @@ public class SearchResult {
     public ArrayList<Asignatura> getAsignaturas() {
         return asignaturas;
     }
+    
+    public boolean hasAllInfo() {
+        return estudiante != null && asignaturas != null && !asignaturas.isEmpty();
+    }
 }

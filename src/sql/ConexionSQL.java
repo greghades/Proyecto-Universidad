@@ -50,7 +50,7 @@ public class ConexionSQL {
 
     public Estudiante getEstudiante(String id) {
         try {
-            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
+            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.* FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
             ResultSet bigSet = statement.executeQuery(query);
             Estudiante estudiante = null;
 
@@ -60,7 +60,10 @@ public class ConexionSQL {
                 int edad = bigSet.getInt("edad");
                 String correo = bigSet.getString("correo");
                 String sexo = bigSet.getString("sexo");
-                String carrera = bigSet.getString("nombre_carrera");
+                String nombreCarrera = bigSet.getString("nombre_carrera");
+                String idCarrera = bigSet.getString("id_carrera");
+                
+                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
 
                 estudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
             }
@@ -71,9 +74,9 @@ public class ConexionSQL {
         }
     }
 
-    private ArrayList<Asignatura> getAsignaturas() {
+    private ArrayList<Asignatura> getAsignaturasParaInscripcion(String idCarrera) {
         try {
-            String asignaturasQuery = "SELECT * FROM public.\"Asignaturas\"";
+            String asignaturasQuery = String.format("SELECT * FROM public.\"Asignaturas\" AS a INNER JOIN public.\"Asignaturas_carrera\" AS ac ON a.id_asignatura = ac.id_asignatura WHERE ac.id_carrera = '%s'", idCarrera);
             ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
 
             ArrayList<Asignatura> asignaturasList = new ArrayList<>();
@@ -82,7 +85,6 @@ public class ConexionSQL {
                 String idAsignatura = asignaturasSet.getString("id_asignatura");
                 String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
                 String preRequisito = asignaturasSet.getString("pre_requisito");
-//                String seccion = asignaturasSet.getString("seccion");
                 int credito = asignaturasSet.getInt("credito");
 
                 Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, credito, preRequisito, "1");
@@ -96,15 +98,14 @@ public class ConexionSQL {
 
     public SearchResult obtenerDatosDeInscripcion(String id) {
         Estudiante estudiante = getEstudiante(id);
-        ArrayList<Asignatura> asignaturasList = getAsignaturas();
-        
-        System.out.println("asignaturas:" + asignaturasList.get(0).getSeccion());
-        
         if (estudiante == null) {
             return null;
-        } else {
-            return new SearchResult(estudiante, asignaturasList);
         }
+        ArrayList<Asignatura> asignaturasList = getAsignaturasParaInscripcion(estudiante.getCarrera().getId());
+        
+        System.out.println("asignaturas:" + asignaturasList.get(0).getSeccion());
+
+        return new SearchResult(estudiante, asignaturasList);
     }
 
     public void cerrar() {

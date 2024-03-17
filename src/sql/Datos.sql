@@ -211,3 +211,15 @@ INSERT INTO public."Profesor"(id_profesor, nombre_completo, edad, correo, sexo, 
 ('P01', 'Dilcia Amaya', 34, 'damaya@gmail.com', 'F', 'Licenciatura en Matematicas'),
 ('P55', 'Lorena Alvarez', 48, 'alvarezlore@gmail.com', 'F', 'Ingenieria en informatica'),
 ('P05', 'Jesus Rodriguez', 34, 'jesusito@gmail.com', 'M', 'Licenciatura en Matematicas');
+
+INSERT INTO public."Asignaturas_carrera" (id_asignatura_carrera,id_carrera,id_asignatura) VALUES
+('1', '1', '1'), -- Matematica I
+('2', '1', '2'), -- Estructuras Discretas I
+('3', '1', '3'), -- Técnicas de Estudio
+('4', '1', '7'), -- Matematica II (requiere Matematica I)
+
+-- Asignaturas para la carrera 'Ingenieria en Produccion' (id_carrera 2):
+('5', '2', '4'), -- Teoría de la Administración
+('6', '2', '5'), -- Problemática del Desarrollo
+('7', '2', '6'), -- Aprendizaje Basado en Proceso
+('8', '2', '8');
