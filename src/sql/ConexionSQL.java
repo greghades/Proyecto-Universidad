@@ -117,30 +117,33 @@ public class ConexionSQL {
         }
     }
 //haciendo arreglos en estudiante:
-   /* private ArrayList<Estudiante> getEstudiantes() {
+    public ArrayList<Estudiante> getEstudiantes() {
         try {
-            String estudiantesQuery = "SELECT * FROM public.\"Estudiantes\"";
+            String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera";
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
 
             ArrayList<Estudiante> estudiantesList = new ArrayList<>();
 
             while (estudiantesSet.next()) {
-                String carrera = estudiantesSet.getString("nombre_carrera");
                 String cedula = estudiantesSet.getString("id_estudiante");
                 String nombreEstudiante = estudiantesSet.getString("nombre_estudiante");
                 String apellidoEstudiante = estudiantesSet.getString("apellido_estudiante");
                 String correoEstudiante = estudiantesSet.getString("correo_estudiante");
                 int edad = estudiantesSet.getInt("edad");
                 String sexoEstudiante = estudiantesSet.getString("sexo_estudiante");
+                String idCarrera = estudiantesSet.getString("id_carrera");
+                String nombreCarrera = estudiantesSet.getString("nombre_carrera");
 
+                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
                 Estudiante estudiante = new Estudiante(carrera, cedula, nombreEstudiante, apellidoEstudiante, correoEstudiante, edad, sexoEstudiante);
                 estudiantesList.add(estudiante);
             }
+            System.out.println("estudiantes: " + estudiantesList);
             return estudiantesList;
         } catch (SQLException e) {
             return null;
         }
-    }*/
+    }
 
     public InscripcionInfo obtenerDatosDeInscripcion(String id) {
         Estudiante estudiante = getEstudiante(id);

@@ -139,7 +139,7 @@ CREATE TABLE "Estudiantes" (
 INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,correo,direccion,sexo,estado) VALUES
     ('28047103','CAR-001','Gregori José Yepez Arteaga',22,'gregjose2513@gmail.com','Av.Bolivar Sector Camino Nuevo','Masculino',true),
     ('28268078','CAR-001','Albani Gabriela Barragan Cuenca',22,'1001.28268078.ucla@gmail.com','Cabudare, Barquisimeto','Femenino',true),
-    ('29561929','CAR-001','Yaslin Anabel Vreugdenhil Torres',22,'1001.29561929.ucla@gmail.com','Yaritagua','Femenino',true),
+    ('29561929','CAR-001','Yaslin Anabel Vreugdenhil Vasquez',22,'1001.29561929.ucla@gmail.com','Yaritagua','Femenino',true),
     ('28245373','CAR-001','Ernesto Jose Contreras Schiffino',23,'1001.28245373.ucla@gmail.com','Av.Bolivar Sector Camino Nuevo','Masculino',true),
     ('27539960','CAR-002','Luis Daniel Carrillo Salas',25,'1001.27539960.ucla@gmail.com','Av 20, Barquisimeto','Masculino',true),
     ('30276543','CAR-001','Valeria Valentina Rodriguez',21,'vvaler@ucla.edu','Urb. La Joya, Barquisimeto','Femenino',true),

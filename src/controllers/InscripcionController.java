@@ -78,6 +78,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             return;
         }
 
+        connection.getEstudiantes();
         this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
 
         System.out.println(info);
