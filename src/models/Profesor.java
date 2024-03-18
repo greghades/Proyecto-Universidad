@@ -17,32 +17,15 @@ Yaslin Vreugdenhil.
 
 package models;
 
-
 public class Profesor extends Persona {
+
+
+//    public Profesor(String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
+//        super(cedula, nombre, apellido, correo, edad, sexo);
+//    }
     
-    private  Asignatura[] asignaturas;
-    private  Seccion[] secciones;
-
-    public Profesor(Asignatura[] asignaturas, Seccion[] secciones, String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
-        super(cedula, nombre, apellido, correo, edad, sexo);
-        this.asignaturas = asignaturas;
-        this.secciones = secciones;
-    }
-
-    public Asignatura[] getAsignaturas() {
-        return asignaturas;
-    }
-
-    public void setAsignaturas(Asignatura[] asignaturas) {
-        this.asignaturas = asignaturas;
-    }
-
-    public Seccion[] getSecciones() {
-        return secciones;
-    }
-
-    public void setSecciones(Seccion[] secciones) {
-        this.secciones = secciones;
+    public Profesor(String cedula, String nombre) {
+        super(cedula, nombre);
     }
 
     public void calificarEstudiante(float nota, Estudiante estudiante){

@@ -25,19 +25,12 @@ public class Carrera {
     
     private String id;
     private String nombre;
-    private Seccion[] secciones;
-    private PeriodoAcademico[] periodos;
+//    private Seccion[] secciones;
+//    private PeriodoAcademico[] periodos;
 
     public Carrera(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-    }
-    
-    public Carrera(String id, String nombre, Seccion[] secciones, PeriodoAcademico[] periodos) {
-        this.id = id;
-        this.nombre = nombre;
-        this.secciones = secciones;
-        this.periodos = periodos;
     }
 
     public String getId() {
@@ -55,22 +48,4 @@ public class Carrera {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public Seccion[] getSecciones() {
-        return secciones;
-    }
-
-    public void setSecciones(Seccion[] secciones) {
-        this.secciones = secciones;
-    }
-
-    public PeriodoAcademico[] getPeriodos() {
-        return periodos;
-    }
-
-    public void setPeriodos(PeriodoAcademico[] periodos) {
-        this.periodos = periodos;
-    }
-
-    
 }

@@ -14,19 +14,25 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package views;
-import util.AsignaturaTableModel;
-import util.SeccionCellRenderer;
-import util.SeccionCellEditor;
+
+import util.InscripcionTableModel;
 import controllers.InscripcionController;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import java.util.List;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import models.Asignatura;
+import models.Profesor;
+import models.Seccion;
 
 public class InscripcionFrame extends javax.swing.JFrame {
 
@@ -39,17 +45,117 @@ public class InscripcionFrame extends javax.swing.JFrame {
         initComponents();
         displayUI(false);
         agregarListeners(controller);
+        configuracionInicial();
+    }
 
+    public void actualizarPanelDeMaterias(boolean mostrar, Asignatura asignatura, Profesor profesor, ArrayList<Seccion> secciones) {
+        toggle_panel.setVisible(true);
+        String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
+        if (mostrar) {
+            // Create a container panel to hold entryPanel and separatorPanel
+            JPanel containerPanel = new JPanel();
+            containerPanel.setBackground(Color.WHITE);
+            containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+
+            // Create entryPanel as before
+            JPanel entryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            entryPanel.setBackground(Color.WHITE);
+            JLabel materiaLabel = new JLabel();
+            materiaLabel.setText(asignaturaFormateada);
+            materiaLabel.setPreferredSize(new Dimension(200, materiaLabel.getPreferredSize().height));
+            JLabel profesorLabel = new JLabel("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
+            profesorLabel.setPreferredSize(new Dimension(180, materiaLabel.getPreferredSize().height));
+            
+            entryPanel.add(materiaLabel);
+            entryPanel.add(Box.createHorizontalStrut(12));
+            entryPanel.add(profesorLabel);
+
+            // Create a JComboBox with the values of the secciones array
+            String[] numerosDeSeccion = secciones.stream().map(seccion -> String.format("Seccion %s", seccion.getNumero())).toArray(String[]::new);
+            JComboBox<String> comboBox = new JComboBox<>(numerosDeSeccion);
+            comboBox.addActionListener(controller);
+            comboBox.putClientProperty("asignatura", asignatura);
+            comboBox.putClientProperty("profesor", profesor);
+            comboBox.putClientProperty("secciones", secciones);
+            
+            entryPanel.add(Box.createHorizontalStrut(12));
+            entryPanel.add(comboBox);
+
+            // Add entryPanel to containerPanel
+            containerPanel.add(Box.createVerticalStrut(4));
+            containerPanel.add(entryPanel);
+            containerPanel.add(Box.createVerticalStrut(8));
+
+            // Create separator panel as before (assuming createSeparatorPanel() returns a JPanel)
+            containerPanel.add(createSeparatorPanel());
+            containerPanel.add(Box.createVerticalStrut(4));
+
+            // Add containerPanel to toggle_panel
+            toggle_panel.add(containerPanel);
+            toggle_panel.revalidate();
+            toggle_panel.repaint();
+        } else {
+            Component[] components = toggle_panel.getComponents();
+            for (Component component : components) {
+                if (component instanceof JPanel containerPanel) {
+                    JPanel entryPanel = (JPanel) containerPanel.getComponent(1);
+                    JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
+                    if (materiaLabel.getText().equals(asignaturaFormateada)) {
+                        toggle_panel.remove(containerPanel);
+                        toggle_panel.revalidate();
+                        toggle_panel.repaint();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (toggle_panel.getComponents().length == 0) {
+            toggle_panel.setVisible(false);
+            inscripcion_button.setVisible(false);
+        } else {
+            toggle_panel.setVisible(true);
+            inscripcion_button.setVisible(true);
+        }
     }
 
     public void displayUI(boolean should) {
         info_panel.setVisible(should);
         table_panel.setVisible(should);
-        inscripcion_button.setVisible(should);
+    }
+
+    private void configuracionInicial() {
+        inscripcion_button.setVisible(false);
+        toggle_panel.setVisible(false);
+        toggle_panel.setLayout(new BoxLayout(toggle_panel, BoxLayout.Y_AXIS));
+        // Obtiene el borde actual del toggle_panel
+        Border existingBorder = toggle_panel.getBorder();
+        // Crea un EmptyBorder con el margen interno de 20 píxeles
+        Border emptyBorder = BorderFactory.createEmptyBorder(16, 12, 16, 12);
+        // Combina el borde existente con el borde interno
+        Border compoundBorder = BorderFactory.createCompoundBorder(existingBorder, emptyBorder);
+        // Establece el borde compuesto en el toggle_panel
+        toggle_panel.setBorder(compoundBorder);
     }
 
     public void setupTable(List<Asignatura> asignaturas) {
+        limpiarTabla();
 
+        // Instanciar el modelo para pintar la tabla.
+        InscripcionTableModel model = new InscripcionTableModel(asignaturas, controller);
+        materias_table.setModel(model);
+
+        configurarColumnas();
+    }
+
+    private JSeparator createSeparatorPanel() {
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setForeground(Color.LIGHT_GRAY); // Set foreground color for the line
+        return separator;
+    }
+
+    private void limpiarTabla() {
+        // Limpiar la tabla para evitar duplicados.
         if (materias_table.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = materias_table.getColumnModel();
             while (columnModel.getColumnCount() > 0) {
@@ -57,24 +163,25 @@ public class InscripcionFrame extends javax.swing.JFrame {
                 columnModel.removeColumn(column);
             }
         }
+    }
 
-        AsignaturaTableModel model = new AsignaturaTableModel(asignaturas);
-        materias_table.setModel(model);
-
+    private void configurarColumnas() {
+        // Asignar un ancho mayor a la primera columna
         TableColumnModel columnModel = materias_table.getColumnModel();
-        int seccionColumnIndex = columnModel.getColumnCount() - 1;
-        TableColumn seccionColumn = columnModel.getColumn(seccionColumnIndex);
-        seccionColumn.setCellEditor(new SeccionCellEditor());
-        seccionColumn.setCellRenderer(new SeccionCellRenderer());
-
-        // Set the preferred width for the first column
         TableColumn firstColumn = columnModel.getColumn(0);
         firstColumn.setPreferredWidth(150);
+        TableColumn secondColumn = columnModel.getColumn(1);
+        secondColumn.setMinWidth(12);
+        TableColumn thirdColumn = columnModel.getColumn(2);
+        thirdColumn.setMinWidth(12);
+        TableColumn fourthColumn = columnModel.getColumn(3);
+        fourthColumn.setMinWidth(12);
 
+        // Centrar el contenido de las columnas.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int x = 0; x < materias_table.getColumnCount(); x++) {
-            if (x != 2) {
+            if (x != 3) {
                 materias_table.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
             }
         }
@@ -85,19 +192,18 @@ public class InscripcionFrame extends javax.swing.JFrame {
         back_button.addActionListener(accion);
         inscripcion_button.addActionListener(accion);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         title_panel = new javax.swing.JPanel();
         title_label = new javax.swing.JLabel();
         back_button = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
         body_panel = new javax.swing.JPanel();
-        cedula_textfield = new javax.swing.JTextField();
-        cedula_label = new javax.swing.JLabel();
-        cedula_button = new javax.swing.JButton();
         info_panel = new javax.swing.JPanel();
         nombre_title_label = new javax.swing.JLabel();
         nombre_label = new javax.swing.JLabel();
@@ -110,12 +216,28 @@ public class InscripcionFrame extends javax.swing.JFrame {
         correo_title_label = new javax.swing.JLabel();
         correo_label = new javax.swing.JLabel();
         table_panel = new javax.swing.JPanel();
-        materias_label = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         materias_table = new javax.swing.JTable();
+        toggle_panel = new javax.swing.JPanel();
+        materias_label = new javax.swing.JLabel();
         inscripcion_button = new javax.swing.JButton();
+        cedula_panel = new javax.swing.JPanel();
+        cedula_textfield = new javax.swing.JTextField();
+        cedula_label = new javax.swing.JLabel();
+        cedula_button = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,9 +266,9 @@ public class InscripcionFrame extends javax.swing.JFrame {
             .addGroup(title_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102)
-                .addComponent(title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(176, 176, 176))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(title_label)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         title_panelLayout.setVerticalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,44 +278,13 @@ public class InscripcionFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(title_panelLayout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addGap(24, 24, 24)
                         .addComponent(title_label)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
         body_panel.setBackground(new java.awt.Color(255, 255, 255));
         body_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-
-        cedula_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        cedula_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cedula_textfield.setText("Cedula");
-        cedula_textfield.setToolTipText("Introduce tu cedula");
-        cedula_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        cedula_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
-        cedula_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
-        cedula_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
-        cedula_textfield.setName(""); // NOI18N
-        cedula_textfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cedula_textfieldActionPerformed(evt);
-            }
-        });
-
-        cedula_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        cedula_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cedula_label.setText("Ingresa tu cédula");
-        cedula_label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        cedula_label.setPreferredSize(new java.awt.Dimension(120, 32));
-
-        cedula_button.setBackground(new java.awt.Color(58, 159, 220));
-        cedula_button.setForeground(new java.awt.Color(255, 255, 255));
-        cedula_button.setText("Buscar");
-        cedula_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        cedula_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cedula_buttonActionPerformed(evt);
-            }
-        });
 
         info_panel.setBackground(new java.awt.Color(255, 255, 255));
         info_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(37, 92, 125), 2));
@@ -255,94 +346,108 @@ public class InscripcionFrame extends javax.swing.JFrame {
             .addGroup(info_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(carrera_label, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                     .addComponent(correo_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                     .addComponent(correo_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nombre_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nombre_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carrera_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nombre_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(edad_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(edad_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sex_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(carrera_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 107, Short.MAX_VALUE))
         );
         info_panelLayout.setVerticalGroup(
             info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(info_panelLayout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
-                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(info_panelLayout.createSequentialGroup()
-                        .addComponent(nombre_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(correo_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(info_panelLayout.createSequentialGroup()
                         .addComponent(edad_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(sex_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(carrera_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(info_panelLayout.createSequentialGroup()
+                        .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(info_panelLayout.createSequentialGroup()
+                                .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(carrera_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(info_panelLayout.createSequentialGroup()
+                                .addComponent(nombre_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(correo_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         table_panel.setBackground(new java.awt.Color(255, 255, 255));
 
-        materias_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        materias_table.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        materias_table.setFocusable(false);
+        materias_table.setGridColor(new java.awt.Color(37, 92, 125));
+        materias_table.setRequestFocusEnabled(false);
+        materias_table.setRowHeight(48);
+        materias_table.setRowSelectionAllowed(false);
+        materias_table.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        materias_table.setShowGrid(true);
+        materias_table.getTableHeader().setReorderingAllowed(false);
+        materias_table.setUpdateSelectionOnSort(false);
+        materias_table.setVerifyInputWhenFocusTarget(false);
+        jScrollPane1.setViewportView(materias_table);
+
+        toggle_panel.setBackground(new java.awt.Color(255, 255, 255));
+        toggle_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
+        javax.swing.GroupLayout toggle_panelLayout = new javax.swing.GroupLayout(toggle_panel);
+        toggle_panel.setLayout(toggle_panelLayout);
+        toggle_panelLayout.setHorizontalGroup(
+            toggle_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        toggle_panelLayout.setVerticalGroup(
+            toggle_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+        );
+
+        materias_label.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         materias_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         materias_label.setText("Listado de materias");
         materias_label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         materias_label.setPreferredSize(new java.awt.Dimension(120, 32));
 
-        materias_table.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        materias_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Materia", "Carga académica", "Inclusión", "Sección"
-            }
-        ));
-        materias_table.setFocusable(false);
-        materias_table.setRequestFocusEnabled(false);
-        materias_table.setRowHeight(48);
-        materias_table.setRowSelectionAllowed(false);
-        materias_table.setShowGrid(true);
-        materias_table.setUpdateSelectionOnSort(false);
-        materias_table.setVerifyInputWhenFocusTarget(false);
-        jScrollPane1.setViewportView(materias_table);
-
         javax.swing.GroupLayout table_panelLayout = new javax.swing.GroupLayout(table_panel);
         table_panel.setLayout(table_panelLayout);
         table_panelLayout.setHorizontalGroup(
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(materias_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+            .addGroup(table_panelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(toggle_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(materias_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         table_panelLayout.setVerticalGroup(
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(table_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(materias_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(materias_label, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(toggle_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         inscripcion_button.setBackground(new java.awt.Color(58, 159, 220));
@@ -356,67 +461,115 @@ public class InscripcionFrame extends javax.swing.JFrame {
             }
         });
 
+        cedula_panel.setBackground(new java.awt.Color(255, 255, 255));
+
+        cedula_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        cedula_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        cedula_textfield.setText("Cedula");
+        cedula_textfield.setToolTipText("Introduce tu cedula");
+        cedula_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cedula_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
+        cedula_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
+        cedula_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
+        cedula_textfield.setName(""); // NOI18N
+        cedula_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cedula_textfieldActionPerformed(evt);
+            }
+        });
+
+        cedula_label.setBackground(new java.awt.Color(255, 255, 255));
+        cedula_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        cedula_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cedula_label.setText("Ingresa tu cédula");
+        cedula_label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cedula_label.setPreferredSize(new java.awt.Dimension(120, 32));
+
+        cedula_button.setBackground(new java.awt.Color(58, 159, 220));
+        cedula_button.setForeground(new java.awt.Color(255, 255, 255));
+        cedula_button.setText("Buscar");
+        cedula_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cedula_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cedula_buttonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout cedula_panelLayout = new javax.swing.GroupLayout(cedula_panel);
+        cedula_panel.setLayout(cedula_panelLayout);
+        cedula_panelLayout.setHorizontalGroup(
+            cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cedula_panelLayout.createSequentialGroup()
+                .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(cedula_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(cedula_panelLayout.createSequentialGroup()
+                        .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
+        );
+        cedula_panelLayout.setVerticalGroup(
+            cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cedula_panelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout body_panelLayout = new javax.swing.GroupLayout(body_panel);
         body_panel.setLayout(body_panelLayout);
         body_panelLayout.setHorizontalGroup(
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(body_panelLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(inscripcion_button, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, body_panelLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(table_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inscripcion_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(body_panelLayout.createSequentialGroup()
-                        .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(body_panelLayout.createSequentialGroup()
-                                .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                        .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(24, 24, 24))
         );
         body_panelLayout.setVerticalGroup(
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(body_panelLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(body_panelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, body_panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(51, 51, 51)))
-                .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inscripcion_button, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                    .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(table_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(inscripcion_button, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
+
+        jScrollPane2.setViewportView(body_panel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(8, 8, 8))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
+                .addGap(16, 16, 16)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -462,8 +615,6 @@ public class InscripcionFrame extends javax.swing.JFrame {
     public JButton getInscripcion_button() {
         return inscripcion_button;
     }
-    
-    
 
     private void cedula_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_buttonActionPerformed
 
@@ -484,6 +635,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
     private javax.swing.JLabel carrera_title_label;
     private javax.swing.JButton cedula_button;
     private javax.swing.JLabel cedula_label;
+    private javax.swing.JPanel cedula_panel;
     private javax.swing.JTextField cedula_textfield;
     private javax.swing.JLabel correo_label;
     private javax.swing.JLabel correo_title_label;
@@ -491,8 +643,10 @@ public class InscripcionFrame extends javax.swing.JFrame {
     private javax.swing.JLabel edad_title_label;
     private javax.swing.JPanel info_panel;
     private javax.swing.JButton inscripcion_button;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel materias_label;
     private javax.swing.JTable materias_table;
     private javax.swing.JLabel nombre_label;
@@ -502,6 +656,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
     private javax.swing.JPanel table_panel;
     private javax.swing.JLabel title_label;
     private javax.swing.JPanel title_panel;
+    private javax.swing.JPanel toggle_panel;
     // End of variables declaration//GEN-END:variables
 
     public Object getButton1() {
