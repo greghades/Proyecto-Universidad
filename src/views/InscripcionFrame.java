@@ -17,16 +17,15 @@ Yaslin Vreugdenhil.
 package views;
 
 import util.InscripcionTableModel;
-import util.InscripcionCellRenderer;
 import controllers.InscripcionController;
-import static java.awt.Color.white;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.List;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -43,25 +42,117 @@ public class InscripcionFrame extends javax.swing.JFrame {
         initComponents();
         displayUI(false);
         agregarListeners(controller);
+        configuracionInicial();
+    }
+
+    public void actualizarPanelDeMaterias(boolean mostrar, String asignatura, String profesor, String[] secciones) {
+        toggle_panel.setVisible(true);
+        String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura);
+        if (mostrar) {
+            // Create a container panel to hold entryPanel and separatorPanel
+            JPanel containerPanel = new JPanel();
+            containerPanel.setBackground(Color.WHITE);
+            containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+
+            // Create entryPanel as before
+            JPanel entryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            entryPanel.setBackground(Color.WHITE);
+            JLabel materiaLabel = new JLabel();
+            materiaLabel.setText(asignaturaFormateada);
+            materiaLabel.setPreferredSize(new Dimension(200, materiaLabel.getPreferredSize().height));
+            JLabel profesorLabel = new JLabel("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor + "</html>");
+            profesorLabel.setPreferredSize(new Dimension(180, materiaLabel.getPreferredSize().height));
+            
+            entryPanel.add(materiaLabel);
+            entryPanel.add(Box.createHorizontalStrut(12));
+            entryPanel.add(profesorLabel);
+
+            // Create a JComboBox with the values of the secciones array
+            JComboBox<String> comboBox = new JComboBox<>(secciones);
+            comboBox.addActionListener(e -> {
+                // Listener for when the value is updated
+                String selectedSeccion = (String) comboBox.getSelectedItem();
+                System.out.println("Selected Seccion: " + selectedSeccion);
+                comboBox.transferFocus();
+            });
+
+            entryPanel.add(Box.createHorizontalStrut(12));
+            entryPanel.add(comboBox);
+
+            // Add entryPanel to containerPanel
+            containerPanel.add(Box.createVerticalStrut(4));
+            containerPanel.add(entryPanel);
+            containerPanel.add(Box.createVerticalStrut(8));
+
+            // Create separator panel as before (assuming createSeparatorPanel() returns a JPanel)
+            containerPanel.add(createSeparatorPanel());
+            containerPanel.add(Box.createVerticalStrut(4));
+
+            // Add containerPanel to toggle_panel
+            toggle_panel.add(containerPanel);
+            toggle_panel.revalidate();
+            toggle_panel.repaint();
+        } else {
+            Component[] components = toggle_panel.getComponents();
+            for (Component component : components) {
+                if (component instanceof JPanel containerPanel) {
+                    JPanel entryPanel = (JPanel) containerPanel.getComponent(0);
+                    JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
+                    if (materiaLabel.getText().equals(asignaturaFormateada)) {
+                        toggle_panel.remove(containerPanel);
+                        toggle_panel.revalidate();
+                        toggle_panel.repaint();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (toggle_panel.getComponents().length == 0) {
+            toggle_panel.setVisible(false);
+            inscripcion_button.setVisible(false);
+        } else {
+            toggle_panel.setVisible(true);
+            inscripcion_button.setVisible(true);
+        }
+    }
+
+    public void displayUI(boolean should) {
+        info_panel.setVisible(should);
+        table_panel.setVisible(should);
+    }
+
+    private void configuracionInicial() {
+        inscripcion_button.setVisible(false);
         toggle_panel.setVisible(false);
+        toggle_panel.setLayout(new BoxLayout(toggle_panel, BoxLayout.Y_AXIS));
         // Obtiene el borde actual del toggle_panel
         Border existingBorder = toggle_panel.getBorder();
         // Crea un EmptyBorder con el margen interno de 20 píxeles
-        Border emptyBorder = BorderFactory.createEmptyBorder(8, 8, 8, 8);
+        Border emptyBorder = BorderFactory.createEmptyBorder(16, 12, 16, 12);
         // Combina el borde existente con el borde interno
         Border compoundBorder = BorderFactory.createCompoundBorder(existingBorder, emptyBorder);
         // Establece el borde compuesto en el toggle_panel
         toggle_panel.setBorder(compoundBorder);
     }
 
-    public void displayUI(boolean should) {
-        info_panel.setVisible(should);
-        table_panel.setVisible(should);
-        inscripcion_button.setVisible(should);
+    public void setupTable(List<Asignatura> asignaturas) {
+        limpiarTabla();
+
+        // Instanciar el modelo para pintar la tabla.
+        InscripcionTableModel model = new InscripcionTableModel(asignaturas, controller);
+        materias_table.setModel(model);
+
+        configurarColumnas();
     }
 
-    public void setupTable(List<Asignatura> asignaturas) {
+    private JSeparator createSeparatorPanel() {
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setForeground(Color.LIGHT_GRAY); // Set foreground color for the line
+        return separator;
+    }
 
+    private void limpiarTabla() {
         // Limpiar la tabla para evitar duplicados.
         if (materias_table.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = materias_table.getColumnModel();
@@ -70,11 +161,9 @@ public class InscripcionFrame extends javax.swing.JFrame {
                 columnModel.removeColumn(column);
             }
         }
+    }
 
-        // Instanciar el modelo para pintar la tabla.
-        InscripcionTableModel model = new InscripcionTableModel(asignaturas, controller);
-        materias_table.setModel(model);
-
+    private void configurarColumnas() {
         // Asignar un ancho mayor a la primera columna
         TableColumnModel columnModel = materias_table.getColumnModel();
         TableColumn firstColumn = columnModel.getColumn(0);
@@ -92,56 +181,6 @@ public class InscripcionFrame extends javax.swing.JFrame {
         for (int x = 0; x < materias_table.getColumnCount(); x++) {
             if (x != 3) {
                 materias_table.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
-            }
-        }
-    }
-
-    public void actualizarPanelDeMaterias(boolean mostrar, String asignatura, String profesor, String[] secciones) {
-        toggle_panel.setVisible(true);
-        String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura);
-        if (mostrar) {
-            JPanel entryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            entryPanel.setBackground(white);
-            JLabel materiaLabel = new JLabel();
-            materiaLabel.setText(asignaturaFormateada);
-            JLabel profesorLabel = new JLabel("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor + "</html>");
-
-            entryPanel.add(materiaLabel);
-            entryPanel.add(Box.createHorizontalStrut(20));
-            entryPanel.add(profesorLabel);
-
-            // Create a JComboBox with the values of the secciones array
-            JComboBox<String> comboBox = new JComboBox<>(secciones);
-            comboBox.addActionListener(e -> {
-                // Listener for when the value is updated
-                String selectedSeccion = (String) comboBox.getSelectedItem();
-                System.out.println("Selected Seccion: " + selectedSeccion);
-                comboBox.transferFocus();
-            });
-
-            entryPanel.add(Box.createHorizontalStrut(10));
-            entryPanel.add(comboBox);
-
-            toggle_panel.setLayout(new BoxLayout(toggle_panel, BoxLayout.Y_AXIS));
-            toggle_panel.add(entryPanel);
-            toggle_panel.revalidate();
-            toggle_panel.repaint();
-        } else {
-            Component[] components = toggle_panel.getComponents();
-            for (Component component : components) {
-                if (component instanceof JPanel entryPanel) {
-                    JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
-                    if (materiaLabel.getText().equals(asignaturaFormateada)) {
-                        toggle_panel.remove(entryPanel);
-                        toggle_panel.revalidate();
-                        toggle_panel.repaint();
-                        break;
-                    }
-                }
-            }
-            
-            if (toggle_panel.getComponents().length == 0) {
-                toggle_panel.setVisible(false);
             }
         }
     }
