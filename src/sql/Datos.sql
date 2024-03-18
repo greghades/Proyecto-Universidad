@@ -262,7 +262,6 @@ CREATE TABLE "Inscripcion" (
   "id_asignatura" varchar(25) NOT NULL,
   "id_periodo" varchar(25) NOT NULL,
   "id_seccion" varchar(25) NOT NULL,
-  "numero_inscripcion" varchar(100) NOT NULL,
   "fecha_inscripcion" timestamp,
   "estado" bool,
   PRIMARY KEY ("id_inscripcion"),

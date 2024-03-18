@@ -72,6 +72,28 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+    public PeriodoAcademico getPeriodoAcademico(String id) {
+        try {
+          String query = String.format("SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p INNER JOIN public.\"Periodo_Asignatura\" pa ON p.id_periodo = pa.id_periodo INNER JOIN public.\"Asignaturas_carrera\" ac ON pa.id_asignatura = ac.id_asignatura WHERE ac.id_asignatura = '%s'", id);
+          ResultSet periodoSet = statement.executeQuery(query);
+            PeriodoAcademico periodoAcademico = null;
+            
+            while (periodoSet.next()) {
+                String id_periodo = periodoSet.getString("id_periodo");
+                String nombre_periodo_a = periodoSet.getString("nombre_periodo_a");
+                Date fecha_inicio = periodoSet.getDate("fecha_inicio");
+                Date fecha_final = periodoSet.getDate("fecha_final");
+
+                periodoAcademico = new PeriodoAcademico(id_periodo, nombre_periodo_a, fecha_inicio, fecha_final);
+            }
+            
+            System.out.println("Periodo: " + periodoAcademico.getNombre());
+            return periodoAcademico;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     private ArrayList<Asignatura> getAsignaturasParaInscripcion(String idCarrera) {
         try {

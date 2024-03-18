@@ -24,45 +24,47 @@ import java.util.Date;
  */
 public class PeriodoAcademico {
     
-    private final int id;
-    private final Date fechaInicio;
-    private final Date fechaFin;
-    private final Asignatura[] asignaturas;
-    private Estudiante[] estudiantes;
+    private String id;
+    private String nombre;
+    private Date fechaInicio;
+    private Date fechaFin;
 
-    public PeriodoAcademico(int id, Date fechaInicio, Date fechaFin, Asignatura[] asignaturas) {
+    public PeriodoAcademico(String id, String nombre, Date fechaInicio, Date fechaFin) {
         this.id = id;
+        this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.asignaturas = asignaturas;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Date getFechaInicio() {
         return fechaInicio;
     }
 
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
     public Date getFechaFin() {
         return fechaFin;
     }
 
-    public Asignatura[] getAsignaturas() {
-        return asignaturas;
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
-
-    public Estudiante[] getEstudiantes() {
-        return estudiantes;
-    }
-    
-    public void setEstudiantes(Estudiante[] estudiantes) {
-        this.estudiantes = estudiantes;
-    }
-    
-    public Estudiante[] listarEstudiantesConMateriasRetiradas() {
-        return estudiantes;
-    }
-    
 }

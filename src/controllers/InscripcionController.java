@@ -15,9 +15,13 @@ Yaslin Vreugdenhil.
 29561929
  */
 package controllers;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import models.*;
 import sql.ConexionSQL;
@@ -32,6 +36,8 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public InscripcionFrame inscripcionFrame;
     public InicioController inicioController;
     private InscripcionInfo info;
+    private InscripcionData datosInscripcion;
+    private String[] inscripcionIDs = new String[0];
 
     private InscripcionController() {
         inscripcionFrame = new InscripcionFrame(this);
@@ -88,16 +94,42 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         }
     }
 
+    public String generateUniqueID() {
+        String baseId = "INS-";
+        int currentNum = 1;
+        while (true) {
+            String potentialId = baseId + String.format("%03d", currentNum); // Format with 3 leading zeros
+            if (!Arrays.asList(inscripcionIDs).contains(potentialId)) {
+                return potentialId; // Unique ID found
+            }
+            currentNum++;
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent button) {
         if (button.getSource() == inscripcionFrame.getBack_button()) {
             showInicioFrame();
         } else if (button.getSource() == inscripcionFrame.getCedula_button()) {
             mostrarDatos();
-        } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {   
+        } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {
             for (int index = 0; index < this.info.getAsignaturas().size(); index++) {
                 System.out.println("Asignatura: " + info.getAsignaturas().get(index).getNombre() + ", Inscribir: " + info.getAsignaturas().get(index).esRetirada());
             }
+        } else if (button.getSource() instanceof JComboBox) {
+            JComboBox<String> comboBox = (JComboBox<String>) button.getSource();
+            String selectedSeccion = (String) comboBox.getSelectedItem();
+
+            // Access inicioFrame to get the asignatura based on the container panel
+            Asignatura asignatura = (Asignatura) comboBox.getClientProperty("asignatura");
+            Profesor profesor = (Profesor) comboBox.getClientProperty("profesor");
+            ArrayList<Seccion> secciones = (ArrayList<Seccion>) comboBox.getClientProperty("secciones");
+
+            System.out.println("Selected Seccion: " + selectedSeccion);
+            System.out.println("Asignatura: " + asignatura.getNombre());
+            System.out.println("Profesor: " + profesor.getNombre());
+            System.out.println("Secciones: " + secciones);
+            // Handle the selected section and asignatura based on your logic
         }
     }
 
@@ -107,12 +139,24 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         Asignatura asignaturaSeleccionada = info.getAsignaturas().get(row);
         asignaturaSeleccionada.setInclusion(value);
         info.setAsignatura(row, asignaturaSeleccionada);
-        
+
         // Obtener nombre de profesor
         Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId());
         ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
-        System.out.println("Nombre: " + profesor.getNombre() + ", Materia: " + asignaturaSeleccionada.getNombre() + "Mostrar: " + value);
-        String[] numerosDeSeccion = secciones.stream().map(seccion -> String.format("Seccion %s", seccion.getNumero())).toArray(String[]::new);
-        inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada.getNombre(), profesor.getNombre(), numerosDeSeccion);
+        PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
+        inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada, profesor, secciones);
+
+        String uniqueID = generateUniqueID();
+//        if (inscripcionIDs.length == 0) {
+//            inscripcionIDs[0] = uniqueID;
+//        } else {
+//            inscripcionIDs[inscripcionIDs.length - 1] = uniqueID;
+//        }
+        inscripcionIDs = Arrays.copyOf(inscripcionIDs, inscripcionIDs.length + 1); // Expand the array
+        inscripcionIDs[inscripcionIDs.length - 1] = uniqueID; // Assign to the newly added element
+
+
+        InscripcionData inscripcion = new InscripcionData(uniqueID, info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId(), new Date());
+        datosInscripcion = inscripcion;
     }
 }

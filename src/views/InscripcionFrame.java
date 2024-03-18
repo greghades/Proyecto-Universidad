@@ -23,6 +23,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import java.util.List;
 import javax.swing.border.Border;
@@ -30,6 +31,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import models.Asignatura;
+import models.Profesor;
+import models.Seccion;
 
 public class InscripcionFrame extends javax.swing.JFrame {
 
@@ -45,9 +48,9 @@ public class InscripcionFrame extends javax.swing.JFrame {
         configuracionInicial();
     }
 
-    public void actualizarPanelDeMaterias(boolean mostrar, String asignatura, String profesor, String[] secciones) {
+    public void actualizarPanelDeMaterias(boolean mostrar, Asignatura asignatura, Profesor profesor, ArrayList<Seccion> secciones) {
         toggle_panel.setVisible(true);
-        String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura);
+        String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
         if (mostrar) {
             // Create a container panel to hold entryPanel and separatorPanel
             JPanel containerPanel = new JPanel();
@@ -60,7 +63,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
             JLabel materiaLabel = new JLabel();
             materiaLabel.setText(asignaturaFormateada);
             materiaLabel.setPreferredSize(new Dimension(200, materiaLabel.getPreferredSize().height));
-            JLabel profesorLabel = new JLabel("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor + "</html>");
+            JLabel profesorLabel = new JLabel("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
             profesorLabel.setPreferredSize(new Dimension(180, materiaLabel.getPreferredSize().height));
             
             entryPanel.add(materiaLabel);
@@ -68,14 +71,13 @@ public class InscripcionFrame extends javax.swing.JFrame {
             entryPanel.add(profesorLabel);
 
             // Create a JComboBox with the values of the secciones array
-            JComboBox<String> comboBox = new JComboBox<>(secciones);
-            comboBox.addActionListener(e -> {
-                // Listener for when the value is updated
-                String selectedSeccion = (String) comboBox.getSelectedItem();
-                System.out.println("Selected Seccion: " + selectedSeccion);
-                comboBox.transferFocus();
-            });
-
+            String[] numerosDeSeccion = secciones.stream().map(seccion -> String.format("Seccion %s", seccion.getNumero())).toArray(String[]::new);
+            JComboBox<String> comboBox = new JComboBox<>(numerosDeSeccion);
+            comboBox.addActionListener(controller);
+            comboBox.putClientProperty("asignatura", asignatura);
+            comboBox.putClientProperty("profesor", profesor);
+            comboBox.putClientProperty("secciones", secciones);
+            
             entryPanel.add(Box.createHorizontalStrut(12));
             entryPanel.add(comboBox);
 
@@ -96,7 +98,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
             Component[] components = toggle_panel.getComponents();
             for (Component component : components) {
                 if (component instanceof JPanel containerPanel) {
-                    JPanel entryPanel = (JPanel) containerPanel.getComponent(0);
+                    JPanel entryPanel = (JPanel) containerPanel.getComponent(1);
                     JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
                     if (materiaLabel.getText().equals(asignaturaFormateada)) {
                         toggle_panel.remove(containerPanel);
@@ -613,7 +615,6 @@ public class InscripcionFrame extends javax.swing.JFrame {
     public JButton getInscripcion_button() {
         return inscripcion_button;
     }
-
 
     private void cedula_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_buttonActionPerformed
 
