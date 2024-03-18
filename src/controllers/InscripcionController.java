@@ -17,6 +17,7 @@ Yaslin Vreugdenhil.
 package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import models.*;
 import sql.ConexionSQL;
@@ -109,7 +110,9 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         
         // Obtener nombre de profesor
         Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId());
-//        System.out.println("ID: " + profesor.getCedula()+ ", Nombre: " + profesor.getNombre() + ", Secciones: " + profesor.getSecciones().toString());
-        
+        ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
+        System.out.println("Nombre: " + profesor.getNombre() + ", Materia: " + asignaturaSeleccionada.getNombre() + "Mostrar: " + value);
+        String[] numerosDeSeccion = secciones.stream().map(seccion -> String.format("Seccion %s", seccion.getNumero())).toArray(String[]::new);
+        inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada.getNombre(), profesor.getNombre(), numerosDeSeccion);
     }
 }
