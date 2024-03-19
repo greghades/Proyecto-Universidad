@@ -65,8 +65,8 @@ INSERT INTO public."Asignaturas" (id_asignatura,nombre_asignatura,carga_academic
     ('ASI-013', 'Estadística I', 4, NULL),
     ('ASI-014', 'Ingenieria Economica', 5,NULL),
     ('ASI-015', 'Inglés I', 3,NULL),
-    ('ASI-016', 'Inglés II', 4,NULL);
-
+    ('ASI-016', 'Inglés II', 4,NULL);0.40
+0
 CREATE TABLE "Asignaturas_carrera" (
   "id_asignatura_carrera" varchar(25) NOT NULL,
   "id_carrera" varchar(25) NOT NULL,
