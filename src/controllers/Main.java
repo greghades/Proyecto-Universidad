@@ -24,13 +24,14 @@ public class Main {
     InicioController inicioController = InicioController.getInstance();
     InscripcionController inscripcionController = InscripcionController.getInstance();
     ListaSeccionController listaSeccionController = ListaSeccionController.getInstance();
+    ListadoEstudiantesController listadoEstudiantesController = ListadoEstudiantesController.getInstance();
     
-    ConexionSQL connection = new ConexionSQL();
     inicioController.setInscripcionController(inscripcionController);
     inicioController.setListaSeccionController(listaSeccionController);
-    inscripcionController.setInicioController(inicioController);// Establish references between controllers
-    listaSeccionController.setInicioController(inicioController);
+    inicioController.setListadoEstudiantesController(listadoEstudiantesController);
     
-    inscripcionController.setConnection(connection);
+    inscripcionController.setInicioController(inicioController);
+    listaSeccionController.setInicioController(inicioController);
+    listadoEstudiantesController.setInicioController(inicioController);
   }
 }

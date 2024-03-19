@@ -34,15 +34,27 @@ public class InicioFrame extends javax.swing.JFrame {
 
     private void agregarListeners(ActionListener accion) {
         inscripcion_button.addActionListener(accion);
-        asignar_nota_button.addActionListener(accion);
+        listado_seccion_button.addActionListener(accion);
+        listado_estudiante_button.addActionListener(accion);
+    }
+    public JButton getInscripcion_button() {
+        return inscripcion_button;
     }
 
-    public JButton getReporte1_button() {
+    public JButton getAsignar_nota_button() {
         return asignar_nota_button;
     }
 
-    public JButton getInscripcion_button() {
-        return inscripcion_button;
+    public JButton getListado_estudiante_button() {
+        return listado_estudiante_button;
+    }
+
+    public JButton getListado_seccion_button() {
+        return listado_seccion_button;
+    }
+
+    public JButton getRetirar_materia_button() {
+        return retirar_materia_button;
     }
     
     
@@ -81,20 +93,20 @@ public class InicioFrame extends javax.swing.JFrame {
         title_panel.add(title_label2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(58, 159, 220), 2, true));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         jPanel1.setPreferredSize(new java.awt.Dimension(1214, 598));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 24, 24));
 
         title_label3.setBackground(new java.awt.Color(153, 0, 51));
-        title_label3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        title_label3.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         title_label3.setForeground(new java.awt.Color(51, 51, 51));
         title_label3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title_label3.setText("Opciones disponibles");
         title_label3.setMaximumSize(new java.awt.Dimension(1000000, 28));
         title_label3.setMinimumSize(new java.awt.Dimension(624, 28));
-        title_label3.setPreferredSize(new java.awt.Dimension(948, 28));
+        title_label3.setPreferredSize(new java.awt.Dimension(948, 60));
         jPanel2.add(title_label3);
 
         inscripcion_button.setBackground(new java.awt.Color(58, 159, 220));
@@ -102,7 +114,7 @@ public class InicioFrame extends javax.swing.JFrame {
         inscripcion_button.setForeground(new java.awt.Color(255, 255, 255));
         inscripcion_button.setText("Inscribir estudiante");
         inscripcion_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        inscripcion_button.setPreferredSize(new java.awt.Dimension(300, 50));
+        inscripcion_button.setPreferredSize(new java.awt.Dimension(300, 70));
         inscripcion_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inscripcion_buttonActionPerformed(evt);
@@ -116,7 +128,7 @@ public class InicioFrame extends javax.swing.JFrame {
         listado_estudiante_button.setText("Listados por estudiante");
         listado_estudiante_button.setActionCommand("");
         listado_estudiante_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        listado_estudiante_button.setPreferredSize(new java.awt.Dimension(300, 50));
+        listado_estudiante_button.setPreferredSize(new java.awt.Dimension(300, 70));
         listado_estudiante_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listado_estudiante_buttonActionPerformed(evt);
@@ -129,7 +141,7 @@ public class InicioFrame extends javax.swing.JFrame {
         retirar_materia_button.setForeground(new java.awt.Color(255, 255, 255));
         retirar_materia_button.setText("Retirar materia");
         retirar_materia_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        retirar_materia_button.setPreferredSize(new java.awt.Dimension(300, 50));
+        retirar_materia_button.setPreferredSize(new java.awt.Dimension(300, 70));
         retirar_materia_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 retirar_materia_buttonActionPerformed(evt);
@@ -142,7 +154,7 @@ public class InicioFrame extends javax.swing.JFrame {
         listado_seccion_button.setForeground(new java.awt.Color(255, 255, 255));
         listado_seccion_button.setText("Listados por seccion");
         listado_seccion_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        listado_seccion_button.setPreferredSize(new java.awt.Dimension(300, 50));
+        listado_seccion_button.setPreferredSize(new java.awt.Dimension(300, 70));
         listado_seccion_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listado_seccion_buttonActionPerformed(evt);
@@ -156,7 +168,7 @@ public class InicioFrame extends javax.swing.JFrame {
         asignar_nota_button.setText("Asignar nota estudiante");
         asignar_nota_button.setToolTipText("");
         asignar_nota_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        asignar_nota_button.setPreferredSize(new java.awt.Dimension(300, 50));
+        asignar_nota_button.setPreferredSize(new java.awt.Dimension(300, 70));
         asignar_nota_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 asignar_nota_buttonActionPerformed(evt);
@@ -176,8 +188,8 @@ public class InicioFrame extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(220, 220, 220)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addGap(200, 200, 200)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
 

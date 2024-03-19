@@ -19,10 +19,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,11 +32,11 @@ import views.InscripcionFrame;
 public class InscripcionController implements ActionListener, CheckableCellEventListener {
 
     private static InscripcionController instance;
-    public ConexionSQL connection;
+    public ConexionSQL connection = new ConexionSQL();
     public InscripcionFrame inscripcionFrame;
     public InicioController inicioController;
     private InscripcionInfo info;
-    private ArrayList<InscripcionData> inscripciones = new ArrayList<InscripcionData>();
+    private final ArrayList<InscripcionData> inscripciones = new ArrayList<>();
 
     private InscripcionController() {
         inscripcionFrame = new InscripcionFrame(this);
@@ -58,6 +55,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public void showInscripcionFrame() {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(inscripcionFrame);
+        limpiarFormulario();
         inscripcionFrame.setVisible(true);
     }
 
@@ -72,6 +70,13 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
 
     public void setConnection(ConexionSQL conexion) {
         this.connection = conexion;
+    }
+    
+    private void limpiarFormulario() {
+        info = null;
+        inscripciones.removeAll(inscripciones);
+        inscripcionFrame.displayUI(false);
+        inscripcionFrame.limpiarTabla();
     }
 
     private void mostrarDatos() {

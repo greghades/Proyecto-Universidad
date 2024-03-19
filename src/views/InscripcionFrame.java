@@ -156,7 +156,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
         return separator;
     }
 
-    private void limpiarTabla() {
+    public void limpiarTabla() {
         // Limpiar la tabla para evitar duplicados.
         if (materias_table.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = materias_table.getColumnModel();
@@ -576,7 +576,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane2)
                 .addGap(16, 16, 16))
         );
