@@ -88,7 +88,7 @@ public class ConexionSQL {
                 periodoAcademico = new PeriodoAcademico(id_periodo, nombre_periodo_a, fecha_inicio, fecha_final);
             }
             
-            System.out.println("Periodo: " + periodoAcademico.getNombre());
+//            System.out.println("Periodo: " + periodoAcademico.getNombre());
             return periodoAcademico;
         } catch (SQLException e) {
             return null;
@@ -138,7 +138,7 @@ public class ConexionSQL {
                 Estudiante estudiante = new Estudiante(carrera, cedula, nombreEstudiante, apellidoEstudiante, correoEstudiante, edad, sexoEstudiante);
                 estudiantesList.add(estudiante);
             }
-            System.out.println("estudiantes: " + estudiantesList);
+//            System.out.println("estudiantes: " + estudiantesList);
             return estudiantesList;
         } catch (SQLException e) {
             return null;

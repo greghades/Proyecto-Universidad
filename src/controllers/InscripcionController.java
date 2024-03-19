@@ -19,6 +19,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -113,10 +114,6 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             Asignatura asignatura = (Asignatura) comboBox.getClientProperty("asignatura");
             ArrayList<Seccion> secciones = (ArrayList<Seccion>) comboBox.getClientProperty("secciones");
 
-            System.out.println("Selected Seccion: " + selectedSeccion);
-            System.out.println("Asignatura: " + asignatura.getNombre());
-            System.out.println("Secciones: " + secciones);
-
             Seccion seccionSeleccionada = null;
             for (Seccion seccion : secciones) {
                 if (selectedSeccion.equals(String.valueOf(String.format("Seccion %s", seccion.getNumero())))) {
@@ -125,19 +122,29 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
                 }
             }
             Profesor profesor = connection.getProfesor(asignatura.getId(), seccionSeleccionada.getId());
-            System.out.println("Profesor: " + profesor.getNombre());
 
             for (JPanel panel : inscripcionFrame.materiaPanels) {
                 JPanel entryPanel = (JPanel) panel.getComponent(1);
                 JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
                 String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
-                
+
                 if (materiaLabel.getText().equals(asignaturaFormateada)) {
                     JLabel profesorLabel = (JLabel) entryPanel.getComponent(2);
                     profesorLabel.setText("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
                     break;
                 }
             }
+
+            for (InscripcionData inscripcion : inscripciones) {
+                if (inscripcion.getId_asignatura().equals(asignatura.getId())) {
+                    inscripcion.setId_seccion(seccionSeleccionada.getId());
+                    break;
+                }
+            }
+
+            System.out.println("Seccion actual: " + seccionSeleccionada.getId());
+            String[] numerosDeSeccion = inscripciones.stream().map(inscripcion -> inscripcion.getId_seccion()).toArray(String[]::new);
+            System.out.println("Secciones: " + Arrays.toString(numerosDeSeccion));
         }
     }
 
@@ -156,7 +163,6 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
 
         InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());
 
-        System.out.println("Datos inscripcion: " + info.getEstudiante().getCedula() + ", " + asignaturaSeleccionada.getId() + ", " + periodo.getId() + ", " + secciones.get(0).getId());
         // Si this.inscripciones está vacío, inicializar con la inscripcion generada
         if (inscripciones.isEmpty()) {
             inscripciones.add(inscripcion);
@@ -178,6 +184,6 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         for (InscripcionData data : inscripciones) {
             inscriptionIds.add(data.getId_asignatura());
         }
-        System.out.println("Inscripcion IDs: " + inscriptionIds);
+        System.out.println("Seccion actual: " + secciones.get(0).getId());
     }
 }
