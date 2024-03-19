@@ -19,8 +19,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import models.*;
@@ -36,8 +35,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public InscripcionFrame inscripcionFrame;
     public InicioController inicioController;
     private InscripcionInfo info;
-    private InscripcionData datosInscripcion;
-    private String[] inscripcionIDs = new String[0];
+    private ArrayList<InscripcionData> inscripciones = new ArrayList<InscripcionData>();
 
     private InscripcionController() {
         inscripcionFrame = new InscripcionFrame(this);
@@ -95,18 +93,6 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         }
     }
 
-    public String generateUniqueID() {
-        String baseId = "INS-";
-        int currentNum = 1;
-        while (true) {
-            String potentialId = baseId + String.format("%03d", currentNum); // Format with 3 leading zeros
-            if (!Arrays.asList(inscripcionIDs).contains(potentialId)) {
-                return potentialId; // Unique ID found
-            }
-            currentNum++;
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent button) {
         if (button.getSource() == inscripcionFrame.getBack_button()) {
@@ -147,17 +133,30 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
         inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada, profesor, secciones);
 
-        String uniqueID = generateUniqueID();
-//        if (inscripcionIDs.length == 0) {
-//            inscripcionIDs[0] = uniqueID;
-//        } else {
-//            inscripcionIDs[inscripcionIDs.length - 1] = uniqueID;
-//        }
-        inscripcionIDs = Arrays.copyOf(inscripcionIDs, inscripcionIDs.length + 1); // Expand the array
-        inscripcionIDs[inscripcionIDs.length - 1] = uniqueID; // Assign to the newly added element
+        InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());
 
+        System.out.println("Datos inscripcion: " + info.getEstudiante().getCedula() + ", " + asignaturaSeleccionada.getId() + ", " + periodo.getId() + ", " + secciones.get(0).getId());
+        // Si this.inscripciones está vacío, inicializar con la inscripcion generada
+        if (inscripciones.isEmpty()) {
+            inscripciones.add(inscripcion);
+        } else {
+            // Si this.inscripciones no está vacío
+            if (!value) {
+                // Si value es falso, eliminar la inscripcion si existe
+                inscripciones.removeIf(i -> i.equals(inscripcion));
+            } else {
+                // Si value es verdadero, validar la existencia de la inscripcion
+                if (!inscripciones.contains(inscripcion)) {
+                    // Si no existe, agregar la inscripcion al arreglo
+                    inscripciones.add(inscripcion);
+                }
+            }
+        }
 
-        InscripcionData inscripcion = new InscripcionData(uniqueID, info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId(), new Date());
-        datosInscripcion = inscripcion;
+        List<String> inscriptionIds = new ArrayList<>();
+        for (InscripcionData data : inscripciones) {
+            inscriptionIds.add(data.getId_asignatura());
+        }
+        System.out.println("Inscripcion IDs: " + inscriptionIds);
     }
 }

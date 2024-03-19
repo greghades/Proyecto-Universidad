@@ -14,34 +14,37 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package models;
 
-import java.util.Date;
+import java.util.Objects;
 
 public class InscripcionData {
-    private String id_inscripcion;
+
     private String id_estudiante;
     private String id_asignatura;
     private String id_periodo;
     private String id_seccion;
-    private Date fecha_inscripcion;
 
-    public InscripcionData(String id_inscripcion, String id_estudiante, String id_asignatura, String id_periodo, String id_seccion, Date fecha_inscripcion) {
-        this.id_inscripcion = id_inscripcion;
+    public InscripcionData(String id_estudiante, String id_asignatura, String id_periodo, String id_seccion) {
         this.id_estudiante = id_estudiante;
         this.id_asignatura = id_asignatura;
         this.id_periodo = id_periodo;
         this.id_seccion = id_seccion;
-        this.fecha_inscripcion = fecha_inscripcion;
     }
 
-    public String getId_inscripcion() {
-        return id_inscripcion;
-    }
-
-    public void setId_inscripcion(String id_inscripcion) {
-        this.id_inscripcion = id_inscripcion;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        InscripcionData other = (InscripcionData) obj;
+        return Objects.equals(id_estudiante, other.id_estudiante)
+                && Objects.equals(id_asignatura, other.id_asignatura)
+                && Objects.equals(id_periodo, other.id_periodo)
+                && Objects.equals(id_seccion, other.id_seccion);
     }
 
     public String getId_estudiante() {
@@ -75,14 +78,4 @@ public class InscripcionData {
     public void setId_seccion(String id_seccion) {
         this.id_seccion = id_seccion;
     }
-
-    public Date getFecha_inscripcion() {
-        return fecha_inscripcion;
-    }
-
-    public void setFecha_inscripcion(Date fecha_inscripcion) {
-        this.fecha_inscripcion = fecha_inscripcion;
-    }
-
-    
 }

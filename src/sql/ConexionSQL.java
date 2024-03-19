@@ -75,7 +75,7 @@ public class ConexionSQL {
     
     public PeriodoAcademico getPeriodoAcademico(String id) {
         try {
-          String query = String.format("SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p INNER JOIN public.\"Periodo_Asignatura\" pa ON p.id_periodo = pa.id_periodo INNER JOIN public.\"Asignaturas_carrera\" ac ON pa.id_asignatura = ac.id_asignatura WHERE ac.id_asignatura = '%s'", id);
+          String query = "SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p WHERE p.id_periodo = 'PER-001'";
           ResultSet periodoSet = statement.executeQuery(query);
             PeriodoAcademico periodoAcademico = null;
             

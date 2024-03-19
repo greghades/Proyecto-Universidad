@@ -235,29 +235,52 @@ INSERT INTO public."Periodo_academico" (id_periodo, nombre_periodo_a, fecha_inic
     ('PER-002', 'Segundo Periodo 2024', '2024-07-01', '2024-09-30', true),
     ('PER-003', 'Tercer Periodo 2024', '2024-10-01', '2024-12-31', true);
 
-CREATE TABLE "Periodo_Asignatura" (
-  "id_periodo_asignatura" varchar(25) NOT NULL,
-  "id_periodo" varchar(25) NOT NULL,
+CREATE TABLE "Semestre" (
+  "id_semestre" varchar(25) NOT NULL,
+  "nombre_semestre" varchar(25) NOT NULL,
+  PRIMARY KEY ("id_semestre")
+);
+
+INSERT INTO public."Semestre" (id_semestre, nombre_semestre) VALUES
+    ('SEM-001', 'Semestre I'),
+    ('SEM-002', 'Semestre II'),
+    ('SEM-003', 'Semestre III'),
+    ('SEM-004', 'Semestre IV'),
+    ('SEM-005', 'Semestre V');
+
+CREATE TABLE "Semestre_Asignatura" (
+  "id_semestre_asignatura" varchar(25) NOT NULL,
+  "id_semestre" varchar(25) NOT NULL,
   "id_asignatura" varchar(25) NOT NULL,
-  PRIMARY KEY ("id_periodo_asignatura"),
-  CONSTRAINT "FK_Periodo_Asignatura.id_periodo"
-    FOREIGN KEY ("id_periodo")
-      REFERENCES "Periodo_academico"("id_periodo"),
-  CONSTRAINT "FK_Periodo_Asignatura.id_asignatura"
+  PRIMARY KEY ("id_semestre_asignatura"),
+  CONSTRAINT "FK_Semestre_Asignatura.id_semestre"
+    FOREIGN KEY ("id_semestre")
+      REFERENCES "Semestre"("id_semestre"),
+  CONSTRAINT "FK_Semestre_Asignatura.id_asignatura"
     FOREIGN KEY ("id_asignatura")
       REFERENCES "Asignaturas"("id_asignatura")
 );
 
-INSERT INTO public."Periodo_Asignatura" (id_periodo_asignatura, id_periodo, id_asignatura) VALUES
-    ('PAS-002', 'PER-001', 'ASI-002'),
-    ('PAS-003', 'PER-001', 'ASI-003'),
-    ('PAS-004', 'PER-002', 'ASI-001'),
-    ('PAS-005', 'PER-002', 'ASI-004'),
-    ('PAS-006', 'PER-003', 'ASI-002'),
-    ('PAS-007', 'PER-003', 'ASI-005');
+INSERT INTO public."Semestre_Asignatura" (id_semestre_asignatura, id_semestre, id_asignatura) VALUES
+    ('SAS-001', 'SEM-001', 'ASI-001'),
+    ('SAS-002', 'SEM-001', 'ASI-002'),
+    ('SAS-003', 'SEM-001', 'ASI-003'),
+    ('SAS-004', 'SEM-001', 'ASI-004'),
+    ('SAS-005', 'SEM-001', 'ASI-005'),
+    ('SAS-006', 'SEM-002', 'ASI-006'),
+    ('SAS-007', 'SEM-002', 'ASI-007'),
+    ('SAS-008', 'SEM-002', 'ASI-008'),
+    ('SAS-009', 'SEM-002', 'ASI-009'),
+    ('SAS-010', 'SEM-003', 'ASI-010'),
+    ('SAS-011', 'SEM-003', 'ASI-011'),
+    ('SAS-012', 'SEM-003', 'ASI-012'),
+    ('SAS-013', 'SEM-004', 'ASI-013'),
+    ('SAS-014', 'SEM-004', 'ASI-014'),
+    ('SAS-015', 'SEM-005', 'ASI-015'),
+    ('SAS-016', 'SEM-005', 'ASI-016');
 
 CREATE TABLE "Inscripcion" (
-  "id_inscripcion" varchar(25) NOT NULL,
+  "id_inscripcion" int,
   "id_estudiante" varchar(25) NOT NULL,
   "id_asignatura" varchar(25) NOT NULL,
   "id_periodo" varchar(25) NOT NULL,
@@ -279,24 +302,16 @@ CREATE TABLE "Inscripcion" (
       REFERENCES "Secciones"("id_seccion")
 );
 
-CREATE TABLE "Nota_periodo" (
-  "nota_periodo" varchar(25) NOT NULL,
+CREATE TABLE "Nota_estudiante" (
+  "id_nota_estudiante" int,
   "id_estudiante" varchar(25) NOT NULL,
   "id_asignatura" varchar(25) NOT NULL,
-  "id_periodo" varchar(25) NOT NULL,
-  "id_seccion" varchar(25) NOT NULL,
-  "nota" integer,
-  PRIMARY KEY ("nota_periodo"),
-  CONSTRAINT "FK_Nota_periodo.id_estudiante"
+  "nota" float,
+  PRIMARY KEY ("id_nota_estudiante"),
+  CONSTRAINT "FK_Nota_estudiante.id_estudiante"
     FOREIGN KEY ("id_estudiante")
       REFERENCES "Estudiantes"("id_estudiante"),
-  CONSTRAINT "FK_Nota_periodo.id_asignatura"
+  CONSTRAINT "FK_Nota_estudiante.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura"),
-  CONSTRAINT "FK_Nota_periodo.id_periodo"
-    FOREIGN KEY ("id_periodo")
-      REFERENCES "Periodo_academico"("id_periodo"),
-  CONSTRAINT "FK_Nota_periodo.id_seccion"
-    FOREIGN KEY ("id_seccion")
-      REFERENCES "Secciones"("id_seccion")
+      REFERENCES "Asignaturas"("id_asignatura")
 );
