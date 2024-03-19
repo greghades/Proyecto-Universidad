@@ -280,14 +280,12 @@ INSERT INTO public."Semestre_Asignatura" (id_semestre_asignatura, id_semestre, i
     ('SAS-016', 'SEM-005', 'ASI-016');
 
 CREATE TABLE "Inscripcion" (
-  "id_inscripcion" int,
+  "id_inscripcion" serial primary key,
   "id_estudiante" varchar(25) NOT NULL,
   "id_asignatura" varchar(25) NOT NULL,
   "id_periodo" varchar(25) NOT NULL,
   "id_seccion" varchar(25) NOT NULL,
-  "fecha_inscripcion" timestamp,
   "estado" bool,
-  PRIMARY KEY ("id_inscripcion"),
   CONSTRAINT "FK_Inscripcion.id_estudiante"
     FOREIGN KEY ("id_estudiante")
       REFERENCES "Estudiantes"("id_estudiante"),
@@ -303,11 +301,10 @@ CREATE TABLE "Inscripcion" (
 );
 
 CREATE TABLE "Nota_estudiante" (
-  "id_nota_estudiante" int,
+  "id_nota_estudiante" serial primary key,
   "id_estudiante" varchar(25) NOT NULL,
   "id_asignatura" varchar(25) NOT NULL,
   "nota" float,
-  PRIMARY KEY ("id_nota_estudiante"),
   CONSTRAINT "FK_Nota_estudiante.id_estudiante"
     FOREIGN KEY ("id_estudiante")
       REFERENCES "Estudiantes"("id_estudiante"),

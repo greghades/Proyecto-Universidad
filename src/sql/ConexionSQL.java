@@ -72,13 +72,13 @@ public class ConexionSQL {
             return null;
         }
     }
-    
+
     public PeriodoAcademico getPeriodoAcademico(String id) {
         try {
-          String query = "SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p WHERE p.id_periodo = 'PER-001'";
-          ResultSet periodoSet = statement.executeQuery(query);
+            String query = "SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p WHERE p.id_periodo = 'PER-001'";
+            ResultSet periodoSet = statement.executeQuery(query);
             PeriodoAcademico periodoAcademico = null;
-            
+
             while (periodoSet.next()) {
                 String id_periodo = periodoSet.getString("id_periodo");
                 String nombre_periodo_a = periodoSet.getString("nombre_periodo_a");
@@ -87,7 +87,7 @@ public class ConexionSQL {
 
                 periodoAcademico = new PeriodoAcademico(id_periodo, nombre_periodo_a, fecha_inicio, fecha_final);
             }
-            
+
 //            System.out.println("Periodo: " + periodoAcademico.getNombre());
             return periodoAcademico;
         } catch (SQLException e) {
@@ -117,6 +117,7 @@ public class ConexionSQL {
         }
     }
 //haciendo arreglos en estudiante:
+
     public ArrayList<Estudiante> getEstudiantes() {
         try {
             String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera";
@@ -163,28 +164,28 @@ public class ConexionSQL {
         try {
             String query = String.format("SELECT s.id_seccion, s.numero_seccion, s.limite_estudiantes FROM public.\"Secciones\" s INNER JOIN public.\"Profesor_asignatura_seccion\" psa ON s.id_seccion = psa.id_seccion WHERE psa.id_asignatura = '%s'", idAsignatura);
             ResultSet seccionesSet = statement.executeQuery(query);
-            
+
             ArrayList<Seccion> secciones = new ArrayList<>();
-                while (seccionesSet.next()) {
-                    String id = seccionesSet.getString("id_seccion");
-                    int cupos = seccionesSet.getInt("limite_estudiantes");
-                    int numeroSeccion = seccionesSet.getInt("numero_seccion");
+            while (seccionesSet.next()) {
+                String id = seccionesSet.getString("id_seccion");
+                int cupos = seccionesSet.getInt("limite_estudiantes");
+                int numeroSeccion = seccionesSet.getInt("numero_seccion");
 
 //                    System.out.println("seccion: " + id + numeroSeccion);
-                    secciones.add(new Seccion(id, cupos, numeroSeccion));
-                }
-                return secciones;
+                secciones.add(new Seccion(id, cupos, numeroSeccion));
+            }
+            return secciones;
         } catch (SQLException e) {
             return null;
         }
     }
-    
+
     public Profesor getProfesor(String idAsignatura, String idSeccion) {
         try {
             String query = String.format("SELECT p.id_profesor, p.nombre_completo FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
             ResultSet profesorSet = statement.executeQuery(query);
             Profesor profesor = null;
-            
+
             while (profesorSet.next()) {
                 String cedula = profesorSet.getString("id_profesor");
                 String nombre = profesorSet.getString("nombre_completo");
@@ -193,6 +194,29 @@ public class ConexionSQL {
             return profesor;
         } catch (SQLException e) {
             return null;
+        }
+    }
+
+    public void inscribirEstudiante(ArrayList<InscripcionData> inscripciones) {
+        try {
+            for (int index = 0; index < inscripciones.size(); index++) {
+                InscripcionData inscripcion = inscripciones.get(index);
+                
+                String estudiante_id = inscripcion.getId_estudiante();
+                String asignatura_id = inscripcion.getId_asignatura();
+                String periodo_id = inscripcion.getId_periodo();
+                String seccion_id = inscripcion.getId_seccion();
+
+                System.out.println("Datos: " + estudiante_id + " " + asignatura_id + " " + periodo_id + " " + seccion_id);
+
+                String query = String.format("INSERT INTO public.\"Inscripcion\"(id_estudiante, id_asignatura, id_periodo, id_seccion,estado) VALUES ('%s', '%s', '%s', '%s', false);", estudiante_id, asignatura_id, periodo_id, seccion_id);
+                statement.executeUpdate(query);
+                
+                System.out.println("Inscripcion: " + inscripciones.get(index).getId_asignatura());
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
         }
     }
 
