@@ -14,7 +14,6 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -24,7 +23,7 @@ import util.PantallaCompleta;
 import views.ListaSeccionFrame;
 
 public class ListaSeccionController implements ActionListener {
-    
+
     private static ListaSeccionController instance;
     public ListaSeccionFrame listaSeccionFrame;
     public ConexionSQL connection = ConexionSQL.getInstance();
@@ -49,19 +48,19 @@ public class ListaSeccionController implements ActionListener {
         pantallaCompleta.setPantallaCompleta(listaSeccionFrame);
         listaSeccionFrame.setVisible(true);
     }
+
     private void showInicioFrame() {
         listaSeccionFrame.setVisible(false);
         inicioController.showInicioFrame();
     }
-    
+
     public void setInicioController(InicioController inicioController) {
         this.inicioController = inicioController;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         showInicioFrame();
     }
-    
-    
-    
+
 }

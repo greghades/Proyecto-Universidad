@@ -26,7 +26,7 @@ import models.*;
 
 public class ConexionSQL {
 
-   private static ConexionSQL instance = null;
+    private static ConexionSQL instance = null;
     private Connection conn = null;
     private Statement statement;
     private final String db = "universidad";
@@ -44,7 +44,7 @@ public class ConexionSQL {
         }
         return instance;
     }
-    
+
     private void conectar() {
         try {
             Class.forName("org.postgresql.Driver");

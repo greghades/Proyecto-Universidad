@@ -67,7 +67,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public void setInicioController(InicioController inicioController) {
         this.inicioController = inicioController;
     }
-    
+
     private void limpiarFormulario() {
         info = null;
         inscripciones.removeAll(inscripciones);
@@ -80,7 +80,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
 
         System.out.println(info);

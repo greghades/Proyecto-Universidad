@@ -38,6 +38,7 @@ public class InicioFrame extends javax.swing.JFrame {
         listado_estudiante_button.addActionListener(accion);
         retirar_materia_button.addActionListener(accion);
     }
+
     public JButton getInscripcion_button() {
         return inscripcion_button;
     }
@@ -57,8 +58,7 @@ public class InicioFrame extends javax.swing.JFrame {
     public JButton getRetirar_materia_button() {
         return retirar_materia_button;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

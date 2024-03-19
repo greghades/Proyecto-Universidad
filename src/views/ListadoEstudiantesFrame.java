@@ -14,29 +14,27 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package views;
+
 import controllers.ListadoEstudiantesController;
 import java.awt.event.ActionListener;
 
 public class ListadoEstudiantesFrame extends javax.swing.JFrame {
-    
-     public ListadoEstudiantesController controller;
+
+    public ListadoEstudiantesController controller;
 
     //pasarle el controlador (oyente)
     public ListadoEstudiantesFrame(ListadoEstudiantesController controller) {
-       this.controller = controller;
-       
+        this.controller = controller;
+
         initComponents();
         agregarListener(controller);
-        
+
     }
 
     private void agregarListener(ActionListener accion) {
         back_button.addActionListener(accion);
     }
-
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -193,7 +191,6 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_back_buttonActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back_button;

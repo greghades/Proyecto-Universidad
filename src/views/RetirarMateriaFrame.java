@@ -14,7 +14,6 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package views;
 
 import java.awt.event.ActionListener;

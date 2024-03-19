@@ -14,26 +14,25 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package controllers;
 
 public class Main {
-    
-     public static void main(String[] args) {
-    InicioController inicioController = InicioController.getInstance();
-    InscripcionController inscripcionController = InscripcionController.getInstance();
-    ListaSeccionController listaSeccionController = ListaSeccionController.getInstance();
-    ListadoEstudiantesController listadoEstudiantesController = ListadoEstudiantesController.getInstance();
-    RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
-    
-    inicioController.setInscripcionController(inscripcionController);
-    inicioController.setListaSeccionController(listaSeccionController);
-    inicioController.setListadoEstudiantesController(listadoEstudiantesController);
-    inicioController.setRetirarMateriaController(retirarMateriaController);
-    
-    inscripcionController.setInicioController(inicioController);
-    listaSeccionController.setInicioController(inicioController);
-    listadoEstudiantesController.setInicioController(inicioController);
-    retirarMateriaController.setInicioController(inicioController);
-  }
+
+    public static void main(String[] args) {
+        InicioController inicioController = InicioController.getInstance();
+        InscripcionController inscripcionController = InscripcionController.getInstance();
+        ListaSeccionController listaSeccionController = ListaSeccionController.getInstance();
+        ListadoEstudiantesController listadoEstudiantesController = ListadoEstudiantesController.getInstance();
+        RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
+
+        inicioController.setInscripcionController(inscripcionController);
+        inicioController.setListaSeccionController(listaSeccionController);
+        inicioController.setListadoEstudiantesController(listadoEstudiantesController);
+        inicioController.setRetirarMateriaController(retirarMateriaController);
+
+        inscripcionController.setInicioController(inicioController);
+        listaSeccionController.setInicioController(inicioController);
+        listadoEstudiantesController.setInicioController(inicioController);
+        retirarMateriaController.setInicioController(inicioController);
+    }
 }

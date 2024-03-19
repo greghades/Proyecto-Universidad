@@ -14,13 +14,12 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package controllers;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import util.PantallaCompleta;
 import views.InicioFrame;
-
 
 public class InicioController implements ActionListener {
 
@@ -53,45 +52,48 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         inscripcionController.showInscripcionFrame();
     }
-    
+
     private void showListaSeccionFrame() {
         inicioFrame.setVisible(false);
         listaSeccionController.showListaSeccionFrame();
     }
-    
+
     private void showListadoEstudiantesFrame() {
         inicioFrame.setVisible(false);
         listadoEstudiantesController.showListadoEstudiantesFrame();
     }
-    private void showRetirarMateriaFrame(){
+
+    private void showRetirarMateriaFrame() {
         inicioFrame.setVisible(false);
         retirarMateriaController.showRetirarMateriaFrame();
     }
-   
+
     public void setInscripcionController(InscripcionController inscripcionController) {
         this.inscripcionController = inscripcionController;
     }
-  
+
     public void setListaSeccionController(ListaSeccionController listaSeccionController) {
         this.listaSeccionController = listaSeccionController;
     }
-    
-    public void setListadoEstudiantesController(ListadoEstudiantesController listadoEstudiantesController){
+
+    public void setListadoEstudiantesController(ListadoEstudiantesController listadoEstudiantesController) {
         this.listadoEstudiantesController = listadoEstudiantesController;
     }
-    public void setRetirarMateriaController(RetirarMateriaController retirarMateriaController){
-        this.retirarMateriaController= retirarMateriaController;
+
+    public void setRetirarMateriaController(RetirarMateriaController retirarMateriaController) {
+        this.retirarMateriaController = retirarMateriaController;
     }
+
     @Override
     public void actionPerformed(ActionEvent button) {
-        if(button.getSource() == inicioFrame.getListado_seccion_button()){
+        if (button.getSource() == inicioFrame.getListado_seccion_button()) {
             showListaSeccionFrame();
-        } else if(button.getSource() == inicioFrame.getInscripcion_button()){
+        } else if (button.getSource() == inicioFrame.getInscripcion_button()) {
             showInscripcionFrame();
-        } else if(button.getSource() == inicioFrame.getListado_estudiante_button()){
-           showListadoEstudiantesFrame();
-        } else if(button.getSource() == inicioFrame.getRetirar_materia_button()){
-           showRetirarMateriaFrame();
-        } 
+        } else if (button.getSource() == inicioFrame.getListado_estudiante_button()) {
+            showListadoEstudiantesFrame();
+        } else if (button.getSource() == inicioFrame.getRetirar_materia_button()) {
+            showRetirarMateriaFrame();
+        }
     }
 }

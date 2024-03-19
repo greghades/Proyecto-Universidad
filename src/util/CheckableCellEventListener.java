@@ -14,10 +14,9 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package util;
 
 public interface CheckableCellEventListener {
+
     void onCheckboxValueChanged(int row, boolean value);
 }
-
