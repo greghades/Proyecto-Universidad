@@ -28,6 +28,7 @@ public class InicioController implements ActionListener {
     public InscripcionController inscripcionController;
     public ListaSeccionController listaSeccionController;
     public ListadoEstudiantesController listadoEstudiantesController;
+    public AsignarNotaController asignarNotaController;
 
     public InicioController() {
         inicioFrame = new InicioFrame(this);
@@ -62,6 +63,11 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         listadoEstudiantesController.showListadoEstudiantesFrame();
     }
+    
+   private void showAsignarNotaFrame() {
+        inicioFrame.setVisible(false);
+        asignarNotaController.showAsignarNotaFrame();
+    }
 
     public void setInscripcionController(InscripcionController inscripcionController) {
         this.inscripcionController = inscripcionController;
@@ -75,6 +81,10 @@ public class InicioController implements ActionListener {
         this.listadoEstudiantesController = listadoEstudiantesController;
     }
     
+    public void setAsignarNotaController(AsignarNotaController asignarNotaController){
+        this.asignarNotaController = asignarNotaController;
+    }
+    
     @Override
     public void actionPerformed(ActionEvent button) {
         if(button.getSource() == inicioFrame.getListado_seccion_button()){
@@ -83,6 +93,9 @@ public class InicioController implements ActionListener {
             showInscripcionFrame();
         } else if(button.getSource() == inicioFrame.getListado_estudiante_button()){
            showListadoEstudiantesFrame();
-        } 
+        }
+        else if(button.getSource() == inicioFrame.getAsignar_nota_button()){
+           showAsignarNotaFrame();
+        }
     }
 }
