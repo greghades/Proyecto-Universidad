@@ -16,7 +16,6 @@ Yaslin Vreugdenhil.
  */
 
 package controllers;
-import sql.ConexionSQL;
 
 public class Main {
     

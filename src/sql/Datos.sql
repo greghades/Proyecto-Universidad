@@ -148,7 +148,67 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('30543210','CAR-002','Miguel Angel Torres',24,'mtorres@ucla.edu','Urb. La Concordia, Cabudare','Masculino',true),
     ('30632109','CAR-003','Mariana Alexandra Silva',22,'masilva@ucla.edu','Urb. Santa Elena, Barquisimeto','Femenino',true),
     ('30721098','CAR-003','Kevin Daniel Pérez',23,'kper@ucla.edu','Urb. La Pradera, Cabudare','Masculino',true),
-    ('30810987','CAR-001','Ana Sofia Lopez',21,'aslopez@ucla.edu','Urb. La Granja, Barquisimeto','Femenino',true);
+    ('30810987','CAR-001','Ana Sofia Lopez',21,'aslopez@ucla.edu','Urb. La Granja, Barquisimeto','Femenino',true),
+    ('30000007', 'CAR-001', 'Juan Perez', 20, 'juan.perez@ucla.com', 'Calle Principal 123','Masculino',true),
+    ('40810988', 'CAR-001', 'Maria Rodriguez', 22, 'maria.rodriguez@ucla.com', 'Avenida Libertador 456','Femenino',true),
+    ('50810989', 'CAR-001', 'Luis Gonzalez', 21, 'luis.gonzalez@ucla.com', 'Carrera 7 89','Masculino',true),
+    ('60810990', 'CAR-001', 'Ana Martinez', 20, 'ana.martinez@ucla.com', 'Calle 10 11-12','Femenino',true),
+    ('70810991', 'CAR-001', 'Carlos Sanchez', 23, 'carlos.sanchez@ucla.com', 'Avenida Bolivar 567','Masculino',true),
+    ('80810992', 'CAR-001', 'Laura Ramirez', 22, 'laura.ramirez@ucla.com', 'Urbanizacion Los Mangos','Femenino',true),
+    ('90810993', 'CAR-001', 'Diego Hernandez', 21, 'diego.hernandez@ucla.com', 'Calle 20 21-22','Masculino',true),
+    ('10081094', 'CAR-001', 'Sofia Gomez', 20, 'sofia.gomez@ucla.com', 'Avenida Sucre 789','Femenino',true),
+    ('11081095', 'CAR-001', 'Manuel Alvarez', 22, 'manuel.alvarez@ucla.com', 'Carrera 15 16-17','Masculino',true),
+    ('12081096', 'CAR-001', 'Elena Torres', 21, 'elena.torres@ucla.com', 'Calle 30 31-32','Femenino',true),
+    ('13081097', 'CAR-001', 'Jorge Castro', 20, 'jorge.castro@ucla.com', 'Avenida Miranda 8910','Masculino',true),
+    ('14081098', 'CAR-001', 'Ana Garcia', 23, 'ana.garcia@ucla.com', 'Calle 40 41-42','Femenino',true),
+    ('15081099', 'CAR-001', 'Pedro Chavez', 22, 'pedro.chavez@ucla.com', 'Carrera 50 51-52','Masculino',true),
+    ('16081100', 'CAR-001', 'Luisa Rivas', 21, 'luisa.rivas@ucla.com', 'Avenida Bolivar 1112','Femenino',true),
+    ('17081101', 'CAR-001', 'Miguel Diaz', 20, 'miguel.diaz@ucla.com', 'Calle 60 61-62','Masculino',true),
+    ('18081102', 'CAR-001', 'Paula Nuñez', 22, 'paula.nunez@ucla.com', 'Urbanizacion Las Mercedes','Femenino',true),
+    ('19081103', 'CAR-001', 'Roberto Herrera', 21, 'roberto.herrera@ucla.com', 'Calle 70 71-72','Masculino',true),
+    ('20081104', 'CAR-001', 'Diana Jimenez', 20, 'diana.jimenez@ucla.com', 'Avenida Bolivar 1314','Femenino',true),
+    ('21081105', 'CAR-001', 'Gabriel Torres', 23, 'gabriel.torres@ucla.com', 'Calle 80 81-82','Masculino',true),
+    ('22081106', 'CAR-001', 'Valentina Suarez', 22, 'valentina.suarez@ucla.com', 'Carrera 90 91-92','Femenino',true),
+    ('30820987', 'CAR-002', 'Marcela Sánchez', 19, 'marcela.sanchez@ucla.com', 'Calle San Martín 123','Femenino',true),
+    ('40820988', 'CAR-002', 'Luis Hernandez', 20, 'luis.hernandez@ucla.com', 'Avenida Libertador 456','Masculino',true),
+    ('50820989', 'CAR-002', 'Gabriela Ramirez', 21, 'gabriela.ramirez@ucla.com', 'Calle 23 de Enero 789','Femenino',true),
+    ('60820990', 'CAR-002', 'Ricardo Fernandez', 22, 'ricardo.fernandez@ucla.com', 'Calle 10 de Octubre 11-12','Masculino',true),
+    ('70820991', 'CAR-002', 'Fernanda Torres', 23, 'fernanda.torres@ucla.com', 'Avenida Bolivar 567','Femenino',true),
+    ('80820992', 'CAR-002', 'Javier Perez', 20, 'javier.perez@ucla.com', 'Urbanizacion Los Mangos','Masculino',true),
+    ('90820993', 'CAR-002', 'Carolina Gomez', 21, 'carolina.gomez@ucla.com', 'Calle 24 de Julio 21-22','Femenino',true),
+    ('100820994', 'CAR-002', 'Andres Nuñez', 22, 'andres.nuñez@ucla.com', 'Avenida Sucre 789','Masculino',true),
+    ('110820995', 'CAR-002', 'Daniela Castro', 20, 'daniela.castro@ucla.com', 'Carrera 18 de Octubre 16-17','Femenino',true),
+    ('120820996', 'CAR-002', 'Gustavo Rivas', 21, 'gustavo.rivas@ucla.com', 'Calle 30 de Abril 31-32','Masculino',true),
+    ('130820997', 'CAR-002', 'Camila Garcia', 19, 'camila.garcia@ucla.com', 'Avenida Miranda 8910','Femenino',true),
+    ('140820998', 'CAR-002', 'Roberto Chavez', 20, 'roberto.chavez@ucla.com', 'Calle 40 de Mayo 41-42','Masculino',true),
+    ('150820999', 'CAR-002', 'Patricia Lopez', 21, 'patricia.lopez@ucla.com', 'Carrera 50 de Junio 51-52','Femenino',true),
+    ('160821000', 'CAR-002', 'Esteban Hernandez', 22, 'esteban.hernandez@ucla.com', 'Avenida Bolivar 1112','Masculino',true),
+    ('170821001', 'CAR-002', 'Laura Torres', 23, 'laura.torres@ucla.com', 'Calle 60 de Julio 61-62','Femenino',true),
+    ('180821002', 'CAR-002', 'Francisco Diaz', 20, 'francisco.diaz@ucla.com', 'Urbanizacion Las Mercedes','Masculino',true),
+    ('190821003', 'CAR-002', 'Valeria Jimenez', 21, 'valeria.jimenez@ucla.com', 'Calle 70 de Agosto 71-72','Femenino',true),
+    ('200821004', 'CAR-002', 'Alberto Suarez', 22, 'alberto.suarez@ucla.com', 'Avenida Bolivar 1314','Masculino',true),
+    ('210821005', 'CAR-002', 'Erika Perez', 19, 'erika.perez@ucla.com', 'Calle 80 de Septiembre 81-82','Femenino',true),
+    ('220821006', 'CAR-002', 'Juanita Gomez', 20, 'juanita.gomez@ucla.com', 'Carrera 90 de Diciembre 91-92','Femenino',true),
+    ('40830987', 'CAR-003', 'Andrés López', 22, 'andres.lopez@ucla.com', 'Calle 25 de Mayo 123','Masculino',true),
+    ('50830988', 'CAR-003', 'Isabella Rodriguez', 20, 'isabella.rodriguez@ucla.com', 'Avenida Libertador 789','Femenino',true),
+    ('60830989', 'CAR-003', 'Martín García', 21, 'martin.garcia@ucla.com', 'Calle Los Pinos 456','Masculino',true),
+    ('70830990', 'CAR-003', 'Valentina Martínez', 19, 'valentina.martinez@ucla.com', 'Carrera 10 de Octubre 11-12','Femenino',true),
+    ('80830991', 'CAR-003', 'Sebastián Sánchez', 23, 'sebastian.sanchez@ucla.com', 'Avenida Bolivar 567','Masculino',true),
+    ('90830992', 'CAR-003', 'Lucía Pérez', 20, 'lucia.perez@ucla.com', 'Urbanización Los Mangos','Femenino',true),
+    ('100830993', 'CAR-003', 'Mateo González', 21, 'mateo.gonzalez@ucla.com', 'Calle 30 de Abril 21-22','Masculino',true),
+    ('110830994', 'CAR-003', 'Camila Suárez', 22, 'camila.suarez@ucla.com', 'Avenida Sucre 789','Femenino',true),
+    ('120830995', 'CAR-003', 'Juan Torres', 20, 'juan.torres@ucla.com', 'Carrera 15 de Septiembre 16-17','Masculino',true),
+    ('130830996', 'CAR-003', 'Valeria Díaz', 21, 'valeria.diaz@ucla.com', 'Calle 40 de Julio 31-32','Femenino',true),
+    ('140830997', 'CAR-003', 'Diego Ramírez', 19, 'diego.ramirez@ucla.com', 'Avenida Miranda 8910','Masculino',true),
+    ('150830998', 'CAR-003', 'Mariana Gómez', 20, 'mariana.gomez@ucla.com', 'Calle Los Robles 41-42','Femenino',true),
+    ('160830999', 'CAR-003', 'Alejandro Pérez', 22, 'alejandro.perez@ucla.com', 'Avenida Bolivar 1112','Masculino',true),
+    ('170831000', 'CAR-003', 'Ana María Fernández', 21, 'ana.fernandez@ucla.com', 'Calle Los Almendros 61-62','Femenino',true),
+    ('180831001', 'CAR-003', 'Gabriel Jiménez', 23, 'gabriel.jimenez@ucla.com', 'Urbanización Las Mercedes','Masculino',true),
+    ('190831002', 'CAR-003', 'Valentina López', 20, 'valentina.lopez@ucla.com', 'Carrera 20 de Noviembre 71-72','Femenino',true),
+    ('200831003', 'CAR-003', 'Lucas Martínez', 21, 'lucas.martinez@ucla.com', 'Avenida Bolivar 1314','Masculino',true),
+    ('210831004', 'CAR-003', 'María José Rodríguez', 19, 'maria.rodriguez@ucla.com', 'Calle Los Cerezos 81-82','Femenino',true),
+    ('220831005', 'CAR-003', 'Joaquín García', 20, 'joaquin.garcia@ucla.com', 'Carrera 30 de Diciembre 91-92','Masculino',true),
+    ('230831006', 'CAR-003', 'Valeria Sánchez', 22, 'valeria.sanchez@ucla.com', 'Avenida Los Laureles 1314','Femenino',true);
 
 CREATE TABLE "Secciones" (
   "id_seccion" varchar(25) NOT NULL,
@@ -300,15 +360,24 @@ CREATE TABLE "Inscripcion" (
       REFERENCES "Secciones"("id_seccion")
 );
 
-CREATE TABLE "Nota_estudiante" (
-  "id_nota_estudiante" serial primary key,
+CREATE TABLE "Nota_periodo" (
+  "nota_periodo" varchar(25) NOT NULL,
   "id_estudiante" varchar(25) NOT NULL,
   "id_asignatura" varchar(25) NOT NULL,
-  "nota" float,
-  CONSTRAINT "FK_Nota_estudiante.id_estudiante"
+  "id_periodo" varchar(25) NOT NULL,
+  "id_seccion" varchar(25) NOT NULL,
+  "nota" integer,
+  PRIMARY KEY ("nota_periodo"),
+  CONSTRAINT "FK_Nota_periodo.id_estudiante"
     FOREIGN KEY ("id_estudiante")
       REFERENCES "Estudiantes"("id_estudiante"),
-  CONSTRAINT "FK_Nota_estudiante.id_asignatura"
+  CONSTRAINT "FK_Nota_periodo.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura")
+      REFERENCES "Asignaturas"("id_asignatura"),
+  CONSTRAINT "FK_Nota_periodo.id_periodo"
+    FOREIGN KEY ("id_periodo")
+      REFERENCES "Periodo_academico"("id_periodo"),
+  CONSTRAINT "FK_Nota_periodo.id_seccion"
+    FOREIGN KEY ("id_seccion")
+      REFERENCES "Secciones"("id_seccion")
 );
