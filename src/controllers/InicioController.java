@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import util.PantallaCompleta;
 import views.InicioFrame;
 
+
 public class InicioController implements ActionListener {
 
     private static InicioController instance;
@@ -28,6 +29,7 @@ public class InicioController implements ActionListener {
     public InscripcionController inscripcionController;
     public ListaSeccionController listaSeccionController;
     public ListadoEstudiantesController listadoEstudiantesController;
+    public RetirarMateriaController retirarMateriaController;
 
     public InicioController() {
         inicioFrame = new InicioFrame(this);
@@ -62,7 +64,11 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         listadoEstudiantesController.showListadoEstudiantesFrame();
     }
-
+    private void showRetirarMateriaFrame(){
+        inicioFrame.setVisible(false);
+        retirarMateriaController.showRetirarMateriaFrame();
+    }
+   
     public void setInscripcionController(InscripcionController inscripcionController) {
         this.inscripcionController = inscripcionController;
     }
@@ -74,7 +80,10 @@ public class InicioController implements ActionListener {
     public void setListadoEstudiantesController(ListadoEstudiantesController listadoEstudiantesController){
         this.listadoEstudiantesController = listadoEstudiantesController;
     }
+    public void setRetirarMateriaController(RetirarMateriaController retirarMateriaController){
     
+        this.retirarMateriaController= retirarMateriaController;
+    }
     @Override
     public void actionPerformed(ActionEvent button) {
         if(button.getSource() == inicioFrame.getListado_seccion_button()){
@@ -83,6 +92,9 @@ public class InicioController implements ActionListener {
             showInscripcionFrame();
         } else if(button.getSource() == inicioFrame.getListado_estudiante_button()){
            showListadoEstudiantesFrame();
+        } 
+          else if(button.getSource() == inicioFrame.getRetirar_materia_button()){
+           showRetirarMateriaFrame();
         } 
     }
 }
