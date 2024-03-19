@@ -14,23 +14,22 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package util;
+
 import java.awt.Dimension;
 import java.awt.Insets;
-//import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-//import javax.swing.SwingUtilities;
 
 public class PantallaCompleta {
-        public void setPantallaCompleta(JFrame frame) {
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            Insets insets = new Insets(100, 200, 100, 200);
-            Dimension adjustedSize = new Dimension(
-                    screenSize.width - insets.left - insets.right,
-                    screenSize.height - insets.top - insets.bottom
-            );
+
+    public void setPantallaCompleta(JFrame frame) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Insets insets = new Insets(100, 200, 100, 200);
+        Dimension adjustedSize = new Dimension(
+                screenSize.width - insets.left - insets.right,
+                screenSize.height - insets.top - insets.bottom
+        );
         frame.getContentPane().setPreferredSize(adjustedSize);
         frame.pack();
         frame.setLocationRelativeTo(null);

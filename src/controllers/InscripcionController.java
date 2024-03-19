@@ -32,7 +32,7 @@ import views.InscripcionFrame;
 public class InscripcionController implements ActionListener, CheckableCellEventListener {
 
     private static InscripcionController instance;
-    public ConexionSQL connection = new ConexionSQL();
+    public ConexionSQL connection = ConexionSQL.getInstance();
     public InscripcionFrame inscripcionFrame;
     public InicioController inicioController;
     private InscripcionInfo info;
@@ -67,10 +67,6 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public void setInicioController(InicioController inicioController) {
         this.inicioController = inicioController;
     }
-
-    public void setConnection(ConexionSQL conexion) {
-        this.connection = conexion;
-    }
     
     private void limpiarFormulario() {
         info = null;
@@ -84,8 +80,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        connection.getEstudiantes();
+        
         this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
 
         System.out.println(info);

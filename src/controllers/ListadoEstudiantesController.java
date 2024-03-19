@@ -1,7 +1,20 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -10,15 +23,11 @@ import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.ListadoEstudiantesFrame;
 
-/**
- *
- * @author alba
- */
 public class ListadoEstudiantesController implements ActionListener {
     
     private static ListadoEstudiantesController instance;
     public ListadoEstudiantesFrame listadoEstudiantesFrame;
-    public ConexionSQL connection = new ConexionSQL();
+    public ConexionSQL connection = ConexionSQL.getInstance();
     public InicioController inicioController;
     
     //constructor 

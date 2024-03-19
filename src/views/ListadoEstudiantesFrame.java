@@ -1,16 +1,24 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package views;
-//importar el controlador eso
 import controllers.ListadoEstudiantesController;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author Usuario
- */
 public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     
      public ListadoEstudiantesController controller;

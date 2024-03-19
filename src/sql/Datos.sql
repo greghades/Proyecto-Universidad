@@ -1,3 +1,20 @@
+/*
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
+ */
+
 CREATE TABLE "Universidad" (
   "id_universidad" varchar(25) NOT NULL,
   "nombre_universidad" varchar(100) NOT NULL,

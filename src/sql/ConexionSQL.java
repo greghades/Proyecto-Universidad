@@ -22,22 +22,29 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.swing.JDialog;
 import models.*;
 
 public class ConexionSQL {
 
+   private static ConexionSQL instance = null;
     private Connection conn = null;
     private Statement statement;
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "1234";
+    private final String pass = "1502Luis*";
 
     public ConexionSQL() {
         conectar();
     }
 
+    public static ConexionSQL getInstance() {
+        if (instance == null) {
+            instance = new ConexionSQL();
+        }
+        return instance;
+    }
+    
     private void conectar() {
         try {
             Class.forName("org.postgresql.Driver");

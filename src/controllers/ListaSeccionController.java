@@ -1,25 +1,33 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
-import views.InscripcionFrame;
 import views.ListaSeccionFrame;
 
-/**
- *
- * @author 58412
- */
 public class ListaSeccionController implements ActionListener {
     
     private static ListaSeccionController instance;
     public ListaSeccionFrame listaSeccionFrame;
-    public ConexionSQL connection = new ConexionSQL();
+    public ConexionSQL connection = ConexionSQL.getInstance();
     public InicioController inicioController;
 
     private ListaSeccionController() {
