@@ -19,7 +19,7 @@ public class ListaSeccionController implements ActionListener {
     
     private static ListaSeccionController instance;
     public ListaSeccionFrame listaSeccionFrame;
-    
+    public ConexionSQL connection = new ConexionSQL();
     public InicioController inicioController;
 
     private ListaSeccionController() {

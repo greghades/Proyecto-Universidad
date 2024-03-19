@@ -19,10 +19,10 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import models.*;
 import sql.ConexionSQL;
 import util.CheckableCellEventListener;
@@ -32,12 +32,11 @@ import views.InscripcionFrame;
 public class InscripcionController implements ActionListener, CheckableCellEventListener {
 
     private static InscripcionController instance;
-    public ConexionSQL connection;
+    public ConexionSQL connection = new ConexionSQL();
     public InscripcionFrame inscripcionFrame;
     public InicioController inicioController;
     private InscripcionInfo info;
-    private InscripcionData datosInscripcion;
-    private String[] inscripcionIDs = new String[0];
+    private final ArrayList<InscripcionData> inscripciones = new ArrayList<>();
 
     private InscripcionController() {
         inscripcionFrame = new InscripcionFrame(this);
@@ -56,6 +55,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     public void showInscripcionFrame() {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(inscripcionFrame);
+        limpiarFormulario();
         inscripcionFrame.setVisible(true);
     }
 
@@ -70,6 +70,13 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
 
     public void setConnection(ConexionSQL conexion) {
         this.connection = conexion;
+    }
+    
+    private void limpiarFormulario() {
+        info = null;
+        inscripciones.removeAll(inscripciones);
+        inscripcionFrame.displayUI(false);
+        inscripcionFrame.limpiarTabla();
     }
 
     private void mostrarDatos() {
@@ -95,16 +102,22 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         }
     }
 
-    public String generateUniqueID() {
-        String baseId = "INS-";
-        int currentNum = 1;
-        while (true) {
-            String potentialId = baseId + String.format("%03d", currentNum); // Format with 3 leading zeros
-            if (!Arrays.asList(inscripcionIDs).contains(potentialId)) {
-                return potentialId; // Unique ID found
-            }
-            currentNum++;
-        }
+    // Method to display an alert with an "Aceptar" button
+    private void showSuccessAlert(boolean exitosa) {
+        Object[] options = {"Aceptar"};
+        int selection = JOptionPane.showOptionDialog(
+                null,
+                exitosa ? "¡Te has inscrito correctamente!" : "No se pudo llevar a cabo la inscripcion correctamente",
+                exitosa ? "Felicidades" : "Ha ocurrido un error",
+                JOptionPane.OK_OPTION,
+                exitosa ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        System.out.println("Selected Option is OK : " + selection);
+        showInicioFrame();
+
     }
 
     @Override
@@ -114,8 +127,12 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         } else if (button.getSource() == inscripcionFrame.getCedula_button()) {
             mostrarDatos();
         } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {
-            for (int index = 0; index < this.info.getAsignaturas().size(); index++) {
-                System.out.println("Asignatura: " + info.getAsignaturas().get(index).getNombre() + ", Inscribir: " + info.getAsignaturas().get(index).esRetirada());
+            int rowsAffected = connection.inscribirEstudiante(inscripciones);
+
+            if (rowsAffected > 0) {
+                showSuccessAlert(true);
+            } else {
+                showSuccessAlert(false);
             }
         } else if (button.getSource() instanceof JComboBox) {
             JComboBox<String> comboBox = (JComboBox<String>) button.getSource();
@@ -123,14 +140,35 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
 
             // Access inicioFrame to get the asignatura based on the container panel
             Asignatura asignatura = (Asignatura) comboBox.getClientProperty("asignatura");
-            Profesor profesor = (Profesor) comboBox.getClientProperty("profesor");
             ArrayList<Seccion> secciones = (ArrayList<Seccion>) comboBox.getClientProperty("secciones");
 
-            System.out.println("Selected Seccion: " + selectedSeccion);
-            System.out.println("Asignatura: " + asignatura.getNombre());
-            System.out.println("Profesor: " + profesor.getNombre());
-            System.out.println("Secciones: " + secciones);
-            // Handle the selected section and asignatura based on your logic
+            Seccion seccionSeleccionada = null;
+            for (Seccion seccion : secciones) {
+                if (selectedSeccion.equals(String.valueOf(String.format("Seccion %s", seccion.getNumero())))) {
+                    seccionSeleccionada = seccion;
+                    break;
+                }
+            }
+            Profesor profesor = connection.getProfesor(asignatura.getId(), seccionSeleccionada.getId());
+
+            for (JPanel panel : inscripcionFrame.materiaPanels) {
+                JPanel entryPanel = (JPanel) panel.getComponent(1);
+                JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
+                String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
+
+                if (materiaLabel.getText().equals(asignaturaFormateada)) {
+                    JLabel profesorLabel = (JLabel) entryPanel.getComponent(2);
+                    profesorLabel.setText("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
+                    break;
+                }
+            }
+
+            for (InscripcionData inscripcion : inscripciones) {
+                if (inscripcion.getId_asignatura().equals(asignatura.getId())) {
+                    inscripcion.setId_seccion(seccionSeleccionada.getId());
+                    break;
+                }
+            }
         }
     }
 
@@ -142,22 +180,28 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         info.setAsignatura(row, asignaturaSeleccionada);
 
         // Obtener nombre de profesor
-        Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId());
         ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
+        Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId(), secciones.get(0).getId());
         PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
         inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada, profesor, secciones);
 
-        String uniqueID = generateUniqueID();
-//        if (inscripcionIDs.length == 0) {
-//            inscripcionIDs[0] = uniqueID;
-//        } else {
-//            inscripcionIDs[inscripcionIDs.length - 1] = uniqueID;
-//        }
-        inscripcionIDs = Arrays.copyOf(inscripcionIDs, inscripcionIDs.length + 1); // Expand the array
-        inscripcionIDs[inscripcionIDs.length - 1] = uniqueID; // Assign to the newly added element
+        InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());
 
-
-        InscripcionData inscripcion = new InscripcionData(uniqueID, info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId(), new Date());
-        datosInscripcion = inscripcion;
+        // Si this.inscripciones está vacío, inicializar con la inscripcion generada
+        if (inscripciones.isEmpty()) {
+            inscripciones.add(inscripcion);
+        } else {
+            // Si this.inscripciones no está vacío
+            if (!value) {
+                // Si value es falso, eliminar la inscripcion si existe
+                inscripciones.removeIf(i -> i.equals(inscripcion));
+            } else {
+                // Si value es verdadero, validar la existencia de la inscripcion
+                if (!inscripciones.contains(inscripcion)) {
+                    // Si no existe, agregar la inscripcion al arreglo
+                    inscripciones.add(inscripcion);
+                }
+            }
+        }
     }
 }

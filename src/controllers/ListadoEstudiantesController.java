@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.ListadoEstudiantesFrame;
-import views.InscripcionFrame;
 
 /**
  *
@@ -19,7 +18,7 @@ public class ListadoEstudiantesController implements ActionListener {
     
     private static ListadoEstudiantesController instance;
     public ListadoEstudiantesFrame listadoEstudiantesFrame;
-    //public ConexionSQL connection;
+    public ConexionSQL connection = new ConexionSQL();
     public InicioController inicioController;
     
     //constructor 

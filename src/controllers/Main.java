@@ -16,7 +16,6 @@ Yaslin Vreugdenhil.
  */
 
 package controllers;
-import sql.ConexionSQL;
 
 public class Main {
     
@@ -25,14 +24,13 @@ public class Main {
     InscripcionController inscripcionController = InscripcionController.getInstance();
     ListaSeccionController listaSeccionController = ListaSeccionController.getInstance();
     ListadoEstudiantesController listadoEstudiantesController = ListadoEstudiantesController.getInstance();
-    ConexionSQL connection = new ConexionSQL();
+    
     inicioController.setInscripcionController(inscripcionController);
     inicioController.setListaSeccionController(listaSeccionController);
     inicioController.setListadoEstudiantesController(listadoEstudiantesController);
-    inscripcionController.setInicioController(inicioController);// Establish references between controllers
+    
+    inscripcionController.setInicioController(inicioController);
     listaSeccionController.setInicioController(inicioController);
     listadoEstudiantesController.setInicioController(inicioController);
-    
-    inscripcionController.setConnection(connection);
   }
 }
