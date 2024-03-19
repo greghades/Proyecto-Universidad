@@ -179,20 +179,17 @@ public class ConexionSQL {
         }
     }
     
-    public Profesor getProfesor(String idAsignatura) {
+    public Profesor getProfesor(String idAsignatura, String idSeccion) {
         try {
-            String query = String.format("SELECT p.id_profesor, p.nombre_completo FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s'", idAsignatura);
+            String query = String.format("SELECT p.id_profesor, p.nombre_completo FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
             ResultSet profesorSet = statement.executeQuery(query);
             Profesor profesor = null;
             
             while (profesorSet.next()) {
                 String cedula = profesorSet.getString("id_profesor");
                 String nombre = profesorSet.getString("nombre_completo");
-//                System.out.println("profe: " + cedula + nombre);
                 profesor = new Profesor(cedula, nombre);
             }
-
-//            System.out.println("profesor: " + profesor.getCedula());
             return profesor;
         } catch (SQLException e) {
             return null;

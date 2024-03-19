@@ -21,7 +21,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import models.*;
 import sql.ConexionSQL;
 import util.CheckableCellEventListener;
@@ -109,14 +111,33 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
 
             // Access inicioFrame to get the asignatura based on the container panel
             Asignatura asignatura = (Asignatura) comboBox.getClientProperty("asignatura");
-            Profesor profesor = (Profesor) comboBox.getClientProperty("profesor");
             ArrayList<Seccion> secciones = (ArrayList<Seccion>) comboBox.getClientProperty("secciones");
 
             System.out.println("Selected Seccion: " + selectedSeccion);
             System.out.println("Asignatura: " + asignatura.getNombre());
-            System.out.println("Profesor: " + profesor.getNombre());
             System.out.println("Secciones: " + secciones);
-            // Handle the selected section and asignatura based on your logic
+
+            Seccion seccionSeleccionada = null;
+            for (Seccion seccion : secciones) {
+                if (selectedSeccion.equals(String.valueOf(String.format("Seccion %s", seccion.getNumero())))) {
+                    seccionSeleccionada = seccion;
+                    break;
+                }
+            }
+            Profesor profesor = connection.getProfesor(asignatura.getId(), seccionSeleccionada.getId());
+            System.out.println("Profesor: " + profesor.getNombre());
+
+            for (JPanel panel : inscripcionFrame.materiaPanels) {
+                JPanel entryPanel = (JPanel) panel.getComponent(1);
+                JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
+                String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
+                
+                if (materiaLabel.getText().equals(asignaturaFormateada)) {
+                    JLabel profesorLabel = (JLabel) entryPanel.getComponent(2);
+                    profesorLabel.setText("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
+                    break;
+                }
+            }
         }
     }
 
@@ -128,8 +149,8 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         info.setAsignatura(row, asignaturaSeleccionada);
 
         // Obtener nombre de profesor
-        Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId());
         ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
+        Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId(), secciones.get(0).getId());
         PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
         inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada, profesor, secciones);
 

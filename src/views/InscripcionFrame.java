@@ -37,6 +37,7 @@ import models.Seccion;
 public class InscripcionFrame extends javax.swing.JFrame {
 
     public InscripcionController controller;
+    public ArrayList<JPanel> materiaPanels = new ArrayList<JPanel>();
 
     public InscripcionFrame(InscripcionController controller) {
         super("Proyecto: Universidad Central de Lara");
@@ -65,7 +66,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
             materiaLabel.setPreferredSize(new Dimension(200, materiaLabel.getPreferredSize().height));
             JLabel profesorLabel = new JLabel("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
             profesorLabel.setPreferredSize(new Dimension(180, materiaLabel.getPreferredSize().height));
-            
+
             entryPanel.add(materiaLabel);
             entryPanel.add(Box.createHorizontalStrut(12));
             entryPanel.add(profesorLabel);
@@ -75,9 +76,8 @@ public class InscripcionFrame extends javax.swing.JFrame {
             JComboBox<String> comboBox = new JComboBox<>(numerosDeSeccion);
             comboBox.addActionListener(controller);
             comboBox.putClientProperty("asignatura", asignatura);
-            comboBox.putClientProperty("profesor", profesor);
             comboBox.putClientProperty("secciones", secciones);
-            
+
             entryPanel.add(Box.createHorizontalStrut(12));
             entryPanel.add(comboBox);
 
@@ -92,6 +92,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
 
             // Add containerPanel to toggle_panel
             toggle_panel.add(containerPanel);
+            materiaPanels.add(containerPanel);
             toggle_panel.revalidate();
             toggle_panel.repaint();
         } else {
@@ -102,6 +103,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
                     JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
                     if (materiaLabel.getText().equals(asignaturaFormateada)) {
                         toggle_panel.remove(containerPanel);
+                        materiaPanels.remove(containerPanel);
                         toggle_panel.revalidate();
                         toggle_panel.repaint();
                         break;
@@ -162,6 +164,13 @@ public class InscripcionFrame extends javax.swing.JFrame {
                 TableColumn column = columnModel.getColumn(0); // Get the first column
                 columnModel.removeColumn(column);
             }
+
+            materiaPanels.removeAll(materiaPanels);
+            inscripcion_button.setVisible(false);
+            toggle_panel.removeAll();
+            toggle_panel.setVisible(false);
+            toggle_panel.revalidate();
+            toggle_panel.repaint();
         }
     }
 
