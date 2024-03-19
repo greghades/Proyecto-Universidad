@@ -27,6 +27,8 @@ public class InicioController implements ActionListener {
     public InicioFrame inicioFrame;
     public InscripcionController inscripcionController;
     public ListaSeccionController listaSeccionController;
+    //agrregar aqui como un atributo
+    public ListadoEstudiantesController listadoEstudiantesController;
     
 
     public InicioController() {
@@ -57,6 +59,12 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         listaSeccionController.showListaSeccionFrame();
     }
+    
+    //agregando showListadoEstudiantes
+    private void showListadoEstudiantesFrame() {
+        inicioFrame.setVisible(false);
+        listadoEstudiantesController.showListadoEstudiantesFrame();
+    }
 
     public void setInscripcionController(InscripcionController inscripcionController) {
         this.inscripcionController = inscripcionController;
@@ -66,12 +74,19 @@ public class InicioController implements ActionListener {
         this.listaSeccionController = listaSeccionController;
     }
     
+    public void setListadoEstudiantesController(ListadoEstudiantesController listadoEstudiantesController){
+        this.listadoEstudiantesController = listadoEstudiantesController;
+    }
+    
     @Override
     public void actionPerformed(ActionEvent button) {
         if(button.getSource() == inicioFrame.getReporte1_button()){
             showListaSeccionFrame();
         } else if(button.getSource() == inicioFrame.getInscripcion_button()){
             showInscripcionFrame();
+            //para que escuche o detecte el click
+        }else if(button.getSource() == inicioFrame.getReporteEstudiante_button()){
+            showListadoEstudiantesFrame();
         }
     }
 }
