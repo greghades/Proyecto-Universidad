@@ -22,6 +22,7 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JDialog;
 import models.*;
 
 public class ConexionSQL {
@@ -197,26 +198,25 @@ public class ConexionSQL {
         }
     }
 
-    public void inscribirEstudiante(ArrayList<InscripcionData> inscripciones) {
+    public int inscribirEstudiante(ArrayList<InscripcionData> inscripciones) {
         try {
+            int totalRowsAffected = 0;
             for (int index = 0; index < inscripciones.size(); index++) {
                 InscripcionData inscripcion = inscripciones.get(index);
-                
+
                 String estudiante_id = inscripcion.getId_estudiante();
                 String asignatura_id = inscripcion.getId_asignatura();
                 String periodo_id = inscripcion.getId_periodo();
                 String seccion_id = inscripcion.getId_seccion();
 
-                System.out.println("Datos: " + estudiante_id + " " + asignatura_id + " " + periodo_id + " " + seccion_id);
-
                 String query = String.format("INSERT INTO public.\"Inscripcion\"(id_estudiante, id_asignatura, id_periodo, id_seccion,estado) VALUES ('%s', '%s', '%s', '%s', false);", estudiante_id, asignatura_id, periodo_id, seccion_id);
-                statement.executeUpdate(query);
-                
-                System.out.println("Inscripcion: " + inscripciones.get(index).getId_asignatura());
+                int rowsAffected = statement.executeUpdate(query);
+                totalRowsAffected += rowsAffected;
             }
-            
+            return totalRowsAffected;
         } catch (SQLException e) {
             System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
+            return -1;
         }
     }
 
