@@ -55,6 +55,24 @@ public class ConexionSQL {
             System.out.println("conexion fallida");
         }
     }
+    
+    public boolean getInscripcion(String id) {
+        try {
+            String query = String.format("SELECT i.id_estudiante FROM public.\"Inscripcion\" AS i WHERE i.id_estudiante = '%s'", id);
+            ResultSet inscripcionSet = statement.executeQuery(query);
+            boolean estaInscrito = false;
+
+            while (inscripcionSet.next()) {
+                String cedula = inscripcionSet.getString("id_estudiante");
+                
+                estaInscrito = cedula.equals(id);
+            }
+
+            return estaInscrito;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 
     public Estudiante getEstudiante(String id) {
         try {
@@ -124,8 +142,8 @@ public class ConexionSQL {
             return null;
         }
     }
+    
 //haciendo arreglos en estudiante:
-
     public ArrayList<Estudiante> getEstudiantes() {
         try {
             String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera";

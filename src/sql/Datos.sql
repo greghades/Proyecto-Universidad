@@ -82,8 +82,8 @@ INSERT INTO public."Asignaturas" (id_asignatura,nombre_asignatura,carga_academic
     ('ASI-013', 'Estadística I', 4, NULL),
     ('ASI-014', 'Ingenieria Economica', 5,NULL),
     ('ASI-015', 'Inglés I', 3,NULL),
-    ('ASI-016', 'Inglés II', 4,NULL);0.40
-0
+    ('ASI-016', 'Inglés II', 4,NULL);
+	
 CREATE TABLE "Asignaturas_carrera" (
   "id_asignatura_carrera" varchar(25) NOT NULL,
   "id_carrera" varchar(25) NOT NULL,
@@ -168,7 +168,7 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('30810987','CAR-001','Ana Sofia Lopez',21,'aslopez@ucla.edu','Urb. La Granja, Barquisimeto','Femenino',true),
     ('30000007', 'CAR-001', 'Juan Perez', 20, 'juan.perez@ucla.com', 'Calle Principal 123','Masculino',true),
     ('40810988', 'CAR-001', 'Maria Rodriguez', 22, 'maria.rodriguez@ucla.com', 'Avenida Libertador 456','Femenino',true),
-    ('50810989', 'CAR-001', 'Luis Gonzalez', 21, 'luis.gonzalez@ucla.com', 'Carrera 7 89','Masculino',true),
+    ('50810989', 'CAR-001', 'Luis Gonzalez', 21, 'luis.gonzalez@ucla.com', 'Carrera 7 89','Masculino',true), /////
     ('60810990', 'CAR-001', 'Ana Martinez', 20, 'ana.martinez@ucla.com', 'Calle 10 11-12','Femenino',true),
     ('70810991', 'CAR-001', 'Carlos Sanchez', 23, 'carlos.sanchez@ucla.com', 'Avenida Bolivar 567','Masculino',true),
     ('80810992', 'CAR-001', 'Laura Ramirez', 22, 'laura.ramirez@ucla.com', 'Urbanizacion Los Mangos','Femenino',true),
@@ -178,7 +178,7 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('12081096', 'CAR-001', 'Elena Torres', 21, 'elena.torres@ucla.com', 'Calle 30 31-32','Femenino',true),
     ('13081097', 'CAR-001', 'Jorge Castro', 20, 'jorge.castro@ucla.com', 'Avenida Miranda 8910','Masculino',true),
     ('14081098', 'CAR-001', 'Ana Garcia', 23, 'ana.garcia@ucla.com', 'Calle 40 41-42','Femenino',true),
-    ('15081099', 'CAR-001', 'Pedro Chavez', 22, 'pedro.chavez@ucla.com', 'Carrera 50 51-52','Masculino',true),
+    ('15081099', 'CAR-001', 'Pedro Chavez', 22, 'pedro.chavez@ucla.com', 'Carrera 50 51-52','Masculino',true), /////
     ('16081100', 'CAR-001', 'Luisa Rivas', 21, 'luisa.rivas@ucla.com', 'Avenida Bolivar 1112','Femenino',true),
     ('17081101', 'CAR-001', 'Miguel Diaz', 20, 'miguel.diaz@ucla.com', 'Calle 60 61-62','Masculino',true),
     ('18081102', 'CAR-001', 'Paula Nuñez', 22, 'paula.nunez@ucla.com', 'Urbanizacion Las Mercedes','Femenino',true),
@@ -188,7 +188,7 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('22081106', 'CAR-001', 'Valentina Suarez', 22, 'valentina.suarez@ucla.com', 'Carrera 90 91-92','Femenino',true),
     ('30820987', 'CAR-002', 'Marcela Sánchez', 19, 'marcela.sanchez@ucla.com', 'Calle San Martín 123','Femenino',true),
     ('40820988', 'CAR-002', 'Luis Hernandez', 20, 'luis.hernandez@ucla.com', 'Avenida Libertador 456','Masculino',true),
-    ('50820989', 'CAR-002', 'Gabriela Ramirez', 21, 'gabriela.ramirez@ucla.com', 'Calle 23 de Enero 789','Femenino',true),
+    ('50820989', 'CAR-002', 'Gabriela Ramirez', 21, 'gabriela.ramirez@ucla.com', 'Calle 23 de Enero 789','Femenino',true), /////
     ('60820990', 'CAR-002', 'Ricardo Fernandez', 22, 'ricardo.fernandez@ucla.com', 'Calle 10 de Octubre 11-12','Masculino',true),
     ('70820991', 'CAR-002', 'Fernanda Torres', 23, 'fernanda.torres@ucla.com', 'Avenida Bolivar 567','Femenino',true),
     ('80820992', 'CAR-002', 'Javier Perez', 20, 'javier.perez@ucla.com', 'Urbanizacion Los Mangos','Masculino',true),
@@ -198,7 +198,7 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('120820996', 'CAR-002', 'Gustavo Rivas', 21, 'gustavo.rivas@ucla.com', 'Calle 30 de Abril 31-32','Masculino',true),
     ('130820997', 'CAR-002', 'Camila Garcia', 19, 'camila.garcia@ucla.com', 'Avenida Miranda 8910','Femenino',true),
     ('140820998', 'CAR-002', 'Roberto Chavez', 20, 'roberto.chavez@ucla.com', 'Calle 40 de Mayo 41-42','Masculino',true),
-    ('150820999', 'CAR-002', 'Patricia Lopez', 21, 'patricia.lopez@ucla.com', 'Carrera 50 de Junio 51-52','Femenino',true),
+    ('150820999', 'CAR-002', 'Patricia Lopez', 21, 'patricia.lopez@ucla.com', 'Carrera 50 de Junio 51-52','Femenino',true), /////
     ('160821000', 'CAR-002', 'Esteban Hernandez', 22, 'esteban.hernandez@ucla.com', 'Avenida Bolivar 1112','Masculino',true),
     ('170821001', 'CAR-002', 'Laura Torres', 23, 'laura.torres@ucla.com', 'Calle 60 de Julio 61-62','Femenino',true),
     ('180821002', 'CAR-002', 'Francisco Diaz', 20, 'francisco.diaz@ucla.com', 'Urbanizacion Las Mercedes','Masculino',true),
@@ -208,7 +208,7 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('220821006', 'CAR-002', 'Juanita Gomez', 20, 'juanita.gomez@ucla.com', 'Carrera 90 de Diciembre 91-92','Femenino',true),
     ('40830987', 'CAR-003', 'Andrés López', 22, 'andres.lopez@ucla.com', 'Calle 25 de Mayo 123','Masculino',true),
     ('50830988', 'CAR-003', 'Isabella Rodriguez', 20, 'isabella.rodriguez@ucla.com', 'Avenida Libertador 789','Femenino',true),
-    ('60830989', 'CAR-003', 'Martín García', 21, 'martin.garcia@ucla.com', 'Calle Los Pinos 456','Masculino',true),
+    ('60830989', 'CAR-003', 'Martín García', 21, 'martin.garcia@ucla.com', 'Calle Los Pinos 456','Masculino',true), /////
     ('70830990', 'CAR-003', 'Valentina Martínez', 19, 'valentina.martinez@ucla.com', 'Carrera 10 de Octubre 11-12','Femenino',true),
     ('80830991', 'CAR-003', 'Sebastián Sánchez', 23, 'sebastian.sanchez@ucla.com', 'Avenida Bolivar 567','Masculino',true),
     ('90830992', 'CAR-003', 'Lucía Pérez', 20, 'lucia.perez@ucla.com', 'Urbanización Los Mangos','Femenino',true),
@@ -218,7 +218,7 @@ INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,
     ('130830996', 'CAR-003', 'Valeria Díaz', 21, 'valeria.diaz@ucla.com', 'Calle 40 de Julio 31-32','Femenino',true),
     ('140830997', 'CAR-003', 'Diego Ramírez', 19, 'diego.ramirez@ucla.com', 'Avenida Miranda 8910','Masculino',true),
     ('150830998', 'CAR-003', 'Mariana Gómez', 20, 'mariana.gomez@ucla.com', 'Calle Los Robles 41-42','Femenino',true),
-    ('160830999', 'CAR-003', 'Alejandro Pérez', 22, 'alejandro.perez@ucla.com', 'Avenida Bolivar 1112','Masculino',true),
+    ('160830999', 'CAR-003', 'Alejandro Pérez', 22, 'alejandro.perez@ucla.com', 'Avenida Bolivar 1112','Masculino',true), ////
     ('170831000', 'CAR-003', 'Ana María Fernández', 21, 'ana.fernandez@ucla.com', 'Calle Los Almendros 61-62','Femenino',true),
     ('180831001', 'CAR-003', 'Gabriel Jiménez', 23, 'gabriel.jimenez@ucla.com', 'Urbanización Las Mercedes','Masculino',true),
     ('190831002', 'CAR-003', 'Valentina López', 20, 'valentina.lopez@ucla.com', 'Carrera 20 de Noviembre 71-72','Femenino',true),
@@ -376,6 +376,336 @@ CREATE TABLE "Inscripcion" (
     FOREIGN KEY ("id_seccion")
       REFERENCES "Secciones"("id_seccion")
 );
+
+INSERT INTO public."Inscripcion"(id_estudiante, id_asignatura, id_periodo, id_seccion, estado) VALUES 
+    ('30276543', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('30276543', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('30276543', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('30276543', 'ASI-004', 'PER-001', 'SEC-004', false),
+
+    ('30365432', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('30365432', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('30365432', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('30365432', 'ASI-008', 'PER-001', 'SEC-004', false),
+
+    ('30454321', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('30454321', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('30454321', 'ASI-011', 'PER-001', 'SEC-003', false),
+    ('30454321', 'ASI-012', 'PER-001', 'SEC-004', false),
+
+    ('30543210', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('30543210', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('30543210', 'ASI-015', 'PER-001', 'SEC-003', false),
+    ('30543210', 'ASI-016', 'PER-001', 'SEC-004', false),
+
+    ('30632109', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('30632109', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('30632109', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('30632109', 'ASI-004', 'PER-001', 'SEC-004', false),
+
+    ('30721098', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('30721098', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('30721098', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('30721098', 'ASI-008', 'PER-001', 'SEC-004', false),
+
+    ('30810987', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('30810987', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('30810987', 'ASI-011', 'PER-001', 'SEC-003', false),
+    ('30810987', 'ASI-012', 'PER-001', 'SEC-004', false),
+
+    ('30000007', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('30000007', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('30000007', 'ASI-015', 'PER-001', 'SEC-003', false),
+    ('30000007', 'ASI-016', 'PER-001', 'SEC-004', false),
+
+    ('40810988', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('40810988', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('40810988', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('40810988', 'ASI-004', 'PER-001', 'SEC-004', false),
+
+    ('50810989', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('50810989', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('50810989', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('50810989', 'ASI-008', 'PER-001', 'SEC-004', false),
+
+    ('60810990', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('60810990', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('60810990', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('60810990', 'ASI-004', 'PER-001', 'SEC-004', false),
+
+    ('70810991', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('70810991', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('70810991', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('70810991', 'ASI-008', 'PER-001', 'SEC-004', false),
+
+    ('80810992', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('80810992', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('80810992', 'ASI-011', 'PER-001', 'SEC-003', false),
+    ('80810992', 'ASI-012', 'PER-001', 'SEC-004', false),
+
+    ('90810993', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('90810993', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('90810993', 'ASI-015', 'PER-001', 'SEC-003', false),
+    ('90810993', 'ASI-016', 'PER-001', 'SEC-004', false),
+
+    ('10081094', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('10081094', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('10081094', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('10081094', 'ASI-004', 'PER-001', 'SEC-004', false),
+
+    ('11081095', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('11081095', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('11081095', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('11081095', 'ASI-008', 'PER-001', 'SEC-004', false),
+
+    ('12081096', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('12081096', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('12081096', 'ASI-011', 'PER-001', 'SEC-003', false),
+    ('12081096', 'ASI-012', 'PER-001', 'SEC-004', false),
+
+    ('13081097', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('13081097', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('13081097', 'ASI-015', 'PER-001', 'SEC-003', false),
+    ('13081097', 'ASI-016', 'PER-001', 'SEC-004', false),
+
+    ('14081098', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('14081098', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('14081098', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('14081098', 'ASI-004', 'PER-001', 'SEC-004', false),
+
+    ('15081099', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('15081099', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('15081099', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('15081099', 'ASI-008', 'PER-001', 'SEC-004', false),
+
+    ('16081100', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('16081100', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('16081100', 'ASI-003', 'PER-001', 'SEC-003', false),
+
+    ('17081101', 'ASI-004', 'PER-001', 'SEC-001', false),
+    ('17081101', 'ASI-005', 'PER-001', 'SEC-002', false),
+    ('17081101', 'ASI-006', 'PER-001', 'SEC-003', false),
+
+    ('18081102', 'ASI-007', 'PER-001', 'SEC-001', false),
+    ('18081102', 'ASI-008', 'PER-001', 'SEC-002', false),
+    ('18081102', 'ASI-009', 'PER-001', 'SEC-003', false),
+
+    ('19081103', 'ASI-010', 'PER-001', 'SEC-001', false),
+    ('19081103', 'ASI-011', 'PER-001', 'SEC-002', false),
+    ('19081103', 'ASI-012', 'PER-001', 'SEC-003', false),
+
+    ('20081104', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('20081104', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('20081104', 'ASI-015', 'PER-001', 'SEC-003', false),
+
+    ('21081105', 'ASI-016', 'PER-001', 'SEC-001', false),
+    ('21081105', 'ASI-001', 'PER-001', 'SEC-002', false),
+    ('21081105', 'ASI-002', 'PER-001', 'SEC-003', false),
+
+    ('22081106', 'ASI-003', 'PER-001', 'SEC-001', false),
+    ('22081106', 'ASI-004', 'PER-001', 'SEC-002', false),
+    ('22081106', 'ASI-005', 'PER-001', 'SEC-003', false),
+
+    ('30820987', 'ASI-006', 'PER-001', 'SEC-001', false),
+    ('30820987', 'ASI-007', 'PER-001', 'SEC-002', false),
+    ('30820987', 'ASI-008', 'PER-001', 'SEC-003', false),
+
+    ('40820988', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('40820988', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('40820988', 'ASI-011', 'PER-001', 'SEC-003', false),
+
+    ('50820989', 'ASI-012', 'PER-001', 'SEC-001', false),
+    ('50820989', 'ASI-013', 'PER-001', 'SEC-002', false),
+    ('50820989', 'ASI-014', 'PER-001', 'SEC-003', false),
+
+    ('60820990', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('60820990', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('60820990', 'ASI-003', 'PER-001', 'SEC-003', false),
+
+    ('70820991', 'ASI-004', 'PER-001', 'SEC-001', false),
+    ('70820991', 'ASI-005', 'PER-001', 'SEC-002', false),
+    ('70820991', 'ASI-006', 'PER-001', 'SEC-003', false),
+
+    ('80820992', 'ASI-007', 'PER-001', 'SEC-001', false),
+    ('80820992', 'ASI-008', 'PER-001', 'SEC-002', false),
+    ('80820992', 'ASI-009', 'PER-001', 'SEC-003', false),
+
+    ('90820993', 'ASI-010', 'PER-001', 'SEC-001', false),
+    ('90820993', 'ASI-011', 'PER-001', 'SEC-002', false),
+    ('90820993', 'ASI-012', 'PER-001', 'SEC-003', false),
+
+    ('100820994', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('100820994', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('100820994', 'ASI-015', 'PER-001', 'SEC-003', false),
+
+    ('110820995', 'ASI-016', 'PER-001', 'SEC-001', false),
+    ('110820995', 'ASI-001', 'PER-001', 'SEC-002', false),
+    ('110820995', 'ASI-002', 'PER-001', 'SEC-003', false),
+
+    ('120820996', 'ASI-003', 'PER-001', 'SEC-001', false),
+    ('120820996', 'ASI-004', 'PER-001', 'SEC-002', false),
+    ('120820996', 'ASI-005', 'PER-001', 'SEC-003', false),
+
+    ('130820997', 'ASI-006', 'PER-001', 'SEC-001', false),
+    ('130820997', 'ASI-007', 'PER-001', 'SEC-002', false),
+    ('130820997', 'ASI-008', 'PER-001', 'SEC-003', false),
+
+    ('140820998', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('140820998', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('140820998', 'ASI-011', 'PER-001', 'SEC-003', false),
+
+    ('150820999', 'ASI-012', 'PER-001', 'SEC-001', false),
+    ('150820999', 'ASI-013', 'PER-001', 'SEC-002', false),
+    ('150820999', 'ASI-014', 'PER-001', 'SEC-003', false),
+
+    ('160821000', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('160821000', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('160821000', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('160821000', 'ASI-004', 'PER-001', 'SEC-004', false),
+    ('160821000', 'ASI-005', 'PER-001', 'SEC-005', false),
+
+    ('170821001', 'ASI-006', 'PER-001', 'SEC-001', false),
+    ('170821001', 'ASI-007', 'PER-001', 'SEC-002', false),
+    ('170821001', 'ASI-008', 'PER-001', 'SEC-003', false),
+    ('170821001', 'ASI-009', 'PER-001', 'SEC-004', false),
+    ('170821001', 'ASI-010', 'PER-001', 'SEC-005', false),
+
+    ('180821002', 'ASI-011', 'PER-001', 'SEC-001', false),
+    ('180821002', 'ASI-012', 'PER-001', 'SEC-002', false),
+    ('180821002', 'ASI-013', 'PER-001', 'SEC-003', false),
+    ('180821002', 'ASI-014', 'PER-001', 'SEC-004', false),
+    ('180821002', 'ASI-015', 'PER-001', 'SEC-005', false),
+
+    ('190821003', 'ASI-016', 'PER-001', 'SEC-001', false),
+    ('190821003', 'ASI-001', 'PER-001', 'SEC-002', false),
+    ('190821003', 'ASI-002', 'PER-001', 'SEC-003', false),
+    ('190821003', 'ASI-003', 'PER-001', 'SEC-004', false),
+    ('190821003', 'ASI-004', 'PER-001', 'SEC-005', false),
+
+    ('200821004', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('200821004', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('200821004', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('200821004', 'ASI-008', 'PER-001', 'SEC-004', false),
+    ('200821004', 'ASI-009', 'PER-001', 'SEC-005', false),
+
+    ('210821005', 'ASI-010', 'PER-001', 'SEC-001', false),
+    ('210821005', 'ASI-011', 'PER-001', 'SEC-002', false),
+    ('210821005', 'ASI-012', 'PER-001', 'SEC-003', false),
+    ('210821005', 'ASI-013', 'PER-001', 'SEC-004', false),
+    ('210821005', 'ASI-014', 'PER-001', 'SEC-005', false),
+
+    ('220821006', 'ASI-015', 'PER-001', 'SEC-001', false),
+    ('220821006', 'ASI-016', 'PER-001', 'SEC-002', false),
+    ('220821006', 'ASI-001', 'PER-001', 'SEC-003', false),
+    ('220821006', 'ASI-002', 'PER-001', 'SEC-004', false),
+    ('220821006', 'ASI-003', 'PER-001', 'SEC-005', false),
+
+    ('40830987', 'ASI-004', 'PER-001', 'SEC-001', false),
+    ('40830987', 'ASI-005', 'PER-001', 'SEC-002', false),
+    ('40830987', 'ASI-006', 'PER-001', 'SEC-003', false),
+    ('40830987', 'ASI-007', 'PER-001', 'SEC-004', false),
+    ('40830987', 'ASI-008', 'PER-001', 'SEC-005', false),
+
+    ('50830988', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('50830988', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('50830988', 'ASI-011', 'PER-001', 'SEC-003', false),
+    ('50830988', 'ASI-012', 'PER-001', 'SEC-004', false),
+    ('50830988', 'ASI-013', 'PER-001', 'SEC-005', false),
+
+    ('60830989', 'ASI-014', 'PER-001', 'SEC-001', false),
+    ('60830989', 'ASI-015', 'PER-001', 'SEC-002', false),
+    ('60830989', 'ASI-016', 'PER-001', 'SEC-003', false),
+    ('60830989', 'ASI-001', 'PER-001', 'SEC-004', false),
+    ('60830989', 'ASI-002', 'PER-001', 'SEC-005', false),
+
+    ('70830990', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('70830990', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('70830990', 'ASI-003', 'PER-001', 'SEC-003', false),
+
+    ('80830991', 'ASI-004', 'PER-001', 'SEC-001', false),
+    ('80830991', 'ASI-005', 'PER-001', 'SEC-002', false),
+    ('80830991', 'ASI-006', 'PER-001', 'SEC-003', false),
+
+    ('90830992', 'ASI-007', 'PER-001', 'SEC-001', false),
+    ('90830992', 'ASI-008', 'PER-001', 'SEC-002', false),
+    ('90830992', 'ASI-009', 'PER-001', 'SEC-003', false),
+
+    ('100830993', 'ASI-010', 'PER-001', 'SEC-001', false),
+    ('100830993', 'ASI-011', 'PER-001', 'SEC-002', false),
+    ('100830993', 'ASI-012', 'PER-001', 'SEC-003', false),
+
+    ('110830994', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('110830994', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('110830994', 'ASI-015', 'PER-001', 'SEC-003', false),
+
+    ('120830995', 'ASI-016', 'PER-001', 'SEC-001', false),
+    ('120830995', 'ASI-001', 'PER-001', 'SEC-002', false),
+    ('120830995', 'ASI-002', 'PER-001', 'SEC-003', false),
+
+    ('130830996', 'ASI-003', 'PER-001', 'SEC-001', false),
+    ('130830996', 'ASI-004', 'PER-001', 'SEC-002', false),
+    ('130830996', 'ASI-005', 'PER-001', 'SEC-003', false),
+
+    ('140830997', 'ASI-006', 'PER-001', 'SEC-001', false),
+    ('140830997', 'ASI-007', 'PER-001', 'SEC-002', false),
+    ('140830997', 'ASI-008', 'PER-001', 'SEC-003', false),
+
+    ('150830998', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('150830998', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('150830998', 'ASI-011', 'PER-001', 'SEC-003', false),
+
+    ('160830999', 'ASI-012', 'PER-001', 'SEC-001', false),
+    ('160830999', 'ASI-013', 'PER-001', 'SEC-002', false),
+    ('160830999', 'ASI-014', 'PER-001', 'SEC-003', false),
+
+    ('170831000', 'ASI-001', 'PER-001', 'SEC-001', false),
+    ('170831000', 'ASI-002', 'PER-001', 'SEC-002', false),
+    ('170831000', 'ASI-003', 'PER-001', 'SEC-003', false),
+    ('170831000', 'ASI-004', 'PER-001', 'SEC-004', false),
+    ('170831000', 'ASI-005', 'PER-001', 'SEC-005', false),
+    ('170831000', 'ASI-006', 'PER-001', 'SEC-006', false),
+
+    ('180831001', 'ASI-007', 'PER-001', 'SEC-001', false),
+    ('180831001', 'ASI-008', 'PER-001', 'SEC-002', false),
+    ('180831001', 'ASI-009', 'PER-001', 'SEC-003', false),
+    ('180831001', 'ASI-010', 'PER-001', 'SEC-004', false),
+    ('180831001', 'ASI-011', 'PER-001', 'SEC-005', false),
+    ('180831001', 'ASI-012', 'PER-001', 'SEC-006', false),
+
+    ('190831002', 'ASI-013', 'PER-001', 'SEC-001', false),
+    ('190831002', 'ASI-014', 'PER-001', 'SEC-002', false),
+    ('190831002', 'ASI-015', 'PER-001', 'SEC-003', false),
+    ('190831002', 'ASI-016', 'PER-001', 'SEC-004', false),
+    ('190831002', 'ASI-001', 'PER-001', 'SEC-005', false),
+    ('190831002', 'ASI-002', 'PER-001', 'SEC-006', false),
+
+    ('200831003', 'ASI-003', 'PER-001', 'SEC-001', false),
+    ('200831003', 'ASI-004', 'PER-001', 'SEC-002', false),
+    ('200831003', 'ASI-005', 'PER-001', 'SEC-003', false),
+    ('200831003', 'ASI-006', 'PER-001', 'SEC-004', false),
+    ('200831003', 'ASI-007', 'PER-001', 'SEC-005', false),
+    ('200831003', 'ASI-008', 'PER-001', 'SEC-006', false),
+
+    ('210831004', 'ASI-009', 'PER-001', 'SEC-001', false),
+    ('210831004', 'ASI-010', 'PER-001', 'SEC-002', false),
+    ('210831004', 'ASI-011', 'PER-001', 'SEC-003', false),
+    ('210831004', 'ASI-012', 'PER-001', 'SEC-004', false),
+    ('210831004', 'ASI-013', 'PER-001', 'SEC-005', false),
+    ('210831004', 'ASI-014', 'PER-001', 'SEC-006', false),
+
+    ('220831005', 'ASI-015', 'PER-001', 'SEC-001', false),
+    ('220831005', 'ASI-016', 'PER-001', 'SEC-002', false),
+    ('220831005', 'ASI-001', 'PER-001', 'SEC-003', false),
+    ('220831005', 'ASI-002', 'PER-001', 'SEC-004', false),
+    ('220831005', 'ASI-003', 'PER-001', 'SEC-005', false),
+    ('220831005', 'ASI-004', 'PER-001', 'SEC-006', false),
+
+    ('230831006', 'ASI-005', 'PER-001', 'SEC-001', false),
+    ('230831006', 'ASI-006', 'PER-001', 'SEC-002', false),
+    ('230831006', 'ASI-007', 'PER-001', 'SEC-003', false),
+    ('230831006', 'ASI-008', 'PER-001', 'SEC-004', false),
+    ('230831006', 'ASI-009', 'PER-001', 'SEC-005', false),
+    ('230831006', 'ASI-010', 'PER-001', 'SEC-006', false);
 
 CREATE TABLE "Nota_periodo" (
   "nota_periodo" varchar(25) NOT NULL,

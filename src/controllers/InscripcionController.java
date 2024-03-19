@@ -81,9 +81,13 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             return;
         }
 
-        this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
+        if (connection.getInscripcion(inscripcionFrame.getCedula())) {
+            JOptionPane.showMessageDialog(null, "El estudiante ingresado ya se encuentra inscrito", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        System.out.println(info);
+        this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
+        
         if (info == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun estudiante con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -97,7 +101,58 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         }
     }
 
-    // Method to display an alert with an "Aceptar" button
+    private void inscribirEstudiante() {
+        if (connection.getInscripcion(inscripcionFrame.getCedula())) {
+            JOptionPane.showMessageDialog(null, "El estudiante ingresado ya se encuentra inscrito", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int rowsAffected = connection.inscribirEstudiante(inscripciones);
+
+        if (rowsAffected > 0) {
+            showSuccessAlert(true);
+        } else {
+            showSuccessAlert(false);
+        }
+    }
+
+    private void manejarCambioDeSeccion(ActionEvent button) {
+        JComboBox<String> comboBox = (JComboBox<String>) button.getSource();
+        String selectedSeccion = (String) comboBox.getSelectedItem();
+
+        // Access inicioFrame to get the asignatura based on the container panel
+        Asignatura asignatura = (Asignatura) comboBox.getClientProperty("asignatura");
+        ArrayList<Seccion> secciones = (ArrayList<Seccion>) comboBox.getClientProperty("secciones");
+
+        Seccion seccionSeleccionada = null;
+        for (Seccion seccion : secciones) {
+            if (selectedSeccion.equals(String.valueOf(String.format("Seccion %s", seccion.getNumero())))) {
+                seccionSeleccionada = seccion;
+                break;
+            }
+        }
+        Profesor profesor = connection.getProfesor(asignatura.getId(), seccionSeleccionada.getId());
+
+        for (JPanel panel : inscripcionFrame.materiaPanels) {
+            JPanel entryPanel = (JPanel) panel.getComponent(1);
+            JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
+            String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
+
+            if (materiaLabel.getText().equals(asignaturaFormateada)) {
+                JLabel profesorLabel = (JLabel) entryPanel.getComponent(2);
+                profesorLabel.setText("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
+                break;
+            }
+        }
+
+        for (InscripcionData inscripcion : inscripciones) {
+            if (inscripcion.getId_asignatura().equals(asignatura.getId())) {
+                inscripcion.setId_seccion(seccionSeleccionada.getId());
+                break;
+            }
+        }
+    }
+    
     private void showSuccessAlert(boolean exitosa) {
         Object[] options = {"Aceptar"};
         int selection = JOptionPane.showOptionDialog(
@@ -110,9 +165,11 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
                 options,
                 options[0]);
 
-        System.out.println("Selected Option is OK : " + selection);
-        showInicioFrame();
-
+        if (selection == JOptionPane.OK_OPTION) {
+            showInicioFrame();
+        } else {
+            System.out.println("Selected Option Is X: " + selection);
+        }
     }
 
     @Override
@@ -122,48 +179,9 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         } else if (button.getSource() == inscripcionFrame.getCedula_button()) {
             mostrarDatos();
         } else if (button.getSource() == inscripcionFrame.getInscripcion_button()) {
-            int rowsAffected = connection.inscribirEstudiante(inscripciones);
-
-            if (rowsAffected > 0) {
-                showSuccessAlert(true);
-            } else {
-                showSuccessAlert(false);
-            }
+            inscribirEstudiante();
         } else if (button.getSource() instanceof JComboBox) {
-            JComboBox<String> comboBox = (JComboBox<String>) button.getSource();
-            String selectedSeccion = (String) comboBox.getSelectedItem();
-
-            // Access inicioFrame to get the asignatura based on the container panel
-            Asignatura asignatura = (Asignatura) comboBox.getClientProperty("asignatura");
-            ArrayList<Seccion> secciones = (ArrayList<Seccion>) comboBox.getClientProperty("secciones");
-
-            Seccion seccionSeleccionada = null;
-            for (Seccion seccion : secciones) {
-                if (selectedSeccion.equals(String.valueOf(String.format("Seccion %s", seccion.getNumero())))) {
-                    seccionSeleccionada = seccion;
-                    break;
-                }
-            }
-            Profesor profesor = connection.getProfesor(asignatura.getId(), seccionSeleccionada.getId());
-
-            for (JPanel panel : inscripcionFrame.materiaPanels) {
-                JPanel entryPanel = (JPanel) panel.getComponent(1);
-                JLabel materiaLabel = (JLabel) entryPanel.getComponent(0);
-                String asignaturaFormateada = String.format("<html><font size=\"4\" color=\"#3A9FDC\">Materia:</font> %s</html>", asignatura.getNombre());
-
-                if (materiaLabel.getText().equals(asignaturaFormateada)) {
-                    JLabel profesorLabel = (JLabel) entryPanel.getComponent(2);
-                    profesorLabel.setText("<html><font size=\"4\" color=\"#3A9FDC\">Profesor:</font> " + profesor.getNombre() + "</html>");
-                    break;
-                }
-            }
-
-            for (InscripcionData inscripcion : inscripciones) {
-                if (inscripcion.getId_asignatura().equals(asignatura.getId())) {
-                    inscripcion.setId_seccion(seccionSeleccionada.getId());
-                    break;
-                }
-            }
+            manejarCambioDeSeccion(button);
         }
     }
 
