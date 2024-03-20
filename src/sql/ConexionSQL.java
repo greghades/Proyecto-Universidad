@@ -275,15 +275,54 @@ public class ConexionSQL {
 
     public Profesor getProfesor(String idAsignatura, String idSeccion) {
         try {
-            String query = String.format("SELECT p.id_profesor, p.nombre_completo FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
+            String query = String.format("SELECT p.id_profesor, p.nombre_completo, p.especialidad FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
             ResultSet profesorSet = statement.executeQuery(query);
             Profesor profesor = null;
 
             while (profesorSet.next()) {
                 String cedula = profesorSet.getString("id_profesor");
                 String nombre = profesorSet.getString("nombre_completo");
-                profesor = new Profesor(cedula, nombre);
+                String especialidad = profesorSet.getString("especialidad");
+                profesor = new Profesor(cedula, nombre, especialidad);
             }
+            return profesor;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Profesor getDatosProfesor(String idProfesor) {
+        try {
+            String query = String.format("SELECT DISTINCT a.id_asignatura, a.nombre_asignatura, a.carga_academica, p.id_profesor, p.nombre_completo, p.correo, p.especialidad FROM public.\"Asignaturas\" a JOIN public.\"Profesor_asignatura_seccion\" pas ON a.id_asignatura = pas.id_asignatura JOIN public.\"Profesor\" p ON pas.id_profesor = p.id_profesor WHERE pas.id_profesor = '%s'", idProfesor);
+            ResultSet profesorSet = statement.executeQuery(query);
+            Profesor profesor = null;
+
+            System.out.println("id: " + idProfesor);
+            System.out.println("query: " + query);
+
+            while (profesorSet.next()) {
+                String cedula = profesorSet.getString("id_profesor");
+                System.out.println("Cedula: " + cedula);
+                String nombre = profesorSet.getString("nombre_completo");
+                System.out.println("Nombre: " + nombre);
+                String especialidad = profesorSet.getString("especialidad");
+                System.out.println("Especialidad: " + especialidad);
+
+                if (profesor == null) {
+                    profesor = new Profesor(cedula, nombre, especialidad);
+                }
+
+                String idAsignatura = profesorSet.getString("id_asignatura");
+                System.out.println("ID Asignatura: " + idAsignatura);
+                String nombreAsignatura = profesorSet.getString("nombre_asignatura");
+                System.out.println("Nombre Asignatura: " + nombreAsignatura);
+                int cargaAsignatura = profesorSet.getInt("carga_academica");
+                System.out.println("Carga Academica: " + cargaAsignatura);
+
+                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAsignatura, true);
+                profesor.setAsignatura(asignatura);
+            }
+
             return profesor;
         } catch (SQLException e) {
             return null;

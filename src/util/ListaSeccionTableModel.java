@@ -1,6 +1,18 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
 package util;
 
@@ -9,10 +21,6 @@ import javax.swing.table.AbstractTableModel;
 import models.ListadoSeccionModel;
 import java.util.Arrays;
 
-/**
- *
- * @author 58412
- */
 public class ListaSeccionTableModel extends AbstractTableModel{
     private final List<ListadoSeccionModel> listadoSeccion;
     private static final String[] columnNames = {"Seccion", "Asignatura", "Docente", "Carrera","Decanato","Promedio seccion","Numero Aprobados","Numero Aplazados","Estudiantes Por Encima del Promedio","Estudiantes Por Debajo del Promedio"};

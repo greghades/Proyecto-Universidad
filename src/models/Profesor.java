@@ -14,27 +14,35 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package models;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Profesor extends Persona {
 
+    private String especialidad;
+    private List<Asignatura> asignaturas = new ArrayList<>();
 
-//    public Profesor(String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
-//        super(cedula, nombre, apellido, correo, edad, sexo);
-//    }
-    
-    public Profesor(String cedula, String nombre) {
+    public Profesor(String cedula, String nombre, String especialidad) {
         super(cedula, nombre);
+        this.especialidad = especialidad;
     }
 
-    public void calificarEstudiante(float nota, Estudiante estudiante){
-        
-    
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
     }
-    public void listarPromedios(Seccion[] secciones){
-        
-        
-    
+
+    public void setAsignatura(Asignatura asignatura) {
+        this.asignaturas.add(asignatura);
     }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
 }
