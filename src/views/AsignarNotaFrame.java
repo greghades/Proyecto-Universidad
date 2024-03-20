@@ -24,6 +24,10 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
      private void agregarListener(ActionListener accion) {
         back_button.addActionListener(accion);
     }
+     
+      public void mostrarUI(boolean should) {
+        table_panel.setVisible(should);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
