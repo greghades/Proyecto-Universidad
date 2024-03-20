@@ -18,28 +18,15 @@ package util;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
-import models.CuatroColumnasModel;
+import models.CincoColumnasModel;
 
-public class ListadoEstudianteCuatroTableModel extends AbstractTableModel {
+public class ListadoEstudianteCincoTableModel extends AbstractTableModel {
 
-    private final List<CuatroColumnasModel> datasource;
-    private String[] columnNames = {"Num", "Cedula", "Nombre", "Calificación promedio"};
+    private final List<CincoColumnasModel> datasource;
+    private final String[] columnNames = {"Num", "Cedula", "Nombre", "Género", "Carrera", "Decanato"};
 
-    public ListadoEstudianteCuatroTableModel(List<CuatroColumnasModel> datasource, String extra) {
+    public ListadoEstudianteCincoTableModel(List<CincoColumnasModel> datasource) {
         this.datasource = datasource;
-
-        String[] newColumnNames = new String[columnNames.length + 1];
-        int extraIndex = 2; // Índice donde deseas insertar el valor extra
-        for (int i = 0; i < newColumnNames.length; i++) {
-            if (i < extraIndex) {
-                newColumnNames[i] = columnNames[i];
-            } else if (i == extraIndex) {
-                newColumnNames[i] = extra;
-            } else {
-                newColumnNames[i] = columnNames[i - 1];
-            }
-        }
-        columnNames = newColumnNames;
     }
 
     public void removeRow(int row) {
@@ -63,7 +50,7 @@ public class ListadoEstudianteCuatroTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        CuatroColumnasModel data = datasource.get(rowIndex);
+        CincoColumnasModel data = datasource.get(rowIndex);
         return switch (columnIndex) {
             case 0 ->
                 rowIndex + 1;
@@ -72,9 +59,11 @@ public class ListadoEstudianteCuatroTableModel extends AbstractTableModel {
             case 2 ->
                 data.getNombre();
             case 3 ->
-                data.getExtra();
+                data.getGenero();
             case 4 ->
-                data.getPromedio();
+                data.getCarrera();
+            case 5 ->
+                data.getDecanato();
             default ->
                 null;
         };
@@ -92,6 +81,8 @@ public class ListadoEstudianteCuatroTableModel extends AbstractTableModel {
             case 3 ->
                 String.class;
             case 4 ->
+                String.class;
+            case 5 ->
                 String.class;
             default ->
                 null;

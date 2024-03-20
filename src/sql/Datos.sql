@@ -377,6 +377,7 @@ CREATE TABLE "Inscripcion" (
       REFERENCES "Secciones"("id_seccion")
 );
 
+-- Insercion de registros de inscripcion para 67 estudiantes, excluyendo al equipo
 INSERT INTO public."Inscripcion"(id_estudiante, id_asignatura, id_periodo, id_seccion, estado) VALUES 
     ('30276543', 'ASI-001', 'PER-001', 'SEC-001', false),
     ('30276543', 'ASI-002', 'PER-001', 'SEC-002', false),
@@ -707,6 +708,7 @@ INSERT INTO public."Inscripcion"(id_estudiante, id_asignatura, id_periodo, id_se
     ('230831006', 'ASI-009', 'PER-001', 'SEC-005', false),
     ('230831006', 'ASI-010', 'PER-001', 'SEC-006', false);
 
+-- Creacion de la tabla nota estudiante
 CREATE TABLE "Nota_estudiante" (
   "id_nota_estudiante" serial primary key,
   "id_estudiante" varchar(25) NOT NULL,
@@ -724,6 +726,17 @@ CREATE TABLE "Nota_estudiante" (
       REFERENCES "Secciones"("id_seccion")
 );
 
+-- Primero, asignamos notas aleatorias a los estudiantes existentes
 INSERT INTO public."Nota_estudiante" (id_estudiante, id_asignatura, id_seccion, nota)
 SELECT ins.id_estudiante, ins.id_asignatura, ins.id_seccion, FLOOR(RANDOM() * 20) + 1
 FROM public."Inscripcion" ins;
+
+-- Asignar notas más altas a algunos estudiantes específicos para garantizar que al menos 30 tengan promedios superiores a 16
+UPDATE public."Nota_estudiante" ne
+SET nota = FLOOR(RANDOM() * 5) + 16  -- Genera notas aleatorias entre 16 y 20
+WHERE ne.id_estudiante IN (
+    SELECT id_estudiante
+    FROM public."Estudiantes"
+    ORDER BY RANDOM()
+    LIMIT 30  -- Selecciona 30 estudiantes al azar
+);

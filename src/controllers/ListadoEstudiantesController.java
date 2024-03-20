@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JComboBox;
+import models.CincoColumnasModel;
 import models.CuatroColumnasModel;
 import models.TresColumnasModel;
 import sql.ConexionSQL;
@@ -64,6 +65,8 @@ public class ListadoEstudiantesController implements ActionListener {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(listadoEstudiantesFrame);
         listadoEstudiantesFrame.setVisible(true);
+        listadoEstudiantesFrame.limpiarUI();
+        listadoEstudiantesFrame.mostrarUI(false);
     }
 
     private void showInicioFrame() {
@@ -82,59 +85,45 @@ public class ListadoEstudiantesController implements ActionListener {
         listadoEstudiantesFrame.getCmb_listado_estudiantes().transferFocus();
         switch (tipoSeleccionado) {
             case "Seleccione listado":
-                listadoEstudiantesFrame.limpiarTabla();
+                listadoEstudiantesFrame.limpiarUI();
                 break;
             case "Por carrera":
                 ArrayList<TresColumnasModel> datasourceCarrera = connection.getEstudiantesTres("carrera");
                 if (datasourceCarrera != null) {
-                    System.out.println("carrera");
-                    listadoEstudiantesFrame.setupTableTres(datasourceCarrera, "Carrera", "Por carrera");
-                    listadoEstudiantesFrame.displayUI(true);
+                    listadoEstudiantesFrame.configurarTablaTresColumnas(datasourceCarrera, "Carrera", "Por carrera");
                 }
                 break;
             case "Por semestre":
                 ArrayList<TresColumnasModel> datasourceSemestre = connection.getEstudiantesTres("semestre");
                 if (datasourceSemestre != null) {
-                    System.out.println("semestre");
-                    listadoEstudiantesFrame.setupTableTres(datasourceSemestre, "Semestre",  "Por semestre");
-                    listadoEstudiantesFrame.displayUI(true);
+                    listadoEstudiantesFrame.configurarTablaTresColumnas(datasourceSemestre, "Semestre",  "Por semestre");
                 }
                 break;
             case "20 mejores promedios por carrera":
-                // cedula, nombre, carrera, promedio
                 ArrayList<CuatroColumnasModel> datasource20Carrera = connection.getEstudiantesCuatro("20 promedios carrera");
                 if (datasource20Carrera != null) {
-                    System.out.println("semestre");
-                    listadoEstudiantesFrame.setupTableCuatro(datasource20Carrera, "Carrera",  "20 mejores promedios por carrera");
-                    listadoEstudiantesFrame.displayUI(true);
+                    listadoEstudiantesFrame.configurarTablaCuatroColumnas(datasource20Carrera, "Carrera",  "20 mejores promedios por carrera");
                 }
-                System.out.println("20 mejores promedios por carrera");
-                // Handle selection for "20 mejores promedios por carrera"
                 break;
             case "Genero de carrera y decanato":
-                // cedula, nombre, genero, carrera, decanato
-                System.out.println("Genero");
-                // Handle selection for "Genero de carrera y decanato"
+                ArrayList<CincoColumnasModel> datasourcegenero = connection.getEstudiantesCinco();
+                if (datasourcegenero != null) {
+                    listadoEstudiantesFrame.configurarTablaCincoColumnas(datasourcegenero, "Genero de carrera y decanato");
+                }
                 break;
             case "20 mejores promedios por decanato":
-                // cedula, nombre, decanato, promedio
                 ArrayList<CuatroColumnasModel> datasource20Decanato = connection.getEstudiantesCuatro("20 promedios decanato");
                 if (datasource20Decanato != null) {
-                    System.out.println("semestre");
-                    listadoEstudiantesFrame.setupTableCuatro(datasource20Decanato, "Decanato",  "20 mejores promedios por decanato");
-                    listadoEstudiantesFrame.displayUI(true);
+                    listadoEstudiantesFrame.configurarTablaCuatroColumnas(datasource20Decanato, "Decanato",  "20 mejores promedios por decanato");
                 }
-                System.out.println("20 mejores promedios por decanato");
-                // Handle selection for "20 mejores promedios por decanato"
                 break;
             case "Promedios por encima de 16 puntos":
-                // cedula, nombre, promedio
-                System.out.println("Promedios por encima de 16");
-                // Handle selection for "Promedios por encima de 16 puntos"
+                ArrayList<TresColumnasModel> datasource16promedios = connection.getEstudiantesTres("16 promedios");
+                if (datasource16promedios != null) {
+                    listadoEstudiantesFrame.configurarTablaTresColumnas(datasource16promedios, "Calificación promedio",  "Promedios por encima de 16 puntos");
+                }
                 break;
             default:
-                System.out.println("Random");
-                // Handle unknown selection
                 break;
         }
     }

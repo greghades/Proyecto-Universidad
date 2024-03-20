@@ -27,8 +27,10 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import models.CincoColumnasModel;
 import models.CuatroColumnasModel;
 import models.TresColumnasModel;
+import util.ListadoEstudianteCincoTableModel;
 import util.ListadoEstudianteCuatroTableModel;
 import util.ListadoEstudianteTresTableModel;
 
@@ -40,7 +42,6 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         super("Proyecto: Universidad Central de Lara");
         this.controller = controller;
         initComponents();
-        displayUI(false);
         cmb_listado_estudiantes.setBackground(Color.white);
         agregarListener(controller);
     }
@@ -50,40 +51,45 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         cmb_listado_estudiantes.addActionListener(accion);
     }
 
-    public void displayUI(boolean should) {
+    public void mostrarUI(boolean should) {
         table_panel.setVisible(should);
     }
 
     public void setupComboBox(List<String> opciones) {
         cmb_listado_estudiantes.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
     }
+    
+    private void actualizarUI(String option) {
+        cmb_listado_estudiantes.setSelectedItem(option);
+        table_listado_estudiante.setPreferredScrollableViewportSize(table_listado_estudiante.getPreferredSize());
+        configurarColumnas();
+    }
 
-    public void setupTableTres(List<TresColumnasModel> datasource, String type, String option) {
-        limpiarTabla();
-
-        // Instanciar el modelo para pintar la tabla.
+    public void configurarTablaTresColumnas(List<TresColumnasModel> datasource, String type, String option) {
+        limpiarUI();
         ListadoEstudianteTresTableModel model = new ListadoEstudianteTresTableModel(datasource, type);
         table_listado_estudiante.setModel(model);
-        table_listado_estudiante.setPreferredScrollableViewportSize(table_listado_estudiante.getPreferredSize());
-        cmb_listado_estudiantes.setSelectedItem(option);
-        configurarColumnas();
+        actualizarUI(option);
     }
     
-    public void setupTableCuatro(List<CuatroColumnasModel> datasource, String type, String option) {
-        limpiarTabla();
-
-        // Instanciar el modelo para pintar la tabla.
+    public void configurarTablaCuatroColumnas(List<CuatroColumnasModel> datasource, String type, String option) {
+        limpiarUI();
         ListadoEstudianteCuatroTableModel model = new ListadoEstudianteCuatroTableModel(datasource, type);
         table_listado_estudiante.setModel(model);
-        table_listado_estudiante.setPreferredScrollableViewportSize(table_listado_estudiante.getPreferredSize());
-        cmb_listado_estudiantes.setSelectedItem(option);
-        configurarColumnas();
+        actualizarUI(option);
+    }
+    
+    public void configurarTablaCincoColumnas(List<CincoColumnasModel> datasource, String option) {
+        limpiarUI();
+        ListadoEstudianteCincoTableModel model = new ListadoEstudianteCincoTableModel(datasource);
+        table_listado_estudiante.setModel(model);
+        actualizarUI(option);
     }
 
-    public void limpiarTabla() {
-        // Limpiar la tabla para evitar duplicados.
+    public void limpiarUI() {
+        // Limpiar el UI 
         cmb_listado_estudiantes.setSelectedItem("Seleccione listado");
-//        table_listado_estudiante.setModel(null);
+        mostrarUI(false);
         if (table_listado_estudiante.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = table_listado_estudiante.getColumnModel();
             while (columnModel.getColumnCount() > 0) {
@@ -97,20 +103,20 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         // Asignar un ancho mayor a la primera columna
         TableColumnModel columnModel = table_listado_estudiante.getColumnModel();
         TableColumn firstColumn = columnModel.getColumn(0);
-        firstColumn.setPreferredWidth(100);
-        TableColumn secondColumn = columnModel.getColumn(1);
-        secondColumn.setPreferredWidth(200);
-        TableColumn thirdColumn = columnModel.getColumn(2);
-        thirdColumn.setPreferredWidth(200);
+        firstColumn.setMaxWidth(50);
+        
+        for (int i = 1; i < columnModel.getColumnCount(); i++) {
+            columnModel.getColumn(i).setResizable(true);
+            columnModel.getColumn(i).setMaxWidth(10000); 
+        }
 
         // Centrar el contenido de las columnas.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int x = 0; x < table_listado_estudiante.getColumnCount(); x++) {
-            if (x != 3) {
-                table_listado_estudiante.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
-            }
+            table_listado_estudiante.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
         }
+        mostrarUI(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -197,6 +203,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         estudiantes_title_label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         estudiantes_title_label.setPreferredSize(new java.awt.Dimension(120, 32));
 
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setBorder(null);
 
         table_listado_estudiante.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
@@ -207,7 +214,15 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
             new String [] {
                 "Cedula", "Nombre", "Extra"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         table_listado_estudiante.setFocusable(false);
         table_listado_estudiante.setGridColor(new java.awt.Color(37, 92, 125));
         table_listado_estudiante.setRequestFocusEnabled(false);
@@ -219,6 +234,11 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         table_listado_estudiante.setUpdateSelectionOnSort(false);
         table_listado_estudiante.setVerifyInputWhenFocusTarget(false);
         jScrollPane3.setViewportView(table_listado_estudiante);
+        if (table_listado_estudiante.getColumnModel().getColumnCount() > 0) {
+            table_listado_estudiante.getColumnModel().getColumn(0).setResizable(false);
+            table_listado_estudiante.getColumnModel().getColumn(1).setResizable(false);
+            table_listado_estudiante.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout table_panelLayout = new javax.swing.GroupLayout(table_panel);
         table_panel.setLayout(table_panelLayout);

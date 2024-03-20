@@ -24,7 +24,7 @@ import models.TresColumnasModel;
 public class ListadoEstudianteTresTableModel extends AbstractTableModel {
 
     private final List<TresColumnasModel> datasource;
-    private String[] columnNames = {"Cedula", "Nombre"};
+    private String[] columnNames = {"Num", "Cedula", "Nombre"};
 
     public ListadoEstudianteTresTableModel(List<TresColumnasModel> datasource, String extra) {
         this.datasource = datasource;
@@ -56,10 +56,12 @@ public class ListadoEstudianteTresTableModel extends AbstractTableModel {
         TresColumnasModel data = datasource.get(rowIndex);
         return switch (columnIndex) {
             case 0 ->
-                data.getCedula();
+                rowIndex + 1;
             case 1 ->
-                data.getNombre();
+                data.getCedula();
             case 2 ->
+                data.getNombre();
+            case 3 ->
                 data.getExtra();
             default ->
                 null;
@@ -70,10 +72,12 @@ public class ListadoEstudianteTresTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 ->
-                String.class;
+                Integer.class;
             case 1 ->
                 String.class;
             case 2 ->
+                String.class;
+            case 3 ->
                 String.class;
             default ->
                 null;
