@@ -18,8 +18,10 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.JOptionPane;
+import models.ListadoSeccionModel;
 import sql.ConexionSQL;
-import util.CheckableCellEventListener;
 import util.PantallaCompleta;
 import views.ListaSeccionFrame;
 
@@ -48,6 +50,7 @@ public class ListaSeccionController implements ActionListener {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(listaSeccionFrame);
         listaSeccionFrame.setVisible(true);
+        MostrarSeciones();
     }
 
     private void showInicioFrame() {
@@ -62,6 +65,18 @@ public class ListaSeccionController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         showInicioFrame();
+    }
+    
+    public void MostrarSeciones(){
+        
+        List<ListadoSeccionModel> secciones = connection.getListadoSeccion();
+        
+        if (secciones == null) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las secciones correctamente", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            listaSeccionFrame.setupTable(secciones);
+            listaSeccionFrame.displayUI(true);
+        }
     }
 
 }

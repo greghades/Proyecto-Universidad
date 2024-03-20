@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import models.*;
 
 public class ConexionSQL {
@@ -199,7 +201,7 @@ public class ConexionSQL {
                 float promedio = estudiantesSet.getFloat("promedio_notas");
                 DecimalFormat df = new DecimalFormat("#.##");
                 String promedioText = df.format(promedio);
-                
+
                 String extra;
                 if (filtro.equals("20 promedios carrera")) {
                     extra = estudiantesSet.getString("nombre_carrera");
@@ -222,7 +224,7 @@ public class ConexionSQL {
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
 
             ArrayList<CincoColumnasModel> estudiantesList = new ArrayList<>();
-            
+
             while (estudiantesSet.next()) {
                 String cedula = estudiantesSet.getString("id_estudiante");
                 String nombreEstudiante = estudiantesSet.getString("nombre_completo");
@@ -308,6 +310,83 @@ public class ConexionSQL {
             System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
             return -1;
         }
+    }
+
+    public List<ListadoSeccionModel> getListadoSeccion() {
+
+        try {
+
+            String seccionesQuery = String.format("WITH Promedio_Seccion AS (SELECT ne.id_seccion, ROUND(AVG(ne.nota)::numeric, 2) AS promedio_seccion FROM public.\"Nota_estudiante\" ne GROUP BY ne.id_seccion) SELECT s.numero_seccion, a.nombre_asignatura, p.nombre_completo, c.nombre_carrera, d.nombre_decanato, ROUND(PS.promedio_seccion, 2) AS promedio_seccion, SUM(CASE WHEN ne.nota >= 10 THEN 1 ELSE 0 END) AS numero_aprobados, SUM(CASE WHEN ne.nota < 10 THEN 1 ELSE 0 END) AS numero_reprobados, ARRAY_AGG(CASE WHEN ne.nota >= PS.promedio_seccion THEN e.nombre_completo END) AS e_encimaP, ARRAY_AGG(CASE WHEN ne.nota < PS.promedio_seccion THEN e.nombre_completo END) AS e_debajoP FROM public.\"Nota_estudiante\" ne JOIN public.\"Estudiantes\" e ON ne.id_estudiante = e.id_estudiante JOIN public.\"Asignaturas_carrera\" ac ON ne.id_asignatura = ac.id_asignatura JOIN public.\"Carreras\" c ON ac.id_carrera = c.id_carrera JOIN public.\"Decanatos\" d ON c.id_decanato = d.id_decanato JOIN public.\"Asignaturas\" a ON ne.id_asignatura = a.id_asignatura JOIN public.\"Secciones\" s ON ne.id_seccion = s.id_seccion JOIN public.\"Profesor_asignatura_seccion\" pas ON ne.id_seccion = pas.id_seccion AND ne.id_asignatura = pas.id_asignatura JOIN public.\"Profesor\" p ON pas.id_profesor = p.id_profesor JOIN Promedio_Seccion PS ON ne.id_seccion = PS.id_seccion GROUP BY d.nombre_decanato, c.nombre_carrera, a.nombre_asignatura, s.numero_seccion, p.nombre_completo, PS.promedio_seccion");
+
+            ResultSet seccionesResultSet = statement.executeQuery(seccionesQuery);
+
+            ArrayList<ListadoSeccionModel> secciones = new ArrayList<>();
+
+            while (seccionesResultSet.next()) {
+                String numeroSeccion = seccionesResultSet.getString("numero_seccion");
+                System.out.println("Numero de Seccion: " + numeroSeccion);
+
+                String nombreAsignatura = seccionesResultSet.getString("nombre_asignatura");
+                System.out.println("Nombre de Asignatura: " + nombreAsignatura);
+
+                String nombreCompleto = seccionesResultSet.getString("nombre_completo");
+                System.out.println("Nombre Completo: " + nombreCompleto);
+
+                String nombreCarrera = seccionesResultSet.getString("nombre_carrera");
+                System.out.println("Nombre de Carrera: " + nombreCarrera);
+
+                String nombreDecanato = seccionesResultSet.getString("nombre_decanato");
+                System.out.println("Nombre de Decanato: " + nombreDecanato);
+
+                float promedioSeccion = seccionesResultSet.getFloat("promedio_seccion");
+                System.out.println("Promedio de la Seccion: " + promedioSeccion);
+
+                int numeroAprobados = seccionesResultSet.getInt("numero_aprobados");
+                System.out.println("Numero de Aprobados: " + numeroAprobados);
+
+                int numeroReprobados = seccionesResultSet.getInt("numero_reprobados");
+                System.out.println("Numero de Reprobados: " + numeroReprobados);
+
+                Array estudiantesEncimaPromedioArray = seccionesResultSet.getArray("e_encimap");
+                // Obtener los estudiantes encima del promedio sin valores nulos
+                String[] estudiantesEncimaPromedio = filterNullValues(estudiantesEncimaPromedioArray);
+                System.out.println("Estudiantes encima del promedio: " + Arrays.toString(estudiantesEncimaPromedio));
+
+                Array estudiantesDebajoPromedioArray = seccionesResultSet.getArray("e_debajop");
+                // Obtener los estudiantes debajo del promedio sin valores nulos
+                String[] estudiantesDebajoPromedio = filterNullValues(estudiantesDebajoPromedioArray);
+                System.out.println("Estudiantes debajo del promedio: " + Arrays.toString(estudiantesDebajoPromedio));
+
+                ListadoSeccionModel seccion = new ListadoSeccionModel(numeroSeccion, nombreAsignatura, nombreCompleto, nombreCarrera, nombreDecanato, promedioSeccion, numeroAprobados, numeroReprobados, estudiantesEncimaPromedio, estudiantesDebajoPromedio);
+
+                secciones.add(seccion);
+            }
+
+            return secciones;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+
+    }
+
+    // Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
+    private String[] filterNullValues(Array array) throws SQLException {
+        if (array == null) {
+            return new String[0]; // Retorna un arreglo vacío si el Array es nulo
+        }
+
+        // Obtiene el arreglo de Object y filtra los valores nulos
+        Object[] arrayData = (Object[]) array.getArray();
+        List<String> filteredList = new ArrayList<>();
+        for (Object obj : arrayData) {
+            if (obj != null) {
+                filteredList.add(obj.toString());
+            }
+        }
+
+        // Convierte la lista filtrada de vuelta a un arreglo de String
+        return filteredList.toArray(new String[0]);
     }
 
     public void cerrar() {
