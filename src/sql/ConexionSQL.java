@@ -55,7 +55,7 @@ public class ConexionSQL {
             System.out.println("conexion fallida");
         }
     }
-    
+
     public boolean getInscripcion(String id) {
         try {
             String query = String.format("SELECT i.id_estudiante FROM public.\"Inscripcion\" AS i WHERE i.id_estudiante = '%s'", id);
@@ -64,7 +64,7 @@ public class ConexionSQL {
 
             while (inscripcionSet.next()) {
                 String cedula = inscripcionSet.getString("id_estudiante");
-                
+
                 estaInscrito = cedula.equals(id);
             }
 
@@ -142,7 +142,44 @@ public class ConexionSQL {
             return null;
         }
     }
-    
+
+    public ArrayList<TresColumnasModel> getEstudiantes(String filtro) {
+        try {
+            String estudiantesQuery;
+
+            if (filtro.equals("carrera")) {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, c.nombre_carrera FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera";
+            } else {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, s.nombre_semestre FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Semestre_Asignatura\" sa ON i.id_asignatura = sa.id_asignatura JOIN public.\"Semestre\" s ON sa.id_semestre = s.id_semestre";
+            }
+            ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
+
+            ArrayList<TresColumnasModel> estudiantesList = new ArrayList<>();
+
+            System.out.println("before while: " + estudiantesQuery);
+            while (estudiantesSet.next()) {
+//                System.out.println("inside while 1");
+                String cedula = estudiantesSet.getString("id_estudiante");
+                String nombreEstudiante = estudiantesSet.getString("nombre_completo");
+
+//                System.out.println("inside while 2: " + cedula + " " + nombreEstudiante);
+                String extra;
+                if (filtro.equals("carrera")) {
+                    extra = estudiantesSet.getString("nombre_carrera");
+                } else {
+                    extra = estudiantesSet.getString("nombre_semestre");
+                }
+//                System.out.println("inside while 3: " + cedula + " " + nombreEstudiante + " " + extra);
+
+                TresColumnasModel model = new TresColumnasModel(cedula, nombreEstudiante, extra);
+                estudiantesList.add(model);
+            }
+            return estudiantesList;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
 //haciendo arreglos en estudiante:
     public ArrayList<Estudiante> getEstudiantes() {
         try {

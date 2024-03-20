@@ -19,6 +19,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import sql.ConexionSQL;
+import util.CheckableCellEventListener;
 import util.PantallaCompleta;
 import views.ListaSeccionFrame;
 
