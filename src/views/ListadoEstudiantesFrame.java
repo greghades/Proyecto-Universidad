@@ -27,13 +27,15 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import models.CuatroColumnasModel;
 import models.TresColumnasModel;
+import util.ListadoEstudianteCuatroTableModel;
 import util.ListadoEstudianteTresTableModel;
 
 public class ListadoEstudiantesFrame extends javax.swing.JFrame {
 
     public ListadoEstudiantesController controller;
-    
+
     public ListadoEstudiantesFrame(ListadoEstudiantesController controller) {
         super("Proyecto: Universidad Central de Lara");
         this.controller = controller;
@@ -51,19 +53,30 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     public void displayUI(boolean should) {
         table_panel.setVisible(should);
     }
-    
+
     public void setupComboBox(List<String> opciones) {
         cmb_listado_estudiantes.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
     }
 
-    public void setupTable(List<TresColumnasModel> datasource, String type) {
+    public void setupTableTres(List<TresColumnasModel> datasource, String type, String option) {
         limpiarTabla();
 
         // Instanciar el modelo para pintar la tabla.
         ListadoEstudianteTresTableModel model = new ListadoEstudianteTresTableModel(datasource, type);
         table_listado_estudiante.setModel(model);
         table_listado_estudiante.setPreferredScrollableViewportSize(table_listado_estudiante.getPreferredSize());
+        cmb_listado_estudiantes.setSelectedItem(option);
+        configurarColumnas();
+    }
+    
+    public void setupTableCuatro(List<CuatroColumnasModel> datasource, String type, String option) {
+        limpiarTabla();
 
+        // Instanciar el modelo para pintar la tabla.
+        ListadoEstudianteCuatroTableModel model = new ListadoEstudianteCuatroTableModel(datasource, type);
+        table_listado_estudiante.setModel(model);
+        table_listado_estudiante.setPreferredScrollableViewportSize(table_listado_estudiante.getPreferredSize());
+        cmb_listado_estudiantes.setSelectedItem(option);
         configurarColumnas();
     }
 
@@ -104,7 +117,6 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         title_label = new javax.swing.JLabel();
@@ -145,9 +157,9 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 189, Short.MAX_VALUE)
+                .addGap(0, 121, Short.MAX_VALUE)
                 .addComponent(title_label)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +233,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(estudiantes_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -259,7 +271,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 863, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
@@ -316,7 +328,6 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable table_listado_estudiante;
     private javax.swing.JPanel table_panel;

@@ -143,14 +143,14 @@ public class ConexionSQL {
         }
     }
 
-    public ArrayList<TresColumnasModel> getEstudiantes(String filtro) {
+    public ArrayList<TresColumnasModel> getEstudiantesTres(String filtro) {
         try {
             String estudiantesQuery;
 
             if (filtro.equals("carrera")) {
                 estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, c.nombre_carrera FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera";
             } else {
-                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, s.nombre_semestre FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Semestre_Asignatura\" sa ON i.id_asignatura = sa.id_asignatura JOIN public.\"Semestre\" s ON sa.id_semestre = s.id_semestre";
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, min(s.numero_semestre) as numSem FROM public.\"Inscripcion\" i JOIN public.\"Estudiantes\" e ON i.id_estudiante = e.id_estudiante  JOIN public.\"Semestre_Asignatura\" sa ON i.id_asignatura = sa.id_asignatura  JOIN public.\"Semestre\" s ON sa.id_semestre = s.id_semestre GROUP BY e.id_estudiante, e.nombre_completo ORDER BY numSem";
             }
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
 
@@ -158,20 +158,53 @@ public class ConexionSQL {
 
             System.out.println("before while: " + estudiantesQuery);
             while (estudiantesSet.next()) {
-//                System.out.println("inside while 1");
                 String cedula = estudiantesSet.getString("id_estudiante");
                 String nombreEstudiante = estudiantesSet.getString("nombre_completo");
 
-//                System.out.println("inside while 2: " + cedula + " " + nombreEstudiante);
                 String extra;
                 if (filtro.equals("carrera")) {
                     extra = estudiantesSet.getString("nombre_carrera");
                 } else {
-                    extra = estudiantesSet.getString("nombre_semestre");
+                    int semestre = estudiantesSet.getInt("numsem");
+                    extra = String.format("Semestre %s", semestre);
                 }
-//                System.out.println("inside while 3: " + cedula + " " + nombreEstudiante + " " + extra);
 
                 TresColumnasModel model = new TresColumnasModel(cedula, nombreEstudiante, extra);
+                estudiantesList.add(model);
+            }
+            return estudiantesList;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    public ArrayList<CuatroColumnasModel> getEstudiantesCuatro(String filtro) {
+        try {
+            String estudiantesQuery;
+
+            if (filtro.equals("20 promedios carrera")) {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, c.nombre_carrera, AVG(ne.nota) AS promedio_notas FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Nota_estudiante\" ne ON i.id_estudiante = ne.id_estudiante AND i.id_asignatura = ne.id_asignatura AND i.id_seccion = ne.id_seccion GROUP BY e.id_estudiante, e.nombre_completo, c.nombre_carrera ORDER BY promedio_notas DESC LIMIT 20";
+            } else {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, d.nombre_decanato, AVG(ne.nota) AS promedio_notas FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Decanatos\" d ON c.id_decanato = d.id_decanato JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Nota_estudiante\" ne ON i.id_estudiante = ne.id_estudiante AND i.id_asignatura = ne.id_asignatura AND i.id_seccion = ne.id_seccion GROUP BY e.id_estudiante, e.nombre_completo, d.nombre_decanato ORDER BY promedio_notas DESC LIMIT 20";
+            }
+            ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
+
+            ArrayList<CuatroColumnasModel> estudiantesList = new ArrayList<>();
+
+            System.out.println("before while: " + estudiantesQuery);
+            while (estudiantesSet.next()) {
+                String cedula = estudiantesSet.getString("id_estudiante");
+                String nombreEstudiante = estudiantesSet.getString("nombre_completo");
+                float promedio = estudiantesSet.getFloat("promedio_notas");
+
+                String extra;
+                if (filtro.equals("20 promedios carrera")) {
+                    extra = estudiantesSet.getString("nombre_carrera");
+                } else {
+                    extra = estudiantesSet.getString("nombre_decanato");
+                }
+
+                CuatroColumnasModel model = new CuatroColumnasModel(cedula, nombreEstudiante, extra, String.valueOf(promedio));
                 estudiantesList.add(model);
             }
             return estudiantesList;
