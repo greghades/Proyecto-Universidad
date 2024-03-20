@@ -403,7 +403,17 @@ public class InscripcionFrame extends javax.swing.JFrame {
 
         table_panel.setBackground(new java.awt.Color(255, 255, 255));
 
+        jScrollPane1.setBorder(null);
+
         materias_table.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        materias_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Materia", "Carga académica", "Inclusión", "Sección"
+            }
+        ));
         materias_table.setFocusable(false);
         materias_table.setGridColor(new java.awt.Color(37, 92, 125));
         materias_table.setRequestFocusEnabled(false);

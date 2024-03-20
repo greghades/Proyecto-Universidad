@@ -37,6 +37,7 @@ public class InicioFrame extends javax.swing.JFrame {
         listado_seccion_button.addActionListener(accion);
         listado_estudiante_button.addActionListener(accion);
         retirar_materia_button.addActionListener(accion);
+        asignar_nota_button.addActionListener(accion);
     }
 
     public JButton getInscripcion_button() {

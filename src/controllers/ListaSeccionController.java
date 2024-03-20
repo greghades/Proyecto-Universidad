@@ -23,6 +23,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import models.ListadoSeccionModel;
 import sql.ConexionSQL;
+import util.CheckableCellEventListener;
 import util.PantallaCompleta;
 import views.ListaSeccionFrame;
 

@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import models.*;
@@ -56,7 +57,7 @@ public class ConexionSQL {
             System.out.println("conexion fallida");
         }
     }
-    
+
     public boolean getInscripcion(String id) {
         try {
             String query = String.format("SELECT i.id_estudiante FROM public.\"Inscripcion\" AS i WHERE i.id_estudiante = '%s'", id);
@@ -65,7 +66,7 @@ public class ConexionSQL {
 
             while (inscripcionSet.next()) {
                 String cedula = inscripcionSet.getString("id_estudiante");
-                
+
                 estaInscrito = cedula.equals(id);
             }
 
@@ -114,8 +115,6 @@ public class ConexionSQL {
 
                 periodoAcademico = new PeriodoAcademico(id_periodo, nombre_periodo_a, fecha_inicio, fecha_final);
             }
-
-//            System.out.println("Periodo: " + periodoAcademico.getNombre());
             return periodoAcademico;
         } catch (SQLException e) {
             return null;
@@ -143,30 +142,98 @@ public class ConexionSQL {
             return null;
         }
     }
-    
-//haciendo arreglos en estudiante:
-    public ArrayList<Estudiante> getEstudiantes() {
+
+    public ArrayList<TresColumnasModel> getEstudiantesTres(String filtro) {
         try {
-            String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera";
+            String estudiantesQuery;
+
+            if (filtro.equals("carrera")) {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, c.nombre_carrera FROM public.\"Inscripcion\" i JOIN public.\"Estudiantes\" e ON i.id_estudiante = e.id_estudiante JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera GROUP BY e.id_estudiante, e.nombre_completo, c.nombre_carrera ORDER BY c.nombre_carrera";
+            } else if (filtro.equals("16 promedios")) {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, AVG(ne.nota) AS promedio_notas FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Nota_estudiante\" ne ON i.id_estudiante = ne.id_estudiante AND i.id_asignatura = ne.id_asignatura AND i.id_seccion = ne.id_seccion GROUP BY e.id_estudiante, e.nombre_completo HAVING AVG(ne.nota) >= 16 ORDER BY promedio_notas DESC";
+            } else {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, min(s.numero_semestre) as numSem FROM public.\"Inscripcion\" i JOIN public.\"Estudiantes\" e ON i.id_estudiante = e.id_estudiante  JOIN public.\"Semestre_Asignatura\" sa ON i.id_asignatura = sa.id_asignatura  JOIN public.\"Semestre\" s ON sa.id_semestre = s.id_semestre GROUP BY e.id_estudiante, e.nombre_completo ORDER BY numSem";
+            }
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
 
-            ArrayList<Estudiante> estudiantesList = new ArrayList<>();
-
+            ArrayList<TresColumnasModel> estudiantesList = new ArrayList<>();
             while (estudiantesSet.next()) {
                 String cedula = estudiantesSet.getString("id_estudiante");
-                String nombreEstudiante = estudiantesSet.getString("nombre_estudiante");
-                String apellidoEstudiante = estudiantesSet.getString("apellido_estudiante");
-                String correoEstudiante = estudiantesSet.getString("correo_estudiante");
-                int edad = estudiantesSet.getInt("edad");
-                String sexoEstudiante = estudiantesSet.getString("sexo_estudiante");
-                String idCarrera = estudiantesSet.getString("id_carrera");
-                String nombreCarrera = estudiantesSet.getString("nombre_carrera");
+                String nombreEstudiante = estudiantesSet.getString("nombre_completo");
 
-                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
-                Estudiante estudiante = new Estudiante(carrera, cedula, nombreEstudiante, apellidoEstudiante, correoEstudiante, edad, sexoEstudiante);
-                estudiantesList.add(estudiante);
+                String extra;
+                if (filtro.equals("carrera")) {
+                    extra = estudiantesSet.getString("nombre_carrera");
+                } else if (filtro.equals("16 promedios")) {
+                    float promedio = estudiantesSet.getFloat("promedio_notas");
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    extra = df.format(promedio);
+                } else {
+                    int semestre = estudiantesSet.getInt("numsem");
+                    extra = String.format("Semestre %s", semestre);
+                }
+
+                TresColumnasModel model = new TresColumnasModel(cedula, nombreEstudiante, extra);
+                estudiantesList.add(model);
             }
-//            System.out.println("estudiantes: " + estudiantesList);
+            return estudiantesList;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<CuatroColumnasModel> getEstudiantesCuatro(String filtro) {
+        try {
+            String estudiantesQuery;
+
+            if (filtro.equals("20 promedios carrera")) {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, c.nombre_carrera, AVG(ne.nota) AS promedio_notas FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Nota_estudiante\" ne ON i.id_estudiante = ne.id_estudiante AND i.id_asignatura = ne.id_asignatura AND i.id_seccion = ne.id_seccion GROUP BY e.id_estudiante, e.nombre_completo, c.nombre_carrera ORDER BY promedio_notas DESC LIMIT 20";
+            } else {
+                estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, d.nombre_decanato, AVG(ne.nota) AS promedio_notas FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Decanatos\" d ON c.id_decanato = d.id_decanato JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Nota_estudiante\" ne ON i.id_estudiante = ne.id_estudiante AND i.id_asignatura = ne.id_asignatura AND i.id_seccion = ne.id_seccion GROUP BY e.id_estudiante, e.nombre_completo, d.nombre_decanato ORDER BY promedio_notas DESC LIMIT 20";
+            }
+            ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
+
+            ArrayList<CuatroColumnasModel> estudiantesList = new ArrayList<>();
+            while (estudiantesSet.next()) {
+                String cedula = estudiantesSet.getString("id_estudiante");
+                String nombreEstudiante = estudiantesSet.getString("nombre_completo");
+                float promedio = estudiantesSet.getFloat("promedio_notas");
+                DecimalFormat df = new DecimalFormat("#.##");
+                String promedioText = df.format(promedio);
+                
+                String extra;
+                if (filtro.equals("20 promedios carrera")) {
+                    extra = estudiantesSet.getString("nombre_carrera");
+                } else {
+                    extra = estudiantesSet.getString("nombre_decanato");
+                }
+
+                CuatroColumnasModel model = new CuatroColumnasModel(cedula, nombreEstudiante, extra, promedioText);
+                estudiantesList.add(model);
+            }
+            return estudiantesList;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<CincoColumnasModel> getEstudiantesCinco() {
+        try {
+            String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, e.sexo, d.nombre_decanato, c.nombre_carrera FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Decanatos\" d ON c.id_decanato = d.id_decanato JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante GROUP BY e.id_estudiante, e.nombre_completo, d.nombre_decanato, c.nombre_carrera";
+            ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
+
+            ArrayList<CincoColumnasModel> estudiantesList = new ArrayList<>();
+            
+            while (estudiantesSet.next()) {
+                String cedula = estudiantesSet.getString("id_estudiante");
+                String nombreEstudiante = estudiantesSet.getString("nombre_completo");
+                String sexo = estudiantesSet.getString("sexo");
+                String carrera = estudiantesSet.getString("nombre_carrera");
+                String decanato = estudiantesSet.getString("nombre_decanato");
+
+                CincoColumnasModel model = new CincoColumnasModel(cedula, nombreEstudiante, sexo, decanato, carrera);
+                estudiantesList.add(model);
+            }
             return estudiantesList;
         } catch (SQLException e) {
             return null;
@@ -197,8 +264,6 @@ public class ConexionSQL {
                 String id = seccionesSet.getString("id_seccion");
                 int cupos = seccionesSet.getInt("limite_estudiantes");
                 int numeroSeccion = seccionesSet.getInt("numero_seccion");
-
-//                    System.out.println("seccion: " + id + numeroSeccion);
                 secciones.add(new Seccion(id, cupos, numeroSeccion));
             }
             return secciones;

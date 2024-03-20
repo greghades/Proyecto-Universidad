@@ -24,15 +24,18 @@ public class Main {
         ListaSeccionController listaSeccionController = ListaSeccionController.getInstance();
         ListadoEstudiantesController listadoEstudiantesController = ListadoEstudiantesController.getInstance();
         RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
+        AsignarNotaController asignarNotaController = AsignarNotaController.getInstance();
 
         inicioController.setInscripcionController(inscripcionController);
         inicioController.setListaSeccionController(listaSeccionController);
         inicioController.setListadoEstudiantesController(listadoEstudiantesController);
         inicioController.setRetirarMateriaController(retirarMateriaController);
+        inicioController.setAsignarNotaController(asignarNotaController);
 
         inscripcionController.setInicioController(inicioController);
         listaSeccionController.setInicioController(inicioController);
         listadoEstudiantesController.setInicioController(inicioController);
         retirarMateriaController.setInicioController(inicioController);
+        asignarNotaController.setInicioController(inicioController);
     }
 }
