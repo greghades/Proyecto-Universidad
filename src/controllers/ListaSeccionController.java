@@ -18,6 +18,10 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.JOptionPane;
+import models.ListadoSeccionModel;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.ListaSeccionFrame;
@@ -61,6 +65,19 @@ public class ListaSeccionController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         showInicioFrame();
+        MostrarSeciones();
+    }
+    
+    public void MostrarSeciones(){
+        
+        List<ListadoSeccionModel> secciones = connection.listaSecion();
+        
+        if (secciones == null) {
+            JOptionPane.showMessageDialog(null, "No existe ningun estudiante con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            listaSeccionFrame.setupTable(secciones);
+            listaSeccionFrame.displayUI(true);
+        }
     }
 
 }

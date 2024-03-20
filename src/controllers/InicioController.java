@@ -88,6 +88,7 @@ public class InicioController implements ActionListener {
     public void actionPerformed(ActionEvent button) {
         if (button.getSource() == inicioFrame.getListado_seccion_button()) {
             showListaSeccionFrame();
+            listaSeccionController.MostrarSeciones();
         } else if (button.getSource() == inicioFrame.getInscripcion_button()) {
             showInscripcionFrame();
         } else if (button.getSource() == inicioFrame.getListado_estudiante_button()) {
