@@ -25,6 +25,8 @@ public class AsignarNotaController implements ActionListener {
     public InicioController inicioController;
     public Profesor profesor;
     private List<NotaEstudianteListModel> estudiantes;
+    private List<NotaEstudianteListModel> estudiantesActualizables = new ArrayList<>();
+    private String asignaturaSeleccionada;
 
     public AsignarNotaController() {
         asignarNotaFrame = new AsignarNotaFrame(this);
@@ -71,10 +73,26 @@ public class AsignarNotaController implements ActionListener {
         }
     }
 
-    public void notaActualizada(Object value, int row) {
+    public void actualizarNota(Object value, int row) {
         if (value instanceof Float nota) {
             System.out.println("cedula: " + estudiantes.get(row).getCedula());
-            estudiantes.get(row).setNota(nota);
+            NotaEstudianteListModel estudianteActualizado = estudiantes.get(row);
+            boolean encontrado = false;
+
+            // Iterar sobre estudiantesActualizables para verificar si el estudiante ya existe
+            for (NotaEstudianteListModel estudiante : estudiantesActualizables) {
+                if (estudiante.getCedula().equals(estudianteActualizado.getCedula())) {
+                    // El estudiante ya existe, sobrescribe la nota
+                    estudiante.setNota(nota);
+                    encontrado = true;
+                    break; // Salir del bucle una vez encontrado el estudiante
+                }
+            }
+
+            // Si no se encontró el estudiante, agrégalo a estudiantesActualizables
+            if (!encontrado) {
+                estudiantesActualizables.add(estudianteActualizado);
+            }
         } else {
             System.out.println("El valor no es un objeto Float.");
         }
@@ -96,12 +114,12 @@ public class AsignarNotaController implements ActionListener {
                 break; // Terminar la iteración una vez que se encuentra la asignatura
             }
         }
-
-//        System.out.println("tipoSeleccionado: " + tipoSeleccionado + " idAsignatura: " + idAsignaturaSeleccionada + " profesor: " + this.profesor.getCedula());
+        
         // Verificar si se encontró la asignatura seleccionada
         if (idAsignaturaSeleccionada != null) {
             // Llamar al método mostrarTablaEstudiantes con el ID de la asignatura seleccionada
             mostrarTablaEstudiantes(idAsignaturaSeleccionada);
+            this.asignaturaSeleccionada = idAsignaturaSeleccionada;
         } else {
             System.out.println("No se encontró la asignatura seleccionada.");
         }
@@ -117,12 +135,38 @@ public class AsignarNotaController implements ActionListener {
     }
 
     private void guardarNotas() {
-        System.out.println("notas: " + this.estudiantes);
-        if (this.estudiantes == null || this.estudiantes.isEmpty()) {
+        if (estudiantesActualizables.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes colocar al menos una nota para poder guardar", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
-        
+
+        System.out.println("guardando notas: " + asignaturaSeleccionada);
+        int rowsAffected = connection.actualizarNotasEstudiantes(estudiantesActualizables, asignaturaSeleccionada);
+
+        if (rowsAffected > 0) {
+            showSuccessAlert(true);
+        } else {
+            showSuccessAlert(false);
+        }
+    }
+
+    private void showSuccessAlert(boolean exitosa) {
+        Object[] options = {"Aceptar"};
+        int selection = JOptionPane.showOptionDialog(
+                null,
+                exitosa ? "¡Las notas han sido actualizadas exitosamente!" : "No se pudieron actualizar las notas correctamente",
+                exitosa ? "Felicidades" : "Ha ocurrido un error",
+                JOptionPane.OK_OPTION,
+                exitosa ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (selection == JOptionPane.OK_OPTION && exitosa) {
+            showInicioFrame();
+        } else {
+            System.out.println("Selected Option Is X: " + selection);
+        }
     }
 
     @Override

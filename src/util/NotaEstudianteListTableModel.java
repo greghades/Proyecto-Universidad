@@ -98,16 +98,15 @@ public class NotaEstudianteListTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 6; // Editable checkboxes and toggle lists
+        return columnIndex == 6;
     }
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        if (columnIndex == 6) { // Solo actualizar la última columna
-            // Aquí puedes realizar la validación de entrada antes de actualizar el valor
+        if (columnIndex == 6) {
             datasource.get(rowIndex).setNota((Float) value);
             fireTableCellUpdated(rowIndex, columnIndex);
-            controller.notaActualizada(value, rowIndex);
+            controller.actualizarNota(value, rowIndex);
         }
     }
 }

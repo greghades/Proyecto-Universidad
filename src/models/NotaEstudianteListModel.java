@@ -9,29 +9,40 @@ package models;
  * @author User
  */
 public class NotaEstudianteListModel {
-    
+
     private String cedula;
     private String nombre;
     private String correo;
     private String carrera;
     private String seccion;
     private String id_seccion;
-    private float nota;
+    private Float nota;
+    private boolean tieneNota;
 
-    public NotaEstudianteListModel(String cedula, String nombre, String correo, String carrera, String seccion, String id_seccion) {
+    public NotaEstudianteListModel(String cedula, String nombre, String correo, String carrera, String seccion, String id_seccion, Float nota) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.correo = correo;
         this.carrera = carrera;
         this.seccion = seccion;
         this.id_seccion = id_seccion;
+        this.nota = nota;
+        this.tieneNota = nota != null;
     }
 
-    public float getNota() {
+    public boolean isTieneNota() {
+        return tieneNota;
+    }
+
+    public void setTieneNota(boolean tieneNota) {
+        this.tieneNota = tieneNota;
+    }
+
+    public Float getNota() {
         return nota;
     }
 
-    public void setNota(float nota) {
+    public void setNota(Float nota) {
         this.nota = nota;
     }
 
@@ -82,6 +93,5 @@ public class NotaEstudianteListModel {
     public void setId_seccion(String id_seccion) {
         this.id_seccion = id_seccion;
     }
-    
-    
+
 }

@@ -325,10 +325,10 @@ public class ConexionSQL {
 
     public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {
-            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s' ORDER BY s.numero_seccion", idProfesor, idAsignatura);
+            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion, ne.nota FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion LEFT JOIN public.\"Nota_estudiante\" ne ON ne.id_estudiante = e.id_estudiante AND ne.id_asignatura = i.id_asignatura AND ne.id_seccion = i.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s' ORDER BY s.numero_seccion", idProfesor, idAsignatura);
             ResultSet estudiantesSet = statement.executeQuery(query);
             List<NotaEstudianteListModel> estudiantesList = new ArrayList<>();
-            
+
             while (estudiantesSet.next()) {
                 String cedula = estudiantesSet.getString("id_estudiante");
                 String nombre = estudiantesSet.getString("nombre_completo");
@@ -336,10 +336,10 @@ public class ConexionSQL {
                 String carrera = estudiantesSet.getString("nombre_carrera");
                 int seccion = estudiantesSet.getInt("numero_seccion");
                 String idSeccion = estudiantesSet.getString("id_seccion");
+                Float nota = estudiantesSet.getFloat("nota");
 
-                NotaEstudianteListModel model = new NotaEstudianteListModel(cedula, nombre, correo, carrera,  String.format("Seccion %d", seccion), idSeccion);
-                
-                
+                NotaEstudianteListModel model = new NotaEstudianteListModel(cedula, nombre, correo, carrera, String.format("Seccion %d", seccion), idSeccion, nota);
+
                 estudiantesList.add(model);
             }
             return estudiantesList;
@@ -347,14 +347,39 @@ public class ConexionSQL {
             return null;
         }
     }
-    
-//    public void actualizarNotasEstudiantes(List<NotaEstudianteListModel> notasEstudiantes) {
-//        try {
-//            
-//        } catch (SQLException e) {
-//            return;
-//        }
-//    }
+
+    public int actualizarNotasEstudiantes(List<NotaEstudianteListModel> notasEstudiantes, String idAsignatura) {
+        try {
+            int totalRowsAffected = 0;
+            for (int index = 0; index < notasEstudiantes.size(); index++) {
+                NotaEstudianteListModel notaEstudiante = notasEstudiantes.get(index);
+
+                String estudiante_id = notaEstudiante.getCedula();
+                String seccion_id = notaEstudiante.getId_seccion();
+                Float nota = notaEstudiante.getNota();
+
+                System.out.println("Datos: ");
+                System.out.println("  Estudiante ID: " + estudiante_id);
+                System.out.println("  Asignatura ID: " + idAsignatura);
+                System.out.println("  Sección ID: " + seccion_id);
+                System.out.println("  Nota: " + nota);
+                System.out.println("  Tiene nota: " + notaEstudiante.isTieneNota());
+
+                String query;
+                if (notaEstudiante.isTieneNota()) {
+                    query = String.format("UPDATE public.\"Nota_estudiante\" ne SET nota = %s WHERE ne.id_estudiante = '%s' AND ne.id_asignatura = '%s' AND ne.id_seccion = '%s'", nota, estudiante_id, idAsignatura, seccion_id);
+                } else {
+                    query = String.format("INSERT INTO public.\"Nota_estudiante\"(id_estudiante, id_asignatura, id_seccion, nota) VALUES ('%s', '%s', '%s', '%s')", estudiante_id, idAsignatura, seccion_id, String.valueOf(nota));
+                }
+                int rowsAffected = statement.executeUpdate(query);
+                totalRowsAffected += rowsAffected;
+            }
+            return totalRowsAffected;
+        } catch (SQLException e) {
+            System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
+            return -1;
+        }
+    }
 
     public int inscribirEstudiante(ArrayList<InscripcionData> inscripciones) {
         try {
@@ -392,19 +417,19 @@ public class ConexionSQL {
                 String numeroSeccion = seccionesResultSet.getString("numero_seccion");
 
                 String nombreAsignatura = seccionesResultSet.getString("nombre_asignatura");
-             
+
                 String nombreCompleto = seccionesResultSet.getString("nombre_completo");
 
                 String nombreCarrera = seccionesResultSet.getString("nombre_carrera");
-            
+
                 String nombreDecanato = seccionesResultSet.getString("nombre_decanato");
-             
+
                 float promedioSeccion = seccionesResultSet.getFloat("promedio_seccion");
-             
+
                 int numeroAprobados = seccionesResultSet.getInt("numero_aprobados");
 
                 int numeroReprobados = seccionesResultSet.getInt("numero_reprobados");
-                
+
                 Array estudiantesEncimaPromedioArray = seccionesResultSet.getArray("e_encimap");
                 // Obtener los estudiantes encima del promedio sin valores nulos
                 int estudiantesEncimaPromedio = getArrayLengthWithoutNulls(estudiantesEncimaPromedioArray);
@@ -412,7 +437,7 @@ public class ConexionSQL {
                 Array estudiantesDebajoPromedioArray = seccionesResultSet.getArray("e_debajop");
                 // Obtener los estudiantes debajo del promedio sin valores nulos
                 int estudiantesDebajoPromedio = getArrayLengthWithoutNulls(estudiantesDebajoPromedioArray);
-                
+
                 ListadoSeccionModel seccion = new ListadoSeccionModel(numeroSeccion, nombreAsignatura, nombreCompleto, nombreCarrera, nombreDecanato, promedioSeccion, numeroAprobados, numeroReprobados, estudiantesEncimaPromedio, estudiantesDebajoPromedio);
 
                 secciones.add(seccion);
@@ -442,6 +467,7 @@ public class ConexionSQL {
             return count;
         }
     }
+
     // Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
     private String[] filterNullValues(Array array) throws SQLException {
         if (array == null) {
@@ -460,7 +486,7 @@ public class ConexionSQL {
         // Convierte la lista filtrada de vuelta a un arreglo de String
         return filteredList.toArray(new String[0]);
     }
-    
+
     public void cerrar() {
         try {
             conn.close();
