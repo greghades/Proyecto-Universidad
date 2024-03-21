@@ -6,6 +6,7 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class AsignarNotaController implements ActionListener {
     public ConexionSQL connection = ConexionSQL.getInstance();
     public InicioController inicioController;
     public Profesor profesor;
+    private List<NotaEstudianteListModel> estudiantes;
 
     public AsignarNotaController() {
         asignarNotaFrame = new AsignarNotaFrame(this);
@@ -69,6 +71,15 @@ public class AsignarNotaController implements ActionListener {
         }
     }
 
+    public void notaActualizada(Object value, int row) {
+        if (value instanceof Float nota) {
+            System.out.println("cedula: " + estudiantes.get(row).getCedula());
+            estudiantes.get(row).setNota(nota);
+        } else {
+            System.out.println("El valor no es un objeto Float.");
+        }
+    }
+
     private void manejarCambioDeListado(ActionEvent button) {
         JComboBox<String> comboBox = (JComboBox<String>) button.getSource();
         String tipoSeleccionado = (String) comboBox.getSelectedItem();
@@ -86,7 +97,7 @@ public class AsignarNotaController implements ActionListener {
             }
         }
 
-        System.out.println("tipoSeleccionado: " + tipoSeleccionado + " idAsignatura: " + idAsignaturaSeleccionada + " profesor: " + this.profesor.getCedula());
+//        System.out.println("tipoSeleccionado: " + tipoSeleccionado + " idAsignatura: " + idAsignaturaSeleccionada + " profesor: " + this.profesor.getCedula());
         // Verificar si se encontró la asignatura seleccionada
         if (idAsignaturaSeleccionada != null) {
             // Llamar al método mostrarTablaEstudiantes con el ID de la asignatura seleccionada
@@ -96,12 +107,22 @@ public class AsignarNotaController implements ActionListener {
         }
         asignarNotaFrame.getCmb_asignatura().transferFocus();
 
-        System.out.println("seleccion:" + tipoSeleccionado);
+//        System.out.println("seleccion:" + tipoSeleccionado);
     }
 
     private void mostrarTablaEstudiantes(String idAsignatura) {
         List<NotaEstudianteListModel> estudiantes = connection.getEstudiantesParaAsignarNota(profesor.getCedula(), idAsignatura);
+        this.estudiantes = estudiantes;
         asignarNotaFrame.configurarTablaEstudiantes(estudiantes, idAsignatura);
+    }
+
+    private void guardarNotas() {
+        System.out.println("notas: " + this.estudiantes);
+        if (this.estudiantes == null || this.estudiantes.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes colocar al menos una nota para poder guardar", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }
 
     @Override
@@ -112,6 +133,8 @@ public class AsignarNotaController implements ActionListener {
             mostrarDatos();
         } else if (event.getSource() == asignarNotaFrame.getCmb_asignatura()) {
             manejarCambioDeListado(event);
+        } else if (event.getSource() == asignarNotaFrame.getSave_button()) {
+            guardarNotas();
         }
     }
 }

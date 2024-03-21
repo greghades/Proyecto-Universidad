@@ -338,11 +338,21 @@ public class ConexionSQL {
                 String idSeccion = estudiantesSet.getString("id_seccion");
 
                 NotaEstudianteListModel model = new NotaEstudianteListModel(cedula, nombre, correo, carrera,  String.format("Seccion %d", seccion), idSeccion);
+                
+                
                 estudiantesList.add(model);
             }
             return estudiantesList;
         } catch (SQLException e) {
             return null;
+        }
+    }
+    
+    public void actualizarNotasEstudiantes(List<NotaEstudianteListModel> notasEstudiantes) {
+        try {
+            
+        } catch (SQLException e) {
+            return;
         }
     }
 

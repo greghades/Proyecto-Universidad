@@ -18,6 +18,9 @@ package views;
 
 import controllers.AsignarNotaController;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -46,6 +49,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
         back_button.addActionListener(accion);
         cedula_button.addActionListener(accion);
         cmb_asignatura.addActionListener(accion);
+        save_button.addActionListener(accion);
     }
 
     public void mostrarEstadoInicial() {
@@ -55,6 +59,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
 
     public void limpiarTabla() {
         table_panel.setVisible(false);
+        save_button.setVisible(false);
         if (estudiantes_table.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = estudiantes_table.getColumnModel();
             while (columnModel.getColumnCount() > 0) {
@@ -66,6 +71,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
 
     public void rellenarInformacionInicial(Profesor profesor) {
         table_panel.setVisible(false);
+        save_button.setVisible(false);
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Seleccionar asignatura");
         for (Asignatura asignatura : profesor.getAsignaturas()) {
@@ -82,10 +88,9 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
 
     public void configurarTablaEstudiantes(List<NotaEstudianteListModel> datasource, String option) {
         limpiarTabla();
-        NotaEstudianteListTableModel model = new NotaEstudianteListTableModel(datasource);
+        NotaEstudianteListTableModel model = new NotaEstudianteListTableModel(datasource, controller);
         estudiantes_table.setModel(model);
         actualizarUI(option);
-        table_panel.setVisible(true);
     }
 
     private void actualizarUI(String option) {
@@ -111,6 +116,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
             estudiantes_table.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
         }
         table_panel.setVisible(true);
+        save_button.setVisible(true);
     }
 
     public JTable getAsignaturas_table() {
@@ -133,6 +139,14 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
         return cedula_button;
     }
 
+    public JButton getSave_button() {
+        return save_button;
+    }
+
+    public JTable getEstudiantes_table() {
+        return estudiantes_table;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -151,6 +165,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
         estudiantes_table = new javax.swing.JTable();
         cmb_asignatura = new javax.swing.JComboBox<>();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32), new java.awt.Dimension(32767, 0));
+        save_button = new javax.swing.JButton();
         info_panel = new javax.swing.JPanel();
         nombre_title_label = new javax.swing.JLabel();
         nombre_label = new javax.swing.JLabel();
@@ -185,9 +200,9 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
             .addGroup(title_panelLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
         title_panelLayout.setVerticalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +325,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(table_panelLayout.createSequentialGroup()
                 .addGroup(table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
                     .addComponent(estudiantes_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -320,7 +335,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(estudiantes_label, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -335,18 +350,28 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
             }
         });
 
+        save_button.setBackground(new java.awt.Color(58, 159, 220));
+        save_button.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        save_button.setForeground(new java.awt.Color(255, 255, 255));
+        save_button.setText("Guardar notas");
+        save_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        save_button.setPreferredSize(new java.awt.Dimension(250, 46));
+        save_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout content_panelLayout = new javax.swing.GroupLayout(content_panel);
         content_panel.setLayout(content_panelLayout);
         content_panelLayout.setHorizontalGroup(
             content_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, content_panelLayout.createSequentialGroup()
-                .addGroup(content_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(content_panelLayout.createSequentialGroup()
-                        .addComponent(cmb_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(filler2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                .addComponent(cmb_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(filler2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(table_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(save_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         content_panelLayout.setVerticalGroup(
             content_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,6 +382,8 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
                     .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(save_button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -420,12 +447,12 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, body_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(body_panelLayout.createSequentialGroup()
+                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, body_panelLayout.createSequentialGroup()
                         .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16)
                         .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(content_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
+                    .addComponent(content_panel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
         body_panelLayout.setVerticalGroup(
@@ -436,7 +463,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
                     .addComponent(cedula_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
-                .addComponent(content_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                .addComponent(content_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
 
@@ -448,7 +475,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE))
+                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -457,7 +484,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(body_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
 
@@ -480,6 +507,10 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_asignaturaActionPerformed
 
+    private void save_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_save_buttonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back_button;
@@ -500,6 +531,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nombre_label;
     private javax.swing.JLabel nombre_title_label;
+    private javax.swing.JButton save_button;
     private javax.swing.JPanel table_panel;
     private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
