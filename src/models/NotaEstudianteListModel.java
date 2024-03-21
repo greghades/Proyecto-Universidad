@@ -1,7 +1,20 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package models;
 
 /**
@@ -27,7 +40,7 @@ public class NotaEstudianteListModel {
         this.seccion = seccion;
         this.id_seccion = id_seccion;
         this.nota = nota;
-        this.tieneNota = nota != null;
+        this.tieneNota = nota != null && nota != 0;
     }
 
     public boolean isTieneNota() {

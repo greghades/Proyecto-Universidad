@@ -378,6 +378,7 @@ public class ConexionSQL {
                 } else {
                     query = String.format("INSERT INTO public.\"Nota_estudiante\"(id_estudiante, id_asignatura, id_seccion, nota) VALUES ('%s', '%s', '%s', '%s')", estudiante_id, idAsignatura, seccion_id, String.valueOf(nota));
                 }
+                System.out.println("cedula: " + estudiante_id + " seccion: " + seccion_id + " tieneNota: " + notaEstudiante.isTieneNota() + " query: " + query);
                 int rowsAffected = statement.executeUpdate(query);
                 totalRowsAffected += rowsAffected;
             }
