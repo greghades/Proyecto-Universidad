@@ -143,6 +143,28 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+     private ArrayList<RetiroMateriaData> getAsignaturasParaRetiro(String idEstudiante) {
+        try {
+            String asignaturasQuery = String.format("SELECT i.id_asignatura, a.carga_academica, i.id_seccion FROM public.\"Inscripcion\" i JOIN public.\"Estudiantes\" e ON i.id_estudiante = e.id_estudiante JOIN public.\"Asignaturas\" a ON i.id_asignatura = a.id_asignatura JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion WHERE e.id_estudiante = '%s';", idEstudiante);
+
+            ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
+
+            ArrayList<RetiroMateriaData> asignaturasList = new ArrayList<>();
+
+            while (asignaturasSet.next()) {
+                String idAsignatura = asignaturasSet.getString("id_asignatura");
+                int cargaAcademica = asignaturasSet.getInt("carga_academica");
+                String idSeccion = asignaturasSet.getString("id_seccion");
+
+                RetiroMateriaData asignatura = new RetiroMateriaData(idAsignatura, cargaAcademica, idSeccion);
+                asignaturasList.add(asignatura);
+            }
+            return asignaturasList;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     public ArrayList<TresColumnasModel> getEstudiantesTres(String filtro) {
         try {
@@ -357,6 +379,28 @@ public class ConexionSQL {
 //    }
 
     public int inscribirEstudiante(ArrayList<InscripcionData> inscripciones) {
+        try {
+            int totalRowsAffected = 0;
+            for (int index = 0; index < inscripciones.size(); index++) {
+                InscripcionData inscripcion = inscripciones.get(index);
+
+                String estudiante_id = inscripcion.getId_estudiante();
+                String asignatura_id = inscripcion.getId_asignatura();
+                String periodo_id = inscripcion.getId_periodo();
+                String seccion_id = inscripcion.getId_seccion();
+
+                String query = String.format("INSERT INTO public.\"Inscripcion\"(id_estudiante, id_asignatura, id_periodo, id_seccion,estado) VALUES ('%s', '%s', '%s', '%s', false);", estudiante_id, asignatura_id, periodo_id, seccion_id);
+                int rowsAffected = statement.executeUpdate(query);
+                totalRowsAffected += rowsAffected;
+            }
+            return totalRowsAffected;
+        } catch (SQLException e) {
+            System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
+            return -1;
+        }
+    }
+    
+    public int retirarAsignatura(ArrayList<InscripcionData> inscripciones) {
         try {
             int totalRowsAffected = 0;
             for (int index = 0; index < inscripciones.size(); index++) {
