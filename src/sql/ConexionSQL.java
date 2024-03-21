@@ -35,7 +35,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "";
+    private final String pass = "gr3g0r1j053y3p3z4rt34g4";
 
     public ConexionSQL() {
         conectar();
@@ -325,7 +325,7 @@ public class ConexionSQL {
 
     public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {
-            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s'", idProfesor, idAsignatura);
+            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s' ORDER BY s.numero_seccion", idProfesor, idAsignatura);
             ResultSet estudiantesSet = statement.executeQuery(query);
             List<NotaEstudianteListModel> estudiantesList = new ArrayList<>();
             

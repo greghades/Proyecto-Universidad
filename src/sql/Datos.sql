@@ -377,31 +377,49 @@ CREATE TABLE "Inscripcion" (
       REFERENCES "Secciones"("id_seccion")
 );
 
--- Insercion de registros de inscripcion para todos los estudiantes, excluyendo al equipo
--- WITH random_num_asignaturas AS (
---     SELECT id_estudiante, RANDOM() * 5 + 1 AS num_asignaturas
---     FROM public."Estudiantes"
---     WHERE id_estudiante NOT IN ('28047103', '28268078', '29561929', '28245373', '27539960')
--- )
--- INSERT INTO public."Inscripcion" ("id_estudiante", "id_asignatura", "id_periodo", "id_seccion", "estado")
--- SELECT 
---     rnd.id_estudiante,
---     asig.id_asignatura,
---     'PER-001' AS id_periodo,
---     sec.id_seccion,
---     FALSE AS estado
--- FROM
---     random_num_asignaturas rnd
--- JOIN LATERAL
---     (SELECT id_asignatura FROM public."Asignaturas" ORDER BY RANDOM() LIMIT rnd.num_asignaturas) asig
--- ON
---     TRUE
--- JOIN LATERAL
---     (SELECT id_seccion, ROW_NUMBER() OVER (PARTITION BY id_asignatura ORDER BY RANDOM()) AS rn FROM public."Secciones") sec
--- ON
---     sec.rn = 1 -- Selecciona solo una sección aleatoria por asignatura
--- ORDER BY
---     rnd.id_estudiante, asig.id_asignatura;
+WITH CTE AS (
+    SELECT 
+        id_estudiante, 
+        id_asignatura, 
+        id_seccion, 
+        ROW_NUMBER() OVER (PARTITION BY id_estudiante, id_asignatura ORDER BY RANDOM()) AS row_num
+    FROM 
+        public."Estudiantes" 
+    CROSS JOIN 
+        public."Asignaturas" 
+    CROSS JOIN 
+        public."Secciones"
+),
+UltimoPeriodo AS (
+    SELECT id_periodo
+    FROM public."Periodo_academico"
+    ORDER BY fecha_inicio DESC
+    LIMIT 1
+),
+EstudiantesMaterias AS (
+    SELECT 
+        id_estudiante, 
+        id_asignatura, 
+        id_seccion,
+        ROW_NUMBER() OVER (PARTITION BY id_estudiante ORDER BY RANDOM()) AS rn
+    FROM 
+        CTE
+    WHERE 
+        row_num = 1
+)
+INSERT INTO public."Inscripcion" (id_estudiante, id_asignatura, id_periodo, id_seccion, estado)
+SELECT 
+    em.id_estudiante,
+    em.id_asignatura,
+    up.id_periodo,
+    em.id_seccion,
+    true AS estado
+FROM 
+    EstudiantesMaterias em
+CROSS JOIN 
+    UltimoPeriodo up
+WHERE 
+    em.rn BETWEEN 1 AND 5;
 
 
 -- Creacion de la tabla nota estudiante

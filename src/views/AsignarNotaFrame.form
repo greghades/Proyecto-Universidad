@@ -39,7 +39,7 @@
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Component id="title_panel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="body_panel" max="32767" attributes="0"/>
+              <Component id="body_panel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -166,7 +166,7 @@
                       <Component id="info_panel" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="content_panel" pref="286" max="32767" attributes="0"/>
+                  <Component id="content_panel" pref="268" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -355,7 +355,7 @@
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           <Component id="estudiantes_label" min="-2" pref="43" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="179" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="161" max="32767" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>
