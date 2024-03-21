@@ -17,10 +17,10 @@ public class ListadoSeccionModel {
     private float promedio_seccion;
     private int numero_aprobados;
     private int numero_aplazados;
-    private String[] estudiantesPorEncimaPromedio;
-    private String[] estudiantesPorDebajoPromedio;
+    private int estudiantesPorEncimaPromedio;
+    private int estudiantesPorDebajoPromedio;
 
-    public ListadoSeccionModel(String seccion, String asignatura, String docente, String carrera, String decanato, float promedio_seccion, int numero_aprobados, int numero_aplazados, String[] estudiantesPorEncimaPromedio, String[] estudiantesPorDebajoPromedio) {
+    public ListadoSeccionModel(String seccion, String asignatura, String docente, String carrera, String decanato, float promedio_seccion, int numero_aprobados, int numero_aplazados, int estudiantesPorEncimaPromedio, int estudiantesPorDebajoPromedio) {
         this.seccion = seccion;
         this.asignatura = asignatura;
         this.docente = docente;
@@ -97,19 +97,19 @@ public class ListadoSeccionModel {
         this.numero_aplazados = numero_aplazados;
     }
 
-    public String[] getEstudiantesPorEncimaPromedio() {
+    public int getEstudiantesPorEncimaPromedio() {
         return estudiantesPorEncimaPromedio;
     }
 
-    public void setEstudiantesPorEncimaPromedio(String[] estudiantesPorEncimaPromedio) {
+    public void setEstudiantesPorEncimaPromedio(int estudiantesPorEncimaPromedio) {
         this.estudiantesPorEncimaPromedio = estudiantesPorEncimaPromedio;
     }
 
-    public String[] getEstudiantesPorDebajoPromedio() {
+    public int getEstudiantesPorDebajoPromedio() {
         return estudiantesPorDebajoPromedio;
     }
 
-    public void setEstudiantesPorDebajoPromedio(String[] estudiantesPorDebajoPromedio) {
+    public void setEstudiantesPorDebajoPromedio(int estudiantesPorDebajoPromedio) {
         this.estudiantesPorDebajoPromedio = estudiantesPorDebajoPromedio;
     }
 
