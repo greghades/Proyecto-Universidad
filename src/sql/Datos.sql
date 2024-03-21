@@ -454,3 +454,30 @@ WHERE ne.id_estudiante IN (
     ORDER BY RANDOM()
     LIMIT 30  -- Selecciona 30 estudiantes al azar
 );
+
+EstudiantesMaterias AS (
+    SELECT 
+        id_estudiante, 
+        id_asignatura, 
+        id_seccion,
+        ROW_NUMBER() OVER (PARTITION BY id_estudiante ORDER BY RANDOM()) AS rn
+    FROM 
+        CTE
+    WHERE 
+        row_num = 1
+    AND
+        id_estudiante NOT IN ('28047103', '28268078', '29561929', '28245373', '27539960')
+)
+INSERT INTO public."Inscripcion" (id_estudiante, id_asignatura, id_periodo, id_seccion, estado)
+SELECT 
+    em.id_estudiante,
+    em.id_asignatura,
+    up.id_periodo,
+    em.id_seccion,
+    true AS estado
+FROM 
+    EstudiantesMaterias em
+CROSS JOIN 
+    UltimoPeriodo up
+WHERE 
+    em.rn BETWEEN 1 AND 5;
