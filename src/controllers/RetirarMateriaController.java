@@ -30,10 +30,10 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
 
     private static RetirarMateriaController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
+    public RetirarMateriaFrame retirarMateriaFrame;
     public InicioController inicioController;
     private InscripcionInfo info;
-    public RetirarMateriaFrame retirarMateriaFrame;
-    private final ArrayList<InscripcionData> inscripciones = new ArrayList<>();
+    private final ArrayList<InscripcionData> retiros = new ArrayList<>();
 
     private RetirarMateriaController() {
         retirarMateriaFrame = new RetirarMateriaFrame(this);
@@ -71,7 +71,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             return;
         }
 
-        this.info = connection.obtenerDatosDeInscripcion(retirarMateriaFrame.getCedula());
+        this.info = connection.obtenerEstudianteConAsignaturas(retirarMateriaFrame.getCedula(), true);
 
         System.out.println(info);
         if (info == null) {
@@ -82,10 +82,45 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             retirarMateriaFrame.setEdad(String.valueOf(info.getEstudiante().getEdad()));
             retirarMateriaFrame.setNombre(info.getEstudiante().getNombre());
             retirarMateriaFrame.setSexo(info.getEstudiante().getSexo());
+            retirarMateriaFrame.setupTable(info.getAsignaturas());
             retirarMateriaFrame.displayUI(true);
         }
     }
+    
+    private void retirarAsignatura() {
+        if (connection.getInscripcion(retirarMateriaFrame.getCedula())) {
+            JOptionPane.showMessageDialog(null, "Esta materia ya fue previamente retirada", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        int rowsAffected = connection.retirarAsignatura(retiros);
+
+        if (rowsAffected > 0) {
+            showSuccessAlert(true);
+        } else {
+            showSuccessAlert(false);
+        }
+    }
+    
+    private void showSuccessAlert(boolean exitosa) {
+        Object[] options = {"Aceptar"};
+        int selection = JOptionPane.showOptionDialog(
+                null,
+                exitosa ? "¡La asignatura fue retirada de manera exitosa!" : "No se pudo llevar a cabo el retiro de la asignatura correctamente",
+                exitosa ? "Felicidades" : "Ha ocurrido un error",
+                JOptionPane.OK_OPTION,
+                exitosa ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (selection == JOptionPane.OK_OPTION) {
+            showInicioFrame();
+        } else {
+            System.out.println("Selected Option Is X: " + selection);
+        }
+    }
+    
     @Override
     public void actionPerformed(ActionEvent button) {
         if (button.getSource() == retirarMateriaFrame.getBack_button()) {
@@ -93,13 +128,38 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
         } else if (button.getSource() == retirarMateriaFrame.getCedula_button()) {
             mostrarDatos();
         }else if (button.getSource() == retirarMateriaFrame.getBtn_retirar_asignatura()) {
-            System.out.println("controllers.RetirarMateriaController.actionPerformed()");
+            retirarAsignatura();
         }
-        
     }
 
     @Override
     public void onCheckboxValueChanged(int row, boolean value) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // Implementar la lógica para manejar el cambio de valor del checkbox
+        Asignatura asignaturaSeleccionada = info.getAsignaturas().get(row);
+        asignaturaSeleccionada.setInclusion(value);
+        info.setAsignatura(row, asignaturaSeleccionada);
+
+        // Obtener nombre de profesor
+        ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
+        PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
+
+        InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());
+
+        // Si this.inscripciones está vacío, inicializar con la inscripcion generada
+        if (retiros.isEmpty()) {
+            retiros.add(inscripcion);
+        } else {
+            // Si this.inscripciones no está vacío
+            if (!value) {
+                // Si value es falso, eliminar la inscripcion si existe
+                retiros.removeIf(i -> i.equals(inscripcion));
+            } else {
+                // Si value es verdadero, validar la existencia de la inscripcion
+                if (!retiros.contains(inscripcion)) {
+                    // Si no existe, agregar la inscripcion al arreglo
+                    retiros.add(inscripcion);
+                }
+            }
+        }
     }
 }

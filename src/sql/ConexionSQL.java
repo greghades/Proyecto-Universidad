@@ -23,7 +23,6 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import models.*;
 
@@ -122,20 +121,33 @@ public class ConexionSQL {
         }
     }
 
-    private ArrayList<Asignatura> getAsignaturasParaInscripcion(String idCarrera) {
+    private ArrayList<Asignatura> getAsignaturasParaInscripcion(String id) {
         try {
-            String asignaturasQuery = String.format("SELECT * FROM public.\"Asignaturas\" AS a INNER JOIN public.\"Asignaturas_carrera\" AS ac ON a.id_asignatura = ac.id_asignatura WHERE ac.id_carrera = '%s'", idCarrera);
+            String asignaturasQuery;
+            if (id.startsWith("CAR")) {
+                asignaturasQuery = String.format("SELECT a.id_asignatura, a.nombre_asignatura, a.carga_academica FROM public.\"Asignaturas\" AS a INNER JOIN public.\"Asignaturas_carrera\" AS ac ON a.id_asignatura = ac.id_asignatura WHERE ac.id_carrera = '%s'", id);
+            } else {
+                asignaturasQuery = String.format("SELECT i.id_asignatura, a.nombre_asignatura, a.carga_academica, s.id_seccion, s.numero_seccion FROM public.\"Inscripcion\" i JOIN public.\"Estudiantes\" e ON i.id_estudiante = e.id_estudiante JOIN public.\"Asignaturas\" a ON i.id_asignatura = a.id_asignatura JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion WHERE e.id_estudiante = '%s'", id);
+            }
             ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
-
             ArrayList<Asignatura> asignaturasList = new ArrayList<>();
 
             while (asignaturasSet.next()) {
                 String idAsignatura = asignaturasSet.getString("id_asignatura");
+                System.out.println("data1: " + idAsignatura);
                 String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
+                System.out.println("data2: " + nombreAsignatura);
                 int cargaAcademica = asignaturasSet.getInt("carga_academica");
-                boolean esRetirada = asignaturasSet.getBoolean("retirada");
+                System.out.println("data3: " + cargaAcademica);
 
-                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAcademica, esRetirada);
+                Asignatura asignatura;
+                if (id.startsWith("CAR")) {
+                    asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAcademica);
+                } else {
+                    int seccion = asignaturasSet.getInt("numero_seccion");
+                    System.out.println("data4: " + seccion);
+                    asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAcademica, seccion);
+                }
                 asignaturasList.add(asignatura);
             }
             return asignaturasList;
@@ -143,25 +155,18 @@ public class ConexionSQL {
             return null;
         }
     }
-    
-     private ArrayList<RetiroMateriaData> getAsignaturasParaRetiro(String idEstudiante) {
-        try {
-            String asignaturasQuery = String.format("SELECT i.id_asignatura, a.carga_academica, i.id_seccion FROM public.\"Inscripcion\" i JOIN public.\"Estudiantes\" e ON i.id_estudiante = e.id_estudiante JOIN public.\"Asignaturas\" a ON i.id_asignatura = a.id_asignatura JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion WHERE e.id_estudiante = '%s';", idEstudiante);
 
-            ResultSet asignaturasSet = statement.executeQuery(asignaturasQuery);
+    public InscripcionInfo obtenerEstudianteConAsignaturas(String id, boolean esRetiro) {
+        Estudiante estudiante = getEstudiante(id);
+        if (estudiante == null) {
+            return null;
+        }
+        System.out.println("cedula:" + estudiante.getCedula() + "nombre: " + estudiante.getNombre());
+        ArrayList<Asignatura> asignaturasList = getAsignaturasParaInscripcion(esRetiro ? id : estudiante.getCarrera().getId());
 
-            ArrayList<RetiroMateriaData> asignaturasList = new ArrayList<>();
-
-            while (asignaturasSet.next()) {
-                String idAsignatura = asignaturasSet.getString("id_asignatura");
-                int cargaAcademica = asignaturasSet.getInt("carga_academica");
-                String idSeccion = asignaturasSet.getString("id_seccion");
-
-                RetiroMateriaData asignatura = new RetiroMateriaData(idAsignatura, cargaAcademica, idSeccion);
-                asignaturasList.add(asignatura);
-            }
-            return asignaturasList;
-        } catch (SQLException e) {
+        if (asignaturasList != null) {
+            return new InscripcionInfo(estudiante, asignaturasList);
+        } else {
             return null;
         }
     }
@@ -263,20 +268,6 @@ public class ConexionSQL {
         }
     }
 
-    public InscripcionInfo obtenerDatosDeInscripcion(String id) {
-        Estudiante estudiante = getEstudiante(id);
-        if (estudiante == null) {
-            return null;
-        }
-        ArrayList<Asignatura> asignaturasList = getAsignaturasParaInscripcion(estudiante.getCarrera().getId());
-
-        if (asignaturasList != null) {
-            return new InscripcionInfo(estudiante, asignaturasList);
-        } else {
-            return null;
-        }
-    }
-
     public ArrayList<Seccion> getSecciones(String idAsignatura) {
         try {
             String query = String.format("SELECT s.id_seccion, s.numero_seccion, s.limite_estudiantes FROM public.\"Secciones\" s INNER JOIN public.\"Profesor_asignatura_seccion\" psa ON s.id_seccion = psa.id_seccion WHERE psa.id_asignatura = '%s'", idAsignatura);
@@ -335,7 +326,7 @@ public class ConexionSQL {
                 String nombreAsignatura = profesorSet.getString("nombre_asignatura");
                 int cargaAsignatura = profesorSet.getInt("carga_academica");
 
-                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAsignatura, true);
+                Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAsignatura);
                 profesor.setAsignatura(asignatura);
             }
 
@@ -424,7 +415,7 @@ public class ConexionSQL {
             return -1;
         }
     }
-    
+
     public int retirarAsignatura(ArrayList<InscripcionData> inscripciones) {
         try {
             int totalRowsAffected = 0;

@@ -86,7 +86,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             return;
         }
 
-        this.info = connection.obtenerDatosDeInscripcion(inscripcionFrame.getCedula());
+        this.info = connection.obtenerEstudianteConAsignaturas(inscripcionFrame.getCedula(), false);
         
         if (info == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun estudiante con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);

@@ -14,7 +14,6 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package models;
 
 import java.util.Objects;
@@ -24,16 +23,32 @@ import java.util.Objects;
  * @author 58412
  */
 public class Asignatura {
+
     private String id;
     private String nombre;
     private int cargaAcademica;
     private boolean esRetirada;
+    private int seccion;
 
-    public Asignatura(String id, String nombre, int carga, boolean esRetirada) {
+    public Asignatura(String id, String nombre, int carga) {
         this.id = id;
         this.nombre = nombre;
         this.cargaAcademica = carga;
-        this.esRetirada = esRetirada;
+    }
+
+    public int getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(int seccion) {
+        this.seccion = seccion;
+    }
+
+    public Asignatura(String id, String nombre, int carga, int seccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cargaAcademica = carga;
+        this.seccion = seccion;
     }
 
     public String getId() {
@@ -67,20 +82,24 @@ public class Asignatura {
     public void setCargaAcademica(int cargaAcademica) {
         this.cargaAcademica = cargaAcademica;
     }
-    
-      @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Asignatura asignatura = (Asignatura) o;
-          return Objects.equals(id, asignatura.id)
-                  && Objects.equals(nombre, asignatura.nombre)
-                  && esRetirada == asignatura.esRetirada;
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nombre, esRetirada);
-  }
-    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Asignatura asignatura = (Asignatura) o;
+        return Objects.equals(id, asignatura.id)
+                && Objects.equals(nombre, asignatura.nombre)
+                && esRetirada == asignatura.esRetirada;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, esRetirada);
+    }
+
 }

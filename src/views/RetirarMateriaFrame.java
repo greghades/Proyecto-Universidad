@@ -19,9 +19,12 @@ package views;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import controllers.RetirarMateriaController;
+import java.util.List;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import models.Asignatura;
+import util.InscripcionTableModel;
 
 public class RetirarMateriaFrame extends javax.swing.JFrame {
 
@@ -33,6 +36,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         initComponents();
         displayUI(false);
         agregarListeners(controller);
+        btn_retirar_asignatura.setVisible(false);
 
     }
 
@@ -41,6 +45,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         table_panel.setVisible(should);
 
     }
+
     public void limpiarTabla() {
         // Limpiar la tabla para evitar duplicados.
         if (materias_table.getModel().getRowCount() > 0) {
@@ -50,29 +55,32 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 columnModel.removeColumn(column);
             }
         }
+
+        btn_retirar_asignatura.setVisible(false);
+    }
+
+    public void setupTable(List<Asignatura> asignaturas) {
+        limpiarTabla();
+
+        // Instanciar el modelo para pintar la tabla.
+        InscripcionTableModel model = new InscripcionTableModel(asignaturas, controller);
+        materias_table.setModel(model);
+
+        configurarColumnas();
     }
 
     private void configurarColumnas() {
-        // Asignar un ancho mayor a la primera columna
-        TableColumnModel columnModel = materias_table.getColumnModel();
-        TableColumn firstColumn = columnModel.getColumn(0);
-        firstColumn.setPreferredWidth(150);
-        TableColumn secondColumn = columnModel.getColumn(1);
-        secondColumn.setMinWidth(12);
-        TableColumn thirdColumn = columnModel.getColumn(2);
-        thirdColumn.setMinWidth(12);
-        TableColumn fourthColumn = columnModel.getColumn(3);
-        fourthColumn.setMinWidth(12);
 
         // Centrar el contenido de las columnas.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int x = 0; x < materias_table.getColumnCount(); x++) {
-            if (x != 3) {
+            if (x != 4) {
                 materias_table.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
             }
         }
     }
+
     private void agregarListeners(ActionListener accion) {
         btn_buscar_retirar_materia.addActionListener(accion);
         back_button.addActionListener(accion);
@@ -99,14 +107,14 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         btn_buscar_retirar_materia = new javax.swing.JButton();
         texto_cedula_retirar_materia = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         table_panel = new javax.swing.JPanel();
+        btn_retirar_asignatura = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         materias_table = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         back_button = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btn_retirar_asignatura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -250,10 +258,18 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("Ingresa tu Cédula");
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Listado de Materias");
-        jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        table_panel.setBackground(new java.awt.Color(255, 255, 255));
+
+        btn_retirar_asignatura.setBackground(new java.awt.Color(58, 159, 220));
+        btn_retirar_asignatura.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        btn_retirar_asignatura.setForeground(new java.awt.Color(255, 255, 255));
+        btn_retirar_asignatura.setText("Retirar Asignatura");
+        btn_retirar_asignatura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        btn_retirar_asignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_retirar_asignaturaActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setBorder(null);
 
@@ -278,18 +294,33 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         materias_table.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(materias_table);
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Listado de Materias");
+        jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
         javax.swing.GroupLayout table_panelLayout = new javax.swing.GroupLayout(table_panel);
         table_panel.setLayout(table_panelLayout);
         table_panelLayout.setHorizontalGroup(
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(table_panelLayout.createSequentialGroup()
+                .addGroup(table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_retirar_asignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         table_panelLayout.setVerticalGroup(
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, table_panelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addGap(0, 0, 0)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(btn_retirar_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -299,21 +330,18 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(texto_cedula_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btn_buscar_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField1))
-                                .addGap(36, 36, 36)
-                                .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(texto_cedula_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_buscar_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField1))
+                        .addGap(36, 36, 36)
+                        .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
@@ -323,15 +351,13 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(texto_cedula_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_buscar_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(table_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
         );
 
@@ -371,17 +397,6 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        btn_retirar_asignatura.setBackground(new java.awt.Color(58, 159, 220));
-        btn_retirar_asignatura.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        btn_retirar_asignatura.setForeground(new java.awt.Color(255, 255, 255));
-        btn_retirar_asignatura.setText("Retirar Asignatura");
-        btn_retirar_asignatura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        btn_retirar_asignatura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_retirar_asignaturaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -390,7 +405,6 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_retirar_asignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -401,9 +415,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(16, 16, 16)
-                .addComponent(btn_retirar_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -469,6 +481,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     public JButton getCedula_button() {
         return btn_buscar_retirar_materia;
     }
+
     public JButton getBtn_retirar_asignatura() {
         return btn_buscar_retirar_materia;
     }
