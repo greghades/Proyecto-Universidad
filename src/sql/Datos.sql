@@ -423,34 +423,34 @@ WHERE
 
 
 -- Creacion de la tabla nota estudiante
--- CREATE TABLE "Nota_estudiante" (
---   "id_nota_estudiante" serial primary key,
---   "id_estudiante" varchar(25) NOT NULL,
---   "id_asignatura" varchar(25) NOT NULL,
---   "id_seccion" varchar(25) NOT NULL,
---   "nota" float,
---   CONSTRAINT "FK_Nota_estudiante.id_estudiante"
---     FOREIGN KEY ("id_estudiante")
---       REFERENCES "Estudiantes"("id_estudiante"),
---   CONSTRAINT "FK_Nota_estudiante.id_asignatura"
---     FOREIGN KEY ("id_asignatura")
---       REFERENCES "Asignaturas"("id_asignatura"),
---   CONSTRAINT "FK_Nota_estudiante.id_seccion"
---     FOREIGN KEY ("id_seccion")
---       REFERENCES "Secciones"("id_seccion")
--- );
--- 
--- -- Primero, asignamos notas aleatorias a los estudiantes existentes
--- INSERT INTO public."Nota_estudiante" (id_estudiante, id_asignatura, id_seccion, nota)
--- SELECT ins.id_estudiante, ins.id_asignatura, ins.id_seccion, FLOOR(RANDOM() * 20) + 1
--- FROM public."Inscripcion" ins;
--- 
--- -- Asignar notas más altas a algunos estudiantes específicos para garantizar que al menos 30 tengan promedios superiores a 16
--- UPDATE public."Nota_estudiante" ne
--- SET nota = FLOOR(RANDOM() * 5) + 16  -- Genera notas aleatorias entre 16 y 20
--- WHERE ne.id_estudiante IN (
---     SELECT id_estudiante
---     FROM public."Estudiantes"
---     ORDER BY RANDOM()
---     LIMIT 30  -- Selecciona 30 estudiantes al azar
--- );
+CREATE TABLE "Nota_estudiante" (
+  "id_nota_estudiante" serial primary key,
+  "id_estudiante" varchar(25) NOT NULL,
+  "id_asignatura" varchar(25) NOT NULL,
+  "id_seccion" varchar(25) NOT NULL,
+  "nota" float,
+  CONSTRAINT "FK_Nota_estudiante.id_estudiante"
+    FOREIGN KEY ("id_estudiante")
+      REFERENCES "Estudiantes"("id_estudiante"),
+  CONSTRAINT "FK_Nota_estudiante.id_asignatura"
+    FOREIGN KEY ("id_asignatura")
+      REFERENCES "Asignaturas"("id_asignatura"),
+  CONSTRAINT "FK_Nota_estudiante.id_seccion"
+    FOREIGN KEY ("id_seccion")
+      REFERENCES "Secciones"("id_seccion")
+);
+
+-- Primero, asignamos notas aleatorias a los estudiantes existentes
+INSERT INTO public."Nota_estudiante" (id_estudiante, id_asignatura, id_seccion, nota)
+SELECT ins.id_estudiante, ins.id_asignatura, ins.id_seccion, FLOOR(RANDOM() * 20) + 1
+FROM public."Inscripcion" ins;
+
+-- Asignar notas más altas a algunos estudiantes específicos para garantizar que al menos 30 tengan promedios superiores a 16
+UPDATE public."Nota_estudiante" ne
+SET nota = FLOOR(RANDOM() * 5) + 16  -- Genera notas aleatorias entre 16 y 20
+WHERE ne.id_estudiante IN (
+    SELECT id_estudiante
+    FROM public."Estudiantes"
+    ORDER BY RANDOM()
+    LIMIT 30  -- Selecciona 30 estudiantes al azar
+);
