@@ -338,11 +338,21 @@ public class ConexionSQL {
                 String idSeccion = estudiantesSet.getString("id_seccion");
 
                 NotaEstudianteListModel model = new NotaEstudianteListModel(cedula, nombre, correo, carrera,  String.format("Seccion %d", seccion), idSeccion);
+                
+                
                 estudiantesList.add(model);
             }
             return estudiantesList;
         } catch (SQLException e) {
             return null;
+        }
+    }
+    
+    public void actualizarNotasEstudiantes(List<NotaEstudianteListModel> notasEstudiantes) {
+        try {
+            
+        } catch (SQLException e) {
+            return;
         }
     }
 
@@ -380,39 +390,29 @@ public class ConexionSQL {
 
             while (seccionesResultSet.next()) {
                 String numeroSeccion = seccionesResultSet.getString("numero_seccion");
-                System.out.println("Numero de Seccion: " + numeroSeccion);
 
                 String nombreAsignatura = seccionesResultSet.getString("nombre_asignatura");
-                System.out.println("Nombre de Asignatura: " + nombreAsignatura);
-
+             
                 String nombreCompleto = seccionesResultSet.getString("nombre_completo");
-                System.out.println("Nombre Completo: " + nombreCompleto);
 
                 String nombreCarrera = seccionesResultSet.getString("nombre_carrera");
-                System.out.println("Nombre de Carrera: " + nombreCarrera);
-
+            
                 String nombreDecanato = seccionesResultSet.getString("nombre_decanato");
-                System.out.println("Nombre de Decanato: " + nombreDecanato);
-
+             
                 float promedioSeccion = seccionesResultSet.getFloat("promedio_seccion");
-                System.out.println("Promedio de la Seccion: " + promedioSeccion);
-
+             
                 int numeroAprobados = seccionesResultSet.getInt("numero_aprobados");
-                System.out.println("Numero de Aprobados: " + numeroAprobados);
 
                 int numeroReprobados = seccionesResultSet.getInt("numero_reprobados");
-                System.out.println("Numero de Reprobados: " + numeroReprobados);
-
+                
                 Array estudiantesEncimaPromedioArray = seccionesResultSet.getArray("e_encimap");
                 // Obtener los estudiantes encima del promedio sin valores nulos
-                String[] estudiantesEncimaPromedio = filterNullValues(estudiantesEncimaPromedioArray);
-                System.out.println("Estudiantes encima del promedio: " + Arrays.toString(estudiantesEncimaPromedio));
+                int estudiantesEncimaPromedio = getArrayLengthWithoutNulls(estudiantesEncimaPromedioArray);
 
                 Array estudiantesDebajoPromedioArray = seccionesResultSet.getArray("e_debajop");
                 // Obtener los estudiantes debajo del promedio sin valores nulos
-                String[] estudiantesDebajoPromedio = filterNullValues(estudiantesDebajoPromedioArray);
-                System.out.println("Estudiantes debajo del promedio: " + Arrays.toString(estudiantesDebajoPromedio));
-
+                int estudiantesDebajoPromedio = getArrayLengthWithoutNulls(estudiantesDebajoPromedioArray);
+                
                 ListadoSeccionModel seccion = new ListadoSeccionModel(numeroSeccion, nombreAsignatura, nombreCompleto, nombreCarrera, nombreDecanato, promedioSeccion, numeroAprobados, numeroReprobados, estudiantesEncimaPromedio, estudiantesDebajoPromedio);
 
                 secciones.add(seccion);
@@ -426,6 +426,22 @@ public class ConexionSQL {
 
     }
 
+    // Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
+    // Método para obtener la longitud del array sin valores nulos
+    private int getArrayLengthWithoutNulls(Array array) throws SQLException {
+        if (array == null) {
+            return 0;
+        } else {
+            String[] estudiantes = (String[]) array.getArray();
+            int count = 0;
+            for (String estudiante : estudiantes) {
+                if (estudiante != null) {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
     // Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
     private String[] filterNullValues(Array array) throws SQLException {
         if (array == null) {
@@ -444,7 +460,7 @@ public class ConexionSQL {
         // Convierte la lista filtrada de vuelta a un arreglo de String
         return filteredList.toArray(new String[0]);
     }
-
+    
     public void cerrar() {
         try {
             conn.close();

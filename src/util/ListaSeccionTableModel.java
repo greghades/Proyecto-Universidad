@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 public class ListaSeccionTableModel extends AbstractTableModel{
     private final List<ListadoSeccionModel> listadoSeccion;
-    private static final String[] columnNames = {"Seccion", "Asignatura", "Docente", "Carrera","Decanato","Promedio seccion","Numero Aprobados","Numero Aplazados","Estudiantes Por Encima del Promedio","Estudiantes Por Debajo del Promedio"};
+    private static final String[] columnNames = {"Seccion", "Asignatura", "Docente", "Carrera","Decanato","Promedio seccion","Aprobados","Aplazados","Estudiantes Por Encima del Promedio","Estudiantes Por Debajo del Promedio"};
     
 
     public ListaSeccionTableModel(List<ListadoSeccionModel> listadoSeccion) {
@@ -72,9 +72,9 @@ public class ListaSeccionTableModel extends AbstractTableModel{
             case 7 ->
                 lSeccion.getNumero_aplazados();
             case 8 ->
-                Arrays.toString(lSeccion.getEstudiantesPorEncimaPromedio());
+                lSeccion.getEstudiantesPorEncimaPromedio();
             case 9 ->
-                Arrays.toString(lSeccion.getEstudiantesPorDebajoPromedio());
+                lSeccion.getEstudiantesPorDebajoPromedio();
             default ->
                 null;
         };
@@ -100,9 +100,9 @@ public class ListaSeccionTableModel extends AbstractTableModel{
             case 7 ->
                 Integer.class;
             case 8 ->
-                String.class;
+                Integer.class;
             case 9 ->
-                String.class;
+                Integer.class;
             default ->
                 null;
         };

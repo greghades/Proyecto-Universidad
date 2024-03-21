@@ -16,6 +16,7 @@ Yaslin Vreugdenhil.
  */
 package util;
 
+import controllers.AsignarNotaController;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.NotaEstudianteListModel;
@@ -24,9 +25,11 @@ public class NotaEstudianteListTableModel extends AbstractTableModel {
 
     private final List<NotaEstudianteListModel> datasource;
     private String[] columnNames = {"Num", "Cedula", "Nombre", "Correo", "Carrera", "Seccion", "Nota"};
+    private AsignarNotaController controller;
 
-    public NotaEstudianteListTableModel(List<NotaEstudianteListModel> datasource) {
+    public NotaEstudianteListTableModel(List<NotaEstudianteListModel> datasource, AsignarNotaController controller) {
         this.datasource = datasource;
+        this.controller = controller;
     }
 
     public void removeRow(int row) {
@@ -104,6 +107,7 @@ public class NotaEstudianteListTableModel extends AbstractTableModel {
             // Aquí puedes realizar la validación de entrada antes de actualizar el valor
             datasource.get(rowIndex).setNota((Float) value);
             fireTableCellUpdated(rowIndex, columnIndex);
+            controller.notaActualizada(value, rowIndex);
         }
     }
 }
