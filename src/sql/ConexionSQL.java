@@ -302,28 +302,45 @@ public class ConexionSQL {
 
             while (profesorSet.next()) {
                 String cedula = profesorSet.getString("id_profesor");
-                System.out.println("Cedula: " + cedula);
                 String nombre = profesorSet.getString("nombre_completo");
-                System.out.println("Nombre: " + nombre);
                 String especialidad = profesorSet.getString("especialidad");
-                System.out.println("Especialidad: " + especialidad);
 
                 if (profesor == null) {
                     profesor = new Profesor(cedula, nombre, especialidad);
                 }
 
                 String idAsignatura = profesorSet.getString("id_asignatura");
-                System.out.println("ID Asignatura: " + idAsignatura);
                 String nombreAsignatura = profesorSet.getString("nombre_asignatura");
-                System.out.println("Nombre Asignatura: " + nombreAsignatura);
                 int cargaAsignatura = profesorSet.getInt("carga_academica");
-                System.out.println("Carga Academica: " + cargaAsignatura);
 
                 Asignatura asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAsignatura, true);
                 profesor.setAsignatura(asignatura);
             }
 
             return profesor;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
+        try {
+            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s'", idProfesor, idAsignatura);
+            ResultSet estudiantesSet = statement.executeQuery(query);
+            List<NotaEstudianteListModel> estudiantesList = new ArrayList<>();
+            
+            while (estudiantesSet.next()) {
+                String cedula = estudiantesSet.getString("id_estudiante");
+                String nombre = estudiantesSet.getString("nombre_completo");
+                String correo = estudiantesSet.getString("correo");
+                String carrera = estudiantesSet.getString("nombre_carrera");
+                int seccion = estudiantesSet.getInt("numero_seccion");
+                String idSeccion = estudiantesSet.getString("id_seccion");
+
+                NotaEstudianteListModel model = new NotaEstudianteListModel(cedula, nombre, correo, carrera,  String.format("Seccion %d", seccion), idSeccion);
+                estudiantesList.add(model);
+            }
+            return estudiantesList;
         } catch (SQLException e) {
             return null;
         }

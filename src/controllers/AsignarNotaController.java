@@ -6,17 +6,16 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import models.Asignatura;
+import models.NotaEstudianteListModel;
 import models.Profesor;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.AsignarNotaFrame;
 
-/**
- *
- * @author alba
- */
 public class AsignarNotaController implements ActionListener {
 
     private static AsignarNotaController instance;
@@ -73,9 +72,36 @@ public class AsignarNotaController implements ActionListener {
     private void manejarCambioDeListado(ActionEvent button) {
         JComboBox<String> comboBox = (JComboBox<String>) button.getSource();
         String tipoSeleccionado = (String) comboBox.getSelectedItem();
+        if (tipoSeleccionado.equals("Seleccionar asignatura")) {
+            asignarNotaFrame.limpiarTabla();
+            return;
+        }
 
+        // Buscar el ID de la asignatura seleccionada
+        String idAsignaturaSeleccionada = null;
+        for (Asignatura asignatura : profesor.getAsignaturas()) {
+            if (tipoSeleccionado.equals(asignatura.getNombre())) {
+                idAsignaturaSeleccionada = asignatura.getId();
+                break; // Terminar la iteración una vez que se encuentra la asignatura
+            }
+        }
+
+        System.out.println("tipoSeleccionado: " + tipoSeleccionado + " idAsignatura: " + idAsignaturaSeleccionada + " profesor: " + this.profesor.getCedula());
+        // Verificar si se encontró la asignatura seleccionada
+        if (idAsignaturaSeleccionada != null) {
+            // Llamar al método mostrarTablaEstudiantes con el ID de la asignatura seleccionada
+            mostrarTablaEstudiantes(idAsignaturaSeleccionada);
+        } else {
+            System.out.println("No se encontró la asignatura seleccionada.");
+        }
         asignarNotaFrame.getCmb_asignatura().transferFocus();
+
         System.out.println("seleccion:" + tipoSeleccionado);
+    }
+
+    private void mostrarTablaEstudiantes(String idAsignatura) {
+        List<NotaEstudianteListModel> estudiantes = connection.getEstudiantesParaAsignarNota(profesor.getCedula(), idAsignatura);
+        asignarNotaFrame.configurarTablaEstudiantes(estudiantes, idAsignatura);
     }
 
     @Override

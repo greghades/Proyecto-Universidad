@@ -377,366 +377,62 @@ CREATE TABLE "Inscripcion" (
       REFERENCES "Secciones"("id_seccion")
 );
 
--- Insercion de registros de inscripcion para 67 estudiantes, excluyendo al equipo
-INSERT INTO public."Inscripcion"(id_estudiante, id_asignatura, id_periodo, id_seccion, estado) VALUES 
-    ('30276543', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('30276543', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('30276543', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('30276543', 'ASI-004', 'PER-001', 'SEC-004', false),
+-- Insercion de registros de inscripcion para todos los estudiantes, excluyendo al equipo
+-- WITH random_num_asignaturas AS (
+--     SELECT id_estudiante, RANDOM() * 5 + 1 AS num_asignaturas
+--     FROM public."Estudiantes"
+--     WHERE id_estudiante NOT IN ('28047103', '28268078', '29561929', '28245373', '27539960')
+-- )
+-- INSERT INTO public."Inscripcion" ("id_estudiante", "id_asignatura", "id_periodo", "id_seccion", "estado")
+-- SELECT 
+--     rnd.id_estudiante,
+--     asig.id_asignatura,
+--     'PER-001' AS id_periodo,
+--     sec.id_seccion,
+--     FALSE AS estado
+-- FROM
+--     random_num_asignaturas rnd
+-- JOIN LATERAL
+--     (SELECT id_asignatura FROM public."Asignaturas" ORDER BY RANDOM() LIMIT rnd.num_asignaturas) asig
+-- ON
+--     TRUE
+-- JOIN LATERAL
+--     (SELECT id_seccion, ROW_NUMBER() OVER (PARTITION BY id_asignatura ORDER BY RANDOM()) AS rn FROM public."Secciones") sec
+-- ON
+--     sec.rn = 1 -- Selecciona solo una sección aleatoria por asignatura
+-- ORDER BY
+--     rnd.id_estudiante, asig.id_asignatura;
 
-    ('30365432', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('30365432', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('30365432', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('30365432', 'ASI-008', 'PER-001', 'SEC-004', false),
-
-    ('30454321', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('30454321', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('30454321', 'ASI-011', 'PER-001', 'SEC-003', false),
-    ('30454321', 'ASI-012', 'PER-001', 'SEC-004', false),
-
-    ('30543210', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('30543210', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('30543210', 'ASI-015', 'PER-001', 'SEC-003', false),
-    ('30543210', 'ASI-016', 'PER-001', 'SEC-004', false),
-
-    ('30632109', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('30632109', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('30632109', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('30632109', 'ASI-004', 'PER-001', 'SEC-004', false),
-
-    ('30721098', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('30721098', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('30721098', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('30721098', 'ASI-008', 'PER-001', 'SEC-004', false),
-
-    ('30810987', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('30810987', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('30810987', 'ASI-011', 'PER-001', 'SEC-003', false),
-    ('30810987', 'ASI-012', 'PER-001', 'SEC-004', false),
-
-    ('30000007', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('30000007', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('30000007', 'ASI-015', 'PER-001', 'SEC-003', false),
-    ('30000007', 'ASI-016', 'PER-001', 'SEC-004', false),
-
-    ('40810988', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('40810988', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('40810988', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('40810988', 'ASI-004', 'PER-001', 'SEC-004', false),
-
-    ('50810989', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('50810989', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('50810989', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('50810989', 'ASI-008', 'PER-001', 'SEC-004', false),
-
-    ('60810990', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('60810990', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('60810990', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('60810990', 'ASI-004', 'PER-001', 'SEC-004', false),
-
-    ('70810991', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('70810991', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('70810991', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('70810991', 'ASI-008', 'PER-001', 'SEC-004', false),
-
-    ('80810992', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('80810992', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('80810992', 'ASI-011', 'PER-001', 'SEC-003', false),
-    ('80810992', 'ASI-012', 'PER-001', 'SEC-004', false),
-
-    ('90810993', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('90810993', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('90810993', 'ASI-015', 'PER-001', 'SEC-003', false),
-    ('90810993', 'ASI-016', 'PER-001', 'SEC-004', false),
-
-    ('10081094', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('10081094', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('10081094', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('10081094', 'ASI-004', 'PER-001', 'SEC-004', false),
-
-    ('11081095', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('11081095', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('11081095', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('11081095', 'ASI-008', 'PER-001', 'SEC-004', false),
-
-    ('12081096', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('12081096', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('12081096', 'ASI-011', 'PER-001', 'SEC-003', false),
-    ('12081096', 'ASI-012', 'PER-001', 'SEC-004', false),
-
-    ('13081097', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('13081097', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('13081097', 'ASI-015', 'PER-001', 'SEC-003', false),
-    ('13081097', 'ASI-016', 'PER-001', 'SEC-004', false),
-
-    ('14081098', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('14081098', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('14081098', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('14081098', 'ASI-004', 'PER-001', 'SEC-004', false),
-
-    ('15081099', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('15081099', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('15081099', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('15081099', 'ASI-008', 'PER-001', 'SEC-004', false),
-
-    ('16081100', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('16081100', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('16081100', 'ASI-003', 'PER-001', 'SEC-003', false),
-
-    ('17081101', 'ASI-004', 'PER-001', 'SEC-001', false),
-    ('17081101', 'ASI-005', 'PER-001', 'SEC-002', false),
-    ('17081101', 'ASI-006', 'PER-001', 'SEC-003', false),
-
-    ('18081102', 'ASI-007', 'PER-001', 'SEC-001', false),
-    ('18081102', 'ASI-008', 'PER-001', 'SEC-002', false),
-    ('18081102', 'ASI-009', 'PER-001', 'SEC-003', false),
-
-    ('19081103', 'ASI-010', 'PER-001', 'SEC-001', false),
-    ('19081103', 'ASI-011', 'PER-001', 'SEC-002', false),
-    ('19081103', 'ASI-012', 'PER-001', 'SEC-003', false),
-
-    ('20081104', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('20081104', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('20081104', 'ASI-015', 'PER-001', 'SEC-003', false),
-
-    ('21081105', 'ASI-016', 'PER-001', 'SEC-001', false),
-    ('21081105', 'ASI-001', 'PER-001', 'SEC-002', false),
-    ('21081105', 'ASI-002', 'PER-001', 'SEC-003', false),
-
-    ('22081106', 'ASI-003', 'PER-001', 'SEC-001', false),
-    ('22081106', 'ASI-004', 'PER-001', 'SEC-002', false),
-    ('22081106', 'ASI-005', 'PER-001', 'SEC-003', false),
-
-    ('30820987', 'ASI-006', 'PER-001', 'SEC-001', false),
-    ('30820987', 'ASI-007', 'PER-001', 'SEC-002', false),
-    ('30820987', 'ASI-008', 'PER-001', 'SEC-003', false),
-
-    ('40820988', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('40820988', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('40820988', 'ASI-011', 'PER-001', 'SEC-003', false),
-
-    ('50820989', 'ASI-012', 'PER-001', 'SEC-001', false),
-    ('50820989', 'ASI-013', 'PER-001', 'SEC-002', false),
-    ('50820989', 'ASI-014', 'PER-001', 'SEC-003', false),
-
-    ('60820990', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('60820990', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('60820990', 'ASI-003', 'PER-001', 'SEC-003', false),
-
-    ('70820991', 'ASI-004', 'PER-001', 'SEC-001', false),
-    ('70820991', 'ASI-005', 'PER-001', 'SEC-002', false),
-    ('70820991', 'ASI-006', 'PER-001', 'SEC-003', false),
-
-    ('80820992', 'ASI-007', 'PER-001', 'SEC-001', false),
-    ('80820992', 'ASI-008', 'PER-001', 'SEC-002', false),
-    ('80820992', 'ASI-009', 'PER-001', 'SEC-003', false),
-
-    ('90820993', 'ASI-010', 'PER-001', 'SEC-001', false),
-    ('90820993', 'ASI-011', 'PER-001', 'SEC-002', false),
-    ('90820993', 'ASI-012', 'PER-001', 'SEC-003', false),
-
-    ('100820994', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('100820994', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('100820994', 'ASI-015', 'PER-001', 'SEC-003', false),
-
-    ('110820995', 'ASI-016', 'PER-001', 'SEC-001', false),
-    ('110820995', 'ASI-001', 'PER-001', 'SEC-002', false),
-    ('110820995', 'ASI-002', 'PER-001', 'SEC-003', false),
-
-    ('120820996', 'ASI-003', 'PER-001', 'SEC-001', false),
-    ('120820996', 'ASI-004', 'PER-001', 'SEC-002', false),
-    ('120820996', 'ASI-005', 'PER-001', 'SEC-003', false),
-
-    ('130820997', 'ASI-006', 'PER-001', 'SEC-001', false),
-    ('130820997', 'ASI-007', 'PER-001', 'SEC-002', false),
-    ('130820997', 'ASI-008', 'PER-001', 'SEC-003', false),
-
-    ('140820998', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('140820998', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('140820998', 'ASI-011', 'PER-001', 'SEC-003', false),
-
-    ('150820999', 'ASI-012', 'PER-001', 'SEC-001', false),
-    ('150820999', 'ASI-013', 'PER-001', 'SEC-002', false),
-    ('150820999', 'ASI-014', 'PER-001', 'SEC-003', false),
-
-    ('160821000', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('160821000', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('160821000', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('160821000', 'ASI-004', 'PER-001', 'SEC-004', false),
-    ('160821000', 'ASI-005', 'PER-001', 'SEC-005', false),
-
-    ('170821001', 'ASI-006', 'PER-001', 'SEC-001', false),
-    ('170821001', 'ASI-007', 'PER-001', 'SEC-002', false),
-    ('170821001', 'ASI-008', 'PER-001', 'SEC-003', false),
-    ('170821001', 'ASI-009', 'PER-001', 'SEC-004', false),
-    ('170821001', 'ASI-010', 'PER-001', 'SEC-005', false),
-
-    ('180821002', 'ASI-011', 'PER-001', 'SEC-001', false),
-    ('180821002', 'ASI-012', 'PER-001', 'SEC-002', false),
-    ('180821002', 'ASI-013', 'PER-001', 'SEC-003', false),
-    ('180821002', 'ASI-014', 'PER-001', 'SEC-004', false),
-    ('180821002', 'ASI-015', 'PER-001', 'SEC-005', false),
-
-    ('190821003', 'ASI-016', 'PER-001', 'SEC-001', false),
-    ('190821003', 'ASI-001', 'PER-001', 'SEC-002', false),
-    ('190821003', 'ASI-002', 'PER-001', 'SEC-003', false),
-    ('190821003', 'ASI-003', 'PER-001', 'SEC-004', false),
-    ('190821003', 'ASI-004', 'PER-001', 'SEC-005', false),
-
-    ('200821004', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('200821004', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('200821004', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('200821004', 'ASI-008', 'PER-001', 'SEC-004', false),
-    ('200821004', 'ASI-009', 'PER-001', 'SEC-005', false),
-
-    ('210821005', 'ASI-010', 'PER-001', 'SEC-001', false),
-    ('210821005', 'ASI-011', 'PER-001', 'SEC-002', false),
-    ('210821005', 'ASI-012', 'PER-001', 'SEC-003', false),
-    ('210821005', 'ASI-013', 'PER-001', 'SEC-004', false),
-    ('210821005', 'ASI-014', 'PER-001', 'SEC-005', false),
-
-    ('220821006', 'ASI-015', 'PER-001', 'SEC-001', false),
-    ('220821006', 'ASI-016', 'PER-001', 'SEC-002', false),
-    ('220821006', 'ASI-001', 'PER-001', 'SEC-003', false),
-    ('220821006', 'ASI-002', 'PER-001', 'SEC-004', false),
-    ('220821006', 'ASI-003', 'PER-001', 'SEC-005', false),
-
-    ('40830987', 'ASI-004', 'PER-001', 'SEC-001', false),
-    ('40830987', 'ASI-005', 'PER-001', 'SEC-002', false),
-    ('40830987', 'ASI-006', 'PER-001', 'SEC-003', false),
-    ('40830987', 'ASI-007', 'PER-001', 'SEC-004', false),
-    ('40830987', 'ASI-008', 'PER-001', 'SEC-005', false),
-
-    ('50830988', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('50830988', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('50830988', 'ASI-011', 'PER-001', 'SEC-003', false),
-    ('50830988', 'ASI-012', 'PER-001', 'SEC-004', false),
-    ('50830988', 'ASI-013', 'PER-001', 'SEC-005', false),
-
-    ('60830989', 'ASI-014', 'PER-001', 'SEC-001', false),
-    ('60830989', 'ASI-015', 'PER-001', 'SEC-002', false),
-    ('60830989', 'ASI-016', 'PER-001', 'SEC-003', false),
-    ('60830989', 'ASI-001', 'PER-001', 'SEC-004', false),
-    ('60830989', 'ASI-002', 'PER-001', 'SEC-005', false),
-
-    ('70830990', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('70830990', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('70830990', 'ASI-003', 'PER-001', 'SEC-003', false),
-
-    ('80830991', 'ASI-004', 'PER-001', 'SEC-001', false),
-    ('80830991', 'ASI-005', 'PER-001', 'SEC-002', false),
-    ('80830991', 'ASI-006', 'PER-001', 'SEC-003', false),
-
-    ('90830992', 'ASI-007', 'PER-001', 'SEC-001', false),
-    ('90830992', 'ASI-008', 'PER-001', 'SEC-002', false),
-    ('90830992', 'ASI-009', 'PER-001', 'SEC-003', false),
-
-    ('100830993', 'ASI-010', 'PER-001', 'SEC-001', false),
-    ('100830993', 'ASI-011', 'PER-001', 'SEC-002', false),
-    ('100830993', 'ASI-012', 'PER-001', 'SEC-003', false),
-
-    ('110830994', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('110830994', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('110830994', 'ASI-015', 'PER-001', 'SEC-003', false),
-
-    ('120830995', 'ASI-016', 'PER-001', 'SEC-001', false),
-    ('120830995', 'ASI-001', 'PER-001', 'SEC-002', false),
-    ('120830995', 'ASI-002', 'PER-001', 'SEC-003', false),
-
-    ('130830996', 'ASI-003', 'PER-001', 'SEC-001', false),
-    ('130830996', 'ASI-004', 'PER-001', 'SEC-002', false),
-    ('130830996', 'ASI-005', 'PER-001', 'SEC-003', false),
-
-    ('140830997', 'ASI-006', 'PER-001', 'SEC-001', false),
-    ('140830997', 'ASI-007', 'PER-001', 'SEC-002', false),
-    ('140830997', 'ASI-008', 'PER-001', 'SEC-003', false),
-
-    ('150830998', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('150830998', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('150830998', 'ASI-011', 'PER-001', 'SEC-003', false),
-
-    ('160830999', 'ASI-012', 'PER-001', 'SEC-001', false),
-    ('160830999', 'ASI-013', 'PER-001', 'SEC-002', false),
-    ('160830999', 'ASI-014', 'PER-001', 'SEC-003', false),
-
-    ('170831000', 'ASI-001', 'PER-001', 'SEC-001', false),
-    ('170831000', 'ASI-002', 'PER-001', 'SEC-002', false),
-    ('170831000', 'ASI-003', 'PER-001', 'SEC-003', false),
-    ('170831000', 'ASI-004', 'PER-001', 'SEC-004', false),
-    ('170831000', 'ASI-005', 'PER-001', 'SEC-005', false),
-    ('170831000', 'ASI-006', 'PER-001', 'SEC-006', false),
-
-    ('180831001', 'ASI-007', 'PER-001', 'SEC-001', false),
-    ('180831001', 'ASI-008', 'PER-001', 'SEC-002', false),
-    ('180831001', 'ASI-009', 'PER-001', 'SEC-003', false),
-    ('180831001', 'ASI-010', 'PER-001', 'SEC-004', false),
-    ('180831001', 'ASI-011', 'PER-001', 'SEC-005', false),
-    ('180831001', 'ASI-012', 'PER-001', 'SEC-006', false),
-
-    ('190831002', 'ASI-013', 'PER-001', 'SEC-001', false),
-    ('190831002', 'ASI-014', 'PER-001', 'SEC-002', false),
-    ('190831002', 'ASI-015', 'PER-001', 'SEC-003', false),
-    ('190831002', 'ASI-016', 'PER-001', 'SEC-004', false),
-    ('190831002', 'ASI-001', 'PER-001', 'SEC-005', false),
-    ('190831002', 'ASI-002', 'PER-001', 'SEC-006', false),
-
-    ('200831003', 'ASI-003', 'PER-001', 'SEC-001', false),
-    ('200831003', 'ASI-004', 'PER-001', 'SEC-002', false),
-    ('200831003', 'ASI-005', 'PER-001', 'SEC-003', false),
-    ('200831003', 'ASI-006', 'PER-001', 'SEC-004', false),
-    ('200831003', 'ASI-007', 'PER-001', 'SEC-005', false),
-    ('200831003', 'ASI-008', 'PER-001', 'SEC-006', false),
-
-    ('210831004', 'ASI-009', 'PER-001', 'SEC-001', false),
-    ('210831004', 'ASI-010', 'PER-001', 'SEC-002', false),
-    ('210831004', 'ASI-011', 'PER-001', 'SEC-003', false),
-    ('210831004', 'ASI-012', 'PER-001', 'SEC-004', false),
-    ('210831004', 'ASI-013', 'PER-001', 'SEC-005', false),
-    ('210831004', 'ASI-014', 'PER-001', 'SEC-006', false),
-
-    ('220831005', 'ASI-015', 'PER-001', 'SEC-001', false),
-    ('220831005', 'ASI-016', 'PER-001', 'SEC-002', false),
-    ('220831005', 'ASI-001', 'PER-001', 'SEC-003', false),
-    ('220831005', 'ASI-002', 'PER-001', 'SEC-004', false),
-    ('220831005', 'ASI-003', 'PER-001', 'SEC-005', false),
-    ('220831005', 'ASI-004', 'PER-001', 'SEC-006', false),
-
-    ('230831006', 'ASI-005', 'PER-001', 'SEC-001', false),
-    ('230831006', 'ASI-006', 'PER-001', 'SEC-002', false),
-    ('230831006', 'ASI-007', 'PER-001', 'SEC-003', false),
-    ('230831006', 'ASI-008', 'PER-001', 'SEC-004', false),
-    ('230831006', 'ASI-009', 'PER-001', 'SEC-005', false),
-    ('230831006', 'ASI-010', 'PER-001', 'SEC-006', false);
 
 -- Creacion de la tabla nota estudiante
-CREATE TABLE "Nota_estudiante" (
-  "id_nota_estudiante" serial primary key,
-  "id_estudiante" varchar(25) NOT NULL,
-  "id_asignatura" varchar(25) NOT NULL,
-  "id_seccion" varchar(25) NOT NULL,
-  "nota" float,
-  CONSTRAINT "FK_Nota_estudiante.id_estudiante"
-    FOREIGN KEY ("id_estudiante")
-      REFERENCES "Estudiantes"("id_estudiante"),
-  CONSTRAINT "FK_Nota_estudiante.id_asignatura"
-    FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura"),
-  CONSTRAINT "FK_Nota_estudiante.id_seccion"
-    FOREIGN KEY ("id_seccion")
-      REFERENCES "Secciones"("id_seccion")
-);
-
--- Primero, asignamos notas aleatorias a los estudiantes existentes
-INSERT INTO public."Nota_estudiante" (id_estudiante, id_asignatura, id_seccion, nota)
-SELECT ins.id_estudiante, ins.id_asignatura, ins.id_seccion, FLOOR(RANDOM() * 20) + 1
-FROM public."Inscripcion" ins;
-
--- Asignar notas más altas a algunos estudiantes específicos para garantizar que al menos 30 tengan promedios superiores a 16
-UPDATE public."Nota_estudiante" ne
-SET nota = FLOOR(RANDOM() * 5) + 16  -- Genera notas aleatorias entre 16 y 20
-WHERE ne.id_estudiante IN (
-    SELECT id_estudiante
-    FROM public."Estudiantes"
-    ORDER BY RANDOM()
-    LIMIT 30  -- Selecciona 30 estudiantes al azar
-);
+-- CREATE TABLE "Nota_estudiante" (
+--   "id_nota_estudiante" serial primary key,
+--   "id_estudiante" varchar(25) NOT NULL,
+--   "id_asignatura" varchar(25) NOT NULL,
+--   "id_seccion" varchar(25) NOT NULL,
+--   "nota" float,
+--   CONSTRAINT "FK_Nota_estudiante.id_estudiante"
+--     FOREIGN KEY ("id_estudiante")
+--       REFERENCES "Estudiantes"("id_estudiante"),
+--   CONSTRAINT "FK_Nota_estudiante.id_asignatura"
+--     FOREIGN KEY ("id_asignatura")
+--       REFERENCES "Asignaturas"("id_asignatura"),
+--   CONSTRAINT "FK_Nota_estudiante.id_seccion"
+--     FOREIGN KEY ("id_seccion")
+--       REFERENCES "Secciones"("id_seccion")
+-- );
+-- 
+-- -- Primero, asignamos notas aleatorias a los estudiantes existentes
+-- INSERT INTO public."Nota_estudiante" (id_estudiante, id_asignatura, id_seccion, nota)
+-- SELECT ins.id_estudiante, ins.id_asignatura, ins.id_seccion, FLOOR(RANDOM() * 20) + 1
+-- FROM public."Inscripcion" ins;
+-- 
+-- -- Asignar notas más altas a algunos estudiantes específicos para garantizar que al menos 30 tengan promedios superiores a 16
+-- UPDATE public."Nota_estudiante" ne
+-- SET nota = FLOOR(RANDOM() * 5) + 16  -- Genera notas aleatorias entre 16 y 20
+-- WHERE ne.id_estudiante IN (
+--     SELECT id_estudiante
+--     FROM public."Estudiantes"
+--     ORDER BY RANDOM()
+--     LIMIT 30  -- Selecciona 30 estudiantes al azar
+-- );

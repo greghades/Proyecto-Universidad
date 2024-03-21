@@ -49,14 +49,12 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
     }
 
     public void mostrarEstadoInicial() {
-        cmb_asignatura.setSelectedItem("Seleccionar asignatura");
         content_panel.setVisible(false);
         info_panel.setVisible(false);
-        table_panel.setVisible(false);
     }
 
-    public void limpiarUI() {
-        mostrarEstadoInicial();
+    public void limpiarTabla() {
+        table_panel.setVisible(false);
         if (estudiantes_table.getModel().getRowCount() > 0) {
             TableColumnModel columnModel = estudiantes_table.getColumnModel();
             while (columnModel.getColumnCount() > 0) {
@@ -67,6 +65,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
     }
 
     public void rellenarInformacionInicial(Profesor profesor) {
+        table_panel.setVisible(false);
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Seleccionar asignatura");
         for (Asignatura asignatura : profesor.getAsignaturas()) {
@@ -82,10 +81,11 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
     }
 
     public void configurarTablaEstudiantes(List<NotaEstudianteListModel> datasource, String option) {
-        limpiarUI();
+        limpiarTabla();
         NotaEstudianteListTableModel model = new NotaEstudianteListTableModel(datasource);
         estudiantes_table.setModel(model);
         actualizarUI(option);
+        table_panel.setVisible(true);
     }
 
     private void actualizarUI(String option) {
