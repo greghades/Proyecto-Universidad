@@ -348,13 +348,13 @@ public class ConexionSQL {
         }
     }
     
-    public void actualizarNotasEstudiantes(List<NotaEstudianteListModel> notasEstudiantes) {
-        try {
-            
-        } catch (SQLException e) {
-            return;
-        }
-    }
+//    public void actualizarNotasEstudiantes(List<NotaEstudianteListModel> notasEstudiantes) {
+//        try {
+//            
+//        } catch (SQLException e) {
+//            return;
+//        }
+//    }
 
     public int inscribirEstudiante(ArrayList<InscripcionData> inscripciones) {
         try {
