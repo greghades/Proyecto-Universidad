@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import models.Asignatura;
-import util.InscripcionTableModel;
+import util.RetiroTableModel;
 
 public class RetirarMateriaFrame extends javax.swing.JFrame {
 
@@ -63,10 +63,14 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         limpiarTabla();
 
         // Instanciar el modelo para pintar la tabla.
-        InscripcionTableModel model = new InscripcionTableModel(asignaturas, controller);
+        RetiroTableModel model = new RetiroTableModel(asignaturas, controller);
         materias_table.setModel(model);
 
         configurarColumnas();
+    }
+    
+    public void actualizarBoton(boolean tieneRetiros) {
+        btn_retirar_asignatura.setVisible(tieneRetiros);
     }
 
     private void configurarColumnas() {

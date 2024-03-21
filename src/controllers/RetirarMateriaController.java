@@ -52,7 +52,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
     public void showRetirarMateriaFrame() {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(retirarMateriaFrame);
-
+        limpiarFormulario();
         retirarMateriaFrame.setVisible(true);
     }
 
@@ -65,6 +65,13 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
         this.inicioController = inicioController;
     }
 
+    private void limpiarFormulario() {
+        info = null;
+        retiros.removeAll(retiros);
+        retirarMateriaFrame.displayUI(false);
+        retirarMateriaFrame.limpiarTabla();
+    }
+
     private void mostrarDatos() {
         if ("Cedula".equals(retirarMateriaFrame.getCedula()) || retirarMateriaFrame.getCedula().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
@@ -75,7 +82,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
 
         System.out.println(info);
         if (info == null) {
-            JOptionPane.showMessageDialog(null, "No existe ningun estudiante con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No existe ningun estudiante inscrito con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
             retirarMateriaFrame.setCarrera(info.getEstudiante().getCarrera().getNombre());
             retirarMateriaFrame.setCorreo(info.getEstudiante().getCorreo());
@@ -86,13 +93,15 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             retirarMateriaFrame.displayUI(true);
         }
     }
-    
+
     private void retirarAsignatura() {
+        System.out.println("retirarAsignatura up: ");
         if (connection.getInscripcion(retirarMateriaFrame.getCedula())) {
             JOptionPane.showMessageDialog(null, "Esta materia ya fue previamente retirada", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        System.out.println("retirarAsignatura: ");
         int rowsAffected = connection.retirarAsignatura(retiros);
 
         if (rowsAffected > 0) {
@@ -101,7 +110,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             showSuccessAlert(false);
         }
     }
-    
+
     private void showSuccessAlert(boolean exitosa) {
         Object[] options = {"Aceptar"};
         int selection = JOptionPane.showOptionDialog(
@@ -120,14 +129,14 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             System.out.println("Selected Option Is X: " + selection);
         }
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent button) {
         if (button.getSource() == retirarMateriaFrame.getBack_button()) {
             showInicioFrame();
         } else if (button.getSource() == retirarMateriaFrame.getCedula_button()) {
             mostrarDatos();
-        }else if (button.getSource() == retirarMateriaFrame.getBtn_retirar_asignatura()) {
+        } else if (button.getSource() == retirarMateriaFrame.getBtn_retirar_asignatura()) {
             retirarAsignatura();
         }
     }
@@ -144,7 +153,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
         PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
 
         InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());
-
+        
         // Si this.inscripciones está vacío, inicializar con la inscripcion generada
         if (retiros.isEmpty()) {
             retiros.add(inscripcion);
@@ -161,5 +170,6 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
                 }
             }
         }
+        retirarMateriaFrame.actualizarBoton(!retiros.isEmpty());
     }
 }

@@ -76,31 +76,6 @@ public class ConexionSQL {
         }
     }
 
-    public Estudiante getEstudiante(String id) {
-        try {
-            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.* FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
-            ResultSet bigSet = statement.executeQuery(query);
-            Estudiante estudiante = null;
-
-            while (bigSet.next()) {
-                String cedula = bigSet.getString("id_estudiante");
-                String nombreCompleto = bigSet.getString("nombre_completo");
-                int edad = bigSet.getInt("edad");
-                String correo = bigSet.getString("correo");
-                String sexo = bigSet.getString("sexo");
-                String nombreCarrera = bigSet.getString("nombre_carrera");
-                String idCarrera = bigSet.getString("id_carrera");
-
-                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
-                estudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
-            }
-
-            return estudiante;
-        } catch (SQLException e) {
-            return null;
-        }
-    }
-
     public PeriodoAcademico getPeriodoAcademico(String id) {
         try {
             String query = "SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p WHERE p.id_periodo = 'PER-001'";
@@ -134,18 +109,14 @@ public class ConexionSQL {
 
             while (asignaturasSet.next()) {
                 String idAsignatura = asignaturasSet.getString("id_asignatura");
-                System.out.println("data1: " + idAsignatura);
                 String nombreAsignatura = asignaturasSet.getString("nombre_asignatura");
-                System.out.println("data2: " + nombreAsignatura);
                 int cargaAcademica = asignaturasSet.getInt("carga_academica");
-                System.out.println("data3: " + cargaAcademica);
 
                 Asignatura asignatura;
                 if (id.startsWith("CAR")) {
                     asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAcademica);
                 } else {
                     int seccion = asignaturasSet.getInt("numero_seccion");
-                    System.out.println("data4: " + seccion);
                     asignatura = new Asignatura(idAsignatura, nombreAsignatura, cargaAcademica, seccion);
                 }
                 asignaturasList.add(asignatura);
@@ -155,9 +126,39 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+        public Estudiante getEstudiante(String id, boolean esRetiro) {
+        try {
+            String query;
+            if (esRetiro) {
+             query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera INNER JOIN public.\"Inscripcion\" AS i ON e.id_estudiante = i.id_estudiante WHERE e.id_estudiante = '%s' GROUP BY e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera", id);
+            } else {
+             query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
+            }
+            ResultSet bigSet = statement.executeQuery(query);
+            Estudiante estudiante = null;
+
+            while (bigSet.next()) {
+                String cedula = bigSet.getString("id_estudiante");
+                String nombreCompleto = bigSet.getString("nombre_completo");
+                int edad = bigSet.getInt("edad");
+                String correo = bigSet.getString("correo");
+                String sexo = bigSet.getString("sexo");
+                String nombreCarrera = bigSet.getString("nombre_carrera");
+                String idCarrera = bigSet.getString("id_carrera");
+
+                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
+                estudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
+            }
+
+            return estudiante;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     public InscripcionInfo obtenerEstudianteConAsignaturas(String id, boolean esRetiro) {
-        Estudiante estudiante = getEstudiante(id);
+        Estudiante estudiante = getEstudiante(id, esRetiro);
         if (estudiante == null) {
             return null;
         }
@@ -371,13 +372,6 @@ public class ConexionSQL {
                 String seccion_id = notaEstudiante.getId_seccion();
                 Float nota = notaEstudiante.getNota();
 
-                System.out.println("Datos: ");
-                System.out.println("  Estudiante ID: " + estudiante_id);
-                System.out.println("  Asignatura ID: " + idAsignatura);
-                System.out.println("  Sección ID: " + seccion_id);
-                System.out.println("  Nota: " + nota);
-                System.out.println("  Tiene nota: " + notaEstudiante.isTieneNota());
-
                 String query;
                 if (notaEstudiante.isTieneNota()) {
                     query = String.format("UPDATE public.\"Nota_estudiante\" ne SET nota = %s WHERE ne.id_estudiante = '%s' AND ne.id_asignatura = '%s' AND ne.id_seccion = '%s'", nota, estudiante_id, idAsignatura, seccion_id);
@@ -416,18 +410,23 @@ public class ConexionSQL {
         }
     }
 
-    public int retirarAsignatura(ArrayList<InscripcionData> inscripciones) {
+    public int retirarAsignatura(ArrayList<InscripcionData> retiros) {
         try {
             int totalRowsAffected = 0;
-            for (int index = 0; index < inscripciones.size(); index++) {
-                InscripcionData inscripcion = inscripciones.get(index);
+            for (int index = 0; index < retiros.size(); index++) {
+                InscripcionData inscripcion = retiros.get(index);
 
                 String estudiante_id = inscripcion.getId_estudiante();
+                System.out.println("  Estudiante ID: " + estudiante_id);
                 String asignatura_id = inscripcion.getId_asignatura();
+                System.out.println("  Asignatura ID: " + asignatura_id);
                 String periodo_id = inscripcion.getId_periodo();
+                System.out.println("  Nota: " + periodo_id);
                 String seccion_id = inscripcion.getId_seccion();
-
-                String query = String.format("INSERT INTO public.\"Inscripcion\"(id_estudiante, id_asignatura, id_periodo, id_seccion,estado) VALUES ('%s', '%s', '%s', '%s', false);", estudiante_id, asignatura_id, periodo_id, seccion_id);
+                System.out.println("  Sección ID: " + seccion_id);
+                
+                String query = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s' AND id_asignatura = '%s' AND id_periodo = '%s' AND id_seccion = '%s'", estudiante_id, asignatura_id, periodo_id, seccion_id);
+                System.out.println("query: " + query);
                 int rowsAffected = statement.executeUpdate(query);
                 totalRowsAffected += rowsAffected;
             }
