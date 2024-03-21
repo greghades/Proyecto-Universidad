@@ -487,7 +487,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     }
 
     public JButton getBtn_retirar_asignatura() {
-        return btn_buscar_retirar_materia;
+        return btn_retirar_asignatura;
     }
 
 

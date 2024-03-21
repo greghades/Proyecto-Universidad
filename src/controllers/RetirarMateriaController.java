@@ -96,10 +96,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
 
     private void retirarAsignatura() {
         System.out.println("retirarAsignatura up: ");
-        if (connection.getInscripcion(retirarMateriaFrame.getCedula())) {
-            JOptionPane.showMessageDialog(null, "Esta materia ya fue previamente retirada", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+       
 
         System.out.println("retirarAsignatura: ");
         int rowsAffected = connection.retirarAsignatura(retiros);
@@ -138,6 +135,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             mostrarDatos();
         } else if (button.getSource() == retirarMateriaFrame.getBtn_retirar_asignatura()) {
             retirarAsignatura();
+            
         }
     }
 
