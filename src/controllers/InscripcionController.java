@@ -165,7 +165,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
                 options,
                 options[0]);
 
-        if (selection == JOptionPane.OK_OPTION) {
+        if (selection == JOptionPane.OK_OPTION && exitosa) {
             showInicioFrame();
         } else {
             System.out.println("Selected Option Is X: " + selection);

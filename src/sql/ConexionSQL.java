@@ -417,16 +417,11 @@ public class ConexionSQL {
                 InscripcionData inscripcion = retiros.get(index);
 
                 String estudiante_id = inscripcion.getId_estudiante();
-                System.out.println("  Estudiante ID: " + estudiante_id);
                 String asignatura_id = inscripcion.getId_asignatura();
-                System.out.println("  Asignatura ID: " + asignatura_id);
                 String periodo_id = inscripcion.getId_periodo();
-                System.out.println("  Nota: " + periodo_id);
                 String seccion_id = inscripcion.getId_seccion();
-                System.out.println("  Sección ID: " + seccion_id);
                 
                 String query = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s' AND id_asignatura = '%s' AND id_periodo = '%s' AND id_seccion = '%s'", estudiante_id, asignatura_id, periodo_id, seccion_id);
-                System.out.println("query: " + query);
                 int rowsAffected = statement.executeUpdate(query);
                 totalRowsAffected += rowsAffected;
             }
