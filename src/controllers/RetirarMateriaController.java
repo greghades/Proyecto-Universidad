@@ -18,6 +18,7 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import models.*;
 import sql.ConexionSQL;
@@ -32,6 +33,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
     public InicioController inicioController;
     private InscripcionInfo info;
     public RetirarMateriaFrame retirarMateriaFrame;
+    private final ArrayList<InscripcionData> inscripciones = new ArrayList<>();
 
     private RetirarMateriaController() {
         retirarMateriaFrame = new RetirarMateriaFrame(this);
@@ -90,7 +92,10 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             showInicioFrame();
         } else if (button.getSource() == retirarMateriaFrame.getCedula_button()) {
             mostrarDatos();
+        }else if (button.getSource() == retirarMateriaFrame.getBtn_retirar_asignatura()) {
+            System.out.println("controllers.RetirarMateriaController.actionPerformed()");
         }
+        
     }
 
     @Override
