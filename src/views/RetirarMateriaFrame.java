@@ -39,7 +39,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     }
 
     private void agregarListeners(ActionListener accion) {
-        cedula_button.addActionListener(accion);
+        btn_buscar_retirar_materia.addActionListener(accion);
         back_button.addActionListener(accion);
 
     }
@@ -48,8 +48,8 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         info_panel = new javax.swing.JPanel();
         nombre_title_label = new javax.swing.JLabel();
         nombre_label = new javax.swing.JLabel();
@@ -61,19 +61,21 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         edad_label = new javax.swing.JLabel();
         correo_title_label = new javax.swing.JLabel();
         correo_label = new javax.swing.JLabel();
-        cedula_button = new javax.swing.JButton();
-        cedula_textfield = new javax.swing.JTextField();
+        btn_buscar_retirar_materia = new javax.swing.JButton();
+        texto_cedula_retirar_materia = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         materias_table = new javax.swing.JTable();
-        title_panel = new javax.swing.JPanel();
-        title_label2 = new javax.swing.JLabel();
-        back_button = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btn_volver_retiro_materias = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btn_retirar_asignatura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jButton2.setText("Retirar Asignatura");
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
         info_panel.setBackground(new java.awt.Color(255, 255, 255));
         info_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(37, 92, 125), 2));
@@ -140,16 +142,17 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                     .addComponent(nombre_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nombre_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24)
-                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edad_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(edad_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sex_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(edad_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(sex_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(carrera_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 104, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         info_panelLayout.setVerticalGroup(
             info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,12 +161,12 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(info_panelLayout.createSequentialGroup()
                         .addComponent(edad_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(32, 32, 32)
                         .addComponent(sex_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sex_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(info_panelLayout.createSequentialGroup()
                         .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(info_panelLayout.createSequentialGroup()
@@ -173,36 +176,37 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                             .addGroup(info_panelLayout.createSequentialGroup()
                                 .addComponent(nombre_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(correo_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
 
-        cedula_button.setBackground(new java.awt.Color(58, 159, 220));
-        cedula_button.setForeground(new java.awt.Color(255, 255, 255));
-        cedula_button.setText("Buscar");
-        cedula_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        cedula_button.addActionListener(new java.awt.event.ActionListener() {
+        btn_buscar_retirar_materia.setBackground(new java.awt.Color(58, 159, 220));
+        btn_buscar_retirar_materia.setForeground(new java.awt.Color(255, 255, 255));
+        btn_buscar_retirar_materia.setText("Buscar");
+        btn_buscar_retirar_materia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        btn_buscar_retirar_materia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cedula_buttonActionPerformed(evt);
+                btn_buscar_retirar_materiaActionPerformed(evt);
             }
         });
 
-        cedula_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        cedula_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cedula_textfield.setText("Cedula");
-        cedula_textfield.setToolTipText("Introduce tu cedula");
-        cedula_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        cedula_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
-        cedula_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
-        cedula_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
-        cedula_textfield.setName(""); // NOI18N
-        cedula_textfield.addActionListener(new java.awt.event.ActionListener() {
+        texto_cedula_retirar_materia.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        texto_cedula_retirar_materia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        texto_cedula_retirar_materia.setText("Cedula");
+        texto_cedula_retirar_materia.setToolTipText("Introduce tu cedula");
+        texto_cedula_retirar_materia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        texto_cedula_retirar_materia.setMargin(new java.awt.Insets(8, 8, 8, 8));
+        texto_cedula_retirar_materia.setMaximumSize(new java.awt.Dimension(100, 20));
+        texto_cedula_retirar_materia.setMinimumSize(new java.awt.Dimension(100, 20));
+        texto_cedula_retirar_materia.setName(""); // NOI18N
+        texto_cedula_retirar_materia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cedula_textfieldActionPerformed(evt);
+                texto_cedula_retirar_materiaActionPerformed(evt);
             }
         });
 
@@ -214,7 +218,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Materia", "Carga académica", "Inclusión", "Sección"
+                "Materia", "Carga académica", "Retiro", "Sección"
             }
         ));
         materias_table.setFocusable(false);
@@ -229,106 +233,147 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         materias_table.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(materias_table);
 
+        jTextField1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("Ingresa tu Cédula");
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Listado de Materias");
+        jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(944, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 502, Short.MAX_VALUE)
-                                .addComponent(jButton2))
-                            .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(571, 571, 571))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())))
+                                .addComponent(texto_cedula_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_buscar_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField1))
+                        .addGap(36, 36, 36)
+                        .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(texto_cedula_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_buscar_retirar_materia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
-        title_panel.setBackground(new java.awt.Color(58, 159, 220));
-        title_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        title_panel.setPreferredSize(new java.awt.Dimension(803, 94));
-        title_panel.setLayout(new java.awt.BorderLayout());
+        jPanel3.setBackground(new java.awt.Color(58, 159, 220));
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        title_label2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        title_label2.setForeground(new java.awt.Color(255, 255, 255));
-        title_label2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title_label2.setText("Retirar Materias");
-        title_panel.add(title_label2, java.awt.BorderLayout.CENTER);
+        btn_volver_retiro_materias.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_volver_retiro_materias.setForeground(new java.awt.Color(58, 159, 220));
+        btn_volver_retiro_materias.setText("<Volver");
+        btn_volver_retiro_materias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("< Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.setRequestFocusEnabled(false);
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
-        title_panel.add(back_button, java.awt.BorderLayout.LINE_START);
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(242, 242, 242));
+        jLabel1.setText("Retirar Materias");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_volver_retiro_materias, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(198, 198, 198)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_volver_retiro_materias, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        btn_retirar_asignatura.setBackground(new java.awt.Color(58, 159, 220));
+        btn_retirar_asignatura.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        btn_retirar_asignatura.setForeground(new java.awt.Color(255, 255, 255));
+        btn_retirar_asignatura.setText("Retirar Asignatura");
+        btn_retirar_asignatura.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_retirar_asignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(btn_retirar_asignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1219, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
+    private void btn_buscar_retirar_materiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_retirar_materiaActionPerformed
 
-    }//GEN-LAST:event_back_buttonActionPerformed
+    }//GEN-LAST:event_btn_buscar_retirar_materiaActionPerformed
 
-    private void cedula_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_buttonActionPerformed
+    private void texto_cedula_retirar_materiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_texto_cedula_retirar_materiaActionPerformed
 
-    }//GEN-LAST:event_cedula_buttonActionPerformed
-
-    private void cedula_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_textfieldActionPerformed
-
-    }//GEN-LAST:event_cedula_textfieldActionPerformed
+    }//GEN-LAST:event_texto_cedula_retirar_materiaActionPerformed
     public void setCarrera(String text) {
         this.carrera_label.setText(text);
     }
@@ -350,7 +395,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     }
 
     public String getCedula() {
-        return cedula_textfield.getText();
+        return texto_cedula_retirar_materia.getText();
     }
 
     public JButton getBack_button() {
@@ -358,30 +403,33 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     }
 
     public JButton getCedula_button() {
-        return cedula_button;
+        return btn_buscar_retirar_materia;
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
+    private javax.swing.JButton btn_buscar_retirar_materia;
+    private javax.swing.JButton btn_retirar_asignatura;
+    private javax.swing.JButton btn_volver_retiro_materias;
     private javax.swing.JLabel carrera_label;
     private javax.swing.JLabel carrera_title_label;
-    private javax.swing.JButton cedula_button;
-    private javax.swing.JTextField cedula_textfield;
     private javax.swing.JLabel correo_label;
     private javax.swing.JLabel correo_title_label;
     private javax.swing.JLabel edad_label;
     private javax.swing.JLabel edad_title_label;
     private javax.swing.JPanel info_panel;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable materias_table;
     private javax.swing.JLabel nombre_label;
     private javax.swing.JLabel nombre_title_label;
     private javax.swing.JLabel sex_label;
     private javax.swing.JLabel sex_title_label;
-    private javax.swing.JLabel title_label2;
-    private javax.swing.JPanel title_panel;
+    private javax.swing.JTextField texto_cedula_retirar_materia;
     // End of variables declaration//GEN-END:variables
 }
