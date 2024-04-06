@@ -16,12 +16,12 @@ Yaslin Vreugdenhil.
  */
 
 package models;
-
+import java.io.Serializable;
 /**
  *
  * @author User
  */
-public class NotaEstudianteListModel {
+public class NotaEstudianteListModel implements Serializable {
 
     private String cedula;
     private String nombre;

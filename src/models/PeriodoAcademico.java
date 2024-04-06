@@ -17,12 +17,12 @@ Yaslin Vreugdenhil.
 
 package models;
 import java.util.Date;
-
+import java.io.Serializable;
 /**
  *
  * @author User
  */
-public class PeriodoAcademico {
+public class PeriodoAcademico implements Serializable {
     
     private String id;
     private String nombre;

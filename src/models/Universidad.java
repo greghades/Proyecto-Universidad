@@ -15,12 +15,12 @@ Yaslin Vreugdenhil.
 29561929
  */
 package models;
-
+import java.io.Serializable;
 /**
  *
  * @author User
  */
-public class Universidad {
+public class Universidad implements Serializable {
     
     private final int id;
     private final String nombre;

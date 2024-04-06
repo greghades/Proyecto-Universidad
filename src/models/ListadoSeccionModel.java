@@ -16,12 +16,12 @@ Yaslin Vreugdenhil.
  */
 
 package models;
-
+import java.io.Serializable;
 /**
  *
  * @author 58412
  */
-public class ListadoSeccionModel {
+public class ListadoSeccionModel implements Serializable {
     private String seccion;
     private String asignatura;
     private String docente;

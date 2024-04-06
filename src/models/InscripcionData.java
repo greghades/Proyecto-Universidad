@@ -17,8 +17,9 @@ Yaslin Vreugdenhil.
 package models;
 
 import java.util.Objects;
+import java.io.Serializable;
 
-public class InscripcionData {
+public class InscripcionData implements Serializable {
 
     private String id_estudiante;
     private String id_asignatura;

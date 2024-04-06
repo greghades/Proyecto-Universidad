@@ -17,12 +17,12 @@ Yaslin Vreugdenhil.
 package models;
 
 import java.util.Objects;
-
+import java.io.Serializable;
 /**
  *
  * @author 58412
  */
-public class Asignatura {
+public class Asignatura implements Serializable {
 
     private String id;
     private String nombre;

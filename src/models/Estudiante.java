@@ -16,14 +16,14 @@ Yaslin Vreugdenhil.
  */
 
 package models;
-
+import java.io.Serializable;
 //import java.util.Arrays;
 
 /**
  *
  * @author 58412
  */
-public class Estudiante extends Persona {
+public class Estudiante extends Persona implements Serializable {
     private Carrera carrera;
 
     public Estudiante(Carrera carrera, String cedula, String nombre, String apellido, String correo, int edad, String sexo) {

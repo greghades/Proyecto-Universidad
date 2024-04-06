@@ -15,15 +15,15 @@ Yaslin Vreugdenhil.
 29561929
  */
 package models;
+import java.io.Serializable;
+public class Persona implements Serializable {
 
-public class Persona {
-
-    protected String cedula;
-    protected String nombre;
-    protected String apellido;
-    protected String correo;
-    protected int edad;
-    protected String sexo;
+    private String cedula;
+    private String nombre;
+    private String apellido;
+    private String correo;
+    private int edad;
+    private String sexo;
 
     public Persona(String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
         super();

@@ -16,12 +16,12 @@ Yaslin Vreugdenhil.
  */
 
 package models;
-
+import java.io.Serializable;
 /**
  *
  * @author User
  */
-public class Inscripcion {
+public class Inscripcion implements Serializable{
     
     private final PeriodoAcademico periodo;
     private final Asignatura[] asignaturas;

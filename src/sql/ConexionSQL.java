@@ -34,7 +34,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "gr3g0r1j053y3p3z4rt34g4";
+    private final String pass = "1502Luis*";
 
     public ConexionSQL() {
         conectar();

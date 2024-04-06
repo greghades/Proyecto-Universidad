@@ -16,8 +16,9 @@ Yaslin Vreugdenhil.
  */
 
 package models;
+import java.io.Serializable;
 
-public class CincoColumnasModel {
+public class CincoColumnasModel implements Serializable {
     
     private String cedula;
     private String nombre;

@@ -16,12 +16,12 @@ Yaslin Vreugdenhil.
  */
 
 package models;
-
+import java.io.Serializable;
 /**
  *
  * @author User
  */
-public class Carrera {
+public class Carrera implements Serializable {
     
     private String id;
     private String nombre;

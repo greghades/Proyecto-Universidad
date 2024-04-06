@@ -17,8 +17,9 @@ Yaslin Vreugdenhil.
 
 package models;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class InscripcionInfo {
+public class InscripcionInfo implements Serializable{
     private Estudiante estudiante;
     private ArrayList<Asignatura> asignaturas;
 

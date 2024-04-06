@@ -15,12 +15,12 @@ Yaslin Vreugdenhil.
 29561929
  */
 package models;
-
+import java.io.Serializable;
 /**
  *
  * @author 58412
  */
-public class Seccion {
+public class Seccion implements Serializable {
     private String id;
     private int cupo;
     private int numero;

@@ -18,8 +18,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class Profesor extends Persona {
+import java.io.Serializable;
+public class Profesor extends Persona implements Serializable{
 
     private String especialidad;
     private List<Asignatura> asignaturas = new ArrayList<>();
