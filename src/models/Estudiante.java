@@ -30,9 +30,52 @@ public class Estudiante extends Persona {
         super(cedula, nombre, apellido, correo, edad, sexo);
         this.carrera = carrera;
     }
-    
-    
-    
+
+    @Override
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
 //    public void retirarMateria(Asignatura asignatura){
 //        
 //        // Iterar sobre el arreglo de asignaturas del estudiante
@@ -50,9 +93,12 @@ public class Estudiante extends Persona {
 //                // Salir del bucle una vez que se ha encontrado y retirado la asignatura
 //                break;
 //            }
-//        }  
-//    }
+//        }
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 
+//    }
     public Carrera getCarrera() {
         return carrera;
     }

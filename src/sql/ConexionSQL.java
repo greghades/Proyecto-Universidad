@@ -19,6 +19,7 @@ package sql;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -287,6 +288,7 @@ public class ConexionSQL {
         }
     }
 
+    //ver profesor por asignatura y seccion
     public Profesor getProfesor(String idAsignatura, String idSeccion) {
         try {
             String query = String.format("SELECT p.id_profesor, p.nombre_completo, p.especialidad FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
@@ -305,6 +307,7 @@ public class ConexionSQL {
         }
     }
 
+    //ver profesor por asignatura 
     public Profesor getDatosProfesor(String idProfesor) {
         try {
             String query = String.format("SELECT DISTINCT a.id_asignatura, a.nombre_asignatura, a.carga_academica, p.id_profesor, p.nombre_completo, p.correo, p.especialidad FROM public.\"Asignaturas\" a JOIN public.\"Profesor_asignatura_seccion\" pas ON a.id_asignatura = pas.id_asignatura JOIN public.\"Profesor\" p ON pas.id_profesor = p.id_profesor WHERE pas.id_profesor = '%s'", idProfesor);
@@ -336,6 +339,31 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+      
+   public Estudiante insertarEstudiante(Estudiante estudiante) {
+    PreparedStatement preparedStatement = null;
+    //Estudiante nuevoEstudiante = null; 
+       try {
+        String query = "INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        preparedStatement = conn.prepareStatement(query);
+        preparedStatement.setString(1, estudiante.getCedula());
+         preparedStatement.setString(2, String.valueOf(estudiante.getCarrera()));
+        preparedStatement.setString(3, estudiante.getNombre());
+        preparedStatement.setInt(4, estudiante.getEdad());
+        preparedStatement.setString(5, estudiante.getCorreo());
+        preparedStatement.setString(6, " "); 
+        preparedStatement.setString(7, estudiante.getSexo());
+        preparedStatement.setString(8, String.valueOf(true));
+        preparedStatement.executeUpdate();
+        //nuevoEstudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
+    } catch (SQLException e) {
+        System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
+    }
+        return null;
+}
+
+    
 
     public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {
@@ -525,4 +553,5 @@ public class ConexionSQL {
             JOptionPane.showMessageDialog(null, "desconexion fallida" + e, "desconexion", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }
