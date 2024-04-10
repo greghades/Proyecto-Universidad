@@ -24,6 +24,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import models.Carrera;
 import models.Estudiante;
+import models.NotaEstudianteListModel;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.EstudianteFrame;
@@ -34,7 +35,6 @@ public class EstudianteController implements ActionListener {
     public EstudianteFrame estudianteFrame;
     public ConexionSQL connection = ConexionSQL.getInstance();
     public InicioController inicioController;
-   
 
     public EstudianteController() {
         estudianteFrame = new EstudianteFrame(this); 
@@ -82,16 +82,6 @@ public class EstudianteController implements ActionListener {
         }
     }
     
-public void insertarEstudiante() {
-  Estudiante nuevoEstudiante = connection.insertarEstudiante(estudiante);
-
-  // Si el estudiante se insertó correctamente
-  if (nuevoEstudiante != null) {
-      this.estudiante = nuevoEstudiante;
-  } else {
-      JOptionPane.showMessageDialog(null, "Error al registrar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
-  }
-}
     
     private void limpiar(){
         estudianteFrame.cedula_textfield.setText(null);
@@ -132,7 +122,23 @@ public void insertarEstudiante() {
         } else if (event.getSource() == estudianteFrame.getLimpiar_button()) {
             limpiar();
         }else if (event.getSource() == estudianteFrame.getAgregar_button()) {
-        insertarEstudiante();
+       /*Estudiante estudiante = new Estudiante(carrera, cedula, nombre, apellido, correo, edad , sexo)
+            estudiante.setCedula(estudianteFrame.cedula_textfield.getText());
+            //estudiante.setCarrera(estudianteFrame.carrera_textfield.getText());
+            estudiante.setNombre(estudianteFrame.nombre_textfield.getText());
+            estudiante.setEdad(Integer.parseInt(estudianteFrame.edad_textfield1.getText()));
+            estudiante.setCorreo(estudianteFrame.correo_textfield.getText());
+            estudiante.setSexo(estudianteFrame.sexo_textfield.getText());
+
+	 if (connection.insertarEstudiante(estudiante)) {
+      JOptionPane.showMessageDialog(null, "GAFA", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+  } else {
+      JOptionPane.showMessageDialog(null, "Error al registrar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+  }*/
+        } else if (event.getSource() == estudianteFrame.getEliminar_button()) {
+            
+        }else if (event.getSource() == estudianteFrame.getModificar_button()) {
+            
         }
     }
 }
