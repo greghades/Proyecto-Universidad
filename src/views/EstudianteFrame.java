@@ -41,6 +41,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         back_button.addActionListener(accion);
         cedula_button.addActionListener(accion);
         limpiar_button.addActionListener(accion);
+        cmb_carrera.addActionListener(accion);
         agregar_button.addActionListener(accion);
         eliminar_button.addActionListener(accion);
         modificar_button.addActionListener(accion);
@@ -100,13 +101,19 @@ public class EstudianteFrame extends javax.swing.JFrame {
         body_panel = new javax.swing.JPanel();
         cedula_panel = new javax.swing.JPanel();
         cedula_textfield = new javax.swing.JTextField();
-        sexo_textfield = new javax.swing.JTextField();
         cedula_label = new javax.swing.JLabel();
         cedula_button = new javax.swing.JButton();
+        crud_panel = new javax.swing.JPanel();
         nombre_textfield = new javax.swing.JTextField();
         correo_textfield = new javax.swing.JTextField();
+        cmb_carrera = new javax.swing.JComboBox<>();
+        sexo_textfield = new javax.swing.JTextField();
         edad_textfield1 = new javax.swing.JTextField();
-        carrera_textfield = new javax.swing.JTextField();
+        nombre_jLabel = new javax.swing.JLabel();
+        nombre_jLabel1 = new javax.swing.JLabel();
+        nombre_jLabel2 = new javax.swing.JLabel();
+        nombre_jLabel3 = new javax.swing.JLabel();
+        sexo_jLabel = new javax.swing.JLabel();
         info_panel = new javax.swing.JPanel();
         nombre_title_label = new javax.swing.JLabel();
         nombre_label = new javax.swing.JLabel();
@@ -118,8 +125,9 @@ public class EstudianteFrame extends javax.swing.JFrame {
         edad_label = new javax.swing.JLabel();
         carrera_title_label2 = new javax.swing.JLabel();
         sexo_label = new javax.swing.JLabel();
-        limpiar_button = new javax.swing.JButton();
+        opcion_panel = new javax.swing.JPanel();
         agregar_button = new javax.swing.JButton();
+        limpiar_button = new javax.swing.JButton();
         modificar_button = new javax.swing.JButton();
         eliminar_button = new javax.swing.JButton();
 
@@ -187,21 +195,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
-        sexo_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        sexo_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        sexo_textfield.setText("Sexo");
-        sexo_textfield.setToolTipText("Introduce tu cedula");
-        sexo_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        sexo_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
-        sexo_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
-        sexo_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
-        sexo_textfield.setName(""); // NOI18N
-        sexo_textfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sexo_textfieldActionPerformed(evt);
-            }
-        });
-
         cedula_label.setBackground(new java.awt.Color(255, 255, 255));
         cedula_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cedula_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -218,6 +211,30 @@ public class EstudianteFrame extends javax.swing.JFrame {
                 cedula_buttonActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout cedula_panelLayout = new javax.swing.GroupLayout(cedula_panel);
+        cedula_panel.setLayout(cedula_panelLayout);
+        cedula_panelLayout.setHorizontalGroup(
+            cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cedula_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(cedula_panelLayout.createSequentialGroup()
+                .addComponent(cedula_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        cedula_panelLayout.setVerticalGroup(
+            cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cedula_panelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+
+        crud_panel.setBackground(new java.awt.Color(255, 255, 255));
 
         nombre_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
         nombre_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -249,6 +266,32 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
+        cmb_carrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Carrera" }));
+        cmb_carrera.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cmb_carrera.setMaximumSize(new java.awt.Dimension(32767, 80));
+        cmb_carrera.setMinimumSize(new java.awt.Dimension(214, 80));
+        cmb_carrera.setPreferredSize(new java.awt.Dimension(214, 32));
+        cmb_carrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_carreraActionPerformed(evt);
+            }
+        });
+
+        sexo_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        sexo_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        sexo_textfield.setText("Sexo");
+        sexo_textfield.setToolTipText("Introduce tu cedula");
+        sexo_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        sexo_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
+        sexo_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
+        sexo_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
+        sexo_textfield.setName(""); // NOI18N
+        sexo_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sexo_textfieldActionPerformed(evt);
+            }
+        });
+
         edad_textfield1.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
         edad_textfield1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         edad_textfield1.setText("Edad");
@@ -264,59 +307,58 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
-        carrera_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        carrera_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        carrera_textfield.setText("Carrera");
-        carrera_textfield.setToolTipText("Introduce tu cedula");
-        carrera_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        carrera_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
-        carrera_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
-        carrera_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
-        carrera_textfield.setName(""); // NOI18N
-        carrera_textfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                carrera_textfieldActionPerformed(evt);
-            }
-        });
+        nombre_jLabel.setText("Correo");
 
-        javax.swing.GroupLayout cedula_panelLayout = new javax.swing.GroupLayout(cedula_panel);
-        cedula_panel.setLayout(cedula_panelLayout);
-        cedula_panelLayout.setHorizontalGroup(
-            cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cedula_label, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-            .addGroup(cedula_panelLayout.createSequentialGroup()
-                .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombre_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        nombre_jLabel1.setText("Nombre");
+
+        nombre_jLabel2.setText("Carrera");
+
+        nombre_jLabel3.setText("Edad");
+
+        sexo_jLabel.setText("sexo");
+
+        javax.swing.GroupLayout crud_panelLayout = new javax.swing.GroupLayout(crud_panel);
+        crud_panel.setLayout(crud_panelLayout);
+        crud_panelLayout.setHorizontalGroup(
+            crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crud_panelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(nombre_jLabel1)
+                    .addComponent(nombre_jLabel)
+                    .addComponent(nombre_jLabel2)
+                    .addComponent(nombre_jLabel3)
+                    .addComponent(sexo_jLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sexo_textfield, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(edad_textfield1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmb_carrera, javax.swing.GroupLayout.Alignment.TRAILING, 0, 250, Short.MAX_VALUE)
                     .addComponent(correo_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carrera_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(edad_textfield1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sexo_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(cedula_panelLayout.createSequentialGroup()
-                .addComponent(cedula_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(5, 5, 5)
-                .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombre_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-        cedula_panelLayout.setVerticalGroup(
-            cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cedula_panelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addComponent(nombre_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(correo_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+        crud_panelLayout.setVerticalGroup(
+            crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(crud_panelLayout.createSequentialGroup()
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombre_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(correo_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_jLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(carrera_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmb_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_jLabel2))
                 .addGap(16, 16, 16)
-                .addComponent(edad_textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(sexo_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edad_textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sexo_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sexo_jLabel)))
         );
 
         info_panel.setBackground(new java.awt.Color(255, 255, 255));
@@ -327,12 +369,12 @@ public class EstudianteFrame extends javax.swing.JFrame {
         nombre_title_label.setText("Nombre");
         nombre_title_label.setPreferredSize(new java.awt.Dimension(120, 32));
 
-        nombre_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        nombre_label.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         nombre_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         nombre_label.setText("NombreEstudiante");
         nombre_label.setPreferredSize(new java.awt.Dimension(120, 32));
 
-        carrera_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        carrera_label.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         carrera_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         carrera_label.setText("CarreraEstudiante");
         carrera_label.setPreferredSize(new java.awt.Dimension(120, 32));
@@ -347,7 +389,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         correo_title_label.setText("Correo");
         correo_title_label.setPreferredSize(new java.awt.Dimension(120, 32));
 
-        correo_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        correo_label.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         correo_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         correo_label.setText("CorreoEstudiante");
         correo_label.setPreferredSize(new java.awt.Dimension(120, 32));
@@ -357,7 +399,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         edad_title_label.setText("Edad");
         edad_title_label.setPreferredSize(new java.awt.Dimension(120, 32));
 
-        edad_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        edad_label.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edad_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         edad_label.setText("edadEstudiante");
         edad_label.setPreferredSize(new java.awt.Dimension(120, 32));
@@ -367,7 +409,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         carrera_title_label2.setText("Sexo");
         carrera_title_label2.setPreferredSize(new java.awt.Dimension(120, 32));
 
-        sexo_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        sexo_label.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         sexo_label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         sexo_label.setText("sexoEstudiante");
         sexo_label.setPreferredSize(new java.awt.Dimension(120, 32));
@@ -377,72 +419,53 @@ public class EstudianteFrame extends javax.swing.JFrame {
         info_panelLayout.setHorizontalGroup(
             info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(info_panelLayout.createSequentialGroup()
-                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(16, 16, 16)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(info_panelLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addComponent(nombre_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(info_panelLayout.createSequentialGroup()
                         .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(info_panelLayout.createSequentialGroup()
-                                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(correo_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(correo_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(50, 50, 50)
-                                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(edad_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(info_panelLayout.createSequentialGroup()
-                                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nombre_label, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                                    .addComponent(nombre_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(50, 50, 50)
-                                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(carrera_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                                    .addComponent(carrera_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(info_panelLayout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(carrera_title_label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sexo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(carrera_title_label2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sexo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(correo_title_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(carrera_label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(16, 16, 16)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(edad_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
         info_panelLayout.setVerticalGroup(
             info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(info_panelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(info_panelLayout.createSequentialGroup()
-                        .addComponent(nombre_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(info_panelLayout.createSequentialGroup()
-                        .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(carrera_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(info_panelLayout.createSequentialGroup()
-                        .addComponent(correo_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(info_panelLayout.createSequentialGroup()
-                        .addComponent(edad_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(carrera_title_label2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sexo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edad_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(carrera_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edad_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(correo_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(carrera_title_label2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sexo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(correo_label, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
 
-        limpiar_button.setBackground(new java.awt.Color(58, 159, 220));
-        limpiar_button.setForeground(new java.awt.Color(255, 255, 255));
-        limpiar_button.setText("Limpiar");
-        limpiar_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        limpiar_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpiar_buttonActionPerformed(evt);
-            }
-        });
+        opcion_panel.setBackground(new java.awt.Color(255, 255, 255));
 
         agregar_button.setBackground(new java.awt.Color(58, 159, 220));
         agregar_button.setForeground(new java.awt.Color(255, 255, 255));
@@ -451,6 +474,16 @@ public class EstudianteFrame extends javax.swing.JFrame {
         agregar_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregar_buttonActionPerformed(evt);
+            }
+        });
+
+        limpiar_button.setBackground(new java.awt.Color(58, 159, 220));
+        limpiar_button.setForeground(new java.awt.Color(255, 255, 255));
+        limpiar_button.setText("Limpiar");
+        limpiar_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        limpiar_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiar_buttonActionPerformed(evt);
             }
         });
 
@@ -474,56 +507,77 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout opcion_panelLayout = new javax.swing.GroupLayout(opcion_panel);
+        opcion_panel.setLayout(opcion_panelLayout);
+        opcion_panelLayout.setHorizontalGroup(
+            opcion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(opcion_panelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(eliminar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(modificar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(limpiar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        opcion_panelLayout.setVerticalGroup(
+            opcion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(opcion_panelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(opcion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modificar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eliminar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(limpiar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+
         javax.swing.GroupLayout body_panelLayout = new javax.swing.GroupLayout(body_panel);
         body_panel.setLayout(body_panelLayout);
         body_panelLayout.setHorizontalGroup(
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(body_panelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
+                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cedula_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(crud_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(info_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(body_panelLayout.createSequentialGroup()
-                        .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(eliminar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(opcion_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(body_panelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(modificar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(limpiar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(16, 16, 16))
+                        .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         body_panelLayout.setVerticalGroup(
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, body_panelLayout.createSequentialGroup()
+            .addGroup(body_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(body_panelLayout.createSequentialGroup()
-                        .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, body_panelLayout.createSequentialGroup()
-                        .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(150, 150, 150)
-                        .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(modificar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(eliminar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(limpiar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(38, 38, 38))))
+                        .addGap(48, 48, 48)
+                        .addComponent(opcion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(crud_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE))
-                .addGap(16, 16, 16))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1061, Short.MAX_VALUE)
+                    .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,7 +585,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(body_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -553,10 +607,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
     private void sexo_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sexo_textfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_sexo_textfieldActionPerformed
-
-    private void carrera_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrera_textfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_carrera_textfieldActionPerformed
 
     private void nombre_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre_textfieldActionPerformed
         // TODO add your handling code here:
@@ -586,22 +636,27 @@ public class EstudianteFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_eliminar_buttonActionPerformed
 
+    private void cmb_carreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_carreraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_carreraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar_button;
     private javax.swing.JButton back_button;
     private javax.swing.JPanel body_panel;
     private javax.swing.JLabel carrera_label;
-    public javax.swing.JTextField carrera_textfield;
     private javax.swing.JLabel carrera_title_label;
     private javax.swing.JLabel carrera_title_label2;
     private javax.swing.JButton cedula_button;
     private javax.swing.JLabel cedula_label;
     private javax.swing.JPanel cedula_panel;
     public javax.swing.JTextField cedula_textfield;
+    private javax.swing.JComboBox<String> cmb_carrera;
     private javax.swing.JLabel correo_label;
     public javax.swing.JTextField correo_textfield;
     private javax.swing.JLabel correo_title_label;
+    private javax.swing.JPanel crud_panel;
     private javax.swing.JLabel edad_label;
     public javax.swing.JTextField edad_textfield1;
     private javax.swing.JLabel edad_title_label;
@@ -610,9 +665,15 @@ public class EstudianteFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton limpiar_button;
     private javax.swing.JButton modificar_button;
+    private javax.swing.JLabel nombre_jLabel;
+    private javax.swing.JLabel nombre_jLabel1;
+    private javax.swing.JLabel nombre_jLabel2;
+    private javax.swing.JLabel nombre_jLabel3;
     private javax.swing.JLabel nombre_label;
     public javax.swing.JTextField nombre_textfield;
     private javax.swing.JLabel nombre_title_label;
+    private javax.swing.JPanel opcion_panel;
+    private javax.swing.JLabel sexo_jLabel;
     private javax.swing.JLabel sexo_label;
     public javax.swing.JTextField sexo_textfield;
     private javax.swing.JPanel title_panel;
