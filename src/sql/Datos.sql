@@ -456,3 +456,15 @@ WHERE ne.id_estudiante IN (
     ORDER BY RANDOM()
     LIMIT 30  -- Selecciona 30 estudiantes al azar
 );
+
+CREATE TABLE "Retiro_materia_estudiante" (
+  "id_retiro_materia_estudiante" serial primary key,
+  "id_estudiante" varchar(25) NOT NULL,
+  "id_asignatura" varchar(25) NOT NULL,
+  CONSTRAINT "FK_Retiro_materia_estudiante.id_estudiante"
+    FOREIGN KEY ("id_estudiante")
+      REFERENCES "Estudiantes"("id_estudiante"),
+  CONSTRAINT "FK_Retiro_materia_estudiante.id_asignatura"
+    FOREIGN KEY ("id_asignatura")
+      REFERENCES "Asignaturas"("id_asignatura")
+);

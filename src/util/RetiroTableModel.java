@@ -23,7 +23,7 @@ import models.Asignatura;
 public class RetiroTableModel extends AbstractTableModel {
 
     private final List<Asignatura> asignaturas;
-    private static String[] columnNames = {"ID", "Asignatura", "Carga academica", "Seccion", "Retirar"};
+    private static final String[] columnNames = {"ID", "Asignatura", "Carga academica", "Seccion", "Retirar"};
     private final CheckableCellEventListener listener;
 
     public RetiroTableModel(List<Asignatura> asignaturas, CheckableCellEventListener listener) {
@@ -63,7 +63,7 @@ public class RetiroTableModel extends AbstractTableModel {
             case 2 ->
                 asignatura.getCargaAcademica();
             case 3 ->
-                String.format("Seccion %s", asignatura.getSeccion());
+                String.format("Seccion %s", asignatura.getSeccion().getNumero());
             case 4 ->
                 asignatura.esRetirada();
             default ->

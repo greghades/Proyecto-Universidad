@@ -24,9 +24,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.RowFilter;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import models.CincoColumnasModel;
 import models.CuatroColumnasModel;
 import models.TresColumnasModel;
@@ -35,9 +38,10 @@ import util.ListadoEstudianteCuatroTableModel;
 import util.ListadoEstudianteTresTableModel;
 
 public class ListadoEstudiantesFrame extends javax.swing.JFrame {
-
+    
     public ListadoEstudiantesController controller;
-
+    private TableRowSorter sorter;
+    
     public ListadoEstudiantesFrame(ListadoEstudiantesController controller) {
         super("Proyecto: Universidad Central de Lara");
         this.controller = controller;
@@ -45,47 +49,61 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         cmb_listado_estudiantes.setBackground(Color.white);
         agregarListener(controller);
     }
-
+    
     private void agregarListener(ActionListener accion) {
         back_button.addActionListener(accion);
         cmb_listado_estudiantes.addActionListener(accion);
+        search_button.addActionListener(accion);
     }
-
+    
     public void mostrarUI(boolean should) {
         table_panel.setVisible(should);
     }
-
+    
     public void setupComboBox(List<String> opciones) {
         cmb_listado_estudiantes.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
     }
     
-    private void actualizarUI(String option) {
+    public void search() {
+        String str = searchTextField.getText();
+        String padding = "   ";
+        if (str.length() == 0) {
+            sorter.setRowFilter(null);
+            searchTextField.setText(padding + "Busca por la columna que desees");
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter(str));
+        }
+    }
+    
+    private void actualizarUI(String option, AbstractTableModel model) {
         cmb_listado_estudiantes.setSelectedItem(option);
         table_listado_estudiante.setPreferredScrollableViewportSize(table_listado_estudiante.getPreferredSize());
+        sorter = new TableRowSorter<>(model);
+        table_listado_estudiante.setRowSorter(sorter);
         configurarColumnas();
     }
-
+    
     public void configurarTablaTresColumnas(List<TresColumnasModel> datasource, String type, String option) {
         limpiarUI();
         ListadoEstudianteTresTableModel model = new ListadoEstudianteTresTableModel(datasource, type);
         table_listado_estudiante.setModel(model);
-        actualizarUI(option);
+        actualizarUI(option, model);
     }
     
-    public void configurarTablaCuatroColumnas(List<CuatroColumnasModel> datasource, String type, String option) {
+    public void configurarTablaCuatroColumnas(List<CuatroColumnasModel> datasource, String[] columns, String option) {
         limpiarUI();
-        ListadoEstudianteCuatroTableModel model = new ListadoEstudianteCuatroTableModel(datasource, type);
+        ListadoEstudianteCuatroTableModel model = new ListadoEstudianteCuatroTableModel(datasource, columns);
         table_listado_estudiante.setModel(model);
-        actualizarUI(option);
+        actualizarUI(option, model);
     }
     
     public void configurarTablaCincoColumnas(List<CincoColumnasModel> datasource, String option) {
         limpiarUI();
         ListadoEstudianteCincoTableModel model = new ListadoEstudianteCincoTableModel(datasource);
         table_listado_estudiante.setModel(model);
-        actualizarUI(option);
+        actualizarUI(option, model);
     }
-
+    
     public void limpiarUI() {
         // Limpiar el UI 
         cmb_listado_estudiantes.setSelectedItem("Seleccione listado");
@@ -98,7 +116,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
             }
         }
     }
-
+    
     private void configurarColumnas() {
         // Asignar un ancho mayor a la primera columna
         TableColumnModel columnModel = table_listado_estudiante.getColumnModel();
@@ -107,7 +125,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         
         for (int i = 1; i < columnModel.getColumnCount(); i++) {
             columnModel.getColumn(i).setResizable(true);
-            columnModel.getColumn(i).setMaxWidth(10000); 
+            columnModel.getColumn(i).setMaxWidth(10000);            
         }
 
         // Centrar el contenido de las columnas.
@@ -118,7 +136,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         }
         mostrarUI(true);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -134,6 +152,8 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         estudiantes_title_label = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_listado_estudiante = new javax.swing.JTable();
+        searchTextField = new javax.swing.JTextField();
+        search_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -240,22 +260,45 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
             table_listado_estudiante.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        searchTextField.setText("   Busca por la columna que desees");
+        searchTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
+        search_button.setBackground(new java.awt.Color(58, 159, 220));
+        search_button.setForeground(new java.awt.Color(255, 255, 255));
+        search_button.setText("Buscar");
+        search_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        search_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout table_panelLayout = new javax.swing.GroupLayout(table_panel);
         table_panel.setLayout(table_panelLayout);
         table_panelLayout.setHorizontalGroup(
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
             .addComponent(estudiantes_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, table_panelLayout.createSequentialGroup()
+                .addComponent(searchTextField)
+                .addGap(8, 8, 8)
+                .addComponent(search_button, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         table_panelLayout.setVerticalGroup(
             table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, table_panelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(estudiantes_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addGroup(table_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(search_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
+
+        searchTextField.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -266,8 +309,8 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(table_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmb_listado_estudiantes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16))
         );
@@ -332,10 +375,18 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_listado_estudiantesActionPerformed
 
+    private void search_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_buttonActionPerformed
+
+    }//GEN-LAST:event_search_buttonActionPerformed
+    
     public JButton getBack_button() {
         return back_button;
     }
-
+    
+    public JButton getSearch_button() {
+        return search_button;
+    }
+    
     public JComboBox<Object> getCmb_listado_estudiantes() {
         return cmb_listado_estudiantes;
     }
@@ -349,6 +400,8 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField searchTextField;
+    private javax.swing.JButton search_button;
     private javax.swing.JTable table_listado_estudiante;
     private javax.swing.JPanel table_panel;
     private javax.swing.JLabel title_label;

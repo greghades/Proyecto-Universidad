@@ -28,7 +28,7 @@ public class Asignatura {
     private String nombre;
     private int cargaAcademica;
     private boolean esRetirada;
-    private int seccion;
+    private Seccion seccion;
 
     public Asignatura(String id, String nombre, int carga) {
         this.id = id;
@@ -36,20 +36,21 @@ public class Asignatura {
         this.cargaAcademica = carga;
     }
 
-    public int getSeccion() {
-        return seccion;
-    }
-
-    public void setSeccion(int seccion) {
-        this.seccion = seccion;
-    }
-
-    public Asignatura(String id, String nombre, int carga, int seccion) {
+    public Asignatura(String id, String nombre, int carga, Seccion seccion) {
         this.id = id;
         this.nombre = nombre;
         this.cargaAcademica = carga;
         this.seccion = seccion;
     }
+
+    public Seccion getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(Seccion seccion) {
+        this.seccion = seccion;
+    }
+
 
     public String getId() {
         return id;

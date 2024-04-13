@@ -80,7 +80,6 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
 
         this.info = connection.obtenerEstudianteConAsignaturas(retirarMateriaFrame.getCedula(), true);
 
-        System.out.println(info);
         if (info == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun estudiante inscrito con esa cedula", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -95,24 +94,46 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
     }
 
     private void retirarAsignatura() {
-        System.out.println("retirarAsignatura up: ");
-       
-
-        System.out.println("retirarAsignatura: ");
-        int rowsAffected = connection.retirarAsignatura(retiros);
-
-        if (rowsAffected > 0) {
-            showSuccessAlert(true);
+        String cedulaEstudianteConMateriaRetirada = connection.revisarRetiroMateria(retiros.get(0).getId_estudiante());
+        
+        if (cedulaEstudianteConMateriaRetirada.isEmpty()) {
+            String mensajeConsulta = connection.retirarAsignatura(retiros);
+            if (mensajeConsulta.contains("No")) {
+                showSuccessAlert(false, mensajeConsulta);
+            } else {
+                showSuccessAlert(true, mensajeConsulta);
+            }            
+        } else if (cedulaEstudianteConMateriaRetirada == null) {
+            showAlert("Ha ocurrido un error", "No se pudo realizar la consulta para retirar mediante base de datos.", false);
         } else {
-            showSuccessAlert(false);
+            showAlert("Lo sentimos", "El estudiante ya retiro una materia este periodo academico.", false);
         }
     }
-
-    private void showSuccessAlert(boolean exitosa) {
+    
+        private void showAlert(String title, String message, boolean isSuccess) {
         Object[] options = {"Aceptar"};
         int selection = JOptionPane.showOptionDialog(
                 null,
-                exitosa ? "¡La asignatura fue retirada de manera exitosa!" : "No se pudo llevar a cabo el retiro de la asignatura correctamente",
+                message,
+                title,
+                JOptionPane.OK_OPTION,
+                isSuccess ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (selection == JOptionPane.OK_OPTION && isSuccess) {
+            showInicioFrame();
+        } else {
+            System.out.println("Selected Option Is X: " + selection);
+        }
+    }
+
+    private void showSuccessAlert(boolean exitosa, String message) {
+        Object[] options = {"Aceptar"};
+        int selection = JOptionPane.showOptionDialog(
+                null,
+                message,
                 exitosa ? "Felicidades" : "Ha ocurrido un error",
                 JOptionPane.OK_OPTION,
                 exitosa ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
@@ -135,7 +156,6 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
             mostrarDatos();
         } else if (button.getSource() == retirarMateriaFrame.getBtn_retirar_asignatura()) {
             retirarAsignatura();
-            
         }
     }
 
@@ -146,12 +166,10 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
         asignaturaSeleccionada.setInclusion(value);
         info.setAsignatura(row, asignaturaSeleccionada);
 
-        // Obtener nombre de profesor
-        ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
         PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
 
-        InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());
-        
+        InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), asignaturaSeleccionada.getSeccion().getId());
+
         // Si this.inscripciones está vacío, inicializar con la inscripcion generada
         if (retiros.isEmpty()) {
             retiros.add(inscripcion);

@@ -23,23 +23,11 @@ import models.CuatroColumnasModel;
 public class ListadoEstudianteCuatroTableModel extends AbstractTableModel {
 
     private final List<CuatroColumnasModel> datasource;
-    private String[] columnNames = {"Num", "Cedula", "Nombre", "Calificación promedio"};
+    private String[] columnNames = {};
 
-    public ListadoEstudianteCuatroTableModel(List<CuatroColumnasModel> datasource, String extra) {
+    public ListadoEstudianteCuatroTableModel(List<CuatroColumnasModel> datasource, String[] columns) {
         this.datasource = datasource;
-
-        String[] newColumnNames = new String[columnNames.length + 1];
-        int extraIndex = 2; // Índice donde deseas insertar el valor extra
-        for (int i = 0; i < newColumnNames.length; i++) {
-            if (i < extraIndex) {
-                newColumnNames[i] = columnNames[i];
-            } else if (i == extraIndex) {
-                newColumnNames[i] = extra;
-            } else {
-                newColumnNames[i] = columnNames[i - 1];
-            }
-        }
-        columnNames = newColumnNames;
+        this.columnNames = columns;
     }
 
     public void removeRow(int row) {

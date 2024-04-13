@@ -88,7 +88,6 @@ public class AsignarNotaController implements ActionListener {
 
     public void actualizarNota(Object value, int row) {
         if (value instanceof Float nota) {
-            System.out.println("cedula: " + estudiantes.get(row).getCedula());
             NotaEstudianteListModel estudianteActualizado = estudiantes.get(row);
             boolean encontrado = false;
 
@@ -137,8 +136,6 @@ public class AsignarNotaController implements ActionListener {
             System.out.println("No se encontró la asignatura seleccionada.");
         }
         asignarNotaFrame.getCmb_asignatura().transferFocus();
-
-//        System.out.println("seleccion:" + tipoSeleccionado);
     }
 
     private void mostrarTablaEstudiantes(String idAsignatura) {

@@ -17,7 +17,7 @@ Yaslin Vreugdenhil.
 package util;
 
 import java.awt.Dimension;
-import java.awt.Insets;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
@@ -25,13 +25,13 @@ public class PantallaCompleta {
 
     public void setPantallaCompleta(JFrame frame) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Insets insets = new Insets(100, 200, 100, 200);
         Dimension adjustedSize = new Dimension(
-                screenSize.width - insets.left - insets.right,
-                screenSize.height - insets.top - insets.bottom
+                screenSize.width,
+                screenSize.height
         );
         frame.getContentPane().setPreferredSize(adjustedSize);
         frame.pack();
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
     }
 }
