@@ -19,16 +19,30 @@ package models;
 
 //import java.util.Arrays;
 
-/**
- *
- * @author 58412
- */
+import com.sun.jdi.request.ClassPrepareRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Estudiante extends Persona {
     private Carrera carrera;
-
+    private String id_carrera;
+  
     public Estudiante(Carrera carrera, String cedula, String nombre, String apellido, String correo, int edad, String sexo) {
         super(cedula, nombre, apellido, correo, edad, sexo);
         this.carrera = carrera;
+    }
+    
+    public Estudiante(String id_carrera, String cedula, String nombre, String apellido, String correo, int edad, String sexo){
+         super(cedula, nombre, apellido, correo, edad, sexo);
+         this.id_carrera = id_carrera;
+    }
+
+    public String getId_carrera() {
+        return id_carrera;
+    }
+
+    public void setId_carrera(String id_carrera) {
+        this.id_carrera = id_carrera;
     }
 
     @Override
@@ -39,7 +53,7 @@ public class Estudiante extends Persona {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -76,33 +90,15 @@ public class Estudiante extends Persona {
         return sexo;
     }
 
-//    public void retirarMateria(Asignatura asignatura){
-//        
-//        // Iterar sobre el arreglo de asignaturas del estudiante
-//        for (int i = 0; i < asignaturas.length; i++) {
-//            // Verificar si la asignatura actual coincide con la asignatura que se desea retirar
-//            if (asignaturas[i].equals(asignatura)) {
-//                // Si coincide, eliminar la asignatura del arreglo
-//                // Esto lo puedes hacer moviendo todos los elementos posteriores una posición hacia adelante
-//                for (int j = i; j < asignaturas.length - 1; j++) {
-//                    asignaturas[j] = asignaturas[j + 1];
-//                }
-//                // Reducir el tamaño del arreglo en 1
-//                asignaturas = Arrays.copyOf(asignaturas, asignaturas.length - 1);
-//
-//                // Salir del bucle una vez que se ha encontrado y retirado la asignatura
-//                break;
-//            }
-//        }
+
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-//    }
     public Carrera getCarrera() {
         return carrera;
     }
-
+    
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }

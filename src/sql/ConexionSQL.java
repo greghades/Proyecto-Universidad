@@ -32,7 +32,7 @@ public class ConexionSQL {
     private static ConexionSQL instance = null;
     private Connection conn = null;
     private Statement statement;
-    private final String db = "universidad";
+    private final String db = "universidadcrud";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
     private final String pass = "123456789";
@@ -96,6 +96,28 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+  /* public ArrayList<Carrera> getCarrera() {
+    try {
+        String query = "SELECT c.id_carrera, c.nombre_carrera FROM public.\"Carreras\" c";
+        ResultSet carreraSet = statement.executeQuery(query);
+        ArrayList<Carrera> carreraList = new ArrayList<>();
+        
+        while (carreraSet.next()) {
+            String id_carrera = carreraSet.getString("id_carrera");
+            String nombre = carreraSet.getString("nombre_carrera");
+            
+            // Crea una instancia de Carrera y agrégala a la lista
+            Carrera carrera = new Carrera(id_carrera, nombre);
+            carreraList.add(carrera);
+        }
+        
+        return carreraList;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+    }
+}*/
 
     private ArrayList<Asignatura> getAsignaturasParaInscripcion(String id) {
         try {
@@ -288,7 +310,6 @@ public class ConexionSQL {
         }
     }
 
-    //ver profesor por asignatura y seccion
     public Profesor getProfesor(String idAsignatura, String idSeccion) {
         try {
             String query = String.format("SELECT p.id_profesor, p.nombre_completo, p.especialidad FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
@@ -340,60 +361,125 @@ public class ConexionSQL {
         }
     }
     
-    //CRUD Estudiante  
-   public boolean insertarEstudiante(Estudiante estudiante) {
-    PreparedStatement preparedStatement = null;
-       try {
-        String query = "INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setString(1, estudiante.getCedula());
-        preparedStatement.setString(2, String.valueOf(estudiante.getCarrera()));
-        preparedStatement.setString(3, estudiante.getNombre());
-        preparedStatement.setInt(4, estudiante.getEdad());
-        preparedStatement.setString(5, estudiante.getCorreo());
-        preparedStatement.setString(6, " "); 
-        preparedStatement.setString(7, estudiante.getSexo());
-        preparedStatement.setString(8, String.valueOf(true));
-        preparedStatement.executeUpdate();
-        return true;
-    } catch (SQLException e) {
-        System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
-    }
-        return false;
-}
-   public void modificarEstudiante(Estudiante estudiante) {
-       try {
-        String query = "UPDATE public.\"Estudiantes\" SET id_estudiante = %s , id_carrera= %s , nombre_completo= %s , edad= %s , correo= %s , direccion= %s , sexo= %s , estado= %s  WHERE id_estudiante = '%s';";
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setString(1, estudiante.getCedula());
-        preparedStatement.setString(2, String.valueOf(estudiante.getCarrera()));
-        preparedStatement.setString(3, estudiante.getNombre());
-        preparedStatement.setInt(4, estudiante.getEdad());
-        preparedStatement.setString(5, estudiante.getCorreo());
-        preparedStatement.setString(6, " "); 
-        preparedStatement.setString(7, estudiante.getSexo());
-        preparedStatement.setString(8, String.valueOf(true));
-        preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-        System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e.getMessage());
-    }
-
-}
-   //duda porque aqui esta es buscando inhabilitar estudiante 
-  public void eliminarEstudiante(Estudiante estudiante) {
-       try {
-        String query = "UPDATE public.\"Estudiantes\" SET estado = %s  WHERE id_estudiante = '%s';";
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setString(1, estudiante.getCedula());
-        preparedStatement.setString(8, String.valueOf(false));
-        preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-        System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e.getMessage());
-    }
-
-}
-   
+    //CRUD - Estudiantes
     
+     //Cree una consulta traerme las carreras al combobox
+     public ArrayList<Carrera> getCarrera() {
+        try {
+            String query = "SELECT c.id_carrera, c.nombre_carrera FROM public.\"Carreras\" c";
+            ResultSet carreraSet = statement.executeQuery(query);
+
+            ArrayList<Carrera> carreras = new ArrayList<>();
+            while (carreraSet.next()) {
+                String id_carrera = carreraSet.getString("id_carrera");
+                String nombre = carreraSet.getString("nombre_carrera");
+                carreras.add(new Carrera(id_carrera, nombre));
+            }
+            return carreras;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    //agregar un estudiante
+    public int agregarEstudiante(Estudiante estudiante) {
+        try {
+            String id_estudiante = estudiante.getCedula();
+            String id_carrera = estudiante.getCarrera().getId();
+            System.out.println("carrerita" + id_carrera);
+            String nombre = estudiante.getNombre();
+            int edad = estudiante.getEdad();
+            String correo = estudiante.getCorreo();
+            String sexo = estudiante.getSexo();
+            
+            String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
+            return -1;
+        }
+    }
+    
+    //modificar
+    public int modificarEstudiante(Estudiante estudiante, String id) {
+            try {
+                System.out.println("Cedulita" + id);
+
+                String id_carrera = estudiante.getCarrera().getId();
+                String nombre = estudiante.getNombre();
+                int edad = estudiante.getEdad();
+                String correo = estudiante.getCorreo();
+                String sexo = estudiante.getSexo();
+                
+                String query = String.format("UPDATE public.\"Estudiantes\" SET id_carrera = '%s', nombre_completo = '%s', edad = '%s', correo = '%s', direccion = '%s', sexo = '%s', estado = '%s' WHERE id_estudiante = '%s'", id_carrera, nombre, edad, correo, " ", sexo, true, id);
+
+                System.out.println("cedula estudiante : " + id +"Edad " + edad+ " query: " + query);
+                int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.out.println("sql.ConexionSQL.modificarEstudiante() error: " + e);
+            return -1;
+        } 
+    }
+    
+    //eliminar
+        public int eliminarEstudiante(String id) {
+            try {
+                String estudiante_id = id;
+                
+                String query = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';" , estudiante_id);
+                int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
+            return -1;
+        }
+    }
+    
+    //buscar Estudiante
+     public Estudiante buscarEstudiante(String id) {
+        try {
+            String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
+            ResultSet bigSet = statement.executeQuery(query);
+            Estudiante estudiante = null;
+
+            while (bigSet.next()) {
+                String cedula = bigSet.getString("id_estudiante");
+                String nombreCompleto = bigSet.getString("nombre_completo");
+                int edad = bigSet.getInt("edad");
+                String correo = bigSet.getString("correo");
+                String sexo = bigSet.getString("sexo");
+                String nombreCarrera = bigSet.getString("nombre_carrera");
+                String idCarrera = bigSet.getString("id_carrera");
+                Carrera carrera = new Carrera(idCarrera, nombreCarrera);
+                estudiante = new Estudiante(carrera, cedula, nombreCompleto, "", correo, edad, sexo);
+            }
+            return estudiante;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+      
+  //CRUD - Profesor
+    
+    //agregar un profesor
+   /*  public int insertarProfesor(Profesor profesor) {
+        try {
+            String id_estudiante = estudiante.getCedula();
+            String id_carrera = estudiante.getCarrera().getId();
+            String nombre = estudiante.getNombre();
+            int edad = estudiante.getEdad();
+            String correo = estudiante.getCorreo();
+            String sexo = estudiante.getSexo();
+            
+            String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
+            return -1;
+        }
+    }*/
 
     public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {

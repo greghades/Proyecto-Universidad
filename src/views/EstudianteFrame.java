@@ -18,23 +18,31 @@ package views;
 
 import controllers.AsignarNotaController;
 import controllers.EstudianteController;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import models.Carrera;
 import models.Estudiante;
 import models.Profesor;
+import sql.ConexionSQL;
 
 public class EstudianteFrame extends javax.swing.JFrame {
 
     public EstudianteController controller;
 
+     //controlador
     public EstudianteFrame(EstudianteController controller) {
         this.controller = controller;
         initComponents();
         agregarListener(controller);
+        cmb_sexo.setBackground(Color.white);
     }
 
     private void agregarListener(ActionListener accion) {
@@ -45,22 +53,34 @@ public class EstudianteFrame extends javax.swing.JFrame {
         agregar_button.addActionListener(accion);
         eliminar_button.addActionListener(accion);
         modificar_button.addActionListener(accion);
-        
+        cmb_sexo.addActionListener(accion); 
     }
-
+    
+// muestra el estado inicial de la interfaz
     public void mostrarEstadoInicial() {
         info_panel.setVisible(false);
+        //crud_panel.setVisible(false);
+       // opcion_panel.setVisible(false);
     }
-
+    // el error esta que hay que cambiarlo para que traiga un string por si acaso a la larga me da error 
+  public void setupComboBox(List<String> opciones) {
+        cmb_sexo.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+    }
     
-//Para que se muestre la informacion que se esta buscando 
     public void rellenarInformacionInicial(Estudiante estudiante) {
         nombre_label.setText(estudiante.getNombre());
-        carrera_label.setText(estudiante.getCarrera().toString());
+        //cambie a get nombre 
+        carrera_label.setText(estudiante.getCarrera().getNombre());
         correo_label.setText(estudiante.getCorreo());
         edad_label.setText(Integer.toString(estudiante.getEdad()));
         sexo_label.setText(estudiante.getSexo());
         info_panel.setVisible(true);
+        opcion_panel.setVisible(true);  
+        crud_panel.setVisible(true);
+    }
+    
+    public void mostrarCrud(Estudiante estudiante){
+         crud_panel.setVisible(true);
     }
     
     public String getCedula() {
@@ -85,13 +105,18 @@ public class EstudianteFrame extends javax.swing.JFrame {
     
     public JButton getAgregar_button() {
         return agregar_button;
+        
     }
     
     public JButton getModificar_button(){
         return modificar_button;
     }
-
-
+    public JComboBox<String> getCmb_carrera() {
+        return cmb_carrera;
+    }
+    public JComboBox<Object> getCmb_sexo() {
+        return cmb_sexo;
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -103,17 +128,18 @@ public class EstudianteFrame extends javax.swing.JFrame {
         cedula_textfield = new javax.swing.JTextField();
         cedula_label = new javax.swing.JLabel();
         cedula_button = new javax.swing.JButton();
+        agregar_button = new javax.swing.JButton();
         crud_panel = new javax.swing.JPanel();
         nombre_textfield = new javax.swing.JTextField();
         correo_textfield = new javax.swing.JTextField();
         cmb_carrera = new javax.swing.JComboBox<>();
-        sexo_textfield = new javax.swing.JTextField();
-        edad_textfield1 = new javax.swing.JTextField();
+        edad_textfield = new javax.swing.JTextField();
         nombre_jLabel = new javax.swing.JLabel();
         nombre_jLabel1 = new javax.swing.JLabel();
         nombre_jLabel2 = new javax.swing.JLabel();
         nombre_jLabel3 = new javax.swing.JLabel();
         sexo_jLabel = new javax.swing.JLabel();
+        cmb_sexo = new javax.swing.JComboBox<>();
         info_panel = new javax.swing.JPanel();
         nombre_title_label = new javax.swing.JLabel();
         nombre_label = new javax.swing.JLabel();
@@ -126,7 +152,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
         carrera_title_label2 = new javax.swing.JLabel();
         sexo_label = new javax.swing.JLabel();
         opcion_panel = new javax.swing.JPanel();
-        agregar_button = new javax.swing.JButton();
         limpiar_button = new javax.swing.JButton();
         modificar_button = new javax.swing.JButton();
         eliminar_button = new javax.swing.JButton();
@@ -212,26 +237,39 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
+        agregar_button.setBackground(new java.awt.Color(58, 159, 220));
+        agregar_button.setForeground(new java.awt.Color(255, 255, 255));
+        agregar_button.setText("Agregar");
+        agregar_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        agregar_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregar_buttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout cedula_panelLayout = new javax.swing.GroupLayout(cedula_panel);
         cedula_panel.setLayout(cedula_panelLayout);
         cedula_panelLayout.setHorizontalGroup(
             cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cedula_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(cedula_panelLayout.createSequentialGroup()
-                .addComponent(cedula_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(5, 5, 5)
-                .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cedula_label, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                    .addComponent(cedula_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         cedula_panelLayout.setVerticalGroup(
             cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cedula_panelLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addComponent(cedula_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addGroup(cedula_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cedula_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                    .addComponent(cedula_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         crud_panel.setBackground(new java.awt.Color(255, 255, 255));
@@ -277,33 +315,18 @@ public class EstudianteFrame extends javax.swing.JFrame {
             }
         });
 
-        sexo_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        sexo_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        sexo_textfield.setText("Sexo");
-        sexo_textfield.setToolTipText("Introduce tu cedula");
-        sexo_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        sexo_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
-        sexo_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
-        sexo_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
-        sexo_textfield.setName(""); // NOI18N
-        sexo_textfield.addActionListener(new java.awt.event.ActionListener() {
+        edad_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        edad_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        edad_textfield.setText("Edad");
+        edad_textfield.setToolTipText("Introduce tu cedula");
+        edad_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        edad_textfield.setMargin(new java.awt.Insets(8, 8, 8, 8));
+        edad_textfield.setMaximumSize(new java.awt.Dimension(100, 20));
+        edad_textfield.setMinimumSize(new java.awt.Dimension(100, 20));
+        edad_textfield.setName(""); // NOI18N
+        edad_textfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sexo_textfieldActionPerformed(evt);
-            }
-        });
-
-        edad_textfield1.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        edad_textfield1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        edad_textfield1.setText("Edad");
-        edad_textfield1.setToolTipText("Introduce tu cedula");
-        edad_textfield1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        edad_textfield1.setMargin(new java.awt.Insets(8, 8, 8, 8));
-        edad_textfield1.setMaximumSize(new java.awt.Dimension(100, 20));
-        edad_textfield1.setMinimumSize(new java.awt.Dimension(100, 20));
-        edad_textfield1.setName(""); // NOI18N
-        edad_textfield1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edad_textfield1ActionPerformed(evt);
+                edad_textfieldActionPerformed(evt);
             }
         });
 
@@ -317,6 +340,18 @@ public class EstudianteFrame extends javax.swing.JFrame {
 
         sexo_jLabel.setText("sexo");
 
+        cmb_sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar sexo" }));
+        cmb_sexo.setToolTipText("");
+        cmb_sexo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cmb_sexo.setMaximumSize(new java.awt.Dimension(32767, 80));
+        cmb_sexo.setMinimumSize(new java.awt.Dimension(214, 80));
+        cmb_sexo.setPreferredSize(new java.awt.Dimension(214, 32));
+        cmb_sexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_sexoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout crud_panelLayout = new javax.swing.GroupLayout(crud_panel);
         crud_panel.setLayout(crud_panelLayout);
         crud_panelLayout.setHorizontalGroup(
@@ -329,13 +364,14 @@ public class EstudianteFrame extends javax.swing.JFrame {
                     .addComponent(nombre_jLabel2)
                     .addComponent(nombre_jLabel3)
                     .addComponent(sexo_jLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(sexo_textfield, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(edad_textfield1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmb_carrera, javax.swing.GroupLayout.Alignment.TRAILING, 0, 250, Short.MAX_VALUE)
-                    .addComponent(correo_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nombre_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 27, Short.MAX_VALUE)
+                .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmb_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(edad_textfield, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmb_carrera, javax.swing.GroupLayout.Alignment.TRAILING, 0, 356, Short.MAX_VALUE)
+                        .addComponent(correo_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nombre_textfield, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         crud_panelLayout.setVerticalGroup(
             crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,12 +389,12 @@ public class EstudianteFrame extends javax.swing.JFrame {
                     .addComponent(nombre_jLabel2))
                 .addGap(16, 16, 16)
                 .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edad_textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edad_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombre_jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(crud_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sexo_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sexo_jLabel)))
+                    .addComponent(sexo_jLabel)
+                    .addComponent(cmb_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         info_panel.setBackground(new java.awt.Color(255, 255, 255));
@@ -467,16 +503,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
 
         opcion_panel.setBackground(new java.awt.Color(255, 255, 255));
 
-        agregar_button.setBackground(new java.awt.Color(58, 159, 220));
-        agregar_button.setForeground(new java.awt.Color(255, 255, 255));
-        agregar_button.setText("Agregar");
-        agregar_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        agregar_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregar_buttonActionPerformed(evt);
-            }
-        });
-
         limpiar_button.setBackground(new java.awt.Color(58, 159, 220));
         limpiar_button.setForeground(new java.awt.Color(255, 255, 255));
         limpiar_button.setText("Limpiar");
@@ -513,8 +539,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
             opcion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcion_panelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
                 .addComponent(eliminar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(modificar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -527,7 +551,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
             .addGroup(opcion_panelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(opcion_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(agregar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(modificar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(eliminar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(limpiar_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -540,31 +563,31 @@ public class EstudianteFrame extends javax.swing.JFrame {
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(body_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cedula_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(crud_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(body_panelLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(opcion_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(body_panelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(crud_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(body_panelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(body_panelLayout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addComponent(opcion_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(16, 16, 16))
         );
         body_panelLayout.setVerticalGroup(
             body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(body_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(body_panelLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(opcion_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cedula_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(crud_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(body_panelLayout.createSequentialGroup()
+                        .addComponent(opcion_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(info_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(16, 16, 16))
         );
 
@@ -574,10 +597,10 @@ public class EstudianteFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1061, Short.MAX_VALUE)
-                    .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1167, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -604,22 +627,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cedula_buttonActionPerformed
 
-    private void sexo_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sexo_textfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sexo_textfieldActionPerformed
-
-    private void nombre_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre_textfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombre_textfieldActionPerformed
-
-    private void correo_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correo_textfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_correo_textfieldActionPerformed
-
-    private void edad_textfield1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edad_textfield1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edad_textfield1ActionPerformed
-
     private void limpiar_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiar_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_limpiar_buttonActionPerformed
@@ -636,9 +643,25 @@ public class EstudianteFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_eliminar_buttonActionPerformed
 
+    private void cmb_sexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_sexoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_sexoActionPerformed
+
+    private void edad_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edad_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edad_textfieldActionPerformed
+
     private void cmb_carreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_carreraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_carreraActionPerformed
+
+    private void correo_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correo_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_correo_textfieldActionPerformed
+
+    private void nombre_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombre_textfieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -652,13 +675,14 @@ public class EstudianteFrame extends javax.swing.JFrame {
     private javax.swing.JLabel cedula_label;
     private javax.swing.JPanel cedula_panel;
     public javax.swing.JTextField cedula_textfield;
-    private javax.swing.JComboBox<String> cmb_carrera;
+    public javax.swing.JComboBox<String> cmb_carrera;
+    public javax.swing.JComboBox<Object> cmb_sexo;
     private javax.swing.JLabel correo_label;
     public javax.swing.JTextField correo_textfield;
     private javax.swing.JLabel correo_title_label;
     private javax.swing.JPanel crud_panel;
     private javax.swing.JLabel edad_label;
-    public javax.swing.JTextField edad_textfield1;
+    public javax.swing.JTextField edad_textfield;
     private javax.swing.JLabel edad_title_label;
     private javax.swing.JButton eliminar_button;
     private javax.swing.JPanel info_panel;
@@ -675,7 +699,6 @@ public class EstudianteFrame extends javax.swing.JFrame {
     private javax.swing.JPanel opcion_panel;
     private javax.swing.JLabel sexo_jLabel;
     private javax.swing.JLabel sexo_label;
-    public javax.swing.JTextField sexo_textfield;
     private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
 }

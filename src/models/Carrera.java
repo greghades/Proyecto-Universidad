@@ -17,6 +17,8 @@ Yaslin Vreugdenhil.
 
 package models;
 
+import java.util.List;
+
 /**
  *
  * @author User
@@ -32,6 +34,7 @@ public class Carrera {
         this.id = id;
         this.nombre = nombre;
     }
+    
 
     public String getId() {
         return id;
