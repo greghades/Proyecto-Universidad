@@ -65,17 +65,17 @@ public class ProfesorController implements ActionListener {
     public void setInicioController (InicioController inicioController) {
         this.inicioController = inicioController;
     }
-    
+    //mostrar datos del profesor de la base de datos
     public void mostrarDatos() {
         if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
             JOptionPane.showMessageDialog(null,"debes ingresar una cedula.", " Ten Cuidado.", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        this.profesor = connection.getProfesor(profesorFrame.getCedula());
+        //this.profesor = connection.getProfesor(profesorFrame.getCedula()); este no te sirve porque es con dos parametro (cedula, asignatura)
+        this.profesor= connection.getDatosProfesor(profesorFrame.getCedula());
         
         if (profesor == null) {
-            JOptionPane.showMessageDialog(profesorFrame, instance);
             JOptionPane.showMessageDialog(null,"No existe ningun profesor con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
             profesorFrame.rellenarInfoInicial(profesor);
@@ -114,10 +114,10 @@ public class ProfesorController implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == profesorFrame.getVolver_prof_btn()) {
+        if (event.getSource() == profesorFrame.getBack_button()) {
             showInicioFrame();    
         } else if (event.getSource() == profesorFrame.getCedula_profesor_btn()) {
-            mostrarDatos(); 
+            
         } else if (event.getSource() == profesorFrame.getAgg_prof_Btn()) {
             
         } else if (event.getSource() == profesorFrame.getLimpiar_prof_Btn()) {
@@ -128,6 +128,4 @@ public class ProfesorController implements ActionListener {
             
         }
     }
-    
-    
 }

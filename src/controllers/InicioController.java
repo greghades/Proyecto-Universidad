@@ -30,7 +30,6 @@ public class InicioController implements ActionListener {
     public ListadoEstudiantesController listadoEstudiantesController;
     public RetirarMateriaController retirarMateriaController;
     public AsignarNotaController asignarNotaController;
-    public EstudianteController estudianteController;
     public ProfesorController profesorController;
 
     public InicioController() {
@@ -76,11 +75,6 @@ public class InicioController implements ActionListener {
         asignarNotaController.showAsignarNotaFrame();
     }
     
-    private void showEstudianteFrame(){
-        inicioFrame.setVisible(false);
-        estudianteController.showEstudianteFrame();
-    }
-    
     private void showProfesorFrame() {
         inicioFrame.setVisible(false);
         profesorController.showProfesorFrame();
@@ -105,9 +99,6 @@ public class InicioController implements ActionListener {
     public void setRetirarMateriaController(RetirarMateriaController retirarMateriaController) {
         this.retirarMateriaController = retirarMateriaController;
     }
-    public void setEstudianteController(EstudianteController estudianteController){
-        this.estudianteController = estudianteController;
-    }
     public void setProfesorController(ProfesorController profesorController) {
         this.profesorController = profesorController;
     }
@@ -126,7 +117,7 @@ public class InicioController implements ActionListener {
         } else if (button.getSource() == inicioFrame.getAsignar_nota_button()) {
             showAsignarNotaFrame();
         } else if(button.getSource() == inicioFrame.getEstudiante_Button()){
-            showEstudianteFrame();
+           
         } else if (button.getSource() == inicioFrame.getProfesor_Button()) {
             showProfesorFrame();
         }

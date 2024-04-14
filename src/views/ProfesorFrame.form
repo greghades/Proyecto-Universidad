@@ -27,7 +27,7 @@
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="body_prof_Panel" max="32767" attributes="0"/>
-                  <Component id="title_panel1" max="32767" attributes="0"/>
+                  <Component id="title_panel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
@@ -37,7 +37,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="title_panel1" min="-2" max="-2" attributes="0"/>
+              <Component id="title_panel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Component id="body_prof_Panel" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
@@ -46,7 +46,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="title_panel1">
+    <Container class="javax.swing.JPanel" name="title_panel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="dc" green="9f" red="3a" type="rgb"/>
@@ -65,9 +65,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                  <Component id="volver_prof_btn" min="-2" pref="74" max="-2" attributes="0"/>
+                  <Component id="back_button" min="-2" pref="74" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
-                  <Component id="title_Label" max="32767" attributes="0"/>
+                  <Component id="jLabel1" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -78,11 +78,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Component id="volver_prof_btn" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="back_button" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="title_Label" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="title_Label">
+        <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="36" style="1"/>
@@ -102,7 +102,7 @@
             <Property name="text" type="java.lang.String" value="Profesor"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="volver_prof_btn">
+        <Component class="javax.swing.JButton" name="back_button">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>

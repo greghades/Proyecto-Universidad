@@ -16,9 +16,15 @@ Yaslin Vreugdenhil.
  */
 package views;
 
+import controllers.AsignarNotaController;
 import controllers.ProfesorController;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
+import models.Carrera;
+import models.Estudiante;
 import models.Profesor;
 
 
@@ -32,7 +38,8 @@ public class ProfesorFrame extends javax.swing.JFrame {
     }
     
     private void agregarListener(ActionListener accion){
-        volver_prof_btn.addActionListener(accion);
+       //dejalo como backbutton
+        back_button.addActionListener(accion);
         cedula_profesor_btn.addActionListener(accion);
         agg_prof_Btn.addActionListener(accion);
         eliminar_prof_Btn.addActionListener(accion);
@@ -57,8 +64,8 @@ public class ProfesorFrame extends javax.swing.JFrame {
         return cedula_prof_TextField.getText();
     }
     
-    public JButton getVolver_prof_btn() {
-        return volver_prof_btn;
+    public JButton getBack_button() {
+        return back_button;
     }
     
     public JButton getCedula_profesor_btn() {
@@ -81,19 +88,12 @@ public class ProfesorFrame extends javax.swing.JFrame {
         return limpiar_prof_Btn;
     }
 
-   
-    public ProfesorFrame() {
-        initComponents();
-    }
-
-   
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        title_panel1 = new javax.swing.JPanel();
-        title_Label = new javax.swing.JLabel();
-        volver_prof_btn = new javax.swing.JButton();
+        title_panel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        back_button = new javax.swing.JButton();
         body_prof_Panel = new javax.swing.JPanel();
         ID_prof_Panel = new javax.swing.JPanel();
         ingresar_label = new javax.swing.JLabel();
@@ -129,39 +129,39 @@ public class ProfesorFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        title_panel1.setBackground(new java.awt.Color(58, 159, 220));
-        title_panel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        title_panel.setBackground(new java.awt.Color(58, 159, 220));
+        title_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        title_Label.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        title_Label.setForeground(new java.awt.Color(242, 242, 242));
-        title_Label.setText("Profesor");
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(242, 242, 242));
+        jLabel1.setText("Profesor");
 
-        volver_prof_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        volver_prof_btn.setForeground(new java.awt.Color(58, 159, 220));
-        volver_prof_btn.setText("<Volver");
-        volver_prof_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        back_button.setForeground(new java.awt.Color(58, 159, 220));
+        back_button.setText("<Volver");
+        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        javax.swing.GroupLayout title_panel1Layout = new javax.swing.GroupLayout(title_panel1);
-        title_panel1.setLayout(title_panel1Layout);
-        title_panel1Layout.setHorizontalGroup(
-            title_panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(title_panel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
+        title_panel.setLayout(title_panelLayout);
+        title_panelLayout.setHorizontalGroup(
+            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(title_panelLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(volver_prof_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(340, 340, 340)
-                .addComponent(title_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(340, 340, 340))
         );
-        title_panel1Layout.setVerticalGroup(
-            title_panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(title_panel1Layout.createSequentialGroup()
-                .addGroup(title_panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(title_panel1Layout.createSequentialGroup()
+        title_panelLayout.setVerticalGroup(
+            title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(title_panelLayout.createSequentialGroup()
+                .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(title_panelLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(volver_prof_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(title_panel1Layout.createSequentialGroup()
+                        .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(title_panelLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(title_Label)))
+                        .addComponent(jLabel1)))
                 .addGap(35, 35, 35))
         );
 
@@ -471,14 +471,14 @@ public class ProfesorFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(body_prof_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(title_panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(title_panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(body_prof_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
@@ -492,6 +492,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ID_prof_Panel;
     private javax.swing.JButton agg_prof_Btn;
+    private javax.swing.JButton back_button;
     private javax.swing.JPanel body_prof_Panel;
     public javax.swing.JTextField cedula_prof_TextField;
     private javax.swing.JButton cedula_profesor_btn;
@@ -513,6 +514,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel genero_title_prof_Label;
     private javax.swing.JPanel info_prof_Panel;
     private javax.swing.JLabel ingresar_label;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton limpiar_prof_Btn;
     private javax.swing.JButton modif_prof_Btn;
     private javax.swing.JLabel nomb_prof_Label;
@@ -522,16 +524,6 @@ public class ProfesorFrame extends javax.swing.JFrame {
     private javax.swing.JPanel opciones_prof_Panel;
     private javax.swing.JLabel sexo_prof_Label;
     public javax.swing.JTextField sexo_prof_TextField;
-    private javax.swing.JLabel title_Label;
-    private javax.swing.JPanel title_panel1;
-    private javax.swing.JButton volver_prof_btn;
+    private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
-
-   /* public void mostrarEstadoInicial() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public Object getCedula() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-}*/
+}

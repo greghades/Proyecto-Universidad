@@ -307,6 +307,7 @@ public class ConexionSQL {
         }
     }
 
+    
     //ver profesor por asignatura 
     public Profesor getDatosProfesor(String idProfesor) {
         try {
@@ -339,6 +340,8 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+    //CRUD Profesor   
     
     //CRUD Estudiante  
    public boolean insertarEstudiante(Estudiante estudiante) {
