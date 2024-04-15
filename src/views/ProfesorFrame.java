@@ -22,7 +22,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import models.Carrera;
 import models.Estudiante;
 import models.Profesor;
@@ -35,6 +38,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
         this.controller = controller;
         initComponents();
         agregarListener(controller);
+         cmb_sexo.addActionListener(controller);
     }
     
     private void agregarListener(ActionListener accion){
@@ -58,6 +62,10 @@ public class ProfesorFrame extends javax.swing.JFrame {
         genero_profe_Label.setText(profesor.getSexo());
         especialidad_Label.setText(profesor.getEspecialidad());
         info_prof_Panel.setVisible(true);
+    }
+    
+    public void setupComboBox(List<String> opciones) {
+        cmb_sexo.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
     }
     
     public String getCedula() {
@@ -88,6 +96,10 @@ public class ProfesorFrame extends javax.swing.JFrame {
         return limpiar_prof_Btn;
     }
 
+     public JComboBox<Object> getCmb_sexo() {
+        return cmb_sexo;
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -108,8 +120,8 @@ public class ProfesorFrame extends javax.swing.JFrame {
         nombre_prof_TextField = new javax.swing.JTextField();
         correo_prof_TextField = new javax.swing.JTextField();
         edad_prof_TextField = new javax.swing.JTextField();
-        sexo_prof_TextField = new javax.swing.JTextField();
         especialidad_prof_TextField = new javax.swing.JTextField();
+        cmb_sexo = new javax.swing.JComboBox<>();
         opciones_prof_Panel = new javax.swing.JPanel();
         agg_prof_Btn = new javax.swing.JButton();
         eliminar_prof_Btn = new javax.swing.JButton();
@@ -240,15 +252,21 @@ public class ProfesorFrame extends javax.swing.JFrame {
         edad_prof_TextField.setText("Edad");
         edad_prof_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        sexo_prof_TextField.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        sexo_prof_TextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        sexo_prof_TextField.setText("Sexo");
-        sexo_prof_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-
         especialidad_prof_TextField.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
         especialidad_prof_TextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         especialidad_prof_TextField.setText("Especialidad");
         especialidad_prof_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+
+        cmb_sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        cmb_sexo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cmb_sexo.setMaximumSize(new java.awt.Dimension(32767, 80));
+        cmb_sexo.setMinimumSize(new java.awt.Dimension(214, 80));
+        cmb_sexo.setPreferredSize(new java.awt.Dimension(214, 32));
+        cmb_sexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_sexoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout crud_prof_PanelLayout = new javax.swing.GroupLayout(crud_prof_Panel);
         crud_prof_Panel.setLayout(crud_prof_PanelLayout);
@@ -267,8 +285,8 @@ public class ProfesorFrame extends javax.swing.JFrame {
                     .addComponent(nombre_prof_TextField)
                     .addComponent(correo_prof_TextField)
                     .addComponent(edad_prof_TextField)
-                    .addComponent(sexo_prof_TextField)
-                    .addComponent(especialidad_prof_TextField)))
+                    .addComponent(especialidad_prof_TextField)
+                    .addComponent(cmb_sexo, 0, 1, Short.MAX_VALUE)))
         );
         crud_prof_PanelLayout.setVerticalGroup(
             crud_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,8 +305,8 @@ public class ProfesorFrame extends javax.swing.JFrame {
                     .addComponent(edad_prof_Label))
                 .addGap(16, 16, 16)
                 .addGroup(crud_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sexo_prof_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sexo_prof_Label))
+                    .addComponent(sexo_prof_Label)
+                    .addComponent(cmb_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(crud_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(especialidad_prof_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -487,6 +505,10 @@ public class ProfesorFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmb_sexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_sexoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_sexoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -496,6 +518,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
     private javax.swing.JPanel body_prof_Panel;
     public javax.swing.JTextField cedula_prof_TextField;
     private javax.swing.JButton cedula_profesor_btn;
+    public javax.swing.JComboBox<Object> cmb_sexo;
     private javax.swing.JLabel correo_prof_Label;
     public javax.swing.JTextField correo_prof_TextField;
     private javax.swing.JLabel correo_prof_title_Label;
@@ -523,7 +546,6 @@ public class ProfesorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel nombre_prof_title_Label;
     private javax.swing.JPanel opciones_prof_Panel;
     private javax.swing.JLabel sexo_prof_Label;
-    public javax.swing.JTextField sexo_prof_TextField;
     private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
 }
