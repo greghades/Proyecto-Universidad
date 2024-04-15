@@ -121,6 +121,8 @@ public class EstudianteController implements ActionListener {
          }else{
              showSuccessAlert(false);
          }
+         
+         limpiar();
     }
     
     //modificar
@@ -131,8 +133,7 @@ public class EstudianteController implements ActionListener {
             return;
         }
         //traer los datos que ya se han guardado 
-        
-        
+
         //Nuevos datos que se van a actualizar 
         int selectedIndex = estudianteFrame.cmb_carrera.getSelectedIndex();
         Carrera carreraSeleccionada = carreras.get(selectedIndex);
@@ -156,6 +157,7 @@ public class EstudianteController implements ActionListener {
          }else{
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
          } 
+         limpiar();
     }
    
     
@@ -230,7 +232,6 @@ public class EstudianteController implements ActionListener {
         } else if (button.getSource() == estudianteFrame.getLimpiar_button()) {
             limpiar();
         }else if (button.getSource() == estudianteFrame.getAgregar_button()){
-            //rellenarInformacionCmb();
             agregarEstudiante();
         } else if (button.getSource() == estudianteFrame.getEliminar_button()) {
             eliminarEstudiante();
