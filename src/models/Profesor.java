@@ -28,6 +28,11 @@ public class Profesor extends Persona {
         super(cedula, nombre);
         this.especialidad = especialidad;
     }
+    
+     public Profesor(String cedula, String nombre, String apellido, String correo, int edad, String sexo, String especialidad) {
+        super(cedula, nombre, apellido, correo, edad, sexo);
+        this.especialidad = especialidad;
+    }
 
     public List<Asignatura> getAsignaturas() {
         return asignaturas;

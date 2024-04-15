@@ -73,7 +73,7 @@ public class ProfesorController implements ActionListener {
         }
         
         //this.profesor = connection.getProfesor(profesorFrame.getCedula()); este no te sirve porque es con dos parametro (cedula, asignatura)
-        this.profesor= connection.getDatosProfesor(profesorFrame.getCedula());
+        this.profesor= connection.motrarDatosProfesor(profesorFrame.getCedula());
         
         if (profesor == null) {
             JOptionPane.showMessageDialog(null,"No existe ningun profesor con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -117,6 +117,7 @@ public class ProfesorController implements ActionListener {
         if (event.getSource() == profesorFrame.getBack_button()) {
             showInicioFrame();    
         } else if (event.getSource() == profesorFrame.getCedula_profesor_btn()) {
+            mostrarDatos();
             
         } else if (event.getSource() == profesorFrame.getAgg_prof_Btn()) {
             

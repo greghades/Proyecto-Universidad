@@ -53,8 +53,8 @@ public class ProfesorFrame extends javax.swing.JFrame {
     
     public void rellenarInfoInicial(Profesor profesor) {
         nomb_prof_Label.setText(profesor.getNombre());
-        correo_prof_Label.setText(profesor.getCorreo());
-        edad_prof_Label.setText(Integer.toString(profesor.getEdad()));
+        correo_profe_Label.setText(profesor.getCorreo());
+        edad_profe_Label.setText(Integer.toString(profesor.getEdad()));
         genero_profe_Label.setText(profesor.getSexo());
         especialidad_Label.setText(profesor.getEspecialidad());
         info_prof_Panel.setVisible(true);

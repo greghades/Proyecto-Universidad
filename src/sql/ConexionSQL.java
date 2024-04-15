@@ -342,6 +342,33 @@ public class ConexionSQL {
     }
     
     //CRUD Profesor   
+    //mostrar profesor
+    public Profesor motrarDatosProfesor(String id) {
+        try {
+            String query;
+             query = String.format("SELECT * FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
+            
+            ResultSet bigSet = statement.executeQuery(query);
+            Profesor profesor = null;
+
+            while (bigSet.next()) {
+                String cedula = bigSet.getString("id_profesor");
+                String nombreCompleto = bigSet.getString("nombre_completo");
+                int edad = bigSet.getInt("edad");
+                String correo = bigSet.getString("correo");
+                String sexo = bigSet.getString("sexo");
+                String especialidad = bigSet.getString("especialidad");
+                
+                profesor = new Profesor(cedula, nombreCompleto, sexo, correo, edad, sexo, especialidad);
+                
+
+            }
+
+            return profesor;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
     
     //CRUD Estudiante  
    public boolean insertarEstudiante(Estudiante estudiante) {
