@@ -35,7 +35,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "123456789";
+    private final String pass = "1234";
 
     public ConexionSQL() {
         conectar();
@@ -366,7 +366,7 @@ public class ConexionSQL {
     //eliminar profesorm a partir de un id 
     public int eliminarProfesor(String id){
         try {
-         String query = String.format("DELETE * FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
+         String query = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
          int row = statement.executeUpdate(query);
          return row;
         }catch (SQLException e) {
