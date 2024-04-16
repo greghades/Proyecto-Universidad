@@ -35,7 +35,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "1234";
+    private final String pass = "123456789";
 
     public ConexionSQL() {
         conectar();
@@ -386,7 +386,7 @@ public class ConexionSQL {
             String sexo = profesor.getSexo();
             String especialidad = profesor.getEspecialidad();
             
-            String query = String.format("UPDATE public.\"Profesor\" SET nombre_completo = '%s', edad = '%s', correo = '%s', sexo = '%s', especialidad = '%s', estado = '%s' WHERE id_profesor = '%s'", id, nombre_completo, edad, correo, sexo, especialidad, true);
+            String query = String.format("UPDATE public.\"Profesor\" SET nombre_completo = '%s', edad = '%s', correo = '%s', sexo = '%s', especialidad = '%s', estado = '%s' WHERE id_profesor = '%s'", nombre_completo, edad, correo, sexo, especialidad, true, id);
 
             System.out.println("cedula profesor : " + id + "nombre completo: " + nombre_completo + "Edad " + edad+ "correo: " + correo + "sexo: " + sexo + "especialidad: " + especialidad + "query: " + query);
             int row = statement.executeUpdate(query);
