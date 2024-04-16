@@ -14,7 +14,7 @@ import models.CuatroColumnasModel;
 public class ListadoMateriaRetirada implements DataFetcher {
     @Override
     public ArrayList obtenerDatos() {
-        ArrayList<CuatroColumnasModel> datasourceRetiroMateria = connection.getEstudiantesCuatro("Con materia retirada");
+        ArrayList<CuatroColumnasModel> datasourceRetiroMateria = connection.getEstudiantesConMateriasRetiradas();
         return datasourceRetiroMateria;
     }
 }

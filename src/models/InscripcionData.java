@@ -32,6 +32,10 @@ public class InscripcionData {
         this.id_seccion = id_seccion;
     }
 
+    public InscripcionData() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

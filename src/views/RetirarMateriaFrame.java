@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import models.Asignatura;
+import util.RetirarMateriaSelectionListener;
 import util.RetiroTableModel;
 
 public class RetirarMateriaFrame extends javax.swing.JFrame {
@@ -64,6 +65,8 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
 
         // Instanciar el modelo para pintar la tabla.
         RetiroTableModel model = new RetiroTableModel(asignaturas, controller);
+        RetirarMateriaSelectionListener listener = new RetirarMateriaSelectionListener(materias_table);
+        materias_table.getSelectionModel().addListSelectionListener(listener);
         materias_table.setModel(model);
 
         configurarColumnas();

@@ -210,6 +210,25 @@ public class ConexionSQL {
         }
     }
 
+    public ArrayList<CuatroColumnasModel> getEstudiantesConMateriasRetiradas() {
+        try {
+            String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, a.id_asignatura, a.nombre_asignatura, s.id_semestre, s.numero_semestre FROM public.\"Retiro_materia_estudiante\" r JOIN public.\"Estudiantes\" e ON r.id_estudiante = e.id_estudiante JOIN public.\"Asignaturas\" a ON r.id_asignatura = a.id_asignatura JOIN public.\"Semestre_Asignatura\" sa ON r.id_asignatura = sa.id_asignatura JOIN public.\"Semestre\" s ON sa.id_semestre = s.id_semestre";
+            ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
+
+            ArrayList<CuatroColumnasModel> estudiantesList = new ArrayList<>();
+            while (estudiantesSet.next()) {
+                String cedula = estudiantesSet.getString("id_estudiante");
+                String nombreEstudiante = estudiantesSet.getString("nombre_completo");
+                String nombreAsignatura = estudiantesSet.getString("nombre_asignatura");
+                CuatroColumnasModel model = new CuatroColumnasModel(cedula, nombreEstudiante, nombreAsignatura, "Primer Periodo 2024");
+                estudiantesList.add(model);
+            }
+            return estudiantesList;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
     public ArrayList<CuatroColumnasModel> getEstudiantesCuatro(String filtro) {
         try {
             String estudiantesQuery;
@@ -424,35 +443,32 @@ public class ConexionSQL {
         }
     }
 
-    public String retirarAsignatura(ArrayList<InscripcionData> retiros) {
+    public String retirarAsignatura(InscripcionData retiro) {
         try {
-            String id_estudiante = retiros.get(0).getId_estudiante();
-            String id_asignatura = retiros.get(0).getId_asignatura();
-            String retiroQuery = String.format("INSERT INTO public.\"Retiro_materia_estudiante\" (id_estudiante, id_asignatura) VALUES ('%s', '%s')", id_estudiante, id_asignatura);
-            int retiroCodigo = statement.executeUpdate(retiroQuery);
-            if (retiroCodigo == 0) {
-                return "No se pudo actualizar la base de datos con las materias a retirar.";
-            } else {
-                System.out.print("\nSe creo exitosamente la entrada a Retiro_materia_estudiante");
-            }
+            String estudiante_id = retiro.getId_estudiante();
+            String asignatura_id = retiro.getId_asignatura();
+            String periodo_id = retiro.getId_periodo();
+            String seccion_id = retiro.getId_seccion();
 
-            int borrarInscripcionContador = 0;
-            for (int index = 0; index < retiros.size(); index++) {
-                InscripcionData inscripcion = retiros.get(index);
+            System.out.print("\ncedula: " + estudiante_id + " asignatura: " + asignatura_id + " seccion: " + seccion_id + " periodo: " + periodo_id);
+            String borrarInscripcionQuery = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s' AND id_asignatura = '%s' AND id_periodo = '%s' AND id_seccion = '%s'", estudiante_id, asignatura_id, periodo_id, seccion_id);
+            int borrarInscripcionCodigo = statement.executeUpdate(borrarInscripcionQuery);
+            System.out.print("\ncodigo: " + borrarInscripcionCodigo);
+            System.out.print("\nquery: " + borrarInscripcionQuery);
 
-                String estudiante_id = inscripcion.getId_estudiante();
-                String asignatura_id = inscripcion.getId_asignatura();
-                String periodo_id = inscripcion.getId_periodo();
-                String seccion_id = inscripcion.getId_seccion();
-
-                String borrarInscripcionQuery = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s' AND id_asignatura = '%s' AND id_periodo = '%s' AND id_seccion = '%s'", estudiante_id, asignatura_id, periodo_id, seccion_id);
-                int borrarInscripcionCodigo = statement.executeUpdate(borrarInscripcionQuery);
-                borrarInscripcionContador += borrarInscripcionCodigo;
-            }
-
-            if (borrarInscripcionContador == 0) {
+            if (borrarInscripcionCodigo == 0) {
                 return "No se pudo llevar a cabo el retiro de la asignatura correctamente";
             } else {
+                String id_estudiante = retiro.getId_estudiante();
+                String id_asignatura = retiro.getId_asignatura();
+                String retiroQuery = String.format("INSERT INTO public.\"Retiro_materia_estudiante\" (id_estudiante, id_asignatura) VALUES ('%s', '%s')", id_estudiante, id_asignatura);
+                int retiroCodigo = statement.executeUpdate(retiroQuery);
+                System.out.print("Codigo de retiroQuery: " + retiroCodigo);
+                if (retiroCodigo == 0) {
+                    return "No se pudo actualizar la base de datos con las materias a retirar.";
+                } else {
+                    System.out.print("\nSe creo exitosamente la entrada a Retiro_materia_estudiante");
+                }
                 return "La asignatura fue retirada de manera exitosa";
             }
         } catch (SQLException e) {

@@ -390,12 +390,6 @@ WITH CTE AS (
     CROSS JOIN 
         public."Secciones"
 ),
-UltimoPeriodo AS (
-    SELECT id_periodo
-    FROM public."Periodo_academico"
-    ORDER BY fecha_inicio DESC
-    LIMIT 1
-),
 EstudiantesMaterias AS (
     SELECT 
         id_estudiante, 
@@ -413,15 +407,14 @@ INSERT INTO public."Inscripcion" (id_estudiante, id_asignatura, id_periodo, id_s
 SELECT 
     em.id_estudiante,
     em.id_asignatura,
-    up.id_periodo,
+    'PER-001' AS id_periodo,
     em.id_seccion,
     true AS estado
 FROM 
     EstudiantesMaterias em
-CROSS JOIN 
-    UltimoPeriodo up
 WHERE 
     em.rn BETWEEN 1 AND 5;
+
 
 
 -- Creacion de la tabla nota estudiante
