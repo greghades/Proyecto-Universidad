@@ -128,13 +128,53 @@ public class ProfesorController implements ActionListener {
     //eliminar 
     
     public void eliminarProfesor(){
-        
+         if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         
+          int rowsAffected = connection.eliminarProfesor(profesorFrame.getCedula());
+               
+         if(rowsAffected > 0){
+              JOptionPane.showMessageDialog(null, "Eliminado exitosamente", "Felicidades", JOptionPane.ERROR_MESSAGE);
+         }else{
+            JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+         }      
     }
     
     
     //modificar
     
     public void modificarProfesor(){
+        //verificar cedula del profesor
+        if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //datos que se van a actualizar
+        String cedula = profesorFrame.getCedula();
+        String nombre_completo = profesorFrame.nombre_prof_TextField.getText();
+        int edad = Integer.parseInt(profesorFrame.edad_prof_TextField.getText());
+        String sexo = (String) profesorFrame.getCmb_sexo().getSelectedItem();
+        String especialidad = profesorFrame.especialidad_prof_TextField.getText();
+        String correo = profesorFrame.correo_prof_TextField.getText();
+        
+        profesor.setNombre(nombre_completo);
+        profesor.setEdad(edad);
+        profesor.setCorreo(correo);
+        profesor.setSexo(sexo);
+        profesor.setEspecialidad(especialidad);
+        
+        
+        //consulta
+         int rowsAffected = connection.modificarProfesor(profesor, cedula);
+         if(rowsAffected > 0){
+              JOptionPane.showMessageDialog(null, "Modificado exitosamente", "Felicidades", JOptionPane.ERROR_MESSAGE);
+         }else{
+            JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+         } 
+         Limpiar();
         
     }
     
