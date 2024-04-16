@@ -38,6 +38,8 @@ public class InicioFrame extends javax.swing.JFrame {
         listado_estudiante_button.addActionListener(accion);
         retirar_materia_button.addActionListener(accion);
         asignar_nota_button.addActionListener(accion);
+        estudiante_button.addActionListener(accion);
+        profesor_button.addActionListener(accion);
     }
 
     public JButton getInscripcion_button() {
@@ -59,6 +61,14 @@ public class InicioFrame extends javax.swing.JFrame {
     public JButton getRetirar_materia_button() {
         return retirar_materia_button;
     }
+    
+    public JButton getEstudiante_Button(){
+        return estudiante_button;
+    }
+    
+    public JButton getProfesor_Button() {
+        return profesor_button;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,8 +87,10 @@ public class InicioFrame extends javax.swing.JFrame {
         inscripcion_button = new javax.swing.JButton();
         listado_estudiante_button = new javax.swing.JButton();
         retirar_materia_button = new javax.swing.JButton();
-        listado_seccion_button = new javax.swing.JButton();
         asignar_nota_button = new javax.swing.JButton();
+        listado_seccion_button = new javax.swing.JButton();
+        estudiante_button = new javax.swing.JButton();
+        profesor_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -151,19 +163,6 @@ public class InicioFrame extends javax.swing.JFrame {
         });
         jPanel2.add(retirar_materia_button);
 
-        listado_seccion_button.setBackground(new java.awt.Color(58, 159, 220));
-        listado_seccion_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        listado_seccion_button.setForeground(new java.awt.Color(255, 255, 255));
-        listado_seccion_button.setText("Listados por seccion");
-        listado_seccion_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        listado_seccion_button.setPreferredSize(new java.awt.Dimension(300, 70));
-        listado_seccion_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listado_seccion_buttonActionPerformed(evt);
-            }
-        });
-        jPanel2.add(listado_seccion_button);
-
         asignar_nota_button.setBackground(new java.awt.Color(58, 159, 220));
         asignar_nota_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         asignar_nota_button.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,6 +176,45 @@ public class InicioFrame extends javax.swing.JFrame {
             }
         });
         jPanel2.add(asignar_nota_button);
+
+        listado_seccion_button.setBackground(new java.awt.Color(58, 159, 220));
+        listado_seccion_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        listado_seccion_button.setForeground(new java.awt.Color(255, 255, 255));
+        listado_seccion_button.setText("Listados por seccion");
+        listado_seccion_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        listado_seccion_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        listado_seccion_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listado_seccion_buttonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(listado_seccion_button);
+
+        estudiante_button.setBackground(new java.awt.Color(58, 159, 220));
+        estudiante_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        estudiante_button.setForeground(new java.awt.Color(255, 255, 255));
+        estudiante_button.setText("Estudiante");
+        estudiante_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        estudiante_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        estudiante_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estudiante_buttonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(estudiante_button);
+
+        profesor_button.setBackground(new java.awt.Color(58, 159, 220));
+        profesor_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        profesor_button.setForeground(new java.awt.Color(255, 255, 255));
+        profesor_button.setText("Profesor");
+        profesor_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        profesor_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        profesor_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profesor_buttonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(profesor_button);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -239,14 +277,24 @@ public class InicioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_listado_estudiante_buttonActionPerformed
 
+    private void estudiante_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estudiante_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estudiante_buttonActionPerformed
+
+    private void profesor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profesor_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_profesor_buttonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton asignar_nota_button;
+    private javax.swing.JButton estudiante_button;
     private javax.swing.JButton inscripcion_button;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton listado_estudiante_button;
     private javax.swing.JButton listado_seccion_button;
+    private javax.swing.JButton profesor_button;
     private javax.swing.JButton retirar_materia_button;
     private javax.swing.JLabel title_label2;
     private javax.swing.JLabel title_label3;

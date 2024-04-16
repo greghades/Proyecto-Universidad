@@ -19,6 +19,7 @@ package sql;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -34,7 +35,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "gr3g0r1j053y3p3z4rt34g4";
+    private final String pass = "1234";
 
     public ConexionSQL() {
         conectar();
@@ -305,6 +306,7 @@ public class ConexionSQL {
         }
     }
 
+    //ver profesor por asignatura y seccion
     public Profesor getProfesor(String idAsignatura, String idSeccion) {
         try {
             String query = String.format("SELECT p.id_profesor, p.nombre_completo, p.especialidad FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
@@ -323,6 +325,8 @@ public class ConexionSQL {
         }
     }
 
+    
+    //ver profesor por asignatura 
     public Profesor getDatosProfesor(String idProfesor) {
         try {
             String query = String.format("SELECT DISTINCT a.id_asignatura, a.nombre_asignatura, a.carga_academica, p.id_profesor, p.nombre_completo, p.correo, p.especialidad FROM public.\"Asignaturas\" a JOIN public.\"Profesor_asignatura_seccion\" pas ON a.id_asignatura = pas.id_asignatura JOIN public.\"Profesor\" p ON pas.id_profesor = p.id_profesor WHERE pas.id_profesor = '%s'", idProfesor);
@@ -351,7 +355,91 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+    //CRUD Profesor  
+    
+    //agregar profesor
+    public int agregarProfesor(Profesor profesor){
+        try {
+            //obtener valores del formulario 
+            String cedula = profesor.getCedula();
+            String nombre_completo = profesor.getNombre();
+            int edad = profesor.getEdad();
+            String correo = profesor.getCorreo();
+            String sexo = profesor.getSexo();
+            String especialidad = profesor.getEspecialidad();
+            
+            String query = String.format("INSERT INTO public.\"Profesor\" (id_profesor, nombre_completo, edad, correo, sexo, especialidad, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');", cedula, nombre_completo, edad, correo, sexo, especialidad, true);
+            int row = statement.executeUpdate(query);
+            return row;
+        }catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarProfesor() error: " + e);
+            return -1;
+        }
+    }
+    
+    //eliminar profesorm a partir de un id 
+    public int eliminarProfesor(String id){
+        try {
+         String query = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
+         int row = statement.executeUpdate(query);
+         return row;
+        }catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.eliminarProfesor() error: " + e);
+            return -1;
+        }
+    }
+    
+    // modificar profesor a partir de un id
+    
+     public int modificarProfesor(Profesor profesor, String id){
+        try {
+            //obtener valores del formulario 
+            String nombre_completo = profesor.getNombre();
+            int edad = profesor.getEdad();
+            String correo = profesor.getCorreo();
+            String sexo = profesor.getSexo();
+            String especialidad = profesor.getEspecialidad();
+            
+            String query = String.format("UPDATE public.\"Profesor\" SET nombre_completo = '%s', edad = '%s', correo = '%s', sexo = '%s', especialidad = '%s', estado = '%s' WHERE id_profesor = '%s'", nombre_completo, edad, correo, sexo, especialidad, true, id);
 
+            System.out.println("cedula profesor : " + id + "nombre completo: " + nombre_completo + "Edad " + edad+ "correo: " + correo + "sexo: " + sexo + "especialidad: " + especialidad + "query: " + query);
+            int row = statement.executeUpdate(query);
+            return row;
+        }catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.modificarProfesor() error: " + e);
+            return -1;
+        }
+    }
+    
+    
+    //mostrar profesor
+    public Profesor motrarDatosProfesor(String id) {
+        try {
+            String query;
+             query = String.format("SELECT * FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
+            
+            ResultSet bigSet = statement.executeQuery(query);
+            Profesor profesor = null;
+
+            while (bigSet.next()) {
+                String cedula = bigSet.getString("id_profesor");
+                String nombreCompleto = bigSet.getString("nombre_completo");
+                int edad = bigSet.getInt("edad");
+                String correo = bigSet.getString("correo");
+                String sexo = bigSet.getString("sexo");
+                String especialidad = bigSet.getString("especialidad");
+                
+                profesor = new Profesor(cedula, nombreCompleto, sexo, correo, edad, sexo, especialidad);
+
+            }
+
+            return profesor;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
     public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {
             String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion, ne.nota FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion LEFT JOIN public.\"Nota_estudiante\" ne ON ne.id_estudiante = e.id_estudiante AND ne.id_asignatura = i.id_asignatura AND ne.id_seccion = i.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s' ORDER BY s.numero_seccion", idProfesor, idAsignatura);
@@ -569,4 +657,5 @@ public class ConexionSQL {
             JOptionPane.showMessageDialog(null, "desconexion fallida" + e, "desconexion", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }
