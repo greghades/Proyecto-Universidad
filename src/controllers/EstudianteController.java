@@ -132,11 +132,9 @@ public class EstudianteController implements ActionListener {
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        //traer los datos que ya se han guardado 
-
-        //Nuevos datos que se van a actualizar 
         int selectedIndex = estudianteFrame.cmb_carrera.getSelectedIndex();
         Carrera carreraSeleccionada = carreras.get(selectedIndex);
+        //Nuevos datos que se van a actualizar 
         Carrera carrera = carreraSeleccionada;
         String cedula = estudianteFrame.getCedula();
         String nombre = estudianteFrame.nombre_textfield.getText() ;

@@ -61,7 +61,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         info_panel.setVisible(false);
         cedula_panel.setVisible(true);
         crud_panel.setVisible(true);
-        opcion_panel.setVisible(false);
+        opcion_panel.setVisible(true);
     }
     // el error esta que hay que cambiarlo para que traiga un string por si acaso a la larga me da error 
   public void setupComboBox(List<String> opciones) {
@@ -78,8 +78,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
         info_panel.setVisible(true);
         opcion_panel.setVisible(true);  
         crud_panel.setVisible(true);
-    }
-    
+    }    
     public void mostrarCrud(Estudiante estudiante){
          crud_panel.setVisible(true);
     }
