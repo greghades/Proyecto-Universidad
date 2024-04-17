@@ -32,7 +32,7 @@ public class ConexionSQL {
     private static ConexionSQL instance = null;
     private Connection conn = null;
     private Statement statement;
-    private final String db = "universidadcrud";
+    private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
     private final String pass = "123456789";
@@ -424,12 +424,24 @@ public class ConexionSQL {
     
     //eliminar
         public int eliminarEstudiante(String id) {
-            try {
-                String estudiante_id = id;
-                
-                String query = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';" , estudiante_id);
-                int row = statement.executeUpdate(query);
-            return row;
+            try { 
+                 //eliminar de la tabla de inscripcion
+                String querySecundario = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s';" , id);
+                //eliminar de la tabla de notas de Estudiante
+                String queryTerceario = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante = '%s';" , id); 
+                //eliminar de la tabla de estudiantes
+                String queryPrincipal = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';" , id);
+               
+            
+                int contadorTerceario = statement.executeUpdate(queryTerceario);
+                int contadorSecundario = statement.executeUpdate(querySecundario);
+                int contadorPrincipal = statement.executeUpdate(queryPrincipal);
+
+                if (contadorSecundario > 0 && contadorPrincipal > 0 && contadorTerceario > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
         } catch (SQLException e) {
             System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
             return -1;
@@ -460,27 +472,6 @@ public class ConexionSQL {
         }
     }
       
-  //CRUD - Profesor
-    
-    //agregar un profesor
-   /*  public int insertarProfesor(Profesor profesor) {
-        try {
-            String id_estudiante = estudiante.getCedula();
-            String id_carrera = estudiante.getCarrera().getId();
-            String nombre = estudiante.getNombre();
-            int edad = estudiante.getEdad();
-            String correo = estudiante.getCorreo();
-            String sexo = estudiante.getSexo();
-            
-            String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
-            int row = statement.executeUpdate(query);
-            return row;
-        } catch (SQLException e) {
-            System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
-            return -1;
-        }
-    }*/
-
     public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {
             String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion, ne.nota FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion LEFT JOIN public.\"Nota_estudiante\" ne ON ne.id_estudiante = e.id_estudiante AND ne.id_asignatura = i.id_asignatura AND ne.id_seccion = i.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s' ORDER BY s.numero_seccion", idProfesor, idAsignatura);

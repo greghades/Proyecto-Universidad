@@ -102,8 +102,6 @@ public class EstudianteController implements ActionListener {
         String correo = estudianteFrame.correo_textfield.getText();
         //combobox de sexo opcion
         String sexo = (String) estudianteFrame.getCmb_sexo().getSelectedItem();
-        System.out.println("Sexo " + sexo);
-        System.out.println("Carrera " + carreraSeleccionada);
         
       // Crear un objeto Estudiante con los datos capturados
         Estudiante estudiante = new Estudiante(carrera, cedula, nombre, sexo, correo, edad, sexo);
@@ -116,13 +114,12 @@ public class EstudianteController implements ActionListener {
         
          int rowsAffected = connection.agregarEstudiante(estudiante);
                
-         if(rowsAffected > 0){
-              showSuccessAlert(true);
-         }else{
-             showSuccessAlert(false);
-         }
-         
-         limpiar();
+          if (rowsAffected > 0) {
+            showSuccessAlert(true);
+        } else {
+            showSuccessAlert(false);
+        }
+        limpiarVista();
     }
     
     //modificar
@@ -150,12 +147,12 @@ public class EstudianteController implements ActionListener {
         
         //consulta
          int rowsAffected = connection.modificarEstudiante(estudiante, cedula);
-         if(rowsAffected > 0){
-              JOptionPane.showMessageDialog(null, "Modificado exitosamente", "Felicidades", JOptionPane.ERROR_MESSAGE);
-         }else{
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
-         } 
-         limpiar();
+        }
+        limpiarVista();
     }
    
     
@@ -169,14 +166,14 @@ public class EstudianteController implements ActionListener {
           int rowsAffected = connection.eliminarEstudiante(estudianteFrame.getCedula());
                
          if(rowsAffected > 0){
-              JOptionPane.showMessageDialog(null, "Eliminado exitosamente", "Felicidades", JOptionPane.ERROR_MESSAGE);
+              JOptionPane.showMessageDialog(null, "Eliminado exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
          }else{
             JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
          }      
     }
     
     //buscar
-    public void mostrarDatos() {
+    public void buscarEstudiante() {
         if ("Cedula".equals(estudianteFrame.getCedula()) || estudianteFrame.getCedula().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
@@ -191,13 +188,14 @@ public class EstudianteController implements ActionListener {
     
     
     
-       private void limpiar(){
+       private void limpiarVista(){
          estudianteFrame.cedula_textfield.setText(null);
          estudianteFrame.cmb_carrera.setSelectedIndex(0);
          estudianteFrame.nombre_textfield.setText(null);
          estudianteFrame.correo_textfield.setText(null);
          estudianteFrame.edad_textfield.setText(null);
          estudianteFrame.cmb_sexo.setSelectedIndex(0);
+         estudianteFrame.info_panel.setVisible(false);
     }
     
    
@@ -226,9 +224,9 @@ public class EstudianteController implements ActionListener {
         if (button.getSource() == estudianteFrame.getBack_button()) {
             showInicioFrame();
         } else if (button.getSource() == estudianteFrame.getCedula_button()) {
-            mostrarDatos();
+            buscarEstudiante();
         } else if (button.getSource() == estudianteFrame.getLimpiar_button()) {
-            limpiar();
+            limpiarVista();
         }else if (button.getSource() == estudianteFrame.getAgregar_button()){
             agregarEstudiante();
         } else if (button.getSource() == estudianteFrame.getEliminar_button()) {

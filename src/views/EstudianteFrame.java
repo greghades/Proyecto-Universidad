@@ -558,7 +558,7 @@ public class EstudianteFrame extends javax.swing.JFrame {
     private javax.swing.JButton eliminar_button;
     private javax.swing.JLabel especialidad_title_Label;
     private javax.swing.JLabel genero_title_prof_Label;
-    private javax.swing.JPanel info_panel;
+    public javax.swing.JPanel info_panel;
     private javax.swing.JLabel ingresar_label;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton limpiar_button;
