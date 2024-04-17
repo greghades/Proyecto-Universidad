@@ -19,7 +19,6 @@ package sql;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -379,12 +378,19 @@ public class ConexionSQL {
     }
     
     //eliminar profesorm a partir de un id 
-    public int eliminarProfesor(String id){
+    public int eliminarProfesor(String id) {
         try {
-         String query = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
-         int row = statement.executeUpdate(query);
-         return row;
-        }catch (SQLException e) {
+            String querySecundario = String.format("DELETE FROM public.\"Profesor_asignatura_seccion\" WHERE id_profesor = '%s'", id);
+            String queryPrincipal = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
+            int contadorSecundario = statement.executeUpdate(querySecundario);
+            int contadorPrincipal = statement.executeUpdate(queryPrincipal);
+            
+            if (contadorSecundario > 0 && contadorPrincipal > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
             System.err.println("sql.ConexionSQL.eliminarProfesor() error: " + e);
             return -1;
         }

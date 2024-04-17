@@ -20,8 +20,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import models.Profesor;
 import sql.ConexionSQL;
@@ -33,67 +31,68 @@ import views.ProfesorFrame;
  * @author Usuario
  */
 public class ProfesorController implements ActionListener {
-    
+
     public Profesor profesor;
     private static ProfesorController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
     public ProfesorFrame profesorFrame;
     public InicioController inicioController;
-   //para el combobox del sexo
+    //para el combobox del sexo
     private final List<String> opcionSexo = Arrays.asList(
             "Seleccionar ",
             "Femenino",
             "Masculino"
     );
-    
-    public ProfesorController(){
+
+    public ProfesorController() {
         profesorFrame = new ProfesorFrame(this);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(profesorFrame);
         profesorFrame.setVisible(false);
         profesorFrame.setupComboBox(opcionSexo);
     }
-    
+
     public static ProfesorController getInstance() {
         if (instance == null) {
             instance = new ProfesorController();
         }
         return instance;
     }
-    
-    public void showProfesorFrame () {
+
+    public void showProfesorFrame() {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(profesorFrame);
         profesorFrame.setVisible(true);
         profesorFrame.mostrarEstadoInicial();
     }
-    
-    private void showInicioFrame () {
+
+    private void showInicioFrame() {
         profesorFrame.setVisible(false);
         inicioController.showInicioFrame();
     }
-    
-    public void setInicioController (InicioController inicioController) {
+
+    public void setInicioController(InicioController inicioController) {
         this.inicioController = inicioController;
     }
+
     //mostrar datos del profesor de la base de datos
-    public void mostrarDatos() {
+    public void buscarProfesor() {
         if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
-            JOptionPane.showMessageDialog(null,"debes ingresar una cedula.", " Ten Cuidado.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "debes ingresar una cedula.", " Ten Cuidado.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        this.profesor= connection.motrarDatosProfesor(profesorFrame.getCedula());
-        
+
+        this.profesor = connection.motrarDatosProfesor(profesorFrame.getCedula());
+
         if (profesor == null) {
-            JOptionPane.showMessageDialog(null,"No existe ningun profesor con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No existe ningun profesor con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
             profesorFrame.rellenarInfoInicial(profesor);
         }
     }
-    
+
     //agregar
-    public void agregarProfesor(){
+    public void agregarProfesor() {
         //obtener los datos del formulario 
         String cedula = profesorFrame.cedula_prof_TextField.getText();
         String nombre_completo = profesorFrame.nombre_prof_TextField.getText();
@@ -101,57 +100,54 @@ public class ProfesorController implements ActionListener {
         String correo = profesorFrame.correo_prof_TextField.getText();
         //combobox
         String sexo = (String) profesorFrame.getCmb_sexo().getSelectedItem();
-        System.out.println("Sexo " + sexo);         
+        System.out.println("Sexo " + sexo);
         String especialidad = profesorFrame.especialidad_prof_TextField.getText();
-        
-       // nuevos valores
-       Profesor profesor = new Profesor(cedula, nombre_completo, " ", correo, edad, sexo, especialidad);
-       profesor.setCedula(cedula);
-       profesor.setNombre(nombre_completo);
-       profesor.setEdad(edad);
-       profesor.setCorreo(correo);
-       profesor.setSexo(sexo);
-       profesor.setEspecialidad(especialidad);
-         
-       
-       //consulta
+
+        // nuevos valores
+        Profesor profesor = new Profesor(cedula, nombre_completo, " ", correo, edad, sexo, especialidad);
+        profesor.setCedula(cedula);
+        profesor.setNombre(nombre_completo);
+        profesor.setEdad(edad);
+        profesor.setCorreo(correo);
+        profesor.setSexo(sexo);
+        profesor.setEspecialidad(especialidad);
+
+        //consulta
         int rowsAffected = connection.agregarProfesor(profesor);
-        
-         if(rowsAffected > 0){
-              showSuccessAlert(true);
-         }else{
-             showSuccessAlert(false);
-         }
-         Limpiar();
+
+        if (rowsAffected > 0) {
+            showSuccessAlert(true);
+        } else {
+            showSuccessAlert(false);
+        }
+        limpiarVista();
     }
-    
+
     //eliminar 
-    
-    public void eliminarProfesor(){
-         if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
+    public void eliminarProfesor() {
+        if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
-         
-          int rowsAffected = connection.eliminarProfesor(profesorFrame.getCedula());
-               
-         if(rowsAffected > 0){
-              JOptionPane.showMessageDialog(null, "Eliminado exitosamente", "Felicidades", JOptionPane.ERROR_MESSAGE);
-         }else{
+
+        int rowsAffected = connection.eliminarProfesor(profesorFrame.getCedula());
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "El profesor fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            limpiarVista();
+        } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
-         }      
+        }
     }
-    
-    
+
     //modificar
-    
-    public void modificarProfesor(){
+    public void modificarProfesor() {
         //verificar cedula del profesor
         if ("Cedula".equals(profesorFrame.getCedula()) || profesorFrame.getCedula().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes ingresar una cedula", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         //datos que se van a actualizar
         String cedula = profesorFrame.getCedula();
         String nombre_completo = profesorFrame.nombre_prof_TextField.getText();
@@ -159,35 +155,34 @@ public class ProfesorController implements ActionListener {
         String sexo = (String) profesorFrame.getCmb_sexo().getSelectedItem();
         String especialidad = profesorFrame.especialidad_prof_TextField.getText();
         String correo = profesorFrame.correo_prof_TextField.getText();
-        
+
         profesor.setNombre(nombre_completo);
         profesor.setEdad(edad);
         profesor.setCorreo(correo);
         profesor.setSexo(sexo);
         profesor.setEspecialidad(especialidad);
-        
-        
+
         //consulta
-         int rowsAffected = connection.modificarProfesor(profesor, cedula);
-         if(rowsAffected > 0){
-              JOptionPane.showMessageDialog(null, "Modificado exitosamente", "Felicidades", JOptionPane.ERROR_MESSAGE);
-         }else{
+        int rowsAffected = connection.modificarProfesor(profesor, cedula);
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
-         } 
-         Limpiar();
-        
+        }
+        limpiarVista();
+
     }
-    
-    private void Limpiar() {
+
+    private void limpiarVista() {
         profesorFrame.cedula_prof_TextField.setText(null);
         profesorFrame.nombre_prof_TextField.setText(null);
         profesorFrame.correo_prof_TextField.setText(null);
         profesorFrame.edad_prof_TextField.setText(null);
         profesorFrame.cmb_sexo.setSelectedIndex(0);
         profesorFrame.especialidad_prof_TextField.setText(null);
-        
+        profesorFrame.info_prof_Panel.setVisible(false);
     }
-    
+
     private void showSuccessAlert(boolean exitosa) {
         Object[] options = {"Aceptar"};
         int selection = JOptionPane.showOptionDialog(
@@ -205,20 +200,19 @@ public class ProfesorController implements ActionListener {
         } else {
             System.out.println("Selected Option Is X: " + selection);
         }
-    
+
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == profesorFrame.getBack_button()) {
-            showInicioFrame();    
+            showInicioFrame();
         } else if (event.getSource() == profesorFrame.getCedula_profesor_btn()) {
-            mostrarDatos();
-            
+            buscarProfesor();
         } else if (event.getSource() == profesorFrame.getAgg_prof_Btn()) {
             agregarProfesor();
         } else if (event.getSource() == profesorFrame.getLimpiar_prof_Btn()) {
-            Limpiar();
+            limpiarVista();
         } else if (event.getSource() == profesorFrame.getEliminar_prof_Btn()) {
             eliminarProfesor();
         } else if (event.getSource() == profesorFrame.getModif_prof_Btn()) {

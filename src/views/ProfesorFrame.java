@@ -535,7 +535,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel especialidad_title_Label;
     private javax.swing.JLabel genero_profe_Label;
     private javax.swing.JLabel genero_title_prof_Label;
-    private javax.swing.JPanel info_prof_Panel;
+    public javax.swing.JPanel info_prof_Panel;
     private javax.swing.JLabel ingresar_label;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton limpiar_prof_Btn;
