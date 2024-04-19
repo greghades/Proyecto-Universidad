@@ -5,6 +5,7 @@
 package factoryMethod;
 
 import java.util.ArrayList;
+import sql.ConexionSQL;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class ListadoVacio implements DataFetcher {
 
     @Override
-    public ArrayList obtenerDatos() {
+    public ArrayList obtenerDatos(ConexionSQL connection) {
         return new ArrayList();
     }
     

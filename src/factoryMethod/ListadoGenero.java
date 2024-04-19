@@ -6,6 +6,7 @@ package factoryMethod;
 
 import java.util.ArrayList;
 import models.CincoColumnasModel;
+import sql.ConexionSQL;
 
 /**
  *
@@ -13,7 +14,7 @@ import models.CincoColumnasModel;
  */
 public class ListadoGenero implements DataFetcher {
     @Override
-    public ArrayList obtenerDatos() {
+    public ArrayList obtenerDatos(ConexionSQL connection) {
         ArrayList<CincoColumnasModel> datasourcegenero = connection.getEstudiantesCinco();
         return datasourcegenero;
     }

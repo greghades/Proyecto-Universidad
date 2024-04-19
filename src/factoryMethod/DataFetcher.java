@@ -11,8 +11,6 @@ import sql.ConexionSQL;
  *
  * @author User
  */
-public interface DataFetcher {
-    public ConexionSQL connection = ConexionSQL.getInstance();
-    
-    public ArrayList obtenerDatos();
+public interface DataFetcher {    
+    public ArrayList obtenerDatos(ConexionSQL conexionSQL);
 }

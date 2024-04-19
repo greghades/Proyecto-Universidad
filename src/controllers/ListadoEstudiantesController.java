@@ -88,7 +88,8 @@ public class ListadoEstudiantesController implements ActionListener {
 
         listadoEstudiantesFrame.getCmb_listado_estudiantes().transferFocus();
         DataFetcher dataFetcher = ListadoFactory.create(tipoSeleccionado);
-        ArrayList<?> dataSource = dataFetcher.obtenerDatos();
+        System.out.println("tipo seleccionado: " + tipoSeleccionado + " fetcher: " + dataFetcher);
+        ArrayList<?> dataSource = dataFetcher.obtenerDatos(connection);
 
         if (dataSource != null) {
             switch (tipoSeleccionado) {

@@ -6,6 +6,7 @@ package factoryMethod;
 
 import java.util.ArrayList;
 import models.CuatroColumnasModel;
+import sql.ConexionSQL;
 
 /**
  *
@@ -13,7 +14,7 @@ import models.CuatroColumnasModel;
  */
 public class ListadoPromedioDecanato implements DataFetcher {
     @Override
-    public ArrayList obtenerDatos() {
+    public ArrayList obtenerDatos(ConexionSQL connection) {
         ArrayList<CuatroColumnasModel> datasource20Decanato = connection.getEstudiantesCuatro("20 promedios decanato");
         return datasource20Decanato;
     }

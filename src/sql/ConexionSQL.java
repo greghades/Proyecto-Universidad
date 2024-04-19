@@ -205,6 +205,7 @@ public class ConexionSQL {
             }
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
 
+            System.out.println("query: " + estudiantesQuery + " filtro: " + filtro);
             ArrayList<TresColumnasModel> estudiantesList = new ArrayList<>();
             while (estudiantesSet.next()) {
                 String cedula = estudiantesSet.getString("id_estudiante");
@@ -222,9 +223,11 @@ public class ConexionSQL {
                     extra = String.format("Semestre %s", semestre);
                 }
 
+                System.out.println("resultado listado estudiantes:" + cedula + " nombre: " + nombreEstudiante);
                 TresColumnasModel model = new TresColumnasModel(cedula, nombreEstudiante, extra);
                 estudiantesList.add(model);
             }
+            System.out.println("total estudiantes: " + estudiantesList.size() + " filtro: " + filtro);
             return estudiantesList;
         } catch (SQLException e) {
             return null;
@@ -461,9 +464,9 @@ public class ConexionSQL {
             return null;
         }
     }
-            //CRUD - Estudiantes
+    //CRUD - Estudiantes
 
-            //Cree una consulta traerme las carreras al combobox
+    //Cree una consulta traerme las carreras al combobox
     public ArrayList<Carrera> getCarrera() {
         try {
             String query = "SELECT c.id_carrera, c.nombre_carrera FROM public.\"Carreras\" c";
@@ -790,5 +793,4 @@ public class ConexionSQL {
             JOptionPane.showMessageDialog(null, "desconexion fallida" + e, "desconexion", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }
