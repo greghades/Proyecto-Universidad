@@ -30,7 +30,8 @@ public class InicioController implements ActionListener {
     public ListadoEstudiantesController listadoEstudiantesController;
     public RetirarMateriaController retirarMateriaController;
     public AsignarNotaController asignarNotaController;
-    public ProfesorController profesorController;
+    public CrudController crudController;
+    public EstudianteController estudianteController;
 
     public InicioController() {
         inicioFrame = new InicioFrame(this);
@@ -75,10 +76,15 @@ public class InicioController implements ActionListener {
         asignarNotaController.showAsignarNotaFrame();
     }
     
-    private void showProfesorFrame() {
+    private void mostrarCrud(String tipoCrud) {
         inicioFrame.setVisible(false);
-        profesorController.showProfesorFrame();
-        profesorController.profesorFrame.mostrarEstadoInicial();
+        crudController.tipoCrud = tipoCrud;
+        crudController.showCrudFrame();
+        crudController.crudFrame.mostrarEstadoInicial();
+    }
+    
+    public void setEstudianteController(EstudianteController estudianteController) {
+        this.estudianteController = estudianteController;
     }
 
     public void setInscripcionController(InscripcionController inscripcionController) {
@@ -100,8 +106,8 @@ public class InicioController implements ActionListener {
     public void setRetirarMateriaController(RetirarMateriaController retirarMateriaController) {
         this.retirarMateriaController = retirarMateriaController;
     }
-    public void setProfesorController(ProfesorController profesorController) {
-        this.profesorController = profesorController;
+    public void setCrudController(CrudController crudController) {
+        this.crudController = crudController;
     }
 
     @Override
@@ -118,9 +124,9 @@ public class InicioController implements ActionListener {
         } else if (button.getSource() == inicioFrame.getAsignar_nota_button()) {
             showAsignarNotaFrame();
         } else if(button.getSource() == inicioFrame.getEstudiante_Button()){
-           
+           mostrarCrud("estudiante");
         } else if (button.getSource() == inicioFrame.getProfesor_Button()) {
-            showProfesorFrame();
+            mostrarCrud("profesor");
         }
     }
 }

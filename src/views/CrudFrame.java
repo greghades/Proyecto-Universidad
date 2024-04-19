@@ -16,17 +16,17 @@ Yaslin Vreugdenhil.
  */
 package views;
 
-import controllers.ProfesorController;
+import controllers.CrudController;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import models.Profesor;
 
-public class ProfesorFrame extends javax.swing.JFrame {
+public class CrudFrame extends javax.swing.JFrame {
 
-    public ProfesorController controller;
+    public CrudController controller;
 
-    public ProfesorFrame(ProfesorController controller) {
+    public CrudFrame(CrudController controller) {
         this.controller = controller;
         initComponents();
         agregarListener(controller);
@@ -35,103 +35,109 @@ public class ProfesorFrame extends javax.swing.JFrame {
     private void agregarListener(ActionListener accion) {
         //dejalo como backbutton
         back_button.addActionListener(accion);
-        buscar_prof_btn.addActionListener(accion);
-        cedula_profesor_btn.addActionListener(accion);
-        eliminar_prof_btn.addActionListener(accion);
-        modificar_prof_btn.addActionListener(accion);
+        buscar_btn.addActionListener(accion);
+        buscar_id_btn.addActionListener(accion);
+        eliminar_btn.addActionListener(accion);
+        modificar_btn.addActionListener(accion);
         reestablecer_btn.addActionListener(accion);
-        registrar_prof_btn.addActionListener(accion);
+        registrar_btn.addActionListener(accion);
     }
 
     public void mostrarEstadoInicial() {
-        ID_prof_Panel1.setVisible(false);
-        profesor_info_container_panel.setVisible(false);
+        id_panel.setVisible(false);
+        info_container_panel.setVisible(false);
         reestablecer_btn.setVisible(false);
-        registrar_prof_btn.setVisible(true);
-        buscar_prof_btn.setVisible(true);
+        registrar_btn.setVisible(true);
+        buscar_btn.setVisible(true);
+        main_title_label.setText(String.format("Gestionar %s", controller.tipoCrud));
+        registrar_btn.setText(String.format("Registrar a un %s", controller.tipoCrud));
+        buscar_btn.setText(String.format("Buscar a un %s", controller.tipoCrud));
+        ingresar_label.setText(String.format("Ingresar ID del %s", controller.tipoCrud));
+        modificar_btn.setText(String.format("Modificar datos del %s", controller.tipoCrud));
+        eliminar_btn.setText(String.format("Eliminar al %s", controller.tipoCrud));
         question_title_label.setText("¿Qué quieres hacer?");
     }
 
-    public void rellenarInfoInicial(Profesor profesor) {
-        nombre_prof_label.setText(profesor.getNombre());
-        correo_prof_label.setText(profesor.getCorreo());
-        edad_prof_label.setText(Integer.toString(profesor.getEdad()));
-        genero_prof_label.setText(profesor.getSexo());
-        especialidad_prof_label.setText(profesor.getEspecialidad());
-        info_prof_Panel.setVisible(true);
+    public void rellenarInfoProfesor(Profesor profesor) {
+        first_crud_label.setText(profesor.getNombre());
+        second_label.setText(profesor.getCorreo());
+        third_label.setText(Integer.toString(profesor.getEdad()));
+        fourth_label.setText(profesor.getSexo());
+        fifth_label.setText(profesor.getEspecialidad());
+        info_panel.setVisible(true);
     }
     
-    public void mostrarEstadoProfesorInfo() {
-        profesor_info_container_panel.setVisible(true);
+    public void mostrarEstadoInformacion() {
+        info_container_panel.setVisible(true);
     }
 
     public void mostrarEstadoBuscar() {
-        ID_prof_Panel1.setVisible(true);
-        registrar_prof_btn.setVisible(false);
-        buscar_prof_btn.setVisible(false);
+        id_panel.setVisible(true);
+        registrar_btn.setVisible(false);
+        buscar_btn.setVisible(false);
         reestablecer_btn.setVisible(true);
-        profesor_info_container_panel.setVisible(false);
+        info_container_panel.setVisible(false);
         question_title_label.setText("Realiza tu búsqueda");
     }
 
-    public JPanel getID_prof_Panel1() {
-        return ID_prof_Panel1;
+    public JPanel getId_panel() {
+        return id_panel;
     }
 
-    public JPanel getBody_prof_Panel() {
-        return body_prof_Panel;
+    public JPanel getMain_body_panel() {
+        return main_body_panel;
     }
 
     public JPanel getInfo_buttons_panel() {
         return info_buttons_panel;
     }
 
-    public JPanel getInfo_prof_Panel() {
-        return info_prof_Panel;
+    public JPanel getInfo_panel() {
+        return info_panel;
     }
 
     public JPanel getMain_buttons_panel() {
         return main_buttons_panel;
     }
 
-    public JPanel getProfesor_info_container_panel() {
-        return profesor_info_container_panel;
+    public JPanel getInfo_container_panel() {
+        return info_container_panel;
     }
 
     public String getCedula() {
-        return cedula_prof_TextField.getText();
+        return id_textField.getText();
     }
 
     public JButton getBack_button() {
         return back_button;
     }
 
-    public JButton getCedula_profesor_btn() {
-        return cedula_profesor_btn;
+    public JButton getBuscar_id_btn() {
+        return buscar_id_btn;
     }
 
     public JButton getReestablecer_prof_Btn() {
         return reestablecer_btn;
     }
 
-    public JButton getBuscar_prof_btn() {
-        return buscar_prof_btn;
+    public JButton getBuscar_btn() {
+        return buscar_btn;
     }
 
-    public JButton getEliminar_prof_btn() {
-        return eliminar_prof_btn;
+    public JButton getEliminar_btn() {
+        return eliminar_btn;
     }
 
-    public JButton getModificar_prof_btn() {
-        return modificar_prof_btn;
+    public JButton getModificar_btn() {
+        return modificar_btn;
     }
 
     public JButton getReestablecer_btn() {
         return reestablecer_btn;
     }
 
-    public JButton getRegistrar_prof_btn() {
-        return registrar_prof_btn;
+    public JButton getRegistrar_btn() {
+        return registrar_btn;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,46 +145,46 @@ public class ProfesorFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         title_panel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        main_title_label = new javax.swing.JLabel();
         back_button = new javax.swing.JButton();
-        body_prof_Panel = new javax.swing.JPanel();
+        main_body_panel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         question_title_label = new javax.swing.JLabel();
         main_buttons_panel = new javax.swing.JPanel();
-        registrar_prof_btn = new javax.swing.JButton();
-        buscar_prof_btn = new javax.swing.JButton();
+        registrar_btn = new javax.swing.JButton();
+        buscar_btn = new javax.swing.JButton();
         reestablecer_btn = new javax.swing.JButton();
-        ID_prof_Panel1 = new javax.swing.JPanel();
+        id_panel = new javax.swing.JPanel();
         ingresar_label = new javax.swing.JLabel();
-        cedula_prof_TextField = new javax.swing.JTextField();
-        cedula_profesor_btn = new javax.swing.JButton();
-        profesor_info_container_panel = new javax.swing.JPanel();
-        info_prof_Panel = new javax.swing.JPanel();
+        id_textField = new javax.swing.JTextField();
+        buscar_id_btn = new javax.swing.JButton();
+        info_container_panel = new javax.swing.JPanel();
+        info_panel = new javax.swing.JPanel();
         nombre_prof_title_Label = new javax.swing.JLabel();
-        nombre_prof_label = new javax.swing.JLabel();
+        first_crud_label = new javax.swing.JLabel();
         correo_prof_title_Label = new javax.swing.JLabel();
-        correo_prof_label = new javax.swing.JLabel();
+        second_label = new javax.swing.JLabel();
         edad_title_prof_Label = new javax.swing.JLabel();
-        edad_prof_label = new javax.swing.JLabel();
+        third_label = new javax.swing.JLabel();
         genero_title_prof_Label = new javax.swing.JLabel();
-        genero_prof_label = new javax.swing.JLabel();
+        fourth_label = new javax.swing.JLabel();
         especialidad_title_Label = new javax.swing.JLabel();
-        especialidad_prof_label = new javax.swing.JLabel();
+        fifth_label = new javax.swing.JLabel();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 16), new java.awt.Dimension(0, 16), new java.awt.Dimension(32767, 16));
         info_buttons_panel = new javax.swing.JPanel();
-        modificar_prof_btn = new javax.swing.JButton();
-        eliminar_prof_btn = new javax.swing.JButton();
+        modificar_btn = new javax.swing.JButton();
+        eliminar_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         title_panel.setBackground(new java.awt.Color(58, 159, 220));
         title_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(242, 242, 242));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Gestionar profesor");
+        main_title_label.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        main_title_label.setForeground(new java.awt.Color(242, 242, 242));
+        main_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        main_title_label.setText("Gestionar titulo");
 
         back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         back_button.setForeground(new java.awt.Color(58, 159, 220));
@@ -198,7 +204,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(main_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(100, 100, 100))
         );
         title_panelLayout.setVerticalGroup(
@@ -210,12 +216,12 @@ public class ProfesorFrame extends javax.swing.JFrame {
                         .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(title_panelLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(jLabel1)))
+                        .addComponent(main_title_label)))
                 .addGap(16, 16, 16))
         );
 
-        body_prof_Panel.setBackground(new java.awt.Color(255, 255, 255));
-        body_prof_Panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        main_body_panel.setBackground(new java.awt.Color(255, 255, 255));
+        main_body_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new java.awt.GridBagLayout());
@@ -237,18 +243,18 @@ public class ProfesorFrame extends javax.swing.JFrame {
         main_buttons_panelLayout.rowHeights = new int[] {0, 0, 0};
         main_buttons_panel.setLayout(main_buttons_panelLayout);
 
-        registrar_prof_btn.setBackground(new java.awt.Color(58, 159, 220));
-        registrar_prof_btn.setForeground(new java.awt.Color(255, 255, 255));
-        registrar_prof_btn.setText("Registrar a un profesor");
-        registrar_prof_btn.setAlignmentX(1.0F);
-        registrar_prof_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        registrar_prof_btn.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        registrar_prof_btn.setMaximumSize(new java.awt.Dimension(500, 20));
-        registrar_prof_btn.setMinimumSize(new java.awt.Dimension(100, 20));
-        registrar_prof_btn.setPreferredSize(new java.awt.Dimension(156, 32));
-        registrar_prof_btn.addActionListener(new java.awt.event.ActionListener() {
+        registrar_btn.setBackground(new java.awt.Color(58, 159, 220));
+        registrar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        registrar_btn.setText("Registrar a un profesor");
+        registrar_btn.setAlignmentX(1.0F);
+        registrar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        registrar_btn.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        registrar_btn.setMaximumSize(new java.awt.Dimension(500, 20));
+        registrar_btn.setMinimumSize(new java.awt.Dimension(100, 20));
+        registrar_btn.setPreferredSize(new java.awt.Dimension(156, 32));
+        registrar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrar_prof_btnActionPerformed(evt);
+                registrar_btnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -259,20 +265,20 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.ipady = 1;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        main_buttons_panel.add(registrar_prof_btn, gridBagConstraints);
+        main_buttons_panel.add(registrar_btn, gridBagConstraints);
 
-        buscar_prof_btn.setBackground(new java.awt.Color(58, 159, 220));
-        buscar_prof_btn.setForeground(new java.awt.Color(255, 255, 255));
-        buscar_prof_btn.setText("Buscar a un profesor ");
-        buscar_prof_btn.setAlignmentX(1.0F);
-        buscar_prof_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        buscar_prof_btn.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        buscar_prof_btn.setMaximumSize(new java.awt.Dimension(500, 20));
-        buscar_prof_btn.setMinimumSize(new java.awt.Dimension(100, 20));
-        buscar_prof_btn.setPreferredSize(new java.awt.Dimension(156, 32));
-        buscar_prof_btn.addActionListener(new java.awt.event.ActionListener() {
+        buscar_btn.setBackground(new java.awt.Color(58, 159, 220));
+        buscar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        buscar_btn.setText("Buscar a un profesor ");
+        buscar_btn.setAlignmentX(1.0F);
+        buscar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        buscar_btn.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        buscar_btn.setMaximumSize(new java.awt.Dimension(500, 20));
+        buscar_btn.setMinimumSize(new java.awt.Dimension(100, 20));
+        buscar_btn.setPreferredSize(new java.awt.Dimension(156, 32));
+        buscar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscar_prof_btnActionPerformed(evt);
+                buscar_btnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -283,7 +289,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.ipady = 1;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        main_buttons_panel.add(buscar_prof_btn, gridBagConstraints);
+        main_buttons_panel.add(buscar_btn, gridBagConstraints);
 
         reestablecer_btn.setBackground(new java.awt.Color(58, 159, 220));
         reestablecer_btn.setForeground(new java.awt.Color(255, 255, 255));
@@ -340,50 +346,50 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.weighty = 0.8;
         jPanel3.add(jPanel2, gridBagConstraints);
 
-        ID_prof_Panel1.setBackground(new java.awt.Color(255, 255, 255));
+        id_panel.setBackground(new java.awt.Color(255, 255, 255));
 
         ingresar_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         ingresar_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ingresar_label.setText("Ingresar ID del profesor");
         ingresar_label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        cedula_prof_TextField.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        cedula_prof_TextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cedula_prof_TextField.setText("ID");
-        cedula_prof_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        id_textField.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        id_textField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        id_textField.setText("ID");
+        id_textField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        cedula_profesor_btn.setBackground(new java.awt.Color(58, 159, 220));
-        cedula_profesor_btn.setForeground(new java.awt.Color(255, 255, 255));
-        cedula_profesor_btn.setText("Buscar");
-        cedula_profesor_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        cedula_profesor_btn.addActionListener(new java.awt.event.ActionListener() {
+        buscar_id_btn.setBackground(new java.awt.Color(58, 159, 220));
+        buscar_id_btn.setForeground(new java.awt.Color(255, 255, 255));
+        buscar_id_btn.setText("Buscar");
+        buscar_id_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        buscar_id_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cedula_profesor_btnActionPerformed(evt);
+                buscar_id_btnActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout ID_prof_Panel1Layout = new javax.swing.GroupLayout(ID_prof_Panel1);
-        ID_prof_Panel1.setLayout(ID_prof_Panel1Layout);
-        ID_prof_Panel1Layout.setHorizontalGroup(
-            ID_prof_Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ID_prof_Panel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout id_panelLayout = new javax.swing.GroupLayout(id_panel);
+        id_panel.setLayout(id_panelLayout);
+        id_panelLayout.setHorizontalGroup(
+            id_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, id_panelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(ID_prof_Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(id_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ingresar_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(ID_prof_Panel1Layout.createSequentialGroup()
-                        .addComponent(cedula_prof_TextField)
+                    .addGroup(id_panelLayout.createSequentialGroup()
+                        .addComponent(id_textField)
                         .addGap(16, 16, 16)
-                        .addComponent(cedula_profesor_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(buscar_id_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
-        ID_prof_Panel1Layout.setVerticalGroup(
-            ID_prof_Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ID_prof_Panel1Layout.createSequentialGroup()
+        id_panelLayout.setVerticalGroup(
+            id_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(id_panelLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(ingresar_label, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addGroup(ID_prof_Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cedula_prof_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cedula_profesor_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(id_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(id_textField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscar_id_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1))
         );
 
@@ -394,98 +400,98 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 32;
         gridBagConstraints.ipady = 16;
         gridBagConstraints.weightx = 1.0;
-        jPanel3.add(ID_prof_Panel1, gridBagConstraints);
+        jPanel3.add(id_panel, gridBagConstraints);
 
-        profesor_info_container_panel.setBackground(new java.awt.Color(255, 255, 255));
-        profesor_info_container_panel.setLayout(new javax.swing.BoxLayout(profesor_info_container_panel, javax.swing.BoxLayout.Y_AXIS));
+        info_container_panel.setBackground(new java.awt.Color(255, 255, 255));
+        info_container_panel.setLayout(new javax.swing.BoxLayout(info_container_panel, javax.swing.BoxLayout.Y_AXIS));
 
-        info_prof_Panel.setBackground(new java.awt.Color(255, 255, 255));
-        info_prof_Panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        info_prof_Panel.setPreferredSize(new java.awt.Dimension(400, 120));
+        info_panel.setBackground(new java.awt.Color(255, 255, 255));
+        info_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        info_panel.setPreferredSize(new java.awt.Dimension(400, 120));
 
         nombre_prof_title_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         nombre_prof_title_Label.setText("Nombre:");
 
-        nombre_prof_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        nombre_prof_label.setText("Nombre Profesor");
+        first_crud_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        first_crud_label.setText("Nombre Profesor");
 
         correo_prof_title_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         correo_prof_title_Label.setText("Correo:");
 
-        correo_prof_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        correo_prof_label.setText("Correo Profesor");
+        second_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        second_label.setText("Correo Profesor");
 
         edad_title_prof_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         edad_title_prof_Label.setText("Edad:");
 
-        edad_prof_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        edad_prof_label.setText("Edad Profesor");
+        third_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        third_label.setText("Edad Profesor");
 
         genero_title_prof_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         genero_title_prof_Label.setText("Género:");
 
-        genero_prof_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        genero_prof_label.setText("Género Profesor");
+        fourth_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        fourth_label.setText("Género Profesor");
 
         especialidad_title_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         especialidad_title_Label.setText("Especialidad:");
 
-        especialidad_prof_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        especialidad_prof_label.setText("Especialidad Profesor");
+        fifth_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        fifth_label.setText("Especialidad Profesor");
 
-        javax.swing.GroupLayout info_prof_PanelLayout = new javax.swing.GroupLayout(info_prof_Panel);
-        info_prof_Panel.setLayout(info_prof_PanelLayout);
-        info_prof_PanelLayout.setHorizontalGroup(
-            info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(info_prof_PanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout info_panelLayout = new javax.swing.GroupLayout(info_panel);
+        info_panel.setLayout(info_panelLayout);
+        info_panelLayout.setHorizontalGroup(
+            info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(info_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombre_prof_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(first_crud_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nombre_prof_title_Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(genero_prof_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fourth_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(genero_title_prof_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(info_prof_PanelLayout.createSequentialGroup()
-                        .addComponent(especialidad_prof_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(info_panelLayout.createSequentialGroup()
+                        .addComponent(fifth_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3))
                     .addComponent(especialidad_title_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(correo_prof_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(second_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(correo_prof_title_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edad_prof_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(third_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(edad_title_prof_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
-        info_prof_PanelLayout.setVerticalGroup(
-            info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(info_prof_PanelLayout.createSequentialGroup()
+        info_panelLayout.setVerticalGroup(
+            info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(info_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombre_prof_title_Label)
                     .addComponent(correo_prof_title_Label)
                     .addComponent(edad_title_prof_Label))
                 .addGap(6, 6, 6)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombre_prof_label)
-                    .addComponent(correo_prof_label)
-                    .addComponent(edad_prof_label))
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(first_crud_label)
+                    .addComponent(second_label)
+                    .addComponent(third_label))
                 .addGap(16, 16, 16)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genero_title_prof_Label)
                     .addComponent(especialidad_title_Label))
                 .addGap(6, 6, 6)
-                .addGroup(info_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(genero_prof_label)
-                    .addComponent(especialidad_prof_label))
+                .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fourth_label)
+                    .addComponent(fifth_label))
                 .addGap(16, 16, 16))
         );
 
-        profesor_info_container_panel.add(info_prof_Panel);
+        info_container_panel.add(info_panel);
 
         filler4.setBackground(new java.awt.Color(255, 255, 255));
-        profesor_info_container_panel.add(filler4);
+        info_container_panel.add(filler4);
 
         info_buttons_panel.setBackground(new java.awt.Color(255, 255, 255));
         info_buttons_panel.setPreferredSize(new java.awt.Dimension(482, 32));
@@ -494,14 +500,14 @@ public class ProfesorFrame extends javax.swing.JFrame {
         info_buttons_panelLayout.rowHeights = new int[] {0};
         info_buttons_panel.setLayout(info_buttons_panelLayout);
 
-        modificar_prof_btn.setBackground(new java.awt.Color(58, 159, 220));
-        modificar_prof_btn.setForeground(new java.awt.Color(255, 255, 255));
-        modificar_prof_btn.setText("Modificar datos del profesor");
-        modificar_prof_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        modificar_prof_btn.setPreferredSize(new java.awt.Dimension(150, 20));
-        modificar_prof_btn.addActionListener(new java.awt.event.ActionListener() {
+        modificar_btn.setBackground(new java.awt.Color(58, 159, 220));
+        modificar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        modificar_btn.setText("Modificar datos del profesor");
+        modificar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        modificar_btn.setPreferredSize(new java.awt.Dimension(150, 20));
+        modificar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modificar_prof_btnActionPerformed(evt);
+                modificar_btnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -509,15 +515,15 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.ipady = 12;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        info_buttons_panel.add(modificar_prof_btn, gridBagConstraints);
+        info_buttons_panel.add(modificar_btn, gridBagConstraints);
 
-        eliminar_prof_btn.setBackground(new java.awt.Color(58, 159, 220));
-        eliminar_prof_btn.setForeground(new java.awt.Color(255, 255, 255));
-        eliminar_prof_btn.setText("Eliminar al profesor");
-        eliminar_prof_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        eliminar_prof_btn.addActionListener(new java.awt.event.ActionListener() {
+        eliminar_btn.setBackground(new java.awt.Color(58, 159, 220));
+        eliminar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        eliminar_btn.setText("Eliminar al profesor");
+        eliminar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        eliminar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminar_prof_btnActionPerformed(evt);
+                eliminar_btnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -527,9 +533,9 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.ipady = 12;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        info_buttons_panel.add(eliminar_prof_btn, gridBagConstraints);
+        info_buttons_panel.add(eliminar_btn, gridBagConstraints);
 
-        profesor_info_container_panel.add(info_buttons_panel);
+        info_container_panel.add(info_buttons_panel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -537,20 +543,20 @@ public class ProfesorFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 32;
         gridBagConstraints.weightx = 1.0;
-        jPanel3.add(profesor_info_container_panel, gridBagConstraints);
+        jPanel3.add(info_container_panel, gridBagConstraints);
 
-        javax.swing.GroupLayout body_prof_PanelLayout = new javax.swing.GroupLayout(body_prof_Panel);
-        body_prof_Panel.setLayout(body_prof_PanelLayout);
-        body_prof_PanelLayout.setHorizontalGroup(
-            body_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, body_prof_PanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout main_body_panelLayout = new javax.swing.GroupLayout(main_body_panel);
+        main_body_panel.setLayout(main_body_panelLayout);
+        main_body_panelLayout.setHorizontalGroup(
+            main_body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_body_panelLayout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
-        body_prof_PanelLayout.setVerticalGroup(
-            body_prof_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(body_prof_PanelLayout.createSequentialGroup()
+        main_body_panelLayout.setVerticalGroup(
+            main_body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(main_body_panelLayout.createSequentialGroup()
                 .addContainerGap(65, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(65, Short.MAX_VALUE))
@@ -564,7 +570,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(body_prof_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(main_body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -573,7 +579,7 @@ public class ProfesorFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(body_prof_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(main_body_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
 
@@ -584,62 +590,62 @@ public class ProfesorFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_back_buttonActionPerformed
 
-    private void buscar_prof_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_prof_btnActionPerformed
+    private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buscar_prof_btnActionPerformed
+    }//GEN-LAST:event_buscar_btnActionPerformed
 
-    private void registrar_prof_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_prof_btnActionPerformed
+    private void registrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registrar_prof_btnActionPerformed
+    }//GEN-LAST:event_registrar_btnActionPerformed
 
     private void reestablecer_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reestablecer_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_reestablecer_btnActionPerformed
 
-    private void cedula_profesor_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_profesor_btnActionPerformed
+    private void buscar_id_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_id_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cedula_profesor_btnActionPerformed
+    }//GEN-LAST:event_buscar_id_btnActionPerformed
 
-    private void modificar_prof_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar_prof_btnActionPerformed
+    private void modificar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_modificar_prof_btnActionPerformed
+    }//GEN-LAST:event_modificar_btnActionPerformed
 
-    private void eliminar_prof_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar_prof_btnActionPerformed
+    private void eliminar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eliminar_prof_btnActionPerformed
+    }//GEN-LAST:event_eliminar_btnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel ID_prof_Panel1;
     private javax.swing.JButton back_button;
-    private javax.swing.JPanel body_prof_Panel;
-    private javax.swing.JButton buscar_prof_btn;
-    public javax.swing.JTextField cedula_prof_TextField;
-    private javax.swing.JButton cedula_profesor_btn;
-    private javax.swing.JLabel correo_prof_label;
+    private javax.swing.JButton buscar_btn;
+    private javax.swing.JButton buscar_id_btn;
     private javax.swing.JLabel correo_prof_title_Label;
-    private javax.swing.JLabel edad_prof_label;
     private javax.swing.JLabel edad_title_prof_Label;
-    private javax.swing.JButton eliminar_prof_btn;
-    private javax.swing.JLabel especialidad_prof_label;
+    private javax.swing.JButton eliminar_btn;
     private javax.swing.JLabel especialidad_title_Label;
+    private javax.swing.JLabel fifth_label;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.JLabel genero_prof_label;
+    private javax.swing.JLabel first_crud_label;
+    private javax.swing.JLabel fourth_label;
     private javax.swing.JLabel genero_title_prof_Label;
+    private javax.swing.JPanel id_panel;
+    public javax.swing.JTextField id_textField;
     private javax.swing.JPanel info_buttons_panel;
-    private javax.swing.JPanel info_prof_Panel;
+    private javax.swing.JPanel info_container_panel;
+    private javax.swing.JPanel info_panel;
     private javax.swing.JLabel ingresar_label;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel main_body_panel;
     private javax.swing.JPanel main_buttons_panel;
-    private javax.swing.JButton modificar_prof_btn;
-    private javax.swing.JLabel nombre_prof_label;
+    private javax.swing.JLabel main_title_label;
+    private javax.swing.JButton modificar_btn;
     private javax.swing.JLabel nombre_prof_title_Label;
-    private javax.swing.JPanel profesor_info_container_panel;
     private javax.swing.JLabel question_title_label;
     private javax.swing.JButton reestablecer_btn;
-    private javax.swing.JButton registrar_prof_btn;
+    private javax.swing.JButton registrar_btn;
+    private javax.swing.JLabel second_label;
+    private javax.swing.JLabel third_label;
     private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,20 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -12,16 +25,17 @@ import javax.swing.JOptionPane;
 import models.Profesor;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
-import views.GestionarProfesorFrame;
+import views.GestionarCrudFrame;
 
-public class GestionarProfesorController implements ActionListener {
+public class GestionarCrudController implements ActionListener {
 
     public Profesor profesor;
-    private static GestionarProfesorController instance;
+    private static GestionarCrudController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
-    public GestionarProfesorFrame gestionarProfesorFrame;
-    public ProfesorController profesorController;
+    public GestionarCrudFrame gestionarCrudFrame;
+    public CrudController crudController;
     public boolean esAgregar;
+    public String tipoCrud;
     //para el combobox del sexo
     private final List<String> opcionSexo = Arrays.asList(
             "Seleccionar ",
@@ -29,17 +43,17 @@ public class GestionarProfesorController implements ActionListener {
             "Masculino"
     );
 
-    public GestionarProfesorController() {
-        gestionarProfesorFrame = new GestionarProfesorFrame(this);
+    public GestionarCrudController() {
+        gestionarCrudFrame = new GestionarCrudFrame(this);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
-        pantallaCompleta.setPantallaCompleta(gestionarProfesorFrame);
-        gestionarProfesorFrame.setVisible(false);
-        gestionarProfesorFrame.setupComboBox(opcionSexo);
+        pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
+        gestionarCrudFrame.setVisible(false);
+        gestionarCrudFrame.setupComboBox(opcionSexo);
     }
 
-    public static GestionarProfesorController getInstance() {
+    public static GestionarCrudController getInstance() {
         if (instance == null) {
-            instance = new GestionarProfesorController();
+            instance = new GestionarCrudController();
         }
         return instance;
     }
@@ -48,40 +62,40 @@ public class GestionarProfesorController implements ActionListener {
         
         System.out.println("es agregar: " + esAgregar + " profesor: " + profesor);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
-        pantallaCompleta.setPantallaCompleta(gestionarProfesorFrame);
-        gestionarProfesorFrame.setVisible(true);
+        pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
+        gestionarCrudFrame.setVisible(true);
         
         if (esAgregar) {
-            gestionarProfesorFrame.configurarRegistro();
+            gestionarCrudFrame.configurarRegistro();
         } else {
             rellenarDatos(profesor);
-            gestionarProfesorFrame.configurarModificacion();
+            gestionarCrudFrame.configurarModificacion();
         }
     }
 
     private void showProfesorFrame() {
-        gestionarProfesorFrame.setVisible(false);
-        profesorController.showProfesorFrame();
+        gestionarCrudFrame.setVisible(false);
+        crudController.showCrudFrame();
     }
 
-    public void setProfesorController(ProfesorController profesorController) {
-        this.profesorController = profesorController;
+    public void setCrudController(CrudController crudController) {
+        this.crudController = crudController;
     }
 
     private void limpiarVista() {
-        gestionarProfesorFrame.nombre_prof_TextField.setText("Nombre");
-        gestionarProfesorFrame.correo_prof_TextField.setText("Correo");
-        gestionarProfesorFrame.edad_prof_TextField.setText("Edad");
-        gestionarProfesorFrame.cmb_sexo.setSelectedIndex(0);
-        gestionarProfesorFrame.especialidad_prof_TextField.setText("Especialidad");
+        gestionarCrudFrame.nombre_prof_TextField.setText("Nombre");
+        gestionarCrudFrame.correo_prof_TextField.setText("Correo");
+        gestionarCrudFrame.edad_prof_TextField.setText("Edad");
+        gestionarCrudFrame.cmb_sexo.setSelectedIndex(0);
+        gestionarCrudFrame.especialidad_prof_TextField.setText("Especialidad");
     }
 
     public void rellenarDatos(Profesor profesor) {
-        gestionarProfesorFrame.nombre_prof_TextField.setText(profesor.getNombre());
-        gestionarProfesorFrame.correo_prof_TextField.setText(profesor.getCorreo());
-        gestionarProfesorFrame.edad_prof_TextField.setText(String.valueOf(profesor.getEdad()));
-        gestionarProfesorFrame.cmb_sexo.setSelectedIndex("Femenino".equals(profesor.getSexo()) ? 1 : 2);
-        gestionarProfesorFrame.especialidad_prof_TextField.setText(profesor.getEspecialidad());
+        gestionarCrudFrame.nombre_prof_TextField.setText(profesor.getNombre());
+        gestionarCrudFrame.correo_prof_TextField.setText(profesor.getCorreo());
+        gestionarCrudFrame.edad_prof_TextField.setText(String.valueOf(profesor.getEdad()));
+        gestionarCrudFrame.cmb_sexo.setSelectedIndex("Femenino".equals(profesor.getSexo()) ? 1 : 2);
+        gestionarCrudFrame.especialidad_prof_TextField.setText(profesor.getEspecialidad());
     }
 
     private void showSuccessAlert(boolean exitosa) {
@@ -107,14 +121,14 @@ public class GestionarProfesorController implements ActionListener {
     //agregar
     public void agregarProfesor() {
         //obtener los datos del formulario 
-        String cedula = profesorController.profesorFrame.getCedula();
-        String nombre_completo = gestionarProfesorFrame.nombre_prof_TextField.getText();
-        int edad = Integer.parseInt(gestionarProfesorFrame.edad_prof_TextField.getText());
-        String correo = gestionarProfesorFrame.correo_prof_TextField.getText();
+        String cedula = crudController.crudFrame.getCedula();
+        String nombre_completo = gestionarCrudFrame.nombre_prof_TextField.getText();
+        int edad = Integer.parseInt(gestionarCrudFrame.edad_prof_TextField.getText());
+        String correo = gestionarCrudFrame.correo_prof_TextField.getText();
         //combobox
-        String sexo = (String) gestionarProfesorFrame.cmb_sexo.getSelectedItem();
+        String sexo = (String) gestionarCrudFrame.cmb_sexo.getSelectedItem();
         System.out.println("Sexo " + sexo);
-        String especialidad = gestionarProfesorFrame.especialidad_prof_TextField.getText();
+        String especialidad = gestionarCrudFrame.especialidad_prof_TextField.getText();
 
         // nuevos valores
         Profesor nuevoProfesor = new Profesor(cedula, nombre_completo, " ", correo, edad, sexo, especialidad);
@@ -139,12 +153,12 @@ public class GestionarProfesorController implements ActionListener {
     //modificar
     public void modificarProfesor() {
         //datos que se van a actualizar
-        String cedula = profesorController.profesorFrame.getCedula();
-        String nombre_completo = gestionarProfesorFrame.nombre_prof_TextField.getText();
-        int edad = Integer.parseInt(gestionarProfesorFrame.edad_prof_TextField.getText());
-        String sexo = (String) gestionarProfesorFrame.cmb_sexo.getSelectedItem();
-        String especialidad = gestionarProfesorFrame.especialidad_prof_TextField.getText();
-        String correo = gestionarProfesorFrame.correo_prof_TextField.getText();
+        String cedula = crudController.crudFrame.getCedula();
+        String nombre_completo = gestionarCrudFrame.nombre_prof_TextField.getText();
+        int edad = Integer.parseInt(gestionarCrudFrame.edad_prof_TextField.getText());
+        String sexo = (String) gestionarCrudFrame.cmb_sexo.getSelectedItem();
+        String especialidad = gestionarCrudFrame.especialidad_prof_TextField.getText();
+        String correo = gestionarCrudFrame.correo_prof_TextField.getText();
 
         profesor.setNombre(nombre_completo);
         profesor.setEdad(edad);
@@ -164,15 +178,15 @@ public class GestionarProfesorController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == gestionarProfesorFrame.getBack_button()) {
+        if (event.getSource() == gestionarCrudFrame.getBack_button()) {
             showProfesorFrame();
-        } else if (event.getSource() == gestionarProfesorFrame.getAgg_prof_Btn()) {
+        } else if (event.getSource() == gestionarCrudFrame.getAgg_prof_Btn()) {
             if (esAgregar) {
                 agregarProfesor();
             } else {
                 modificarProfesor();
             }
-        } else if (event.getSource() == gestionarProfesorFrame.getLimpiar_prof_Btn()) {
+        } else if (event.getSource() == gestionarCrudFrame.getLimpiar_prof_Btn()) {
             limpiarVista();
         }
     }

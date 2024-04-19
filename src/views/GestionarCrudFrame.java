@@ -1,21 +1,33 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ Ernesto Contreras
+28245373
+
+Albani barragán
+28268078
+
+Luis Carrillo
+27539960
+
+Gregori Yepez 
+28047103
+
+Yaslin Vreugdenhil.
+29561929
  */
+
 package views;
 
-import controllers.GestionarProfesorController;
+import controllers.GestionarCrudController;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
-public class GestionarProfesorFrame extends javax.swing.JFrame {
+public class GestionarCrudFrame extends javax.swing.JFrame {
 
-    public GestionarProfesorController gestionarProfesorControllerController;
+    public GestionarCrudController gestionarProfesorControllerController;
 
-    public GestionarProfesorFrame(GestionarProfesorController controller) {
+    public GestionarCrudFrame(GestionarCrudController controller) {
         this.gestionarProfesorControllerController = controller;
         initComponents();
         agregarListener(controller);
