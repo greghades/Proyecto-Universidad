@@ -26,6 +26,9 @@ public class Main {
         RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
         AsignarNotaController asignarNotaController = AsignarNotaController.getInstance();
         ProfesorController profesorController = ProfesorController.getInstance();
+        GestionarProfesorController gestionarProfesorController = GestionarProfesorController.getInstance();
+        profesorController.setGestionarProfesorController(gestionarProfesorController);
+        gestionarProfesorController.setProfesorController(profesorController);
 
         inicioController.setInscripcionController(inscripcionController);
         inicioController.setListaSeccionController(listaSeccionController);

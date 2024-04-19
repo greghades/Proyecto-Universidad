@@ -3,18 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/User/proyecto/src/controllers/ListadoEstudiantesController.java</file>
-=======
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/controllers/InicioController.java</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/controllers/ProfesorController.java</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/views/ProfesorFrame.java</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/sql/ConexionSQL.java</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/sql/Datos.sql</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/models/Profesor.java</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/controllers/Main.java</file>
-            <file>file:/C:/Users/Usuario/Proyecto-Universidad/src/views/InicioFrame.java</file>
->>>>>>> 5d2d45b09b921c0d22651758186b181e02a588fc
+            <file>file:/C:/Users/User/proyecto/src/views/ProfesorFrame.java</file>
+            <file>file:/C:/Users/User/proyecto/src/sql/ConexionSQL.java</file>
+            <file>file:/C:/Users/User/proyecto/src/controllers/ProfesorController.java</file>
+            <file>file:/C:/Users/User/proyecto/src/controllers/GestionarProfesorController.java</file>
+            <file>file:/C:/Users/User/proyecto/src/controllers/Main.java</file>
+            <file>file:/C:/Users/User/proyecto/src/views/GestionarProfesorFrame.java</file>
         </group>
     </open-files>
 </project-private>

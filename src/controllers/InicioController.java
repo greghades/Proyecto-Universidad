@@ -78,6 +78,7 @@ public class InicioController implements ActionListener {
     private void showProfesorFrame() {
         inicioFrame.setVisible(false);
         profesorController.showProfesorFrame();
+        profesorController.profesorFrame.mostrarEstadoInicial();
     }
 
     public void setInscripcionController(InscripcionController inscripcionController) {
