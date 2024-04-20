@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import models.Profesor;
+import models.Universidad;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.GestionarCrudFrame;
@@ -29,6 +30,7 @@ import views.GestionarCrudFrame;
 public class GestionarCrudController implements ActionListener {
 
     public Profesor profesor;
+    public Universidad universidad;
     private static GestionarCrudController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
     public GestionarCrudFrame gestionarCrudFrame;
@@ -77,6 +79,25 @@ public class GestionarCrudController implements ActionListener {
         crudController.showCrudFrame();
     }
 
+    public void showGestionarUniversidadFrame(Universidad universidad) {
+
+        PantallaCompleta pantallaCompleta = new PantallaCompleta();
+        pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
+        gestionarCrudFrame.setVisible(true);
+
+        if (esAgregar) {
+            gestionarCrudFrame.configurarRegistro();
+        } else {
+            rellenarDatosUniversidad(universidad);
+            gestionarCrudFrame.configurarModificacion();
+        }
+    }
+
+    private void showUniversidadFrame() {
+        gestionarCrudFrame.setVisible(false);
+        crudController.showCrudFrame();
+    }
+
     public void setCrudController(CrudController crudController) {
         this.crudController = crudController;
     }
@@ -110,10 +131,18 @@ public class GestionarCrudController implements ActionListener {
                 || correo.isEmpty() || correo.equals("Correo")
                 || sexo.equals("Seleccione") || especialidad.isEmpty() || especialidad.equals("Especialidad")) {
             showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
-            
+
             contenidoValido = false;
         }
         return contenidoValido;
+    }
+
+    public void rellenarDatosUniversidad(Universidad universidad) {
+        gestionarCrudFrame.first_textfield.setText(universidad.getNombre());
+        gestionarCrudFrame.second_textfield.setVisible(false);
+        gestionarCrudFrame.third_textfield.setVisible(false);
+        gestionarCrudFrame.fourth_cmb.setVisible(false);
+        gestionarCrudFrame.fifth_textfield.setVisible(false);
     }
 
     private void showAlert(String title, String message, boolean isSuccess) {
@@ -197,11 +226,11 @@ public class GestionarCrudController implements ActionListener {
         if (event.getSource() == gestionarCrudFrame.getBack_button()) {
             showProfesorFrame();
         } else if (event.getSource() == gestionarCrudFrame.getRegistrar_btn()) {
-            
+
             if (!validarCampos()) {
                 return;
             }
-            
+
             if (esAgregar) {
                 agregarProfesor();
             } else {

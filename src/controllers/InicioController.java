@@ -106,6 +106,7 @@ public class InicioController implements ActionListener {
     public void setRetirarMateriaController(RetirarMateriaController retirarMateriaController) {
         this.retirarMateriaController = retirarMateriaController;
     }
+    
     public void setCrudController(CrudController crudController) {
         this.crudController = crudController;
     }
@@ -127,6 +128,8 @@ public class InicioController implements ActionListener {
            mostrarCrud("estudiante");
         } else if (button.getSource() == inicioFrame.getProfesor_Button()) {
             mostrarCrud("profesor");
+        } else if (button.getSource() == inicioFrame.getUniversidad_Button()) {
+            mostrarCrud("universidad");
         }
     }
 }

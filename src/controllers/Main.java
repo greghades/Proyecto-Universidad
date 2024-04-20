@@ -26,25 +26,25 @@ public class Main {
         RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
         AsignarNotaController asignarNotaController = AsignarNotaController.getInstance();
         EstudianteController estudianteController = EstudianteController.getInstance();
-        CrudController profesorController = CrudController.getInstance();
-        GestionarCrudController gestionarProfesorController = GestionarCrudController.getInstance();
-        profesorController.setGestionarCrudController(gestionarProfesorController);
-        gestionarProfesorController.setCrudController(profesorController);
-        
+        CrudController crudController = CrudController.getInstance();
+        GestionarCrudController gestionarCrudController = GestionarCrudController.getInstance();
+        crudController.setGestionarCrudController(gestionarCrudController);
+        gestionarCrudController.setCrudController(crudController);
+
         inicioController.setEstudianteController(estudianteController);
         inicioController.setInscripcionController(inscripcionController);
         inicioController.setListaSeccionController(listaSeccionController);
         inicioController.setListadoEstudiantesController(listadoEstudiantesController);
         inicioController.setRetirarMateriaController(retirarMateriaController);
         inicioController.setAsignarNotaController(asignarNotaController);
-        inicioController.setCrudController(profesorController);
+        inicioController.setCrudController(crudController);
 
         inscripcionController.setInicioController(inicioController);
         listaSeccionController.setInicioController(inicioController);
         listadoEstudiantesController.setInicioController(inicioController);
         retirarMateriaController.setInicioController(inicioController);
         asignarNotaController.setInicioController(inicioController);
-        profesorController.setInicioController(inicioController);
+        crudController.setInicioController(inicioController);
         estudianteController.setInicioController(inicioController);
     }
 }

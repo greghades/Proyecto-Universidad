@@ -25,14 +25,14 @@ public class Universidad {
     private final int id;
     private final String nombre;
     private final String direccion;
-    private final Decanato[] decanatos;
+    //private final Decanato[] decanatos;
     private Inscripcion[] inscripcion;
 
-    public Universidad(int id, String nombre, String direccion, Decanato[] decanatos) {
+    public Universidad(int id, String nombre, String direccion/*, Decanato[] decanatos*/) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.decanatos = decanatos;
+        //this.decanatos = decanatos;
     }
 
     public int getId() {
@@ -47,10 +47,10 @@ public class Universidad {
         return direccion;
     }
 
-    public Decanato[] getDecanatos() {
+    /*public Decanato[] getDecanatos() {
         return decanatos;
     }
-
+*/
     public Inscripcion[] getInscripcion() {
         return inscripcion;
     }

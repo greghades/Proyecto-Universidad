@@ -49,13 +49,33 @@ public class CrudFrame extends javax.swing.JFrame {
         reestablecer_btn.setVisible(false);
         registrar_btn.setVisible(true);
         buscar_btn.setVisible(true);
-        main_title_label.setText(String.format("Gestionar %s", controller.tipoCrud));
-        registrar_btn.setText(String.format("Registrar a un %s", controller.tipoCrud));
-        buscar_btn.setText(String.format("Buscar a un %s", controller.tipoCrud));
-        ingresar_label.setText(String.format("Ingresar ID del %s", controller.tipoCrud));
-        modificar_btn.setText(String.format("Modificar datos del %s", controller.tipoCrud));
-        eliminar_btn.setText(String.format("Eliminar al %s", controller.tipoCrud));
+        configurarTextos();
+    }
+
+    private void configurarTextos() {
+        String tipoCrud = controller.tipoCrud;
+        String registroText, buscarText, modificarText, eliminarText, idText;
+        if (tipoCrud.equals("universidad") || tipoCrud.equals("carrera")) {
+            registroText = "Registrar una %s";
+            buscarText = "Buscar una %s";
+            modificarText = "Modificar datos de la %s";
+            eliminarText = "Eliminar la %s";
+            idText = "Ingresar ID de la %s";
+        } else {
+            registroText = "Registrar a un %s";
+            buscarText = "Buscar a un %s";
+            modificarText = "Modificar datos del %s";
+            eliminarText = "Eliminar al %s";
+            idText = "Ingresar ID del %s";
+        }
+
+        main_title_label.setText(String.format("Gestionar %s", tipoCrud));
+        registrar_btn.setText(String.format(registroText, tipoCrud));
+        buscar_btn.setText(String.format(buscarText, tipoCrud));
+        modificar_btn.setText(String.format(modificarText, tipoCrud));
+        eliminar_btn.setText(String.format(eliminarText, tipoCrud));
         question_title_label.setText("¿Qué quieres hacer?");
+        ingresar_label.setText(String.format(idText, tipoCrud));
     }
 
     public void rellenarInfoProfesor(Profesor profesor) {
@@ -66,7 +86,7 @@ public class CrudFrame extends javax.swing.JFrame {
         fifth_label.setText(profesor.getEspecialidad());
         info_panel.setVisible(true);
     }
-    
+
     public void mostrarEstadoInformacion() {
         info_container_panel.setVisible(true);
     }
