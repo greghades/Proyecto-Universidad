@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import models.Profesor;
+import models.Universidad;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.GestionarCrudFrame;
@@ -30,6 +31,7 @@ import views.GestionarCrudFrame;
 public class GestionarCrudController implements ActionListener {
 
     public Profesor profesor;
+    public Universidad universidad;
     private static GestionarCrudController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
     public GestionarCrudFrame gestionarCrudFrame;
@@ -50,7 +52,8 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.setVisible(false);
         gestionarCrudFrame.setupComboBox(opcionSexo);
     }
-
+    
+    
     public static GestionarCrudController getInstance() {
         if (instance == null) {
             instance = new GestionarCrudController();
@@ -78,6 +81,25 @@ public class GestionarCrudController implements ActionListener {
         crudController.showCrudFrame();
     }
 
+    public void showGestionarUniversidadFrame(Universidad universidad) {
+        
+        PantallaCompleta pantallaCompleta = new PantallaCompleta();
+        pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
+        gestionarCrudFrame.setVisible(true);
+        
+        if (esAgregar) {
+            gestionarCrudFrame.configurarRegistro();
+        } else {
+            rellenarDatosUniversidad(universidad);
+            gestionarCrudFrame.configurarModificacion();
+        }
+    }
+
+    private void showUniversidadFrame() {
+        gestionarCrudFrame.setVisible(false);
+        crudController.showCrudFrame();
+    }
+    
     public void setCrudController(CrudController crudController) {
         this.crudController = crudController;
     }
@@ -97,7 +119,15 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.cmb_sexo.setSelectedIndex("Femenino".equals(profesor.getSexo()) ? 1 : 2);
         gestionarCrudFrame.especialidad_prof_TextField.setText(profesor.getEspecialidad());
     }
-
+    
+    public void rellenarDatosUniversidad(Universidad universidad) {
+        gestionarCrudFrame.nombre_prof_TextField.setText(universidad.getNombre());
+        gestionarCrudFrame.correo_prof_TextField.setVisible(false);
+        gestionarCrudFrame.edad_prof_TextField.setVisible(false);
+        gestionarCrudFrame.cmb_sexo.setVisible(false);
+        gestionarCrudFrame.especialidad_prof_TextField.setVisible(false);
+    }
+    
     private void showSuccessAlert(boolean exitosa) {
         Object[] options = {"Aceptar"};
         int selection = JOptionPane.showOptionDialog(

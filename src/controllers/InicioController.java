@@ -128,5 +128,10 @@ public class InicioController implements ActionListener {
         } else if (button.getSource() == inicioFrame.getProfesor_Button()) {
             mostrarCrud("profesor");
         }
+        else if (button.getSource() == inicioFrame.getUniversidad_Button()) {
+            mostrarCrud("universidad");
+      
+        }
+        
     }
 }

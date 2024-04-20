@@ -38,8 +38,9 @@ public class InicioFrame extends javax.swing.JFrame {
         listado_estudiante_button.addActionListener(accion);
         retirar_materia_button.addActionListener(accion);
         asignar_nota_button.addActionListener(accion);
-        estudiante_button.addActionListener(accion);
+        universidad_button.addActionListener(accion);
         profesor_button.addActionListener(accion);
+        estudiante_button.addActionListener(accion);
     }
 
     public JButton getInscripcion_button() {
@@ -69,6 +70,11 @@ public class InicioFrame extends javax.swing.JFrame {
     public JButton getProfesor_Button() {
         return profesor_button;
     }
+    
+     public JButton getUniversidad_Button() {
+        return universidad_button;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,8 +95,9 @@ public class InicioFrame extends javax.swing.JFrame {
         retirar_materia_button = new javax.swing.JButton();
         asignar_nota_button = new javax.swing.JButton();
         listado_seccion_button = new javax.swing.JButton();
-        estudiante_button = new javax.swing.JButton();
+        universidad_button = new javax.swing.JButton();
         profesor_button = new javax.swing.JButton();
+        estudiante_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -109,7 +116,7 @@ public class InicioFrame extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
-        jPanel2Layout.columnWidths = new int[] {0, 16, 0, 16, 0};
+        jPanel2Layout.columnWidths = new int[] {0, 16, 0, 16, 0, 16, 0};
         jPanel2Layout.rowHeights = new int[] {0, 16, 0, 16, 0, 16, 0, 16, 0};
         jPanel2.setLayout(jPanel2Layout);
 
@@ -214,22 +221,21 @@ public class InicioFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(listado_seccion_button, gridBagConstraints);
 
-        estudiante_button.setBackground(new java.awt.Color(58, 159, 220));
-        estudiante_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        estudiante_button.setForeground(new java.awt.Color(255, 255, 255));
-        estudiante_button.setText("Gestionar estudiante");
-        estudiante_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        estudiante_button.setPreferredSize(new java.awt.Dimension(300, 70));
-        estudiante_button.addActionListener(new java.awt.event.ActionListener() {
+        universidad_button.setBackground(new java.awt.Color(58, 159, 220));
+        universidad_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        universidad_button.setForeground(new java.awt.Color(255, 255, 255));
+        universidad_button.setText("Gestionar Universidad");
+        universidad_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        universidad_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        universidad_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estudiante_buttonActionPerformed(evt);
+                universidad_buttonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel2.add(estudiante_button, gridBagConstraints);
+        jPanel2.add(universidad_button, gridBagConstraints);
 
         profesor_button.setBackground(new java.awt.Color(58, 159, 220));
         profesor_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -247,6 +253,23 @@ public class InicioFrame extends javax.swing.JFrame {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(profesor_button, gridBagConstraints);
+
+        estudiante_button.setBackground(new java.awt.Color(58, 159, 220));
+        estudiante_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        estudiante_button.setForeground(new java.awt.Color(255, 255, 255));
+        estudiante_button.setText("Gestionar estudiante");
+        estudiante_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        estudiante_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        estudiante_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estudiante_buttonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        jPanel2.add(estudiante_button, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -292,13 +315,17 @@ public class InicioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_listado_estudiante_buttonActionPerformed
 
-    private void estudiante_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estudiante_buttonActionPerformed
+    private void universidad_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_universidad_buttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_estudiante_buttonActionPerformed
+    }//GEN-LAST:event_universidad_buttonActionPerformed
 
     private void profesor_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profesor_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_profesor_buttonActionPerformed
+
+    private void estudiante_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estudiante_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estudiante_buttonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -313,5 +340,6 @@ public class InicioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel title_label2;
     private javax.swing.JLabel title_label3;
     private javax.swing.JPanel title_panel;
+    private javax.swing.JButton universidad_button;
     // End of variables declaration//GEN-END:variables
 }

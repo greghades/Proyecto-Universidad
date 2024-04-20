@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import models.Estudiante;
 import models.Profesor;
+import models.Universidad;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.CrudFrame;
@@ -33,6 +34,7 @@ public class CrudController implements ActionListener {
 
     public Profesor profesor;
     public Estudiante estudiante;
+    public Universidad universidad;
     public String tipoCrud;
     private static CrudController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
@@ -74,6 +76,12 @@ public class CrudController implements ActionListener {
             case "estudiante" -> {
 //                Crear un metodo en gestionarCrud que sea showGestionarEstudianteFrame y reciba al estudiante como parametro
             }
+            
+            case "universidad" -> {
+//                Crear un metodo en gestionarCrud que sea showGestionarEstudianteFrame y reciba al estudiante como parametro
+                gestionarCrudController.showGestionarUniversidadFrame(universidad);
+            }
+            
             default ->
                 throw new AssertionError();
         }

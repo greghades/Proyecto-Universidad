@@ -26,10 +26,17 @@ public class Main {
         RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
         AsignarNotaController asignarNotaController = AsignarNotaController.getInstance();
         EstudianteController estudianteController = EstudianteController.getInstance();
+        
         CrudController profesorController = CrudController.getInstance();
         GestionarCrudController gestionarProfesorController = GestionarCrudController.getInstance();
         profesorController.setGestionarCrudController(gestionarProfesorController);
         gestionarProfesorController.setCrudController(profesorController);
+        
+        CrudController universidadController = CrudController.getInstance();
+        GestionarCrudController gestionarUniversidadController = GestionarCrudController.getInstance();
+        universidadController.setGestionarCrudController(gestionarUniversidadController);
+        gestionarUniversidadController.setCrudController(universidadController);
+        
         
         inicioController.setEstudianteController(estudianteController);
         inicioController.setInscripcionController(inscripcionController);
@@ -46,5 +53,7 @@ public class Main {
         asignarNotaController.setInicioController(inicioController);
         profesorController.setInicioController(inicioController);
         estudianteController.setInicioController(inicioController);
+        universidadController.setInicioController(inicioController);
+        
     }
 }
