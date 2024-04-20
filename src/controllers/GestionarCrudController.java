@@ -14,7 +14,6 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package controllers;
 
 import java.awt.event.ActionEvent;
@@ -59,12 +58,12 @@ public class GestionarCrudController implements ActionListener {
     }
 
     public void showGestionarProfesorFrame(Profesor profesor) {
-        
+
         System.out.println("es agregar: " + esAgregar + " profesor: " + profesor);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(true);
-        
+
         if (esAgregar) {
             gestionarCrudFrame.configurarRegistro();
         } else {
@@ -83,52 +82,69 @@ public class GestionarCrudController implements ActionListener {
     }
 
     private void limpiarVista() {
-        gestionarCrudFrame.nombre_prof_TextField.setText("Nombre");
-        gestionarCrudFrame.correo_prof_TextField.setText("Correo");
-        gestionarCrudFrame.edad_prof_TextField.setText("Edad");
-        gestionarCrudFrame.cmb_sexo.setSelectedIndex(0);
-        gestionarCrudFrame.especialidad_prof_TextField.setText("Especialidad");
+        gestionarCrudFrame.first_textfield.setText("Nombre");
+        gestionarCrudFrame.second_textfield.setText("Correo");
+        gestionarCrudFrame.third_textfield.setText("Edad");
+        gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
+        gestionarCrudFrame.fifth_textfield.setText("Especialidad");
     }
 
     public void rellenarDatos(Profesor profesor) {
-        gestionarCrudFrame.nombre_prof_TextField.setText(profesor.getNombre());
-        gestionarCrudFrame.correo_prof_TextField.setText(profesor.getCorreo());
-        gestionarCrudFrame.edad_prof_TextField.setText(String.valueOf(profesor.getEdad()));
-        gestionarCrudFrame.cmb_sexo.setSelectedIndex("Femenino".equals(profesor.getSexo()) ? 1 : 2);
-        gestionarCrudFrame.especialidad_prof_TextField.setText(profesor.getEspecialidad());
+        gestionarCrudFrame.first_textfield.setText(profesor.getNombre());
+        gestionarCrudFrame.second_textfield.setText(profesor.getCorreo());
+        gestionarCrudFrame.third_textfield.setText(String.valueOf(profesor.getEdad()));
+        gestionarCrudFrame.fourth_cmb.setSelectedIndex("Femenino".equals(profesor.getSexo()) ? 1 : 2);
+        gestionarCrudFrame.fifth_textfield.setText(profesor.getEspecialidad());
     }
 
-    private void showSuccessAlert(boolean exitosa) {
+    public boolean validarCampos() {
+        String nombre = gestionarCrudFrame.first_textfield.getText();
+        String edad = gestionarCrudFrame.third_textfield.getText();
+        String correo = gestionarCrudFrame.second_textfield.getText();
+        String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
+        String especialidad = gestionarCrudFrame.fifth_textfield.getText();
+
+        boolean contenidoValido = true;
+        if (nombre.isEmpty() || nombre.equals("Nombre")
+                || edad.isEmpty() || edad.equals("Edad")
+                || correo.isEmpty() || correo.equals("Correo")
+                || sexo.equals("Seleccione") || especialidad.isEmpty() || especialidad.equals("Especialidad")) {
+            showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
+            
+            contenidoValido = false;
+        }
+        return contenidoValido;
+    }
+
+    private void showAlert(String title, String message, boolean isSuccess) {
         Object[] options = {"Aceptar"};
         int selection = JOptionPane.showOptionDialog(
                 null,
-                exitosa ? "¡Las notas han sido actualizadas exitosamente!" : "No se pudieron actualizar las notas correctamente",
-                exitosa ? "Felicidades" : "Ha ocurrido un error",
+                message,
+                title,
                 JOptionPane.OK_OPTION,
-                exitosa ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
+                isSuccess ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
                 null,
                 options,
                 options[0]);
 
-        if (selection == JOptionPane.OK_OPTION && exitosa) {
-            showProfesorFrame();
+        if (selection == JOptionPane.OK_OPTION && isSuccess) {
+            crudController.showCrudFrame();
         } else {
             System.out.println("Selected Option Is X: " + selection);
         }
-
     }
 
     //agregar
     public void agregarProfesor() {
         //obtener los datos del formulario 
-        String cedula = crudController.crudFrame.getCedula();
-        String nombre_completo = gestionarCrudFrame.nombre_prof_TextField.getText();
-        int edad = Integer.parseInt(gestionarCrudFrame.edad_prof_TextField.getText());
-        String correo = gestionarCrudFrame.correo_prof_TextField.getText();
+        String cedula = connection.obtenerNuevoID("profesor");
+        String nombre_completo = gestionarCrudFrame.first_textfield.getText();
+        int edad = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
+        String correo = gestionarCrudFrame.second_textfield.getText();
         //combobox
-        String sexo = (String) gestionarCrudFrame.cmb_sexo.getSelectedItem();
-        System.out.println("Sexo " + sexo);
-        String especialidad = gestionarCrudFrame.especialidad_prof_TextField.getText();
+        String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
+        String especialidad = gestionarCrudFrame.fifth_textfield.getText();
 
         // nuevos valores
         Profesor nuevoProfesor = new Profesor(cedula, nombre_completo, " ", correo, edad, sexo, especialidad);
@@ -143,9 +159,9 @@ public class GestionarCrudController implements ActionListener {
         int rowsAffected = connection.agregarProfesor(nuevoProfesor);
 
         if (rowsAffected > 0) {
-            showSuccessAlert(true);
+            showAlert("Felicidades", "El registro ha sido realizado exitosamente", true);
         } else {
-            showSuccessAlert(false);
+            showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
         }
         limpiarVista();
     }
@@ -154,11 +170,11 @@ public class GestionarCrudController implements ActionListener {
     public void modificarProfesor() {
         //datos que se van a actualizar
         String cedula = crudController.crudFrame.getCedula();
-        String nombre_completo = gestionarCrudFrame.nombre_prof_TextField.getText();
-        int edad = Integer.parseInt(gestionarCrudFrame.edad_prof_TextField.getText());
-        String sexo = (String) gestionarCrudFrame.cmb_sexo.getSelectedItem();
-        String especialidad = gestionarCrudFrame.especialidad_prof_TextField.getText();
-        String correo = gestionarCrudFrame.correo_prof_TextField.getText();
+        String nombre_completo = gestionarCrudFrame.first_textfield.getText();
+        int edad = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
+        String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
+        String especialidad = gestionarCrudFrame.fifth_textfield.getText();
+        String correo = gestionarCrudFrame.second_textfield.getText();
 
         profesor.setNombre(nombre_completo);
         profesor.setEdad(edad);
@@ -180,13 +196,18 @@ public class GestionarCrudController implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == gestionarCrudFrame.getBack_button()) {
             showProfesorFrame();
-        } else if (event.getSource() == gestionarCrudFrame.getAgg_prof_Btn()) {
+        } else if (event.getSource() == gestionarCrudFrame.getRegistrar_btn()) {
+            
+            if (!validarCampos()) {
+                return;
+            }
+            
             if (esAgregar) {
                 agregarProfesor();
             } else {
                 modificarProfesor();
             }
-        } else if (event.getSource() == gestionarCrudFrame.getLimpiar_prof_Btn()) {
+        } else if (event.getSource() == gestionarCrudFrame.getLimpiar_campos_btn()) {
             limpiarVista();
         }
     }

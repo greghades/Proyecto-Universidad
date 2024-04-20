@@ -58,5 +58,4 @@ public class Universidad {
     public void setInscripcion(Inscripcion[] inscripcion) {
         this.inscripcion = inscripcion;
     }
-
 }

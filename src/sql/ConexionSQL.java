@@ -749,8 +749,43 @@ public class ConexionSQL {
 
     }
 
-    // Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
-    // Método para obtener la longitud del array sin valores nulos
+    public String obtenerNuevoID(String tipo) {
+
+        String prefijo = null;
+        String id = null;
+        String tabla = null;
+
+        switch (tipo) {
+            case "profesor":
+                prefijo = "PRO";
+                id = "id_profesor";
+                tabla = "Profesor";
+        }
+
+        if (prefijo == null || id == null || tabla == null) {
+            return null;
+        }
+        
+        try {
+            String idQuery = String.format("SELECT '%s-' || LPAD((MAX(CAST(SUBSTRING(%s, 5) AS INTEGER)) + 1)::VARCHAR, 3, '0') AS nuevo_id FROM public.\"%s\"", prefijo, id, tabla);
+            ResultSet nuevoIDResultSet = statement.executeQuery(idQuery);
+
+            String nuevoID = "";
+
+            while (nuevoIDResultSet.next()) {
+                String db_id = nuevoIDResultSet.getString("nuevo_id");
+                nuevoID = db_id;
+            }
+
+            return nuevoID;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+// Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
+// Método para obtener la longitud del array sin valores nulos
     private int getArrayLengthWithoutNulls(Array array) throws SQLException {
         if (array == null) {
             return 0;

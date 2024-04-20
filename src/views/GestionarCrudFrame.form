@@ -26,7 +26,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="body_prof_Panel" max="32767" attributes="0"/>
+                  <Component id="main_body_panel" max="32767" attributes="0"/>
                   <Component id="title_panel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
@@ -39,7 +39,7 @@
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Component id="title_panel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="body_prof_Panel" max="32767" attributes="0"/>
+              <Component id="main_body_panel" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -123,7 +123,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="body_prof_Panel">
+    <Container class="javax.swing.JPanel" name="main_body_panel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -205,7 +205,7 @@
                 </Constraint>
               </Constraints>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="nombre_prof_Label">
+                <Component class="javax.swing.JLabel" name="first_label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="Nombre:"/>
@@ -216,7 +216,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="nombre_prof_TextField">
+                <Component class="javax.swing.JTextField" name="first_textfield">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="12" style="2"/>
@@ -240,7 +240,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="correo_prof_Label">
+                <Component class="javax.swing.JLabel" name="second_label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="Correo:"/>
@@ -251,7 +251,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="correo_prof_TextField">
+                <Component class="javax.swing.JTextField" name="second_textfield">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="12" style="2"/>
@@ -275,7 +275,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="edad_prof_Label">
+                <Component class="javax.swing.JLabel" name="third_label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="Edad:"/>
@@ -286,7 +286,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="edad_prof_TextField">
+                <Component class="javax.swing.JTextField" name="third_textfield">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="12" style="2"/>
@@ -310,7 +310,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cmb_sexo">
+                <Component class="javax.swing.JComboBox" name="fourth_cmb">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="1">
@@ -335,7 +335,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmb_sexoActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fourth_cmbActionPerformed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
@@ -347,7 +347,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="sexo_prof_Label">
+                <Component class="javax.swing.JLabel" name="fourth_label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="Sexo:"/>
@@ -358,7 +358,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JLabel" name="especialidad_prof_Label">
+                <Component class="javax.swing.JLabel" name="fifth_label">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="Especialidad:"/>
@@ -369,7 +369,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="especialidad_prof_TextField">
+                <Component class="javax.swing.JTextField" name="fifth_textfield">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="12" style="2"/>
@@ -538,11 +538,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="11_nombre_prof_Label">
-                      <CodeVariable name="nombre_prof_Label" type="8194" declaredType="javax.swing.JLabel"/>
+                    <CodeExpression id="11_first_label">
+                      <CodeVariable name="first_label" type="8194" declaredType="javax.swing.JLabel"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="nombre_prof_Label"/>
+                          <ComponentRef name="first_label"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -659,11 +659,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="20_nombre_prof_TextField">
-                      <CodeVariable name="nombre_prof_TextField" type="8193" declaredType="javax.swing.JTextField"/>
+                    <CodeExpression id="20_first_textfield">
+                      <CodeVariable name="first_textfield" type="8193" declaredType="javax.swing.JTextField"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="nombre_prof_TextField"/>
+                          <ComponentRef name="first_textfield"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -754,11 +754,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="27_correo_prof_Label">
-                      <CodeVariable name="correo_prof_Label" type="8194" declaredType="javax.swing.JLabel"/>
+                    <CodeExpression id="27_second_label">
+                      <CodeVariable name="second_label" type="8194" declaredType="javax.swing.JLabel"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="correo_prof_Label"/>
+                          <ComponentRef name="second_label"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -875,11 +875,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="36_correo_prof_TextField">
-                      <CodeVariable name="correo_prof_TextField" type="8193" declaredType="javax.swing.JTextField"/>
+                    <CodeExpression id="36_second_textfield">
+                      <CodeVariable name="second_textfield" type="8193" declaredType="javax.swing.JTextField"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="correo_prof_TextField"/>
+                          <ComponentRef name="second_textfield"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -970,11 +970,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="43_edad_prof_Label">
-                      <CodeVariable name="edad_prof_Label" type="8194" declaredType="javax.swing.JLabel"/>
+                    <CodeExpression id="43_third_label">
+                      <CodeVariable name="third_label" type="8194" declaredType="javax.swing.JLabel"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="edad_prof_Label"/>
+                          <ComponentRef name="third_label"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1091,11 +1091,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="52_edad_prof_TextField">
-                      <CodeVariable name="edad_prof_TextField" type="8193" declaredType="javax.swing.JTextField"/>
+                    <CodeExpression id="52_third_textfield">
+                      <CodeVariable name="third_textfield" type="8193" declaredType="javax.swing.JTextField"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="edad_prof_TextField"/>
+                          <ComponentRef name="third_textfield"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1199,11 +1199,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="60_cmb_sexo">
-                      <CodeVariable name="cmb_sexo" type="8193" declaredType="javax.swing.JComboBox"/>
+                    <CodeExpression id="60_fourth_cmb">
+                      <CodeVariable name="fourth_cmb" type="8193" declaredType="javax.swing.JComboBox"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="cmb_sexo"/>
+                          <ComponentRef name="fourth_cmb"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1294,11 +1294,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="67_sexo_prof_Label">
-                      <CodeVariable name="sexo_prof_Label" type="8194" declaredType="javax.swing.JLabel"/>
+                    <CodeExpression id="67_fourth_label">
+                      <CodeVariable name="fourth_label" type="8194" declaredType="javax.swing.JLabel"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="sexo_prof_Label"/>
+                          <ComponentRef name="fourth_label"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1389,11 +1389,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="74_especialidad_prof_Label">
-                      <CodeVariable name="especialidad_prof_Label" type="8194" declaredType="javax.swing.JLabel"/>
+                    <CodeExpression id="74_fifth_label">
+                      <CodeVariable name="fifth_label" type="8194" declaredType="javax.swing.JLabel"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="especialidad_prof_Label"/>
+                          <ComponentRef name="fifth_label"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1510,11 +1510,11 @@
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="83_especialidad_prof_TextField">
-                      <CodeVariable name="especialidad_prof_TextField" type="8193" declaredType="javax.swing.JTextField"/>
+                    <CodeExpression id="83_fifth_textfield">
+                      <CodeVariable name="fifth_textfield" type="8193" declaredType="javax.swing.JTextField"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="especialidad_prof_TextField"/>
+                          <ComponentRef name="fifth_textfield"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1523,7 +1523,7 @@
                 </CodeStatement>
               </LayoutCode>
             </Container>
-            <Container class="javax.swing.JPanel" name="opciones_prof_Panel">
+            <Container class="javax.swing.JPanel" name="opciones_buttons_panel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1539,7 +1539,7 @@
                 </Constraint>
               </Constraints>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="agg_prof_Btn">
+                <Component class="javax.swing.JButton" name="registrar_btn">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="dc" green="9f" red="3a" type="rgb"/>
@@ -1563,7 +1563,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agg_prof_BtnActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrar_btnActionPerformed"/>
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -1571,7 +1571,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JButton" name="limpiar_prof_Btn">
+                <Component class="javax.swing.JButton" name="limpiar_campos_btn">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="dc" green="9f" red="3a" type="rgb"/>
@@ -1643,11 +1643,11 @@
                   </Parameters>
                 </CodeStatement>
                 <CodeStatement>
-                  <CodeExpression id="87_opciones_prof_Panel">
-                    <CodeVariable name="opciones_prof_Panel" type="8194" declaredType="javax.swing.JPanel"/>
+                  <CodeExpression id="87_opciones_buttons_panel">
+                    <CodeVariable name="opciones_buttons_panel" type="8194" declaredType="javax.swing.JPanel"/>
                     <ExpressionOrigin>
                       <ExpressionProvider type="ComponentRef">
-                        <ComponentRef name="opciones_prof_Panel"/>
+                        <ComponentRef name="opciones_buttons_panel"/>
                       </ExpressionProvider>
                     </ExpressionOrigin>
                   </CodeExpression>
@@ -1737,16 +1737,16 @@
                   </Parameters>
                 </CodeStatement>
                 <CodeStatement>
-                  <CodeExpression id="87_opciones_prof_Panel"/>
+                  <CodeExpression id="87_opciones_buttons_panel"/>
                   <StatementProvider type="CodeMethod">
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="94_agg_prof_Btn">
-                      <CodeVariable name="agg_prof_Btn" type="8194" declaredType="javax.swing.JButton"/>
+                    <CodeExpression id="94_registrar_btn">
+                      <CodeVariable name="registrar_btn" type="8194" declaredType="javax.swing.JButton"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="agg_prof_Btn"/>
+                          <ComponentRef name="registrar_btn"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -1832,16 +1832,16 @@
                   </Parameters>
                 </CodeStatement>
                 <CodeStatement>
-                  <CodeExpression id="87_opciones_prof_Panel"/>
+                  <CodeExpression id="87_opciones_buttons_panel"/>
                   <StatementProvider type="CodeMethod">
                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                   </StatementProvider>
                   <Parameters>
-                    <CodeExpression id="101_limpiar_prof_Btn">
-                      <CodeVariable name="limpiar_prof_Btn" type="8194" declaredType="javax.swing.JButton"/>
+                    <CodeExpression id="101_limpiar_campos_btn">
+                      <CodeVariable name="limpiar_campos_btn" type="8194" declaredType="javax.swing.JButton"/>
                       <ExpressionOrigin>
                         <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="limpiar_prof_Btn"/>
+                          <ComponentRef name="limpiar_campos_btn"/>
                         </ExpressionProvider>
                       </ExpressionOrigin>
                     </CodeExpression>
@@ -2152,7 +2152,7 @@
                 <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
               </StatementProvider>
               <Parameters>
-                <CodeExpression id="87_opciones_prof_Panel"/>
+                <CodeExpression id="87_opciones_buttons_panel"/>
                 <CodeExpression id="119_gridBagConstraints"/>
               </Parameters>
             </CodeStatement>
