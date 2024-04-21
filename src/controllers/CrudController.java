@@ -99,7 +99,7 @@ public class CrudController implements ActionListener {
             return;
         }
 
-        this.profesor = connection.motrarDatosProfesor(crudFrame.getCedula());
+        this.profesor = connection.obtenerProfesor(crudFrame.getCedula());
 
         if (profesor == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun profesor con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -116,7 +116,7 @@ public class CrudController implements ActionListener {
             return;
         }
 
-        this.estudiante = connection.buscarEstudiante(crudFrame.getCedula());
+        this.estudiante = connection.obtenerEstudiante(crudFrame.getCedula());
 
         if (estudiante == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun estudiante con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);

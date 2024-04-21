@@ -15,7 +15,7 @@ import sql.ConexionSQL;
 public class ListadoSemestre implements DataFetcher {
     @Override
     public ArrayList obtenerDatos(ConexionSQL connection) {
-        ArrayList<TresColumnasModel> datasourceSemestre = connection.getEstudiantesTres("semestre");
+        ArrayList<TresColumnasModel> datasourceSemestre = connection.obtenerEstudiantesParaListadoTresColumnas("semestre");
         return datasourceSemestre;
     }
 }

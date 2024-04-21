@@ -170,7 +170,7 @@ public class RetirarMateriaController implements ActionListener, CheckableCellEv
 
         Asignatura asignaturaSeleccionada = info.getAsignaturas().get(row);
 
-        PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
+        PeriodoAcademico periodo = connection.obtenerPeriodoAcademico(asignaturaSeleccionada.getId());
 
         InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), asignaturaSeleccionada.getSeccion().getId());
 

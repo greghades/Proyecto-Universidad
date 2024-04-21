@@ -58,7 +58,7 @@ public class ConexionSQL {
         }
     }
 
-    public boolean getInscripcion(String id) {
+    public boolean validarInscripcion(String id) {
         try {
             String query = String.format("SELECT i.id_estudiante FROM public.\"Inscripcion\" AS i WHERE i.id_estudiante = '%s'", id);
             ResultSet inscripcionSet = statement.executeQuery(query);
@@ -76,7 +76,7 @@ public class ConexionSQL {
         }
     }
 
-    public PeriodoAcademico getPeriodoAcademico(String id) {
+    public PeriodoAcademico obtenerPeriodoAcademico(String id) {
         try {
             String query = "SELECT p.id_periodo, p.nombre_periodo_a, p.fecha_inicio, p.fecha_final FROM public.\"Periodo_academico\" p WHERE p.id_periodo = 'PER-001'";
             ResultSet periodoSet = statement.executeQuery(query);
@@ -96,28 +96,7 @@ public class ConexionSQL {
         }
     }
 
-    /* public ArrayList<Carrera> getCarrera() {
-    try {
-        String query = "SELECT c.id_carrera, c.nombre_carrera FROM public.\"Carreras\" c";
-        ResultSet carreraSet = statement.executeQuery(query);
-        ArrayList<Carrera> carreraList = new ArrayList<>();
-        
-        while (carreraSet.next()) {
-            String id_carrera = carreraSet.getString("id_carrera");
-            String nombre = carreraSet.getString("nombre_carrera");
-            
-            // Crea una instancia de Carrera y agrégala a la lista
-            Carrera carrera = new Carrera(id_carrera, nombre);
-            carreraList.add(carrera);
-        }
-        
-        return carreraList;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return null;
-    }
-}*/
-    private ArrayList<Asignatura> getAsignaturasParaInscripcion(String id) {
+    private ArrayList<Asignatura> obtenerAsignaturasParaInscripcion(String id) {
         try {
             String asignaturasQuery;
             if (id.startsWith("CAR")) {
@@ -148,7 +127,7 @@ public class ConexionSQL {
         }
     }
 
-    public Estudiante getEstudiante(String id, boolean esRetiro) {
+    public Estudiante obtenerEstudiante(String id, boolean esRetiro) {
         try {
             String query;
             if (esRetiro) {
@@ -179,11 +158,11 @@ public class ConexionSQL {
     }
 
     public InscripcionInfo obtenerEstudianteConAsignaturas(String id, boolean esRetiro) {
-        Estudiante estudiante = getEstudiante(id, esRetiro);
+        Estudiante estudiante = ConexionSQL.this.obtenerEstudiante(id, esRetiro);
         if (estudiante == null) {
             return null;
         }
-        ArrayList<Asignatura> asignaturasList = getAsignaturasParaInscripcion(esRetiro ? id : estudiante.getCarrera().getId());
+        ArrayList<Asignatura> asignaturasList = obtenerAsignaturasParaInscripcion(esRetiro ? id : estudiante.getCarrera().getId());
 
         if (asignaturasList != null) {
             return new InscripcionInfo(estudiante, asignaturasList);
@@ -192,7 +171,7 @@ public class ConexionSQL {
         }
     }
 
-    public ArrayList<TresColumnasModel> getEstudiantesTres(String filtro) {
+    public ArrayList<TresColumnasModel> obtenerEstudiantesParaListadoTresColumnas(String filtro) {
         try {
             String estudiantesQuery;
 
@@ -234,7 +213,7 @@ public class ConexionSQL {
         }
     }
 
-    public ArrayList<CuatroColumnasModel> getEstudiantesConMateriasRetiradas() {
+    public ArrayList<CuatroColumnasModel> obtenerEstudiantesConMateriasRetiradas() {
         try {
             String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, a.id_asignatura, a.nombre_asignatura, s.id_semestre, s.numero_semestre FROM public.\"Retiro_materia_estudiante\" r JOIN public.\"Estudiantes\" e ON r.id_estudiante = e.id_estudiante JOIN public.\"Asignaturas\" a ON r.id_asignatura = a.id_asignatura JOIN public.\"Semestre_Asignatura\" sa ON r.id_asignatura = sa.id_asignatura JOIN public.\"Semestre\" s ON sa.id_semestre = s.id_semestre";
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
@@ -253,7 +232,7 @@ public class ConexionSQL {
         }
     }
 
-    public ArrayList<CuatroColumnasModel> getEstudiantesCuatro(String filtro) {
+    public ArrayList<CuatroColumnasModel> obtenerEstudiantesParaListadoCuatroColumnas(String filtro) {
         try {
             String estudiantesQuery;
 
@@ -288,7 +267,7 @@ public class ConexionSQL {
         }
     }
 
-    public ArrayList<CincoColumnasModel> getEstudiantesCinco() {
+    public ArrayList<CincoColumnasModel> obtenerEstudiantesParaListadoCincoColumnas() {
         try {
             String estudiantesQuery = "SELECT e.id_estudiante, e.nombre_completo, e.sexo, d.nombre_decanato, c.nombre_carrera FROM public.\"Estudiantes\" e JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Decanatos\" d ON c.id_decanato = d.id_decanato JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante GROUP BY e.id_estudiante, e.nombre_completo, d.nombre_decanato, c.nombre_carrera";
             ResultSet estudiantesSet = statement.executeQuery(estudiantesQuery);
@@ -311,7 +290,7 @@ public class ConexionSQL {
         }
     }
 
-    public ArrayList<Seccion> getSecciones(String idAsignatura) {
+    public ArrayList<Seccion> obtenerSecciones(String idAsignatura) {
         try {
             String query = String.format("SELECT s.id_seccion, s.numero_seccion, s.limite_estudiantes FROM public.\"Secciones\" s INNER JOIN public.\"Profesor_asignatura_seccion\" psa ON s.id_seccion = psa.id_seccion WHERE psa.id_asignatura = '%s'", idAsignatura);
             ResultSet seccionesSet = statement.executeQuery(query);
@@ -329,7 +308,7 @@ public class ConexionSQL {
         }
     }
 
-    public Profesor getProfesor(String idAsignatura, String idSeccion) {
+    public Profesor obtenerProfesorPorAsignaturaYSeccion(String idAsignatura, String idSeccion) {
         try {
             String query = String.format("SELECT p.id_profesor, p.nombre_completo, p.especialidad FROM public.\"Profesor\" AS p, public.\"Profesor_asignatura_seccion\" AS pas WHERE p.id_profesor = pas.id_profesor AND pas.id_asignatura = '%s' AND pas.id_seccion = '%s'", idAsignatura, idSeccion);
             ResultSet profesorSet = statement.executeQuery(query);
@@ -348,7 +327,7 @@ public class ConexionSQL {
     }
 
     //ver profesor por asignatura 
-    public Profesor getDatosProfesor(String idProfesor) {
+    public Profesor obtenerProfesorPorAsignatura(String idProfesor) {
         try {
             String query = String.format("SELECT DISTINCT a.id_asignatura, a.nombre_asignatura, a.carga_academica, p.id_profesor, p.nombre_completo, p.correo, p.especialidad FROM public.\"Asignaturas\" a JOIN public.\"Profesor_asignatura_seccion\" pas ON a.id_asignatura = pas.id_asignatura JOIN public.\"Profesor\" p ON pas.id_profesor = p.id_profesor WHERE pas.id_profesor = '%s'", idProfesor);
             ResultSet profesorSet = statement.executeQuery(query);
@@ -377,8 +356,6 @@ public class ConexionSQL {
         }
     }
 
-    //CRUD Profesor  
-    //agregar profesor
     public int agregarProfesor(Profesor profesor) {
         try {
             //obtener valores del formulario 
@@ -398,7 +375,6 @@ public class ConexionSQL {
         }
     }
 
-    //eliminar profesorm a partir de un id 
     public int eliminarProfesor(String id) {
         try {
             String querySecundario = String.format("DELETE FROM public.\"Profesor_asignatura_seccion\" WHERE id_profesor = '%s'", id);
@@ -417,10 +393,8 @@ public class ConexionSQL {
         }
     }
 
-    // modificar profesor a partir de un id
     public int modificarProfesor(Profesor profesor, String id) {
         try {
-            //obtener valores del formulario 
             String nombre_completo = profesor.getNombre();
             int edad = profesor.getEdad();
             String correo = profesor.getCorreo();
@@ -438,8 +412,7 @@ public class ConexionSQL {
         }
     }
 
-    //mostrar profesor
-    public Profesor motrarDatosProfesor(String id) {
+    public Profesor obtenerProfesor(String id) {
         try {
             String query;
             query = String.format("SELECT * FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
@@ -464,10 +437,8 @@ public class ConexionSQL {
             return null;
         }
     }
-    //CRUD - Estudiantes
 
-    //Cree una consulta traerme las carreras al combobox
-    public ArrayList<Carrera> getCarrera() {
+    public ArrayList<Carrera> obtenerCarreras() {
         try {
             String query = "SELECT c.id_carrera, c.nombre_carrera FROM public.\"Carreras\" c";
             ResultSet carreraSet = statement.executeQuery(query);
@@ -485,7 +456,6 @@ public class ConexionSQL {
         }
     }
 
-    //agregar un estudiante
     public int agregarEstudiante(Estudiante estudiante) {
         try {
             String id_estudiante = estudiante.getCedula();
@@ -551,7 +521,7 @@ public class ConexionSQL {
     }
 
     //buscar Estudiante
-    public Estudiante buscarEstudiante(String id) {
+    public Estudiante obtenerEstudiante(String id) {
         try {
             System.out.println("cedulita" + id);
             String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
@@ -575,7 +545,7 @@ public class ConexionSQL {
         }
     }
 
-    public List<NotaEstudianteListModel> getEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
+    public List<NotaEstudianteListModel> obtenerEstudiantesParaAsignarNota(String idProfesor, String idAsignatura) {
         try {
             String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.correo, c.nombre_carrera, s.numero_seccion, i.id_seccion, ne.nota FROM public.\"Estudiantes\" e JOIN public.\"Inscripcion\" i ON e.id_estudiante = i.id_estudiante JOIN public.\"Secciones\" s ON i.id_seccion = s.id_seccion JOIN public.\"Carreras\" c ON e.id_carrera = c.id_carrera JOIN public.\"Profesor_asignatura_seccion\" pas ON i.id_asignatura = pas.id_asignatura AND i.id_seccion = pas.id_seccion LEFT JOIN public.\"Nota_estudiante\" ne ON ne.id_estudiante = e.id_estudiante AND ne.id_asignatura = i.id_asignatura AND ne.id_seccion = i.id_seccion WHERE pas.id_profesor = '%s' AND i.id_asignatura = '%s' ORDER BY s.numero_seccion", idProfesor, idAsignatura);
             ResultSet estudiantesSet = statement.executeQuery(query);
@@ -700,7 +670,7 @@ public class ConexionSQL {
         }
     }
 
-    public List<ListadoSeccionModel> getListadoSeccion() {
+    public List<ListadoSeccionModel> obtenerListadoSeccion() {
 
         try {
 
@@ -755,10 +725,11 @@ public class ConexionSQL {
         String tabla = null;
 
         switch (tipo) {
-            case "profesor":
+            case "profesor" -> {
                 prefijo = "PRO";
                 id = "id_profesor";
                 tabla = "Profesor";
+            }
         }
 
         if (prefijo == null || id == null || tabla == null) {
@@ -783,8 +754,6 @@ public class ConexionSQL {
         }
     }
 
-// Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
-// Método para obtener la longitud del array sin valores nulos
     private int getArrayLengthWithoutNulls(Array array) throws SQLException {
         if (array == null) {
             return 0;
@@ -798,25 +767,6 @@ public class ConexionSQL {
             }
             return count;
         }
-    }
-
-    // Método para filtrar los valores nulos de un Array y devolver un arreglo de String sin nulos
-    private String[] filterNullValues(Array array) throws SQLException {
-        if (array == null) {
-            return new String[0]; // Retorna un arreglo vacío si el Array es nulo
-        }
-
-        // Obtiene el arreglo de Object y filtra los valores nulos
-        Object[] arrayData = (Object[]) array.getArray();
-        List<String> filteredList = new ArrayList<>();
-        for (Object obj : arrayData) {
-            if (obj != null) {
-                filteredList.add(obj.toString());
-            }
-        }
-
-        // Convierte la lista filtrada de vuelta a un arreglo de String
-        return filteredList.toArray(new String[0]);
     }
 
     public void cerrar() {

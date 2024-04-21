@@ -81,7 +81,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
             return;
         }
 
-        if (connection.getInscripcion(inscripcionFrame.getCedula())) {
+        if (connection.validarInscripcion(inscripcionFrame.getCedula())) {
             JOptionPane.showMessageDialog(null, "El estudiante ingresado ya se encuentra inscrito", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -102,7 +102,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
     }
 
     private void inscribirEstudiante() {
-        if (connection.getInscripcion(inscripcionFrame.getCedula())) {
+        if (connection.validarInscripcion(inscripcionFrame.getCedula())) {
             JOptionPane.showMessageDialog(null, "El estudiante ingresado ya se encuentra inscrito", "Operacion no disponible", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -131,7 +131,7 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
                 break;
             }
         }
-        Profesor profesor = connection.getProfesor(asignatura.getId(), seccionSeleccionada.getId());
+        Profesor profesor = connection.obtenerProfesorPorAsignaturaYSeccion(asignatura.getId(), seccionSeleccionada.getId());
 
         for (JPanel panel : inscripcionFrame.materiaPanels) {
             JPanel entryPanel = (JPanel) panel.getComponent(1);
@@ -193,9 +193,9 @@ public class InscripcionController implements ActionListener, CheckableCellEvent
         info.setAsignatura(row, asignaturaSeleccionada);
 
         // Obtener nombre de profesor
-        ArrayList<Seccion> secciones = connection.getSecciones(asignaturaSeleccionada.getId());
-        Profesor profesor = connection.getProfesor(asignaturaSeleccionada.getId(), secciones.get(0).getId());
-        PeriodoAcademico periodo = connection.getPeriodoAcademico(asignaturaSeleccionada.getId());
+        ArrayList<Seccion> secciones = connection.obtenerSecciones(asignaturaSeleccionada.getId());
+        Profesor profesor = connection.obtenerProfesorPorAsignaturaYSeccion(asignaturaSeleccionada.getId(), secciones.get(0).getId());
+        PeriodoAcademico periodo = connection.obtenerPeriodoAcademico(asignaturaSeleccionada.getId());
         inscripcionFrame.actualizarPanelDeMaterias(value, asignaturaSeleccionada, profesor, secciones);
 
         InscripcionData inscripcion = new InscripcionData(info.getEstudiante().getCedula(), asignaturaSeleccionada.getId(), periodo.getId(), secciones.get(0).getId());

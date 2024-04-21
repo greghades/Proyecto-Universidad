@@ -69,7 +69,7 @@ public class ListaSeccionController implements ActionListener {
     
     public void MostrarSeciones(){
         
-        List<ListadoSeccionModel> secciones = connection.getListadoSeccion();
+        List<ListadoSeccionModel> secciones = connection.obtenerListadoSeccion();
         
         if (secciones == null) {
             JOptionPane.showMessageDialog(null, "No se pudieron cargar las secciones correctamente", "Lo sentimos", JOptionPane.ERROR_MESSAGE);

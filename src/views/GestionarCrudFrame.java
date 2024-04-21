@@ -14,7 +14,6 @@ Gregori Yepez
 Yaslin Vreugdenhil.
 29561929
  */
-
 package views;
 
 import controllers.GestionarCrudController;
@@ -41,8 +40,12 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         registrar_btn.addActionListener(accion);
     }
 
-    public void setupComboBox(List<String> opciones) {
-        fourth_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+    public void setupComboBox(List<String> opciones, boolean isFourthCmb) {
+        if (isFourthCmb) {
+            fourth_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+        } else {
+            carrera_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+        }
     }
 
     public void configurarRegistro() {
@@ -50,7 +53,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         instruction_title_label.setText("Llena todos los campos");
         title_label.setText("Registro");
     }
-    
+
     public void configurarModificacion() {
         registrar_btn.setText("Aplicar cambios");
         instruction_title_label.setText("Edita los campos necesarios");

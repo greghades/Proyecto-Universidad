@@ -15,7 +15,7 @@ import sql.ConexionSQL;
 public class ListadoMateriaRetirada implements DataFetcher {
     @Override
     public ArrayList obtenerDatos(ConexionSQL connection) {
-        ArrayList<CuatroColumnasModel> datasourceRetiroMateria = connection.getEstudiantesConMateriasRetiradas();
+        ArrayList<CuatroColumnasModel> datasourceRetiroMateria = connection.obtenerEstudiantesConMateriasRetiradas();
         return datasourceRetiroMateria;
     }
 }

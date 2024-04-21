@@ -52,7 +52,7 @@ public class GestionarCrudController implements ActionListener {
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(false);
-        gestionarCrudFrame.setupComboBox(opcionSexo);
+        gestionarCrudFrame.setupComboBox(opcionSexo, true);
     }
 
     public static GestionarCrudController getInstance() {
@@ -72,7 +72,7 @@ public class GestionarCrudController implements ActionListener {
         if (esAgregar) {
             gestionarCrudFrame.configurarRegistro();
         } else {
-            rellenarDatos(profesor);
+            rellenarDatosProfesor(profesor);
             gestionarCrudFrame.configurarModificacion();
         }
     }
@@ -124,7 +124,7 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.fifth_textfield.setText("Especialidad");
     }
 
-    public void rellenarDatos(Profesor profesor) {
+    public void rellenarDatosProfesor(Profesor profesor) {
         gestionarCrudFrame.first_textfield.setText(profesor.getNombre());
         gestionarCrudFrame.second_textfield.setText(profesor.getCorreo());
         gestionarCrudFrame.third_textfield.setText(String.valueOf(profesor.getEdad()));
@@ -132,7 +132,7 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.fifth_textfield.setText(profesor.getEspecialidad());
     }
 
-    public void rellenarDatosEstudiante(Estudiante estudiante) {
+    private void rellenarDatosEstudiante(Estudiante estudiante) {
         gestionarCrudFrame.cedula_textfield.setText(estudiante.getCedula());
         gestionarCrudFrame.first_textfield.setText(estudiante.getNombre());
         gestionarCrudFrame.second_textfield.setText(estudiante.getCorreo());
@@ -151,12 +151,17 @@ public class GestionarCrudController implements ActionListener {
     }
 
     public void mostrarCarreras() {
-        carreras = connection.getCarrera();
-        gestionarCrudFrame.carrera_cmb.removeAllItems(); //remover todos los elementos del combobox
+        carreras = connection.obtenerCarreras();
+        List<String> opcionesCarrera = new ArrayList<>();
 
+        opcionesCarrera.add("Seleccionar");
+
+        System.out.println("carreras: " + carreras.size());
         for (int i = 0; i < carreras.size(); i++) {
-            gestionarCrudFrame.carrera_cmb.addItem(carreras.get(i).getNombre()); //para que aparezca el nombre
+            opcionesCarrera.add(carreras.get(i).getNombre());
         }
+
+        gestionarCrudFrame.setupComboBox(opcionesCarrera, false);
     }
 
     public void mostrarEstadoInicial() {
@@ -182,7 +187,7 @@ public class GestionarCrudController implements ActionListener {
         String nombre = gestionarCrudFrame.first_textfield.getText();
         String edad = gestionarCrudFrame.third_textfield.getText();
         String correo = gestionarCrudFrame.second_textfield.getText();
-        String sexo = (String) gestionarCrudFrame.carrera_cmb.getSelectedItem();
+        String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
         String especialidad = gestionarCrudFrame.fifth_textfield.getText();
         String cedula = gestionarCrudFrame.cedula_textfield.getText();
         String carrera = (String) gestionarCrudFrame.carrera_cmb.getSelectedItem();

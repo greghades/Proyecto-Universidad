@@ -15,7 +15,7 @@ import sql.ConexionSQL;
 public class ListadoCarrera implements DataFetcher {
     @Override
     public ArrayList obtenerDatos(ConexionSQL connection) {
-        ArrayList<TresColumnasModel> datasourceCarrera = connection.getEstudiantesTres("carrera");
+        ArrayList<TresColumnasModel> datasourceCarrera = connection.obtenerEstudiantesParaListadoTresColumnas("carrera");
         return datasourceCarrera;
     }
 }

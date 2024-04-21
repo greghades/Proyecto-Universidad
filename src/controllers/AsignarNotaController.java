@@ -77,7 +77,7 @@ public class AsignarNotaController implements ActionListener {
             return;
         }
 
-        this.profesor = connection.getDatosProfesor(asignarNotaFrame.getCedula());
+        this.profesor = connection.obtenerProfesorPorAsignatura(asignarNotaFrame.getCedula());
 
         if (profesor == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun profesor con ese id", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -139,7 +139,7 @@ public class AsignarNotaController implements ActionListener {
     }
 
     private void mostrarTablaEstudiantes(String idAsignatura) {
-        List<NotaEstudianteListModel> estudiantes = connection.getEstudiantesParaAsignarNota(profesor.getCedula(), idAsignatura);
+        List<NotaEstudianteListModel> estudiantes = connection.obtenerEstudiantesParaAsignarNota(profesor.getCedula(), idAsignatura);
         this.estudiantes = estudiantes;
         asignarNotaFrame.configurarTablaEstudiantes(estudiantes, idAsignatura);
     }

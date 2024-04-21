@@ -15,7 +15,7 @@ import sql.ConexionSQL;
 public class ListadoPromedioDecanato implements DataFetcher {
     @Override
     public ArrayList obtenerDatos(ConexionSQL connection) {
-        ArrayList<CuatroColumnasModel> datasource20Decanato = connection.getEstudiantesCuatro("20 promedios decanato");
+        ArrayList<CuatroColumnasModel> datasource20Decanato = connection.obtenerEstudiantesParaListadoCuatroColumnas("20 promedios decanato");
         return datasource20Decanato;
     }
 }

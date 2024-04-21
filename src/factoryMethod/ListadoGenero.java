@@ -15,7 +15,7 @@ import sql.ConexionSQL;
 public class ListadoGenero implements DataFetcher {
     @Override
     public ArrayList obtenerDatos(ConexionSQL connection) {
-        ArrayList<CincoColumnasModel> datasourcegenero = connection.getEstudiantesCinco();
+        ArrayList<CincoColumnasModel> datasourcegenero = connection.obtenerEstudiantesParaListadoCincoColumnas();
         return datasourcegenero;
     }
 }
