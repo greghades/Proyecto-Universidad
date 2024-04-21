@@ -347,6 +347,44 @@ public class ConexionSQL {
         }
     }
 
+    public Universidad getUniversidad(String id) {
+        String query;
+        try {
+            query = String.format("SELECT * FROM public.\"Universidad\" WHERE id_universidad = '%s'", id);
+            ResultSet bigSet = statement.executeQuery(query);
+            Universidad universidad = null;
+
+            while (bigSet.next()) {
+                String idUni = bigSet.getString("id_universidad");
+                String nombreUni = bigSet.getString("nombre_universidad");
+                String direccion = bigSet.getString("direccion");
+
+                universidad = new Universidad(idUni, nombreUni, direccion);
+            }
+
+            return universidad;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    
+    public int agregarUniversidad(Universidad universidad) {
+        try {
+            //obtener valores del formulario 
+            String idUni = universidad.getId();
+            String nombre = universidad.getNombre();
+            String direccion = universidad.getDireccion();
+
+            String query = String.format("INSERT INTO public.\"Universidad\" (id_universidad, nombre_universidad, direccion) VALUES ('%s', '%s', '%s');", idUni, nombre, direccion);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarProfesor() error: " + e);
+            return -1;
+        }
+    }
+    
+
     //ver profesor por asignatura 
     public Profesor getDatosProfesor(String idProfesor) {
         try {
@@ -416,6 +454,21 @@ public class ConexionSQL {
             return -1;
         }
     }
+    
+    //eliminar Universidad a partir de un id 
+    public int eliminarUniversidad(String id) {
+        try {
+            
+            String queryDelete = String.format("DELETE FROM public.\"Universidad\" WHERE id_universidad = '%s'", id);
+         
+            statement.executeUpdate(queryDelete);
+
+           return 1;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.eliminarProfesor() error: " + e);
+            return -1;
+        }
+    }
 
     // modificar profesor a partir de un id
     public int modificarProfesor(Profesor profesor, String id) {
@@ -437,7 +490,23 @@ public class ConexionSQL {
             return -1;
         }
     }
+    
+    
+     public int modificarUniversidad(Universidad universidad, String id) {
+        try {
+            //obtener valores del formulario 
+            String nombre = universidad.getNombre();
+            String direccion = universidad.getDireccion();
 
+            String query = String.format("UPDATE public.\"Universidad\" SET nombre_universidad = '%s', direccion = '%s' WHERE id_universidad = '%s'", nombre, direccion, id);
+
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.modificarProfesor() error: " + e);
+            return -1;
+        }
+    }
     //mostrar profesor
     public Profesor motrarDatosProfesor(String id) {
         try {
@@ -760,12 +829,17 @@ public class ConexionSQL {
                 prefijo = "PRO";
                 id = "id_profesor";
                 tabla = "Profesor";
+            
+             case "universidad":
+                prefijo = "UNI";
+                id = "id_universidad";
+                tabla = "Universidad";
         }
 
         if (prefijo == null || id == null || tabla == null) {
             return null;
         }
-        
+
         try {
             String idQuery = String.format("SELECT '%s-' || LPAD((MAX(CAST(SUBSTRING(%s, 5) AS INTEGER)) + 1)::VARCHAR, 3, '0') AS nuevo_id FROM public.\"%s\"", prefijo, id, tabla);
             ResultSet nuevoIDResultSet = statement.executeQuery(idQuery);

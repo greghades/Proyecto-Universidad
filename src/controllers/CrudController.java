@@ -69,8 +69,9 @@ public class CrudController implements ActionListener {
         gestionarCrudController.esAgregar = esAgregar;
         gestionarCrudController.tipoCrud = tipoCrud;
         crudFrame.setVisible(false);
-        
-        switch (tipoCrud) {
+
+        gestionarCrudController.showGestionarFrame();
+        /* switch (tipoCrud) {
             case "profesor" ->
                 gestionarCrudController.showGestionarProfesorFrame(profesor);
             case "estudiante" -> {
@@ -84,7 +85,7 @@ public class CrudController implements ActionListener {
             
             default ->
                 throw new AssertionError();
-        }
+        }*/
     }
 
     public void setInicioController(InicioController inicioController) {
@@ -129,24 +130,60 @@ public class CrudController implements ActionListener {
         }
     }
 
+    public void buscarUniversidad() {
+        if ("Cedula".equals(crudFrame.getCedula()) || crudFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "debes ingresar un id de universidad.", " Ten Cuidado.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        this.universidad = connection.getUniversidad(crudFrame.getCedula());
+
+        if (universidad == null) {
+            JOptionPane.showMessageDialog(null, "No existe ninguna universidad con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            crudFrame.rellenarInfoUniversidad(universidad);
+            crudFrame.mostrarEstadoInformacion();
+        }
+    }
+
+    //eliminar 
+    public void eliminarUniversidad() {
+        if ("Cedula".equals(crudFrame.getCedula()) || crudFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un Id de universidad", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int rowsAffected = connection.eliminarUniversidad(crudFrame.getCedula());
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "El profesor fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            crudFrame.mostrarEstadoInicial();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void manejarBusqueda() {
+        
         switch (tipoCrud) {
             case "profesor" ->
                 buscarProfesor();
-            case "estudiante" -> {
-//            Crear metodo buscarEstudiante();
+            case "universidad" -> {
+                buscarUniversidad();
             }
             default ->
                 throw new AssertionError();
         }
+        //Limpiar campo de texto id
+        //crudFrame.id_textField.setText("ID");
     }
 
     private void manejarEliminacion() {
         switch (tipoCrud) {
             case "profesor" ->
                 eliminarProfesor();
-            case "estudiante" -> {
-//            Crear metodo eliminarEstudiante();
+            case "universidad" -> {
+                eliminarUniversidad();
             }
             default ->
                 throw new AssertionError();

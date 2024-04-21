@@ -44,11 +44,40 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         fourth_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
     }
 
-    public void configurarRegistro() {
+    public void configurarRegistro(String type) {
         registrar_btn.setText("Realizar registro");
         instruction_title_label.setText("Llena todos los campos");
         title_label.setText("Registro");
+        
+        switch (type) {
+            case "Profesor" ->{
+             
+                second_textfield.setText("Correo");
+                second_label.setText("correo");
+                third_textfield.setVisible(true);
+                third_label.setVisible(true);
+                fourth_cmb.setVisible(true);
+                fourth_label.setVisible(true);
+                fifth_textfield.setVisible(true);
+                fifth_label.setVisible(true);
+            
+            }
+            case "Universidad" -> {
+            
+                second_textfield.setText("Direccion");
+                second_label.setText("Direccion");
+                third_textfield.setVisible(false);
+                third_label.setVisible(false);
+                fourth_cmb.setVisible(false);
+                fourth_label.setVisible(false);
+                fifth_textfield.setVisible(false);
+                fifth_label.setVisible(false);
+            }
+            default ->
+                throw new AssertionError();
+        }
     }
+    
     
     public void configurarModificacion() {
         registrar_btn.setText("Aplicar cambios");
@@ -394,21 +423,21 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back_button;
     private javax.swing.JPanel fields_panel;
-    private javax.swing.JLabel fifth_label;
+    public javax.swing.JLabel fifth_label;
     public javax.swing.JTextField fifth_textfield;
     private javax.swing.JLabel first_label;
     public javax.swing.JTextField first_textfield;
     public javax.swing.JComboBox<Object> fourth_cmb;
-    private javax.swing.JLabel fourth_label;
+    public javax.swing.JLabel fourth_label;
     private javax.swing.JLabel instruction_title_label;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton limpiar_campos_btn;
     private javax.swing.JPanel main_body_panel;
     private javax.swing.JPanel opciones_buttons_panel;
     private javax.swing.JButton registrar_btn;
-    private javax.swing.JLabel second_label;
+    public javax.swing.JLabel second_label;
     public javax.swing.JTextField second_textfield;
-    private javax.swing.JLabel third_label;
+    public javax.swing.JLabel third_label;
     public javax.swing.JTextField third_textfield;
     private javax.swing.JLabel title_label;
     private javax.swing.JPanel title_panel;
