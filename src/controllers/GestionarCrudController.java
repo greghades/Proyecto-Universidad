@@ -32,9 +32,6 @@ import views.GestionarCrudFrame;
 
 public class GestionarCrudController implements ActionListener {
 
-    public Profesor profesor;
-    public Estudiante estudiante;
-    public Universidad universidad;
     private static GestionarCrudController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
     public GestionarCrudFrame gestionarCrudFrame;
@@ -48,7 +45,7 @@ public class GestionarCrudController implements ActionListener {
             "Masculino"
     );
     //combobox carrera
-    private ArrayList<Carrera>  carreras;
+    private ArrayList<Carrera> carreras;
 
     public GestionarCrudController() {
         gestionarCrudFrame = new GestionarCrudFrame(this);
@@ -56,7 +53,6 @@ public class GestionarCrudController implements ActionListener {
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(false);
         gestionarCrudFrame.setupComboBox(opcionSexo);
-        tipoCrud = tipoCrud;
     }
 
     public static GestionarCrudController getInstance() {
@@ -67,8 +63,7 @@ public class GestionarCrudController implements ActionListener {
     }
 
     public void showGestionarProfesorFrame(Profesor profesor) {
-
-        System.out.println("es agregar: " + esAgregar + " profesor: " + profesor+ "tipo crud" + tipoCrud);
+        System.out.println("es agregar: " + esAgregar + " profesor: " + profesor + " tipo crud " + tipoCrud);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(true);
@@ -82,19 +77,14 @@ public class GestionarCrudController implements ActionListener {
         }
     }
 
-    private void showProfesorFrame() {
-        gestionarCrudFrame.setVisible(false);
-        crudController.showCrudFrame();
-    }
-
     public void showGestionarEstudianteFrame(Estudiante estudiante) {
-        System.out.println("es agregar: " + esAgregar + " estudiante: " + estudiante);
+        System.out.println("es agregar: " + esAgregar + " estudiante: " + estudiante + " tipo crud " + tipoCrud);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(true);
-        mostrarCarreras();    
+        mostrarCarreras();
         mostrarEstadoInicial();
-        
+
         if (esAgregar) {
             gestionarCrudFrame.configurarRegistro();
         } else {
@@ -103,11 +93,6 @@ public class GestionarCrudController implements ActionListener {
         }
     }
 
-    private void showEstudianteFrame() {
-        gestionarCrudFrame.setVisible(false);
-        crudController.showCrudFrame();
-    }
-    
     public void showGestionarUniversidadFrame(Universidad universidad) {
 
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
@@ -122,7 +107,7 @@ public class GestionarCrudController implements ActionListener {
         }
     }
 
-    private void showUniversidadFrame() {
+    private void showCrudFrame() {
         gestionarCrudFrame.setVisible(false);
         crudController.showCrudFrame();
     }
@@ -147,7 +132,6 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.fifth_textfield.setText(profesor.getEspecialidad());
     }
 
-    
     public void rellenarDatosEstudiante(Estudiante estudiante) {
         gestionarCrudFrame.cedula_textfield.setText(estudiante.getCedula());
         gestionarCrudFrame.first_textfield.setText(estudiante.getNombre());
@@ -158,37 +142,42 @@ public class GestionarCrudController implements ActionListener {
         System.out.println("Estudiante rellenar datos" + estudiante);
     }
 
-    //mostrar las carreras
-     public void mostrarCarreras(){      
+    public void rellenarDatosUniversidad(Universidad universidad) {
+        gestionarCrudFrame.first_textfield.setText(universidad.getNombre());
+        gestionarCrudFrame.second_textfield.setVisible(false);
+        gestionarCrudFrame.third_textfield.setVisible(false);
+        gestionarCrudFrame.carrera_cmb.setVisible(false);
+        gestionarCrudFrame.fifth_textfield.setVisible(false);
+    }
+
+    public void mostrarCarreras() {
         carreras = connection.getCarrera();
         gestionarCrudFrame.carrera_cmb.removeAllItems(); //remover todos los elementos del combobox
-        
-        //recorrer el listado con todos sus datos
-        for(int i = 0; i < carreras.size(); i++){
-          gestionarCrudFrame.carrera_cmb.addItem(carreras.get(i).getNombre()); //para que aparezca el nombre
-        } 
-   }
-     
-     //estado inicial  de los campos
-public void mostrarEstadoInicial() {
-    System.out.println("tipo crud " + tipoCrud);
-    if (tipoCrud == "estudiante") {
-        gestionarCrudFrame.fifth_textfield.setVisible(false);
-        gestionarCrudFrame.fifth_label.setVisible(false);
-        gestionarCrudFrame.cedula_label.setVisible(true);
-        gestionarCrudFrame.cedula_textfield.setVisible(true);
-        gestionarCrudFrame.carrera_label.setVisible(true);
-        gestionarCrudFrame.carrera_cmb.setVisible(true);
-    } else if(tipoCrud == "profesor") {
-        gestionarCrudFrame.fifth_textfield.setVisible(true);
-        gestionarCrudFrame.fifth_label.setVisible(true);
-        gestionarCrudFrame.cedula_label.setVisible(false);
-        gestionarCrudFrame.cedula_textfield.setVisible(false);
-        gestionarCrudFrame.carrera_label.setVisible(false);
-        gestionarCrudFrame.carrera_cmb.setVisible(false);
+
+        for (int i = 0; i < carreras.size(); i++) {
+            gestionarCrudFrame.carrera_cmb.addItem(carreras.get(i).getNombre()); //para que aparezca el nombre
+        }
     }
-}
-    
+
+    public void mostrarEstadoInicial() {
+        System.out.println("tipo crud " + tipoCrud);
+        if ("estudiante".equals(tipoCrud)) {
+            gestionarCrudFrame.fifth_textfield.setVisible(false);
+            gestionarCrudFrame.fifth_label.setVisible(false);
+            gestionarCrudFrame.cedula_label.setVisible(true);
+            gestionarCrudFrame.cedula_textfield.setVisible(true);
+            gestionarCrudFrame.carrera_label.setVisible(true);
+            gestionarCrudFrame.carrera_cmb.setVisible(true);
+        } else if ("profesor".equals(tipoCrud)) {
+            gestionarCrudFrame.fifth_textfield.setVisible(true);
+            gestionarCrudFrame.fifth_label.setVisible(true);
+            gestionarCrudFrame.cedula_label.setVisible(false);
+            gestionarCrudFrame.cedula_textfield.setVisible(false);
+            gestionarCrudFrame.carrera_label.setVisible(false);
+            gestionarCrudFrame.carrera_cmb.setVisible(false);
+        }
+    }
+
     public boolean validarCampos() {
         String nombre = gestionarCrudFrame.first_textfield.getText();
         String edad = gestionarCrudFrame.third_textfield.getText();
@@ -198,39 +187,31 @@ public void mostrarEstadoInicial() {
         String cedula = gestionarCrudFrame.cedula_textfield.getText();
         String carrera = (String) gestionarCrudFrame.carrera_cmb.getSelectedItem();
         boolean contenidoValido = true;
-        
-        if(tipoCrud == "profesor"){
+
+        if ("profesor".equals(tipoCrud)) {
             if (nombre.isEmpty() || nombre.equals("Nombre")
-                || edad.isEmpty() || edad.equals("Edad")
-                || correo.isEmpty() || correo.equals("Correo")
-                || sexo.equals("Seleccione")
-                || especialidad.isEmpty() || especialidad.equals("Especialidad")) {
-            showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
+                    || edad.isEmpty() || edad.equals("Edad")
+                    || correo.isEmpty() || correo.equals("Correo")
+                    || sexo.equals("Seleccione")
+                    || especialidad.isEmpty() || especialidad.equals("Especialidad")) {
+                showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
 
-            contenidoValido = false;
-        }
-        } else if(tipoCrud == "estudiante"){
-            if(nombre.isEmpty() || nombre.equals("Nombre")
-                || edad.isEmpty() || edad.equals("Edad")
-                || correo.isEmpty() || correo.equals("Correo")
-                || sexo.equals("Seleccione") 
-               // || !carrera(gestionarCrudFrame.carrera_cmb)
-                || cedula.isEmpty() || cedula.equals("Cedula")){
-            showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
+                contenidoValido = false;
+            }
+        } else if ("estudiante".equals(tipoCrud)) {
+            if (nombre.isEmpty() || nombre.equals("Nombre")
+                    || edad.isEmpty() || edad.equals("Edad")
+                    || correo.isEmpty() || correo.equals("Correo")
+                    || sexo.equals("Seleccione")
+                    || carrera.equals("Seleccionar")
+                    || cedula.isEmpty() || cedula.equals("Cedula")) {
+                showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
 
-            contenidoValido = false;
+                contenidoValido = false;
+            }
         }
-       }
-        
+
         return contenidoValido;
-    }
-
-    public void rellenarDatosUniversidad(Universidad universidad) {
-        gestionarCrudFrame.first_textfield.setText(universidad.getNombre());
-        gestionarCrudFrame.second_textfield.setVisible(false);
-        gestionarCrudFrame.third_textfield.setVisible(false);
-        gestionarCrudFrame.carrera_cmb.setVisible(false);
-        gestionarCrudFrame.fifth_textfield.setVisible(false);
     }
 
     private void showAlert(String title, String message, boolean isSuccess) {
@@ -283,10 +264,39 @@ public void mostrarEstadoInicial() {
         limpiarVista();
     }
 
-    //modificar
+    public void agregarEstudiante() {
+
+        String cedula = gestionarCrudFrame.cedula_textfield.getText();
+        String nombre_completo = gestionarCrudFrame.first_textfield.getText();
+        String correo = gestionarCrudFrame.second_textfield.getText();
+        int edad = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
+        String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
+        int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
+        Carrera carreraSeleccionada = carreras.get(selectedIndex);
+        Carrera carrera = carreraSeleccionada;
+
+        //nuevos valores
+        Estudiante nuevoEstudiante = new Estudiante(carrera, cedula, nombre_completo, " ", correo, edad, sexo);
+        nuevoEstudiante.setCedula(cedula);
+        nuevoEstudiante.setNombre(nombre_completo);
+        nuevoEstudiante.setEdad(edad);
+        nuevoEstudiante.setCorreo(correo);
+        nuevoEstudiante.setSexo(sexo);
+        nuevoEstudiante.setCarrera(carrera);
+
+        int rowsAffected = connection.agregarEstudiante(nuevoEstudiante);
+
+        if (rowsAffected > 0) {
+            showAlert("Felicidades", "El registro ha sido realizado exitosamente", true);
+        } else {
+            showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
+        }
+        limpiarVista();
+    }
+
     public void modificarProfesor() {
-       
-        //datos que se van a actualizar
+
+        Profesor profesor = crudController.profesor;
         String cedula = crudController.crudFrame.getCedula();
         String nombre_completo = gestionarCrudFrame.first_textfield.getText();
         int edad = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
@@ -307,44 +317,11 @@ public void mostrarEstadoInicial() {
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarVista();
     }
-    
-    public void agregarEstudiante() {
-        
-        String cedula = gestionarCrudFrame.cedula_textfield.getText();
-        String nombre_completo = gestionarCrudFrame.first_textfield.getText();
-        String correo = gestionarCrudFrame.second_textfield.getText();
-        int edad = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
-        //combobox
-        String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
-        //combobox carrera
-        int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
-        Carrera carreraSeleccionada = carreras.get(selectedIndex);
-        Carrera carrera = carreraSeleccionada;
-        
-        //nuevos valores
-        Estudiante nuevoEstudiante = new Estudiante(carrera, cedula, nombre_completo, " " ,correo, edad, sexo);
-        nuevoEstudiante.setCedula(cedula);
-        nuevoEstudiante.setNombre(nombre_completo);
-        nuevoEstudiante.setEdad(edad);
-        nuevoEstudiante.setCorreo(correo);
-        nuevoEstudiante.setSexo(sexo);
-        nuevoEstudiante.setCarrera(carrera);
-        
-        int rowsAffected = connection.agregarEstudiante(nuevoEstudiante);
-        
-        if (rowsAffected > 0) {
-            showAlert("Felicidades", "El registro ha sido realizado exitosamente", true);
-        } else {
-            showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
-        }
-        limpiarVista();
-    }
-    
-     //modificar
+
     public void modificarEstudiante() {
- 
+
+        Estudiante estudiante = crudController.estudiante;
         //datos del estudiante
         String cedula = crudController.crudFrame.getCedula();
         String nombre_completo = gestionarCrudFrame.first_textfield.getText();
@@ -355,32 +332,27 @@ public void mostrarEstadoInicial() {
         int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
         Carrera carreraSeleccionada = carreras.get(selectedIndex);
         Carrera carrera = carreraSeleccionada;
-        
- 
 
         estudiante.setNombre(nombre_completo);
         estudiante.setEdad(edad);
         estudiante.setCorreo(correo);
         estudiante.setSexo(sexo);
         estudiante.setCarrera(carrera);
-      
+
         //consulta
         int rowsAffected = connection.modificarEstudiante(estudiante, cedula);
-        
+
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarVista();
     }
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == gestionarCrudFrame.getBack_button()) {
-            showProfesorFrame();
+            showCrudFrame();
         } else if (event.getSource() == gestionarCrudFrame.getRegistrar_btn()) {
 
             if (!validarCampos()) {
@@ -388,19 +360,19 @@ public void mostrarEstadoInicial() {
             }
 
             if (esAgregar) {
-                if(tipoCrud == "profesor"){
-                   agregarProfesor(); 
-                } else if (tipoCrud == "estudiante") {
-                 agregarEstudiante();
+                if ("profesor".equals(tipoCrud)) {
+                    agregarProfesor();
+                } else if ("estudiante".equals(tipoCrud)) {
+                    agregarEstudiante();
                 }
 
             } else {
-                if(tipoCrud == "profesor"){
-                   modificarProfesor();
-                } else if (tipoCrud == "estudiante") {
-                 modificarEstudiante();
+                if ("profesor".equals(tipoCrud)) {
+                    modificarProfesor();
+                } else if ("estudiante".equals(tipoCrud)) {
+                    modificarEstudiante();
                 }
-                
+
             }
         } else if (event.getSource() == gestionarCrudFrame.getLimpiar_campos_btn()) {
             limpiarVista();
