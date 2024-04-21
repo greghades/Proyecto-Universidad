@@ -952,7 +952,7 @@
                                       <Component id="fifth_label" max="32767" attributes="0"/>
                                       <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="especialidad_title_Label" max="32767" attributes="0"/>
+                                  <Component id="fifth_title_label" max="32767" attributes="0"/>
                                   <Component id="second_label" alignment="0" max="32767" attributes="0"/>
                                   <Component id="correo_prof_title_Label" alignment="0" max="32767" attributes="0"/>
                               </Group>
@@ -983,7 +983,7 @@
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="genero_title_prof_Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="especialidad_title_Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fifth_title_label" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -1060,7 +1060,7 @@
                         <Property name="text" type="java.lang.String" value="G&#xe9;nero Profesor"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="especialidad_title_Label">
+                    <Component class="javax.swing.JLabel" name="fifth_title_label">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="12" style="1"/>

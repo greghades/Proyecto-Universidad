@@ -34,7 +34,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "gr3g0r1j053y3p3z4rt34g4";
+    private final String pass = "123456789";
 
     public ConexionSQL() {
         conectar();
@@ -490,14 +490,15 @@ public class ConexionSQL {
         try {
             String id_estudiante = estudiante.getCedula();
             String id_carrera = estudiante.getCarrera().getId();
-            System.out.println("carrerita" + id_carrera);
             String nombre = estudiante.getNombre();
             int edad = estudiante.getEdad();
             String correo = estudiante.getCorreo();
             String sexo = estudiante.getSexo();
 
             String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
+            
             int row = statement.executeUpdate(query);
+            System.out.println("query" + query);
             return row;
         } catch (SQLException e) {
             System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
@@ -508,8 +509,6 @@ public class ConexionSQL {
     //modificar
     public int modificarEstudiante(Estudiante estudiante, String id) {
         try {
-            System.out.println("Cedulita" + id);
-
             String id_carrera = estudiante.getCarrera().getId();
             String nombre = estudiante.getNombre();
             int edad = estudiante.getEdad();
@@ -518,7 +517,7 @@ public class ConexionSQL {
 
             String query = String.format("UPDATE public.\"Estudiantes\" SET id_carrera = '%s', nombre_completo = '%s', edad = '%s', correo = '%s', direccion = '%s', sexo = '%s', estado = '%s' WHERE id_estudiante = '%s'", id_carrera, nombre, edad, correo, " ", sexo, true, id);
 
-            System.out.println("cedula estudiante : " + id + "Edad " + edad + " query: " + query);
+            System.out.println("query modificar" + query);
             int row = statement.executeUpdate(query);
             return row;
         } catch (SQLException e) {
@@ -527,7 +526,6 @@ public class ConexionSQL {
         }
     }
 
-    //eliminar
     public int eliminarEstudiante(String id) {
         try {
             //eliminar de la tabla de inscripcion
@@ -555,6 +553,7 @@ public class ConexionSQL {
     //buscar Estudiante
     public Estudiante buscarEstudiante(String id) {
         try {
+            System.out.println("cedulita" + id);
             String query = String.format("SELECT e.id_estudiante, e.nombre_completo, e.edad, e.sexo, e.correo, c.id_carrera, c.nombre_carrera FROM public.\"Estudiantes\" AS e INNER JOIN public.\"Carreras\" AS c ON e.id_carrera = c.id_carrera WHERE e.id_estudiante = '%s'", id);
             ResultSet bigSet = statement.executeQuery(query);
             Estudiante estudiante = null;

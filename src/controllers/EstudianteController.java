@@ -44,7 +44,7 @@ public class EstudianteController implements ActionListener {
             "Femenino",
             "Masculino"
     );
-    private ArrayList<Carrera>  carreras;
+    
 
     public EstudianteController() {
         estudianteFrame = new EstudianteFrame(this); 
@@ -52,7 +52,7 @@ public class EstudianteController implements ActionListener {
         pantallaCompleta.setPantallaCompleta(estudianteFrame);
         estudianteFrame.setVisible(false);
         estudianteFrame.setupComboBox(opcionSexo);
-        mostrarCarreras();
+        //mostrarCarreras();
         
     }
 
@@ -79,47 +79,10 @@ public class EstudianteController implements ActionListener {
         this.inicioController = inicioController;
     }
 
-    public void mostrarCarreras(){      
-        carreras = connection.getCarrera();
-        estudianteFrame.cmb_carrera.removeAllItems(); //remover todos los elementos del combobox
-        
-        //recorrer el listado con todos sus datos
-        for(int i = 0; i < carreras.size(); i++){
-          estudianteFrame.cmb_carrera.addItem(carreras.get(i).getNombre()); //para que aparezca el nombre
-        } 
-   }
+   
 
     public void agregarEstudiante(){
-        //obtener el id de la carrera del combobox a partir de un indice
-        int selectedIndex = estudianteFrame.cmb_carrera.getSelectedIndex();
-        Carrera carreraSeleccionada = carreras.get(selectedIndex);
-
-        // Obtener los datos del formulario 
-        String cedula = estudianteFrame.cedula_textfield.getText();
-        Carrera carrera = carreraSeleccionada;
-        String nombre = estudianteFrame.nombre_textfield.getText() ;
-        int edad = Integer.parseInt(estudianteFrame.edad_textfield.getText());
-        String correo = estudianteFrame.correo_textfield.getText();
-        //combobox de sexo opcion
-        String sexo = (String) estudianteFrame.getCmb_sexo().getSelectedItem();
-        
-      // Crear un objeto Estudiante con los datos capturados
-        Estudiante estudiante = new Estudiante(carrera, cedula, nombre, sexo, correo, edad, sexo);
-        estudiante.setCedula(cedula);
-        estudiante.setCarrera(carrera);
-        estudiante.setNombre(nombre);
-        estudiante.setEdad(edad);
-        estudiante.setCorreo(correo);
-        estudiante.setSexo(sexo);
-        
-         int rowsAffected = connection.agregarEstudiante(estudiante);
-               
-          if (rowsAffected > 0) {
-            showSuccessAlert(true);
-        } else {
-            showSuccessAlert(false);
-        }
-        limpiarVista();
+      
     }
     
     //modificar
@@ -130,9 +93,6 @@ public class EstudianteController implements ActionListener {
             return;
         }
         int selectedIndex = estudianteFrame.cmb_carrera.getSelectedIndex();
-        Carrera carreraSeleccionada = carreras.get(selectedIndex);
-        //Nuevos datos que se van a actualizar 
-        Carrera carrera = carreraSeleccionada;
         String cedula = estudianteFrame.getCedula();
         String nombre = estudianteFrame.nombre_textfield.getText() ;
         int edad = Integer.parseInt(estudianteFrame.edad_textfield.getText());

@@ -20,6 +20,7 @@ import controllers.CrudController;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import models.Estudiante;
 import models.Profesor;
 
 public class CrudFrame extends javax.swing.JFrame {
@@ -84,6 +85,16 @@ public class CrudFrame extends javax.swing.JFrame {
         third_label.setText(Integer.toString(profesor.getEdad()));
         fourth_label.setText(profesor.getSexo());
         fifth_label.setText(profesor.getEspecialidad());
+        info_panel.setVisible(true);
+    }
+    
+     public void rellenarInfoEstudiante(Estudiante estudiante) {
+        first_crud_label.setText(estudiante.getNombre());
+        second_label.setText(estudiante.getCorreo());
+        third_label.setText(Integer.toString(estudiante.getEdad()));
+        fourth_label.setText(estudiante.getSexo());
+        fifth_title_label.setText("Carrera:");
+        fifth_label.setText(estudiante.getCarrera().getNombre());
         info_panel.setVisible(true);
     }
 
@@ -189,7 +200,7 @@ public class CrudFrame extends javax.swing.JFrame {
         third_label = new javax.swing.JLabel();
         genero_title_prof_Label = new javax.swing.JLabel();
         fourth_label = new javax.swing.JLabel();
-        especialidad_title_Label = new javax.swing.JLabel();
+        fifth_title_label = new javax.swing.JLabel();
         fifth_label = new javax.swing.JLabel();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 16), new java.awt.Dimension(0, 16), new java.awt.Dimension(32767, 16));
         info_buttons_panel = new javax.swing.JPanel();
@@ -453,8 +464,8 @@ public class CrudFrame extends javax.swing.JFrame {
         fourth_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         fourth_label.setText("Género Profesor");
 
-        especialidad_title_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        especialidad_title_Label.setText("Especialidad:");
+        fifth_title_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        fifth_title_label.setText("Especialidad:");
 
         fifth_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         fifth_label.setText("Especialidad Profesor");
@@ -475,7 +486,7 @@ public class CrudFrame extends javax.swing.JFrame {
                     .addGroup(info_panelLayout.createSequentialGroup()
                         .addComponent(fifth_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3))
-                    .addComponent(especialidad_title_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fifth_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(second_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(correo_prof_title_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
@@ -500,7 +511,7 @@ public class CrudFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genero_title_prof_Label)
-                    .addComponent(especialidad_title_Label))
+                    .addComponent(fifth_title_label))
                 .addGap(6, 6, 6)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fourth_label)
@@ -642,8 +653,8 @@ public class CrudFrame extends javax.swing.JFrame {
     private javax.swing.JLabel correo_prof_title_Label;
     private javax.swing.JLabel edad_title_prof_Label;
     private javax.swing.JButton eliminar_btn;
-    private javax.swing.JLabel especialidad_title_Label;
     private javax.swing.JLabel fifth_label;
+    private javax.swing.JLabel fifth_title_label;
     private javax.swing.Box.Filler filler4;
     private javax.swing.JLabel first_crud_label;
     private javax.swing.JLabel fourth_label;

@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/proyecto/src/views/CrudFrame.java</file>
-            <file>file:/C:/Users/User/proyecto/src/views/GestionarCrudFrame.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/Main.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/InicioController.java</file>
-            <file>file:/C:/Users/User/proyecto/src/views/InicioFrame.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/GestionarCrudController.java</file>
+            <file>file:/home/albani/Escritorio/Proyecto-Universidad/src/controllers/GestionarCrudController.java</file>
+            <file>file:/home/albani/Escritorio/Proyecto-Universidad/src/sql/ConexionSQL.java</file>
+            <file>file:/home/albani/Escritorio/Proyecto-Universidad/src/views/GestionarCrudFrame.java</file>
+            <file>file:/home/albani/Escritorio/Proyecto-Universidad/src/controllers/EstudianteController.java</file>
+            <file>file:/home/albani/Escritorio/Proyecto-Universidad/src/controllers/CrudController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -75,6 +75,7 @@ public class CrudController implements ActionListener {
                 gestionarCrudController.showGestionarProfesorFrame(profesor);
             case "estudiante" -> {
 //                Crear un metodo en gestionarCrud que sea showGestionarEstudianteFrame y reciba al estudiante como parametro
+                 gestionarCrudController.showGestionarEstudianteFrame(estudiante);
             }
             
             case "universidad" -> {
@@ -111,6 +112,24 @@ public class CrudController implements ActionListener {
             crudFrame.mostrarEstadoInformacion();
         }
     }
+    
+    public void buscarEstudiante() {
+        System.out.println("cedula" + crudFrame.getCedula());
+        if ("Cedula".equals(crudFrame.getCedula()) || crudFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "debes ingresar una cedula.", " Ten Cuidado.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        this.estudiante = connection.buscarEstudiante(crudFrame.getCedula());
+            
+        if (estudiante == null) {
+            JOptionPane.showMessageDialog(null, "No existe ningun estudiante con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            System.out.println("estudiante buscar" +  estudiante);
+            crudFrame.rellenarInfoEstudiante(estudiante);
+            crudFrame.mostrarEstadoInformacion();
+        }
+    }
 
     //eliminar 
     public void eliminarProfesor() {
@@ -134,7 +153,7 @@ public class CrudController implements ActionListener {
             case "profesor" ->
                 buscarProfesor();
             case "estudiante" -> {
-//            Crear metodo buscarEstudiante();
+                buscarEstudiante();
             }
             default ->
                 throw new AssertionError();

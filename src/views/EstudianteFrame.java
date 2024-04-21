@@ -67,6 +67,8 @@ public class EstudianteFrame extends javax.swing.JFrame {
   public void setupComboBox(List<String> opciones) {
         cmb_sexo.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
     }
+  
+  
     
     public void rellenarInformacionInicial(Estudiante estudiante) {
         nombre_label.setText(estudiante.getNombre());

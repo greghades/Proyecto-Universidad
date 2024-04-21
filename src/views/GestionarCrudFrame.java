@@ -36,6 +36,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
     private void agregarListener(ActionListener accion) {
         back_button.addActionListener(accion);
         fourth_cmb.addActionListener(accion);
+        carrera_cmb.addActionListener(accion);
         limpiar_campos_btn.addActionListener(accion);
         registrar_btn.addActionListener(accion);
     }
@@ -86,10 +87,14 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         second_textfield = new javax.swing.JTextField();
         third_label = new javax.swing.JLabel();
         third_textfield = new javax.swing.JTextField();
-        fourth_cmb = new javax.swing.JComboBox<>();
-        fourth_label = new javax.swing.JLabel();
+        carrera_cmb = new javax.swing.JComboBox<>();
+        carrera_label = new javax.swing.JLabel();
         fifth_label = new javax.swing.JLabel();
         fifth_textfield = new javax.swing.JTextField();
+        fourth_cmb = new javax.swing.JComboBox<>();
+        fourth_label1 = new javax.swing.JLabel();
+        cedula_label = new javax.swing.JLabel();
+        cedula_textfield = new javax.swing.JTextField();
         opciones_buttons_panel = new javax.swing.JPanel();
         registrar_btn = new javax.swing.JButton();
         limpiar_campos_btn = new javax.swing.JButton();
@@ -159,14 +164,14 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         fields_panel.setBackground(new java.awt.Color(255, 255, 255));
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
         jPanel2Layout.columnWidths = new int[] {0, 16, 0};
-        jPanel2Layout.rowHeights = new int[] {0, 8, 0, 8, 0, 8, 0, 8, 0};
+        jPanel2Layout.rowHeights = new int[] {0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0};
         fields_panel.setLayout(jPanel2Layout);
 
         first_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         first_label.setText("Nombre:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -178,7 +183,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         first_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 48;
         gridBagConstraints.ipady = 12;
@@ -190,7 +195,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         second_label.setText("Correo:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -202,7 +207,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         second_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 48;
         gridBagConstraints.ipady = 12;
@@ -214,7 +219,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         third_label.setText("Edad:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -226,13 +231,66 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         third_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 48;
         gridBagConstraints.ipady = 12;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         fields_panel.add(third_textfield, gridBagConstraints);
+
+        carrera_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        carrera_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        carrera_cmb.setMaximumSize(new java.awt.Dimension(32767, 80));
+        carrera_cmb.setMinimumSize(new java.awt.Dimension(214, 80));
+        carrera_cmb.setPreferredSize(new java.awt.Dimension(214, 32));
+        carrera_cmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carrera_cmbActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(carrera_cmb, gridBagConstraints);
+
+        carrera_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        carrera_label.setText("Carrera:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(carrera_label, gridBagConstraints);
+
+        fifth_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        fifth_label.setText("Especialidad:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(fifth_label, gridBagConstraints);
+
+        fifth_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        fifth_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fifth_textfield.setText("Especialidad");
+        fifth_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 12;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(fifth_textfield, gridBagConstraints);
 
         fourth_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
         fourth_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
@@ -246,46 +304,46 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 48;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         fields_panel.add(fourth_cmb, gridBagConstraints);
 
-        fourth_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        fourth_label.setText("Sexo:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        fields_panel.add(fourth_label, gridBagConstraints);
-
-        fifth_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        fifth_label.setText("Especialidad:");
+        fourth_label1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        fourth_label1.setText("Sexo:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        fields_panel.add(fifth_label, gridBagConstraints);
+        fields_panel.add(fourth_label1, gridBagConstraints);
 
-        fifth_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
-        fifth_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        fifth_textfield.setText("Especialidad");
-        fifth_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        cedula_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        cedula_label.setText("Cedula:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(cedula_label, gridBagConstraints);
+
+        cedula_textfield.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        cedula_textfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        cedula_textfield.setText("Cedula");
+        cedula_textfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 48;
         gridBagConstraints.ipady = 12;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        fields_panel.add(fifth_textfield, gridBagConstraints);
+        fields_panel.add(cedula_textfield, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -354,9 +412,9 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         main_body_panelLayout.setVerticalGroup(
             main_body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_body_panelLayout.createSequentialGroup()
-                .addContainerGap(90, Short.MAX_VALUE)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -383,23 +441,31 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fourth_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourth_cmbActionPerformed
+    private void carrera_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrera_cmbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fourth_cmbActionPerformed
+    }//GEN-LAST:event_carrera_cmbActionPerformed
 
     private void registrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_registrar_btnActionPerformed
 
+    private void fourth_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourth_cmbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fourth_cmbActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back_button;
+    public javax.swing.JComboBox<Object> carrera_cmb;
+    public javax.swing.JLabel carrera_label;
+    public javax.swing.JLabel cedula_label;
+    public javax.swing.JTextField cedula_textfield;
     private javax.swing.JPanel fields_panel;
-    private javax.swing.JLabel fifth_label;
+    public javax.swing.JLabel fifth_label;
     public javax.swing.JTextField fifth_textfield;
     private javax.swing.JLabel first_label;
     public javax.swing.JTextField first_textfield;
     public javax.swing.JComboBox<Object> fourth_cmb;
-    private javax.swing.JLabel fourth_label;
+    private javax.swing.JLabel fourth_label1;
     private javax.swing.JLabel instruction_title_label;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton limpiar_campos_btn;
