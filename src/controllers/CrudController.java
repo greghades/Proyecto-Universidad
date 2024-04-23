@@ -146,7 +146,7 @@ public class CrudController implements ActionListener, Observer {
             return;
         }
 
-        this.universidad = connection.getUniversidad(crudFrame.getCedula());
+        this.universidad = connection.obtenerUniversidad(crudFrame.getCedula());
 
         if (universidad == null) {
             JOptionPane.showMessageDialog(null, "No existe ninguna universidad con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);

@@ -326,7 +326,7 @@ public class ConexionSQL {
         }
     }
 
-    public Universidad getUniversidad(String id) {
+    public Universidad obtenerUniversidad(String id) {
         String query;
         try {
             query = String.format("SELECT * FROM public.\"Universidad\" WHERE id_universidad = '%s'", id);
@@ -824,6 +824,55 @@ public class ConexionSQL {
         }
 
     }
+    
+    public List<Asignatura> obtenerAsignaturas() {
+        try {
+            String query = "SELECT * FROM public.\"Asignaturas\"";
+            ResultSet asignaturasResultSet = statement.executeQuery(query);
+            
+            ArrayList<Asignatura> asignaturas = new ArrayList<>();
+            
+            while(asignaturasResultSet.next()) {
+                String id_asignatura = asignaturasResultSet.getString("id_asignatura");
+                String nombre_asignatura = asignaturasResultSet.getString("nombre_asignatura");
+                int carga_academica = asignaturasResultSet.getInt("carga_academica");
+                
+                Asignatura asignatura = new Asignatura(id_asignatura, nombre_asignatura, carga_academica);
+                asignaturas.add(asignatura);
+            }
+            
+            return asignaturas;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+    
+    public List<Profesor> obtenerProfesoresSinSeccion() {
+        try {
+            String query = "SELECT * FROM public.\"Profesor\" WHERE id_profesor NOT IN (SELECT id_profesor FROM public.\"Profesor_asignatura_seccion\" GROUP BY id_profesor HAVING COUNT(*) > 1)";
+            ResultSet profesoresResultSet = statement.executeQuery(query);
+            
+            ArrayList<Profesor> profesores = new ArrayList<>();
+            
+            while(profesoresResultSet.next()) {
+                String id_profesor = profesoresResultSet.getString("id_profesor");
+                int edad = profesoresResultSet.getInt("edad");
+                String nombre_completo = profesoresResultSet.getString("nombre_completo");
+                String correo = profesoresResultSet.getString("correo");
+                String sexo = profesoresResultSet.getString("sexo");
+                String especialidad = profesoresResultSet.getString("especialidad");
+                
+                Profesor profesor = new Profesor(id_profesor, nombre_completo, "", correo, edad, sexo, especialidad);
+                profesores.add(profesor);
+            }
+            
+            return profesores;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
 
     public String obtenerNuevoID(String tipo) {
 
@@ -841,6 +890,11 @@ public class ConexionSQL {
                 prefijo = "UNI";
                 id = "id_universidad";
                 tabla = "Universidad";
+            }
+            case "profesor_asignatura_seccion" -> {
+                prefijo = "PAS";
+                id = "id_profesor_asignatura";
+                tabla = "Profesor_asignatura_seccion";
             }
         }
 
@@ -863,6 +917,20 @@ public class ConexionSQL {
         } catch (SQLException e) {
             System.err.println(e);
             return null;
+        }
+    }
+    
+    public int asignarSeccion(String prof_id, String asig_id, String sec_id) {
+        try {
+            String pasID = obtenerNuevoID("profesor_asignatura_seccion");
+            
+            String query = String.format("INSERT INTO public.\"Profesor_asignatura_seccion\" (id_profesor_asignatura, id_profesor, id_asignatura, id_seccion) VALUES ('%s', '%s', '%s', '%s');", pasID, prof_id, asig_id, sec_id);
+            int asignarSeccionCodigo = statement.executeUpdate(query);
+            System.out.println("asignar codigo: " + asignarSeccionCodigo + " query: " + query);
+            return asignarSeccionCodigo;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return -1;
         }
     }
 
