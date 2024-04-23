@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/proyecto/src/views/GestionarCrudFrame.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/Main.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/CrudController.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/GestionarCrudController.java</file>
+            <file>file:/C:/Users/58412/OneDrive/Escritorio/laboratorio%201/Proyecto-Universidad/src/models/Decanato.java</file>
+            <file>file:/C:/Users/58412/OneDrive/Escritorio/laboratorio%201/Proyecto-Universidad/src/models/Universidad.java</file>
+            <file>file:/C:/Users/58412/OneDrive/Escritorio/laboratorio%201/Proyecto-Universidad/src/compose/ComponenteUniversitario.java</file>
+            <file>file:/C:/Users/58412/OneDrive/Escritorio/laboratorio%201/Proyecto-Universidad/src/models/Carrera.java</file>
         </group>
     </open-files>
 </project-private>
