@@ -28,6 +28,9 @@ public class AsignarSeccionController implements ActionListener {
     public ArrayList<Profesor> profesoresList = new ArrayList<>();
     public ArrayList<Asignatura> asignaturasList = new ArrayList<>();
     public ArrayList<Seccion> seccionesList = new ArrayList<>();
+    private Asignatura asignaturaSeleccionada;
+    private Profesor profesorSeleccionado;
+    private Seccion seccionSeleccionada;
 
     public AsignarSeccionController() {
         asignarSeccionFrame = new AsignarSeccionFrame(this);
@@ -90,10 +93,9 @@ public class AsignarSeccionController implements ActionListener {
             opciones.add("Seleccionar");
             for (Seccion seccion : secciones) {
                 seccionesList.add(seccion);
-                opciones.add(String.format("Sección %s", seccion.getNumero()));
+                opciones.add(String.format("Sección %s, ID: %s", seccion.getNumero(), seccion.getId()));
             }
         } else {
-            // Si no se encontró la asignatura, mostrar un mensaje de error o tomar alguna acción apropiada
             System.out.println("Error: No se encontró la asignatura con el nombre especificado.");
         }
         asignarSeccionFrame.setupComboBox(opciones, "seccion");
@@ -105,7 +107,25 @@ public class AsignarSeccionController implements ActionListener {
                 return asignatura;
             }
         }
-        return null; // Retorna null si no se encontró la asignatura con el nombre especificado
+        return null;
+    }
+    
+    private Profesor buscarProfesorPorNombre(String nombre) {
+        for (Profesor profesor : profesoresList) {
+            if (profesor.getNombre().equals(nombre)) {
+                return profesor;
+            }
+        }
+        return null;
+    }
+    
+    private Seccion buscarSeccionPorNombre(String nombre) {
+        for (Seccion seccion : seccionesList) {
+            if (nombre.contains(seccion.getId())) {
+                return seccion;
+            }
+        }
+        return null;
     }
 
     private void configurarProfesores() {
@@ -119,20 +139,45 @@ public class AsignarSeccionController implements ActionListener {
         }
         asignarSeccionFrame.setupComboBox(opciones, "profesor");
     }
+    
+    private void asignarSeccion() {
+        System.out.println(String.format("Profesor: %s %s, Asignatura: %s %s y Seccion: %s %s", profesorSeleccionado.getCedula(), profesorSeleccionado.getNombre(), asignaturaSeleccionada.getId(), asignaturaSeleccionada.getNombre(), seccionSeleccionada.getNumero(), seccionSeleccionada.getId()));
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == asignarSeccionFrame.getBack_button()) {
             showInicioFrame();
         } else if (event.getSource() == asignarSeccionFrame.getAsignar_btn()) {
-            showInicioFrame();
+            asignarSeccion();
+        } else if (event.getSource() == asignarSeccionFrame.getLimpiar_campos_btn()) {
+            asignarSeccionFrame.limpiarVista();
         } else if (event.getSource() == asignarSeccionFrame.getProfesor_cmb()) {
+            String seleccion = (String) asignarSeccionFrame.getProfesor_cmb().getSelectedItem();
+            
+            if ("Seleccionar".equals(seleccion)) {
+                return;
+            }
+            
             asignarSeccionFrame.configurarContenidoPorPaso(1);
+            this.profesorSeleccionado = buscarProfesorPorNombre(seleccion);
         } else if (event.getSource() == asignarSeccionFrame.getAsignatura_cmb()) {
+            String seleccion = (String) asignarSeccionFrame.getAsignatura_cmb().getSelectedItem();
+            
+            if ("Seleccionar".equals(seleccion)) {
+                return;
+            }
             asignarSeccionFrame.configurarContenidoPorPaso(2);
+            this.asignaturaSeleccionada = buscarAsignaturaPorNombre(seleccion);
             configurarSecciones((String) asignarSeccionFrame.getAsignatura_cmb().getSelectedItem());
         } else if (event.getSource() == asignarSeccionFrame.getSeccion_cmb()) {
+            String seleccion = (String) asignarSeccionFrame.getSeccion_cmb().getSelectedItem();
+            
+            if ("Seleccionar".equals(seleccion)) {
+                return;
+            }
             asignarSeccionFrame.configurarContenidoPorPaso(3);
+            this.seccionSeleccionada = buscarSeccionPorNombre(seleccion);
         }
     }
 }

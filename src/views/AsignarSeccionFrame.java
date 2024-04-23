@@ -24,15 +24,15 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 public class AsignarSeccionFrame extends javax.swing.JFrame {
-
+    
     public AsignarSeccionController asignarSeccionController;
-
+    
     public AsignarSeccionFrame(AsignarSeccionController controller) {
         this.asignarSeccionController = controller;
         initComponents();
         agregarListener(controller);
     }
-
+    
     private void agregarListener(ActionListener accion) {
         back_button.addActionListener(accion);
         profesor_cmb.addActionListener(accion);
@@ -41,7 +41,7 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         limpiar_campos_btn.addActionListener(accion);
         asignar_btn.addActionListener(accion);
     }
-
+    
     public void setupComboBox(List<String> opciones, String tipo) {
         switch (tipo) {
             case "asignatura" -> {
@@ -72,8 +72,8 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
                 asignatura_cmb.setVisible(true);
                 seccion_label.setVisible(false);
                 seccion_cmb.setVisible(false);
-                
-            } 
+                asignatura_cmb.setSelectedIndex(0);
+            }
             case 2 -> {
                 seccion_label.setVisible(true);
                 seccion_cmb.setVisible(true);
@@ -83,27 +83,42 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
             }
         }
     }
-
+    
+    public void limpiarVista() {
+        asignar_btn.setVisible(false);
+        limpiar_campos_btn.setVisible(false);
+        asignatura_label.setVisible(false);
+        asignatura_cmb.setVisible(false);
+        seccion_label.setVisible(false);
+        seccion_cmb.setVisible(false);
+        profesor_cmb.setSelectedIndex(0);
+        asignatura_cmb.setSelectedIndex(0);
+    }
+    
     public JButton getAsignar_btn() {
         return asignar_btn;
     }
-
+    
     public JComboBox<Object> getAsignatura_cmb() {
         return asignatura_cmb;
     }
-
+    
     public JButton getBack_button() {
         return back_button;
     }
-
+    
     public JComboBox<Object> getProfesor_cmb() {
         return profesor_cmb;
     }
-
+    
     public JComboBox<Object> getSeccion_cmb() {
         return seccion_cmb;
     }
-
+    
+    public JButton getLimpiar_campos_btn() {
+        return limpiar_campos_btn;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
