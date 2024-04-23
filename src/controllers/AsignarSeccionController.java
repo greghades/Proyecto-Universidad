@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import models.Asignatura;
 import models.Profesor;
 import models.Seccion;
@@ -86,9 +87,8 @@ public class AsignarSeccionController implements ActionListener {
 
         Asignatura asignatura = buscarAsignaturaPorNombre(nombre);
 
-
         if (asignatura != null) {
-        List<Seccion> secciones = connection.obtenerSecciones(asignatura.getId());
+            List<Seccion> secciones = connection.obtenerSecciones(asignatura.getId());
 
             opciones.add("Seleccionar");
             for (Seccion seccion : secciones) {
@@ -109,7 +109,7 @@ public class AsignarSeccionController implements ActionListener {
         }
         return null;
     }
-    
+
     private Profesor buscarProfesorPorNombre(String nombre) {
         for (Profesor profesor : profesoresList) {
             if (profesor.getNombre().equals(nombre)) {
@@ -118,7 +118,7 @@ public class AsignarSeccionController implements ActionListener {
         }
         return null;
     }
-    
+
     private Seccion buscarSeccionPorNombre(String nombre) {
         for (Seccion seccion : seccionesList) {
             if (nombre.contains(seccion.getId())) {
@@ -130,7 +130,7 @@ public class AsignarSeccionController implements ActionListener {
 
     private void configurarProfesores() {
         ArrayList<String> opciones = new ArrayList<>();
-        List<Profesor> profesores = connection.obtenerProfesores();
+        List<Profesor> profesores = connection.obtenerProfesoresSinSeccion();
 
         opciones.add("Seleccionar");
         for (Profesor profesor : profesores) {
@@ -139,9 +139,34 @@ public class AsignarSeccionController implements ActionListener {
         }
         asignarSeccionFrame.setupComboBox(opciones, "profesor");
     }
-    
+
     private void asignarSeccion() {
-        System.out.println(String.format("Profesor: %s %s, Asignatura: %s %s y Seccion: %s %s", profesorSeleccionado.getCedula(), profesorSeleccionado.getNombre(), asignaturaSeleccionada.getId(), asignaturaSeleccionada.getNombre(), seccionSeleccionada.getNumero(), seccionSeleccionada.getId()));
+        int rowsAffected = connection.asignarSeccion(profesorSeleccionado.getCedula(), asignaturaSeleccionada.getId(), seccionSeleccionada.getId());
+
+        if (rowsAffected > 0) {
+            showAlert("Felicidades", "La seccion ha sido asignada exitosamente", true);
+        } else {
+            showAlert("Lo sentimos", "Ha ocurrido un error con la asignacion de seccion", false);
+        }
+    }
+
+    private void showAlert(String title, String message, boolean isSuccess) {
+        Object[] options = {"Aceptar"};
+        int selection = JOptionPane.showOptionDialog(
+                null,
+                message,
+                title,
+                JOptionPane.OK_OPTION,
+                isSuccess ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (selection == JOptionPane.OK_OPTION && isSuccess) {
+            inicioController.showInicioFrame();
+        } else {
+            System.out.println("Selected Option Is X: " + selection);
+        }
     }
 
     @Override
@@ -154,16 +179,16 @@ public class AsignarSeccionController implements ActionListener {
             asignarSeccionFrame.limpiarVista();
         } else if (event.getSource() == asignarSeccionFrame.getProfesor_cmb()) {
             String seleccion = (String) asignarSeccionFrame.getProfesor_cmb().getSelectedItem();
-            
+
             if ("Seleccionar".equals(seleccion)) {
                 return;
             }
-            
+
             asignarSeccionFrame.configurarContenidoPorPaso(1);
             this.profesorSeleccionado = buscarProfesorPorNombre(seleccion);
         } else if (event.getSource() == asignarSeccionFrame.getAsignatura_cmb()) {
             String seleccion = (String) asignarSeccionFrame.getAsignatura_cmb().getSelectedItem();
-            
+
             if ("Seleccionar".equals(seleccion)) {
                 return;
             }
@@ -172,7 +197,7 @@ public class AsignarSeccionController implements ActionListener {
             configurarSecciones((String) asignarSeccionFrame.getAsignatura_cmb().getSelectedItem());
         } else if (event.getSource() == asignarSeccionFrame.getSeccion_cmb()) {
             String seleccion = (String) asignarSeccionFrame.getSeccion_cmb().getSelectedItem();
-            
+
             if ("Seleccionar".equals(seleccion)) {
                 return;
             }

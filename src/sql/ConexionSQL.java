@@ -848,9 +848,9 @@ public class ConexionSQL {
         }
     }
     
-    public List<Profesor> obtenerProfesores() {
+    public List<Profesor> obtenerProfesoresSinSeccion() {
         try {
-            String query = "SELECT * FROM public.\"Profesor\"";
+            String query = "SELECT * FROM public.\"Profesor\" WHERE id_profesor NOT IN (SELECT id_profesor FROM public.\"Profesor_asignatura_seccion\" GROUP BY id_profesor HAVING COUNT(*) > 1)";
             ResultSet profesoresResultSet = statement.executeQuery(query);
             
             ArrayList<Profesor> profesores = new ArrayList<>();
@@ -891,6 +891,11 @@ public class ConexionSQL {
                 id = "id_universidad";
                 tabla = "Universidad";
             }
+            case "profesor_asignatura_seccion" -> {
+                prefijo = "PAS";
+                id = "id_profesor_asignatura";
+                tabla = "Profesor_asignatura_seccion";
+            }
         }
 
         if (prefijo == null || id == null || tabla == null) {
@@ -912,6 +917,20 @@ public class ConexionSQL {
         } catch (SQLException e) {
             System.err.println(e);
             return null;
+        }
+    }
+    
+    public int asignarSeccion(String prof_id, String asig_id, String sec_id) {
+        try {
+            String pasID = obtenerNuevoID("profesor_asignatura_seccion");
+            
+            String query = String.format("INSERT INTO public.\"Profesor_asignatura_seccion\" (id_profesor_asignatura, id_profesor, id_asignatura, id_seccion) VALUES ('%s', '%s', '%s', '%s');", pasID, prof_id, asig_id, sec_id);
+            int asignarSeccionCodigo = statement.executeUpdate(query);
+            System.out.println("asignar codigo: " + asignarSeccionCodigo + " query: " + query);
+            return asignarSeccionCodigo;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return -1;
         }
     }
 
