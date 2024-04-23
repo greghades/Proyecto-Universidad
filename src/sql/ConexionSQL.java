@@ -326,6 +326,43 @@ public class ConexionSQL {
         }
     }
 
+    public Universidad getUniversidad(String id) {
+        String query;
+        try {
+            query = String.format("SELECT * FROM public.\"Universidad\" WHERE id_universidad = '%s'", id);
+            ResultSet bigSet = statement.executeQuery(query);
+            Universidad universidad = null;
+
+            while (bigSet.next()) {
+                String idUni = bigSet.getString("id_universidad");
+                String nombreUni = bigSet.getString("nombre_universidad");
+                String direccion = bigSet.getString("direccion");
+
+                universidad = new Universidad(idUni, nombreUni, direccion);
+            }
+
+            return universidad;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public int agregarUniversidad(Universidad universidad) {
+        try {
+            //obtener valores del formulario 
+            String idUni = universidad.getId();
+            String nombre = universidad.getNombre();
+            String direccion = universidad.getDireccion();
+
+            String query = String.format("INSERT INTO public.\"Universidad\" (id_universidad, nombre_universidad, direccion) VALUES ('%s', '%s', '%s');", idUni, nombre, direccion);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarProfesor() error: " + e);
+            return -1;
+        }
+    }
+
     //ver profesor por asignatura 
     public Profesor obtenerProfesorPorAsignatura(String idProfesor) {
         try {
@@ -378,15 +415,31 @@ public class ConexionSQL {
     public int eliminarProfesor(String id) {
         try {
             String querySecundario = String.format("DELETE FROM public.\"Profesor_asignatura_seccion\" WHERE id_profesor = '%s'", id);
-            String queryPrincipal = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
             int contadorSecundario = statement.executeUpdate(querySecundario);
+            String queryPrincipal = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
             int contadorPrincipal = statement.executeUpdate(queryPrincipal);
 
-            if (contadorSecundario > 0 && contadorPrincipal > 0) {
+            boolean validacionDoble = contadorSecundario > 0 && contadorPrincipal > 0;
+            if (contadorSecundario > 0 ? validacionDoble : contadorPrincipal > 0) {
                 return 1;
             } else {
                 return 0;
             }
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.eliminarProfesor() error: " + e);
+            return -1;
+        }
+    }
+
+    //eliminar Universidad a partir de un id 
+    public int eliminarUniversidad(String id) {
+        try {
+
+            String queryDelete = String.format("DELETE FROM public.\"Universidad\" WHERE id_universidad = '%s'", id);
+
+            statement.executeUpdate(queryDelete);
+
+            return 1;
         } catch (SQLException e) {
             System.err.println("sql.ConexionSQL.eliminarProfesor() error: " + e);
             return -1;
@@ -413,6 +466,49 @@ public class ConexionSQL {
     }
 
     public Profesor obtenerProfesor(String id) {
+        try {
+            String query;
+            query = String.format("SELECT * FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
+
+            ResultSet bigSet = statement.executeQuery(query);
+            Profesor profesor = null;
+
+            while (bigSet.next()) {
+                String cedula = bigSet.getString("id_profesor");
+                String nombreCompleto = bigSet.getString("nombre_completo");
+                int edad = bigSet.getInt("edad");
+                String correo = bigSet.getString("correo");
+                String sexo = bigSet.getString("sexo");
+                String especialidad = bigSet.getString("especialidad");
+
+                profesor = new Profesor(cedula, nombreCompleto, sexo, correo, edad, sexo, especialidad);
+
+            }
+
+            return profesor;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public int modificarUniversidad(Universidad universidad, String id) {
+        try {
+            //obtener valores del formulario 
+            String nombre = universidad.getNombre();
+            String direccion = universidad.getDireccion();
+
+            String query = String.format("UPDATE public.\"Universidad\" SET nombre_universidad = '%s', direccion = '%s' WHERE id_universidad = '%s'", nombre, direccion, id);
+
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.modificarProfesor() error: " + e);
+            return -1;
+        }
+    }
+
+    //mostrar profesor
+    public Profesor motrarDatosProfesor(String id) {
         try {
             String query;
             query = String.format("SELECT * FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
@@ -466,7 +562,7 @@ public class ConexionSQL {
             String sexo = estudiante.getSexo();
 
             String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
-            
+
             int row = statement.executeUpdate(query);
             System.out.println("query" + query);
             return row;
@@ -514,6 +610,24 @@ public class ConexionSQL {
             } else {
                 return 0;
             }
+            
+//                        String query4 = String.format("DELETE FROM public.\"Retiro_materia_estudiante\" WHERE id_estudiante = '%s';", id);
+//            String query3 = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante = '%s';", id);
+//            String query2 = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s';", id);
+//            String query1 = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';", id);
+
+//            int contador1 = statement.executeUpdate(query1);
+//            int contador2 = statement.executeUpdate(query2);
+//            int contador3 = statement.executeUpdate(query3);
+//            int contador4 = statement.executeUpdate(query4);
+//            
+////            boolean validacion1 = contador1 
+//
+//            if (contadorSecundario > 0 && contadorPrincipal > 0 && contadorTerceario > 0) {
+//                return 1;
+//            } else {
+//                return 0;
+//            }
         } catch (SQLException e) {
             System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
             return -1;
@@ -730,12 +844,17 @@ public class ConexionSQL {
                 id = "id_profesor";
                 tabla = "Profesor";
             }
+            case "universidad" -> {
+                prefijo = "UNI";
+                id = "id_universidad";
+                tabla = "Universidad";
+            }
         }
 
         if (prefijo == null || id == null || tabla == null) {
             return null;
         }
-        
+
         try {
             String idQuery = String.format("SELECT '%s-' || LPAD((MAX(CAST(SUBSTRING(%s, 5) AS INTEGER)) + 1)::VARCHAR, 3, '0') AS nuevo_id FROM public.\"%s\"", prefijo, id, tabla);
             ResultSet nuevoIDResultSet = statement.executeQuery(idQuery);

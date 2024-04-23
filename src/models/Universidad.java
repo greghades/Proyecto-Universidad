@@ -22,20 +22,20 @@ package models;
  */
 public class Universidad {
     
-    private final int id;
-    private final String nombre;
-    private final String direccion;
-    //private final Decanato[] decanatos;
-    private Inscripcion[] inscripcion;
+    private String id;
+    private String nombre;
+    private String direccion;
 
-    public Universidad(int id, String nombre, String direccion/*, Decanato[] decanatos*/) {
+    
+  
+
+    public Universidad(String id, String nombre, String direccion/*, Decanato[] decanatos*/) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        //this.decanatos = decanatos;
-    }
+   }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -46,16 +46,18 @@ public class Universidad {
     public String getDireccion() {
         return direccion;
     }
-
-    /*public Decanato[] getDecanatos() {
-        return decanatos;
-    }
-*/
-    public Inscripcion[] getInscripcion() {
-        return inscripcion;
+    
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setInscripcion(Inscripcion[] inscripcion) {
-        this.inscripcion = inscripcion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+  
+   
 }

@@ -95,7 +95,7 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         fifth_label = new javax.swing.JLabel();
         fifth_textfield = new javax.swing.JTextField();
         fourth_cmb = new javax.swing.JComboBox<>();
-        fourth_label1 = new javax.swing.JLabel();
+        fourth_label = new javax.swing.JLabel();
         cedula_label = new javax.swing.JLabel();
         cedula_textfield = new javax.swing.JTextField();
         opciones_buttons_panel = new javax.swing.JPanel();
@@ -314,15 +314,15 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         fields_panel.add(fourth_cmb, gridBagConstraints);
 
-        fourth_label1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        fourth_label1.setText("Sexo:");
+        fourth_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        fourth_label.setText("Sexo:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        fields_panel.add(fourth_label1, gridBagConstraints);
+        fields_panel.add(fourth_label, gridBagConstraints);
 
         cedula_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         cedula_label.setText("Cedula:");
@@ -465,19 +465,19 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
     private javax.swing.JPanel fields_panel;
     public javax.swing.JLabel fifth_label;
     public javax.swing.JTextField fifth_textfield;
-    private javax.swing.JLabel first_label;
+    public javax.swing.JLabel first_label;
     public javax.swing.JTextField first_textfield;
     public javax.swing.JComboBox<Object> fourth_cmb;
-    private javax.swing.JLabel fourth_label1;
+    public javax.swing.JLabel fourth_label;
     private javax.swing.JLabel instruction_title_label;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton limpiar_campos_btn;
     private javax.swing.JPanel main_body_panel;
     private javax.swing.JPanel opciones_buttons_panel;
     private javax.swing.JButton registrar_btn;
-    private javax.swing.JLabel second_label;
+    public javax.swing.JLabel second_label;
     public javax.swing.JTextField second_textfield;
-    private javax.swing.JLabel third_label;
+    public javax.swing.JLabel third_label;
     public javax.swing.JTextField third_textfield;
     private javax.swing.JLabel title_label;
     private javax.swing.JPanel title_panel;

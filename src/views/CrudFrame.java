@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import models.Estudiante;
 import models.Profesor;
+import models.Universidad;
 
 public class CrudFrame extends javax.swing.JFrame {
 
@@ -96,6 +97,20 @@ public class CrudFrame extends javax.swing.JFrame {
         fifth_title_label.setText("Carrera:");
         fifth_label.setText(estudiante.getCarrera().getNombre());
         info_panel.setVisible(true);
+    }
+     
+     public void rellenarInfoUniversidad(Universidad universidad) {
+        first_crud_label.setText(universidad.getNombre());
+        second_label.setVisible(false);
+        correo_prof_title_Label.setVisible(false);
+        fifth_title_label.setVisible(false);
+        genero_title_prof_Label.setText("Direccion: ");
+        edad_title_prof_Label.setVisible(false);
+        third_label.setVisible(false);
+        fourth_label.setText(universidad.getDireccion());
+        fifth_label.setVisible(false);
+        info_panel.setVisible(true);
+      
     }
 
     public void mostrarEstadoInformacion() {
