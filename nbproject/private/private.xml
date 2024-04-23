@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/proyecto/src/views/GestionarCrudFrame.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/Main.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/CrudController.java</file>
-            <file>file:/C:/Users/User/proyecto/src/controllers/GestionarCrudController.java</file>
+            <file>file:/C:/Users/User/proyecto/src/views/AsignarSeccionFrame.java</file>
+            <file>file:/C:/Users/User/proyecto/src/controllers/AsignarSeccionController.java</file>
+            <file>file:/C:/Users/User/proyecto/src/sql/Datos.sql</file>
+            <file>file:/C:/Users/User/proyecto/src/sql/ConexionSQL.java</file>
         </group>
     </open-files>
 </project-private>

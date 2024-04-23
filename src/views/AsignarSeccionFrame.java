@@ -16,60 +16,92 @@ Yaslin Vreugdenhil.
  */
 package views;
 
-import controllers.GestionarCrudController;
+import controllers.AsignarSeccionController;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class AsignarSeccionFrame extends javax.swing.JFrame {
 
-    public GestionarCrudController gestionarCrudController;
+    public AsignarSeccionController asignarSeccionController;
 
-    public AsignarSeccionFrame(GestionarCrudController controller) {
-        this.gestionarCrudController = controller;
+    public AsignarSeccionFrame(AsignarSeccionController controller) {
+        this.asignarSeccionController = controller;
         initComponents();
         agregarListener(controller);
     }
 
     private void agregarListener(ActionListener accion) {
         back_button.addActionListener(accion);
+        profesor_cmb.addActionListener(accion);
         asignatura_cmb.addActionListener(accion);
-        carrera_cmb.addActionListener(accion);
+        seccion_cmb.addActionListener(accion);
         limpiar_campos_btn.addActionListener(accion);
-        registrar_btn.addActionListener(accion);
+        asignar_btn.addActionListener(accion);
     }
 
-    public void setupComboBox(List<String> opciones, boolean isFourthCmb) {
-        if (isFourthCmb) {
-            asignatura_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
-        } else {
-            carrera_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+    public void setupComboBox(List<String> opciones, String tipo) {
+        switch (tipo) {
+            case "asignatura" -> {
+                asignatura_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+            }
+            case "seccion" -> {
+                seccion_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+            }
+            case "profesor" -> {
+                profesor_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
+            }
+        }
+    }
+    
+    public void configurarContenidoPorPaso(int paso) {
+        switch (paso) {
+            case 0 -> {
+                asignar_btn.setVisible(false);
+                limpiar_campos_btn.setVisible(false);
+                asignatura_label.setVisible(false);
+                asignatura_cmb.setVisible(false);
+                seccion_label.setVisible(false);
+                seccion_cmb.setVisible(false);
+            }
+            case 1 -> {
+                limpiar_campos_btn.setVisible(true);
+                asignatura_label.setVisible(true);
+                asignatura_cmb.setVisible(true);
+                seccion_label.setVisible(false);
+                seccion_cmb.setVisible(false);
+                
+            } 
+            case 2 -> {
+                seccion_label.setVisible(true);
+                seccion_cmb.setVisible(true);
+            }
+            case 3 -> {
+                asignar_btn.setVisible(true);
+            }
         }
     }
 
-    public void configurarRegistro() {
-        registrar_btn.setText("Realizar registro");
-        instruction_title_label.setText("Llena todos los campos");
-        title_label.setText("Registro");
+    public JButton getAsignar_btn() {
+        return asignar_btn;
     }
 
-    public void configurarModificacion() {
-        registrar_btn.setText("Aplicar cambios");
-        instruction_title_label.setText("Edita los campos necesarios");
-        title_label.setText("Modificación");
-    }
-
-    public JButton getRegistrar_btn() {
-        return registrar_btn;
+    public JComboBox<Object> getAsignatura_cmb() {
+        return asignatura_cmb;
     }
 
     public JButton getBack_button() {
         return back_button;
     }
 
-    public JButton getLimpiar_campos_btn() {
-        return limpiar_campos_btn;
+    public JComboBox<Object> getProfesor_cmb() {
+        return profesor_cmb;
+    }
+
+    public JComboBox<Object> getSeccion_cmb() {
+        return seccion_cmb;
     }
 
     @SuppressWarnings("unchecked")
@@ -84,14 +116,14 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         instruction_title_label = new javax.swing.JLabel();
         fields_panel = new javax.swing.JPanel();
-        carrera_cmb = new javax.swing.JComboBox<>();
-        carrera_label = new javax.swing.JLabel();
-        asignatura_label = new javax.swing.JLabel();
         profesor_label = new javax.swing.JLabel();
-        asignatura_cmb = new javax.swing.JComboBox<>();
         profesor_cmb = new javax.swing.JComboBox<>();
+        asignatura_label = new javax.swing.JLabel();
+        asignatura_cmb = new javax.swing.JComboBox<>();
+        seccion_label = new javax.swing.JLabel();
+        seccion_cmb = new javax.swing.JComboBox<>();
         opciones_buttons_panel = new javax.swing.JPanel();
-        registrar_btn = new javax.swing.JButton();
+        asignar_btn = new javax.swing.JButton();
         limpiar_campos_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -102,7 +134,7 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         title_label.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         title_label.setForeground(new java.awt.Color(242, 242, 242));
         title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title_label.setText("Gestionar");
+        title_label.setText("Asignar sección");
 
         back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         back_button.setForeground(new java.awt.Color(58, 159, 220));
@@ -145,7 +177,7 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         instruction_title_label.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         instruction_title_label.setForeground(new java.awt.Color(58, 159, 220));
         instruction_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        instruction_title_label.setText("Edita los campos");
+        instruction_title_label.setText("Escoge un profesor");
         instruction_title_label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         instruction_title_label.setPreferredSize(new java.awt.Dimension(53, 40));
         instruction_title_label.setRequestFocusEnabled(false);
@@ -159,74 +191,18 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         fields_panel.setBackground(new java.awt.Color(255, 255, 255));
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
         jPanel2Layout.columnWidths = new int[] {0, 16, 0};
-        jPanel2Layout.rowHeights = new int[] {0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0};
+        jPanel2Layout.rowHeights = new int[] {0, 8, 0, 8, 0};
         fields_panel.setLayout(jPanel2Layout);
-
-        carrera_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
-        carrera_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        carrera_cmb.setMaximumSize(new java.awt.Dimension(32767, 80));
-        carrera_cmb.setMinimumSize(new java.awt.Dimension(214, 80));
-        carrera_cmb.setPreferredSize(new java.awt.Dimension(214, 32));
-        carrera_cmb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                carrera_cmbActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 48;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        fields_panel.add(carrera_cmb, gridBagConstraints);
-
-        carrera_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        carrera_label.setText("Carrera:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        fields_panel.add(carrera_label, gridBagConstraints);
-
-        asignatura_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        asignatura_label.setText("Asignatura:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        fields_panel.add(asignatura_label, gridBagConstraints);
 
         profesor_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         profesor_label.setText("Profesor:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         fields_panel.add(profesor_label, gridBagConstraints);
-
-        asignatura_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
-        asignatura_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        asignatura_cmb.setMaximumSize(new java.awt.Dimension(32767, 80));
-        asignatura_cmb.setMinimumSize(new java.awt.Dimension(214, 80));
-        asignatura_cmb.setPreferredSize(new java.awt.Dimension(214, 32));
-        asignatura_cmb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                asignatura_cmbActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 48;
-        fields_panel.add(asignatura_cmb, gridBagConstraints);
 
         profesor_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
         profesor_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
@@ -240,12 +216,68 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 48;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         fields_panel.add(profesor_cmb, gridBagConstraints);
+
+        asignatura_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        asignatura_label.setText("Asignatura:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(asignatura_label, gridBagConstraints);
+
+        asignatura_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        asignatura_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        asignatura_cmb.setMaximumSize(new java.awt.Dimension(32767, 80));
+        asignatura_cmb.setMinimumSize(new java.awt.Dimension(214, 80));
+        asignatura_cmb.setPreferredSize(new java.awt.Dimension(214, 32));
+        asignatura_cmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asignatura_cmbActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 48;
+        fields_panel.add(asignatura_cmb, gridBagConstraints);
+
+        seccion_label.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        seccion_label.setText("Seccion:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(seccion_label, gridBagConstraints);
+
+        seccion_cmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        seccion_cmb.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        seccion_cmb.setMaximumSize(new java.awt.Dimension(32767, 80));
+        seccion_cmb.setMinimumSize(new java.awt.Dimension(214, 80));
+        seccion_cmb.setPreferredSize(new java.awt.Dimension(214, 32));
+        seccion_cmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seccion_cmbActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        fields_panel.add(seccion_cmb, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -264,15 +296,15 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         opciones_prof_PanelLayout.rowHeights = new int[] {0};
         opciones_buttons_panel.setLayout(opciones_prof_PanelLayout);
 
-        registrar_btn.setBackground(new java.awt.Color(58, 159, 220));
-        registrar_btn.setForeground(new java.awt.Color(255, 255, 255));
-        registrar_btn.setText("Registrar profesor");
-        registrar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        registrar_btn.setMaximumSize(new java.awt.Dimension(80, 20));
-        registrar_btn.setPreferredSize(new java.awt.Dimension(80, 20));
-        registrar_btn.addActionListener(new java.awt.event.ActionListener() {
+        asignar_btn.setBackground(new java.awt.Color(58, 159, 220));
+        asignar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        asignar_btn.setText("Asignar");
+        asignar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        asignar_btn.setMaximumSize(new java.awt.Dimension(80, 20));
+        asignar_btn.setPreferredSize(new java.awt.Dimension(80, 20));
+        asignar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrar_btnActionPerformed(evt);
+                asignar_btnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -281,7 +313,7 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        opciones_buttons_panel.add(registrar_btn, gridBagConstraints);
+        opciones_buttons_panel.add(asignar_btn, gridBagConstraints);
 
         limpiar_campos_btn.setBackground(new java.awt.Color(58, 159, 220));
         limpiar_campos_btn.setForeground(new java.awt.Color(255, 255, 255));
@@ -314,9 +346,9 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         main_body_panelLayout.setVerticalGroup(
             main_body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_body_panelLayout.createSequentialGroup()
-                .addContainerGap(117, Short.MAX_VALUE)
+                .addContainerGap(133, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -343,13 +375,13 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void carrera_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrera_cmbActionPerformed
+    private void seccion_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seccion_cmbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_carrera_cmbActionPerformed
+    }//GEN-LAST:event_seccion_cmbActionPerformed
 
-    private void registrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrar_btnActionPerformed
+    private void asignar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignar_btnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registrar_btnActionPerformed
+    }//GEN-LAST:event_asignar_btnActionPerformed
 
     private void asignatura_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignatura_cmbActionPerformed
         // TODO add your handling code here:
@@ -360,11 +392,10 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_profesor_cmbActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton asignar_btn;
     public javax.swing.JComboBox<Object> asignatura_cmb;
     public javax.swing.JLabel asignatura_label;
     private javax.swing.JButton back_button;
-    public javax.swing.JComboBox<Object> carrera_cmb;
-    public javax.swing.JLabel carrera_label;
     private javax.swing.JPanel fields_panel;
     private javax.swing.JLabel instruction_title_label;
     private javax.swing.JPanel jPanel1;
@@ -373,7 +404,8 @@ public class AsignarSeccionFrame extends javax.swing.JFrame {
     private javax.swing.JPanel opciones_buttons_panel;
     public javax.swing.JComboBox<Object> profesor_cmb;
     public javax.swing.JLabel profesor_label;
-    private javax.swing.JButton registrar_btn;
+    public javax.swing.JComboBox<Object> seccion_cmb;
+    public javax.swing.JLabel seccion_label;
     private javax.swing.JLabel title_label;
     private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables

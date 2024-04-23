@@ -29,6 +29,7 @@ public class Main {
         GestionarCrudController gestionarCrudController = GestionarCrudController.getInstance();
         crudController.setGestionarCrudController(gestionarCrudController);
         gestionarCrudController.setCrudController(crudController);
+        AsignarSeccionController asignarSeccionController = AsignarSeccionController.getInstance();
 
         inicioController.setInscripcionController(inscripcionController);
         inicioController.setListaSeccionController(listaSeccionController);
@@ -36,6 +37,7 @@ public class Main {
         inicioController.setRetirarMateriaController(retirarMateriaController);
         inicioController.setAsignarNotaController(asignarNotaController);
         inicioController.setCrudController(crudController);
+        inicioController.setAsignarSeccionController(asignarSeccionController);
 
         inscripcionController.setInicioController(inicioController);
         listaSeccionController.setInicioController(inicioController);
@@ -43,5 +45,6 @@ public class Main {
         retirarMateriaController.setInicioController(inicioController);
         asignarNotaController.setInicioController(inicioController);
         crudController.setInicioController(inicioController);
+        asignarSeccionController.setInicioController(inicioController);
     }
 }

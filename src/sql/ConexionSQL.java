@@ -326,7 +326,7 @@ public class ConexionSQL {
         }
     }
 
-    public Universidad getUniversidad(String id) {
+    public Universidad obtenerUniversidad(String id) {
         String query;
         try {
             query = String.format("SELECT * FROM public.\"Universidad\" WHERE id_universidad = '%s'", id);
@@ -823,6 +823,55 @@ public class ConexionSQL {
             return null;
         }
 
+    }
+    
+    public List<Asignatura> obtenerAsignaturas() {
+        try {
+            String query = "SELECT * FROM public.\"Asignaturas\"";
+            ResultSet asignaturasResultSet = statement.executeQuery(query);
+            
+            ArrayList<Asignatura> asignaturas = new ArrayList<>();
+            
+            while(asignaturasResultSet.next()) {
+                String id_asignatura = asignaturasResultSet.getString("id_asignatura");
+                String nombre_asignatura = asignaturasResultSet.getString("nombre_asignatura");
+                int carga_academica = asignaturasResultSet.getInt("carga_academica");
+                
+                Asignatura asignatura = new Asignatura(id_asignatura, nombre_asignatura, carga_academica);
+                asignaturas.add(asignatura);
+            }
+            
+            return asignaturas;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+    
+    public List<Profesor> obtenerProfesores() {
+        try {
+            String query = "SELECT * FROM public.\"Profesor\"";
+            ResultSet profesoresResultSet = statement.executeQuery(query);
+            
+            ArrayList<Profesor> profesores = new ArrayList<>();
+            
+            while(profesoresResultSet.next()) {
+                String id_profesor = profesoresResultSet.getString("id_profesor");
+                int edad = profesoresResultSet.getInt("edad");
+                String nombre_completo = profesoresResultSet.getString("nombre_completo");
+                String correo = profesoresResultSet.getString("correo");
+                String sexo = profesoresResultSet.getString("sexo");
+                String especialidad = profesoresResultSet.getString("especialidad");
+                
+                Profesor profesor = new Profesor(id_profesor, nombre_completo, "", correo, edad, sexo, especialidad);
+                profesores.add(profesor);
+            }
+            
+            return profesores;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
     }
 
     public String obtenerNuevoID(String tipo) {
