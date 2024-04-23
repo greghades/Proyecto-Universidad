@@ -26,13 +26,16 @@ import models.Carrera;
 import models.Estudiante;
 import models.Profesor;
 import models.Universidad;
+import observer.Observable;
+import observer.Observer;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.GestionarCrudFrame;
 
-public class GestionarCrudController implements ActionListener {
+public class GestionarCrudController implements ActionListener, Observable {
 
     private static GestionarCrudController instance;
+    private final List<Observer> observers = new ArrayList<>();
     public ConexionSQL connection = ConexionSQL.getInstance();
     public GestionarCrudFrame gestionarCrudFrame;
     public CrudController crudController;
@@ -73,9 +76,12 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.setVisible(true);
 
         switch (tipoCrud) {
-            case "estudiante" -> configurarCamposEstudiante();
-            case "profesor" -> configurarCamposProfesor();
-            case "universidad" -> configurarCamposUniversidad();
+            case "estudiante" ->
+                configurarCamposEstudiante();
+            case "profesor" ->
+                configurarCamposProfesor();
+            case "universidad" ->
+                configurarCamposUniversidad();
         }
 
         if (esAgregar) {
@@ -347,6 +353,7 @@ public class GestionarCrudController implements ActionListener {
         //consulta
         int rowsAffected = connection.modificarProfesor(profesor, cedula);
         if (rowsAffected > 0) {
+            crudController.profesor = profesor;
             JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -377,6 +384,7 @@ public class GestionarCrudController implements ActionListener {
         int rowsAffected = connection.modificarEstudiante(estudiante, cedula);
 
         if (rowsAffected > 0) {
+            crudController.estudiante = estudiante;
             JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -398,6 +406,7 @@ public class GestionarCrudController implements ActionListener {
         //consulta
         int rowsAffected = connection.modificarUniversidad(universidad, id);
         if (rowsAffected > 0) {
+            crudController.universidad = universidad;
             JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -457,13 +466,32 @@ public class GestionarCrudController implements ActionListener {
                         modificarUniversidad();
                     case "estudiante" ->
                         modificarEstudiante();
-
                     default ->
                         throw new AssertionError();
                 }
+                this.notifyObservers();
             }
         } else if (event.getSource() == gestionarCrudFrame.getLimpiar_campos_btn()) {
             limpiarVista();
+        }
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    // Método para remover observadores
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    // Método para notificar a los observadores
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
         }
     }
 }

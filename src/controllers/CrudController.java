@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import models.Estudiante;
 import models.Profesor;
 import models.Universidad;
+import observer.Observer;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.CrudFrame;
@@ -30,7 +31,7 @@ import views.CrudFrame;
  *
  * @author Usuario
  */
-public class CrudController implements ActionListener {
+public class CrudController implements ActionListener, Observer {
 
     public Profesor profesor;
     public Estudiante estudiante;
@@ -78,6 +79,7 @@ public class CrudController implements ActionListener {
 
     public void setGestionarCrudController(GestionarCrudController gestionarCrudController) {
         this.gestionarCrudController = gestionarCrudController;
+        this.gestionarCrudController.addObserver(this);
     }
 
     //mostrar datos del profesor de la base de datos
@@ -221,5 +223,22 @@ public class CrudController implements ActionListener {
         } else if (event.getSource() == crudFrame.getBuscar_btn()) {
             crudFrame.mostrarEstadoBuscar();
         }
+    }
+
+    @Override
+    public void update() {
+        switch (tipoCrud) {
+            case "universidad" -> {
+                crudFrame.rellenarInfoUniversidad(universidad);
+
+            }
+            case "profesor" -> {
+                crudFrame.rellenarInfoProfesor(profesor);
+            }
+            case "estudiante" -> {
+                crudFrame.rellenarInfoEstudiante(estudiante);
+            }
+        }
+        crudFrame.mostrarEstadoInformacion();
     }
 }
