@@ -124,6 +124,7 @@ public class CrudFrame extends javax.swing.JFrame {
         reestablecer_btn.setVisible(true);
         info_container_panel.setVisible(false);
         question_title_label.setText("Realiza tu búsqueda");
+        id_textField.setText("ID");
     }
 
     public JPanel getId_panel() {

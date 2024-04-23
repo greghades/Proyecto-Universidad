@@ -67,11 +67,16 @@ public class GestionarCrudController implements ActionListener {
         Profesor profesor = crudController.profesor;
         Universidad universidad = crudController.universidad;
         Estudiante estudiante = crudController.estudiante;
-        System.out.println("es agregar: " + esAgregar + " profesor: " + profesor + " tipoCrud1: " + tipoCrud);
 
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(true);
+
+        switch (tipoCrud) {
+            case "estudiante" -> configurarCamposEstudiante();
+            case "profesor" -> configurarCamposProfesor();
+            case "universidad" -> configurarCamposUniversidad();
+        }
 
         if (esAgregar) {
             gestionarCrudFrame.configurarRegistro();
@@ -93,18 +98,6 @@ public class GestionarCrudController implements ActionListener {
             }
 
             gestionarCrudFrame.configurarModificacion();
-        }
-
-        switch (tipoCrud) {
-            case "estudiante":
-                configurarCamposEstudiante();
-                break;
-            case "profesor":
-                configurarCamposProfesor();
-                break;
-            case "universidad":
-                configurarCamposUniversidad();
-                break;
         }
     }
 
@@ -133,6 +126,7 @@ public class GestionarCrudController implements ActionListener {
                 gestionarCrudFrame.first_textfield.setText("Nombre");
                 gestionarCrudFrame.second_textfield.setText("Correo");
                 gestionarCrudFrame.third_textfield.setText("Edad");
+                gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
                 gestionarCrudFrame.carrera_cmb.setSelectedIndex(0);
 
             }
@@ -161,7 +155,7 @@ public class GestionarCrudController implements ActionListener {
         gestionarCrudFrame.third_textfield.setText(String.valueOf(estudiante.getEdad()));
         gestionarCrudFrame.fourth_cmb.setSelectedIndex("Femenino".equals(estudiante.getSexo()) ? 1 : 2);
         gestionarCrudFrame.carrera_cmb.setSelectedItem(estudiante.getCarrera().getNombre());
-        System.out.println("Estudiante rellenar datos" + estudiante);
+        System.out.println("Estudiante rellenar datos" + estudiante.getCarrera().getNombre());
     }
 
     public void mostrarCarreras() {
@@ -319,17 +313,11 @@ public class GestionarCrudController implements ActionListener {
         int edad = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
         String sexo = (String) gestionarCrudFrame.fourth_cmb.getSelectedItem();
         int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
-        Carrera carreraSeleccionada = carreras.get(selectedIndex);
+        Carrera carreraSeleccionada = carreras.get(selectedIndex - 1);
         Carrera carrera = carreraSeleccionada;
 
         //nuevos valores
         Estudiante nuevoEstudiante = new Estudiante(carrera, cedula, nombre_completo, " ", correo, edad, sexo);
-        nuevoEstudiante.setCedula(cedula);
-        nuevoEstudiante.setNombre(nombre_completo);
-        nuevoEstudiante.setEdad(edad);
-        nuevoEstudiante.setCorreo(correo);
-        nuevoEstudiante.setSexo(sexo);
-        nuevoEstudiante.setCarrera(carrera);
 
         int rowsAffected = connection.agregarEstudiante(nuevoEstudiante);
 
@@ -376,7 +364,7 @@ public class GestionarCrudController implements ActionListener {
         String correo = gestionarCrudFrame.second_textfield.getText();
         //combobox carrera
         int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
-        Carrera carreraSeleccionada = carreras.get(selectedIndex);
+        Carrera carreraSeleccionada = carreras.get(selectedIndex - 1);
         Carrera carrera = carreraSeleccionada;
 
         estudiante.setNombre(nombre_completo);

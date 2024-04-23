@@ -561,10 +561,11 @@ public class ConexionSQL {
             String correo = estudiante.getCorreo();
             String sexo = estudiante.getSexo();
 
+            System.out.println("estudiante: " + estudiante);
             String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
 
             int row = statement.executeUpdate(query);
-            System.out.println("query" + query);
+            System.out.println("query: " + query + " row: " + row);
             return row;
         } catch (SQLException e) {
             System.err.println("sql.ConexionSQL.agregarEstudiante() error: " + e);
@@ -594,40 +595,32 @@ public class ConexionSQL {
 
     public int eliminarEstudiante(String id) {
         try {
-            //eliminar de la tabla de inscripcion
-            String querySecundario = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s';", id);
-            //eliminar de la tabla de notas de Estudiante
-            String queryTerceario = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante = '%s';", id);
-            //eliminar de la tabla de estudiantes
-            String queryPrincipal = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';", id);
+            String query4 = String.format("DELETE FROM public.\"Retiro_materia_estudiante\" WHERE id_estudiante = '%s';", id);
+            String query3 = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante = '%s';", id);
+            String query2 = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s';", id);
+            String query1 = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';", id);
 
-            int contadorTerceario = statement.executeUpdate(queryTerceario);
-            int contadorSecundario = statement.executeUpdate(querySecundario);
-            int contadorPrincipal = statement.executeUpdate(queryPrincipal);
+            int contador1 = statement.executeUpdate(query1);
+            int contador2 = statement.executeUpdate(query2);
+            int contador3 = statement.executeUpdate(query3);
+            int contador4 = statement.executeUpdate(query4);
 
-            if (contadorSecundario > 0 && contadorPrincipal > 0 && contadorTerceario > 0) {
+            boolean validacion1 = contador1 > 0;
+            boolean validacion2 = contador1 > 0 && contador2 > 0;
+            boolean validacion3 = contador1 > 0 && contador2 > 0 && contador3 > 0;
+            boolean validacion4 = contador1 > 0 && contador2 > 0 && contador3 > 0 && contador4 > 0;
+
+            if (validacion4) {
+                return 1;
+            } else if (validacion3) {
+                return 1;
+            } else if (validacion2) {
+                return 1;
+            } else if (validacion1) {
                 return 1;
             } else {
                 return 0;
             }
-            
-//                        String query4 = String.format("DELETE FROM public.\"Retiro_materia_estudiante\" WHERE id_estudiante = '%s';", id);
-//            String query3 = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante = '%s';", id);
-//            String query2 = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s';", id);
-//            String query1 = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';", id);
-
-//            int contador1 = statement.executeUpdate(query1);
-//            int contador2 = statement.executeUpdate(query2);
-//            int contador3 = statement.executeUpdate(query3);
-//            int contador4 = statement.executeUpdate(query4);
-//            
-////            boolean validacion1 = contador1 
-//
-//            if (contadorSecundario > 0 && contadorPrincipal > 0 && contadorTerceario > 0) {
-//                return 1;
-//            } else {
-//                return 0;
-//            }
         } catch (SQLException e) {
             System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
             return -1;
