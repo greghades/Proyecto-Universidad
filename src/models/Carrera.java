@@ -18,12 +18,12 @@ Yaslin Vreugdenhil.
 package models;
 
 import java.util.List;
-
+import compose.ComponenteUniversitario;
 /**
  *
  * @author User
  */
-public class Carrera {
+public class Carrera implements ComponenteUniversitario{
     
     private String id;
     private String nombre;
@@ -36,6 +36,7 @@ public class Carrera {
     }
     
 
+    @Override
     public String getId() {
         return id;
     }
@@ -44,6 +45,7 @@ public class Carrera {
         this.id = id;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }

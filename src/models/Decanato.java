@@ -16,36 +16,55 @@ Yaslin Vreugdenhil.
  */
 
 package models;
+import compose.ComponenteUniversitario;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author User
  */
-public class Decanato {
-    private final int id;
-    private final String nombre;
-    private final Carrera[] carreras;
+public class Decanato implements ComponenteUniversitario{
+    private String id;
+    private String nombre;
+    private List<ComponenteUniversitario> componentes;
 
-    public Decanato(int id, String nombre, Carrera[] carreras) {
+    public Decanato(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.carreras = carreras;
+        this.componentes = new ArrayList<>();
     }
 
-    public int getId() {
+     public void agregarComponente(ComponenteUniversitario componente) {
+        componentes.add(componente);
+    }
+
+    public void eliminarComponente(ComponenteUniversitario componente) {
+        componentes.remove(componente);
+    }
+    @Override
+    public String getId() {
         return id;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
 
-    public Carrera[] getCarreras() {
-        return carreras;
-    }
-    
     public  Estudiante[] listarMejoresEstudiantes() {
         Estudiante[] estudiantes = new Estudiante[0];
         return estudiantes;
     }
+    
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
+
+
+
