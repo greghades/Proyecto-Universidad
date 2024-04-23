@@ -224,7 +224,7 @@ public class InicioFrame extends javax.swing.JFrame {
         universidad_button.setBackground(new java.awt.Color(58, 159, 220));
         universidad_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         universidad_button.setForeground(new java.awt.Color(255, 255, 255));
-        universidad_button.setText("Gestionar Universidad");
+        universidad_button.setText("Gestionar universidad");
         universidad_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         universidad_button.setPreferredSize(new java.awt.Dimension(300, 70));
         universidad_button.addActionListener(new java.awt.event.ActionListener() {
