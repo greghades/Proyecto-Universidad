@@ -41,6 +41,7 @@ public class InicioFrame extends javax.swing.JFrame {
         estudiante_button.addActionListener(accion);
         profesor_button.addActionListener(accion);
         universidad_button.addActionListener(accion);
+        asignar_seccion_button.addActionListener(accion);
     }
 
     public JButton getInscripcion_button() {
@@ -62,19 +63,22 @@ public class InicioFrame extends javax.swing.JFrame {
     public JButton getRetirar_materia_button() {
         return retirar_materia_button;
     }
-    
-    public JButton getEstudiante_Button(){
+
+    public JButton getEstudiante_Button() {
         return estudiante_button;
     }
-    
+
     public JButton getProfesor_Button() {
         return profesor_button;
     }
-    
-     public JButton getUniversidad_Button() {
+
+    public JButton getUniversidad_Button() {
         return universidad_button;
     }
 
+    public JButton getAsignar_Seccion_Button() {
+        return asignar_seccion_button;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,6 +102,7 @@ public class InicioFrame extends javax.swing.JFrame {
         universidad_button = new javax.swing.JButton();
         profesor_button = new javax.swing.JButton();
         estudiante_button = new javax.swing.JButton();
+        asignar_seccion_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -271,6 +276,22 @@ public class InicioFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(estudiante_button, gridBagConstraints);
 
+        asignar_seccion_button.setBackground(new java.awt.Color(58, 159, 220));
+        asignar_seccion_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        asignar_seccion_button.setForeground(new java.awt.Color(255, 255, 255));
+        asignar_seccion_button.setText("Asignar seccion profesor");
+        asignar_seccion_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        asignar_seccion_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        asignar_seccion_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asignar_seccion_buttonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        jPanel2.add(asignar_seccion_button, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -279,7 +300,7 @@ public class InicioFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1089, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1115, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -327,9 +348,14 @@ public class InicioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_estudiante_buttonActionPerformed
 
+    private void asignar_seccion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignar_seccion_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asignar_seccion_buttonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton asignar_nota_button;
+    private javax.swing.JButton asignar_seccion_button;
     private javax.swing.JButton estudiante_button;
     private javax.swing.JButton inscripcion_button;
     private javax.swing.JPanel jPanel2;
