@@ -488,13 +488,10 @@ public class ConexionSQL {
 
     public int eliminarProfesor(String id) {
         try {
-            String querySecundario = String.format("DELETE FROM public.\"Profesor_asignatura_seccion\" WHERE id_profesor = '%s'", id);
-            int contadorSecundario = statement.executeUpdate(querySecundario);
             String queryPrincipal = String.format("DELETE FROM public.\"Profesor\" WHERE id_profesor = '%s'", id);
-            int contadorPrincipal = statement.executeUpdate(queryPrincipal);
+            int contador = statement.executeUpdate(queryPrincipal);
 
-            boolean validacionDoble = contadorSecundario > 0 && contadorPrincipal > 0;
-            if (contadorSecundario > 0 ? validacionDoble : contadorPrincipal > 0) {
+            if (contador > 0) {
                 return 1;
             } else {
                 return 0;
@@ -523,39 +520,56 @@ public class ConexionSQL {
     //eliminar carrera a partir de un id 
     public int eliminarCarrera(String id) {
         try {
-            String query5 = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante IN (SELECT id_estudiante FROM public.\"Estudiantes\" WHERE id_carrera = '%s');", id);
-            String query4 = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante IN ( SELECT id_estudiante FROM public.\"Estudiantes\" WHERE id_carrera = '%s');", id);
-            String query3 = String.format("DELETE FROM public.\"Asignaturas_carrera\" WHERE id_carrera = '%s';", id);
-            String query2 = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_carrera = '%s'", id);
-            String query1 = String.format("DELETE FROM public.\"Carreras\" WHERE id_carrera = '%s'", id);
+            String query = String.format("DELETE FROM public.\"Carreras\" WHERE id_carrera = '%s'", id);
 
-            int contador5 = statement.executeUpdate(query5);
-            int contador4 = statement.executeUpdate(query4);
-            int contador3 = statement.executeUpdate(query3);
-            int contador2 = statement.executeUpdate(query2);
-            int contador1 = statement.executeUpdate(query1);
+            int contador = statement.executeUpdate(query);
 
-            boolean validacion1 = contador1 > 0;
-            boolean validacion2 = contador1 > 0 && contador2 > 0;
-            boolean validacion3 = contador1 > 0 && contador2 > 0 && contador3 > 0;
-            boolean validacion4 = contador1 > 0 && contador2 > 0 && contador3 > 0 && contador4 > 0;
-            boolean validacion5 = contador1 > 0 && contador2 > 0 && contador3 > 0 && contador4 > 0 && contador5 > 0;
+            boolean validacion = contador > 0;
 
-            if (validacion5) {
-                return 1;
-            } else if (validacion4) {
-                return 1;
-            } else if (validacion3) {
-                return 1;
-            } else if (validacion2) {
-                return 1;
-            } else if (validacion1) {
+            if (validacion) {
                 return 1;
             } else {
                 return 0;
             }
         } catch (SQLException e) {
             System.err.println("sql.ConexionSQL.eliminarCarrera() error: " + e);
+            return -1;
+        }
+    }
+    
+    public int eliminarDecanato(String id) {
+        try {
+            String query = String.format("DELETE FROM public.\"Decanatos\" WHERE id_decanato = '%s'", id);
+
+            int contador1 = statement.executeUpdate(query);
+
+            boolean validacion1 = contador1 > 0;
+                if (validacion1) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.eliminarCarrera() error: " + e);
+            return -1;
+        }
+    }
+    
+    public int eliminarEstudiante(String id) {
+        try {
+            String query = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';", id);
+
+            int contador = statement.executeUpdate(query);
+
+            boolean validacion = contador > 0;
+
+            if (validacion) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
             return -1;
         }
     }
@@ -765,40 +779,6 @@ public class ConexionSQL {
         }
     }
 
-    public int eliminarEstudiante(String id) {
-        try {
-            String query4 = String.format("DELETE FROM public.\"Retiro_materia_estudiante\" WHERE id_estudiante = '%s';", id);
-            String query3 = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante = '%s';", id);
-            String query2 = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s';", id);
-            String query1 = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_estudiante = '%s';", id);
-
-            int contador1 = statement.executeUpdate(query1);
-            int contador2 = statement.executeUpdate(query2);
-            int contador3 = statement.executeUpdate(query3);
-            int contador4 = statement.executeUpdate(query4);
-
-            boolean validacion1 = contador1 > 0;
-            boolean validacion2 = contador1 > 0 && contador2 > 0;
-            boolean validacion3 = contador1 > 0 && contador2 > 0 && contador3 > 0;
-            boolean validacion4 = contador1 > 0 && contador2 > 0 && contador3 > 0 && contador4 > 0;
-
-            if (validacion4) {
-                return 1;
-            } else if (validacion3) {
-                return 1;
-            } else if (validacion2) {
-                return 1;
-            } else if (validacion1) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } catch (SQLException e) {
-            System.out.println("sql.ConexionSQL.inscribirEstudiante() error: " + e);
-            return -1;
-        }
-    }
-
     //buscar Estudiante
     public Estudiante obtenerEstudiante(String id) {
         try {
@@ -925,8 +905,6 @@ public class ConexionSQL {
             System.out.print("\ncedula: " + estudiante_id + " asignatura: " + asignatura_id + " seccion: " + seccion_id + " periodo: " + periodo_id);
             String borrarInscripcionQuery = String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante = '%s' AND id_asignatura = '%s' AND id_periodo = '%s' AND id_seccion = '%s'", estudiante_id, asignatura_id, periodo_id, seccion_id);
             int borrarInscripcionCodigo = statement.executeUpdate(borrarInscripcionQuery);
-            System.out.print("\ncodigo: " + borrarInscripcionCodigo);
-            System.out.print("\nquery: " + borrarInscripcionQuery);
 
             if (borrarInscripcionCodigo == 0) {
                 return "No se pudo llevar a cabo el retiro de la asignatura correctamente";

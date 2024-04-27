@@ -165,7 +165,7 @@ public class CrudController implements ActionListener, Observer {
         if (decanato == null) {
             JOptionPane.showMessageDialog(null, "No existe ningun decanato con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
-            System.out.println("decanato buscar" + decanato.getNombre_universidad()+ " decanato" + decanato.getNombre());
+            System.out.println("decanato buscar" + decanato.getNombre_universidad() + " decanato" + decanato.getNombre());
             crudFrame.rellenarInfoDecanato(decanato);
             crudFrame.mostrarEstadoInformacion();
         }
@@ -194,6 +194,11 @@ public class CrudController implements ActionListener, Observer {
 
     //eliminar 
     public void eliminarProfesor() {
+        if ("ID".equals(crudFrame.getID()) || crudFrame.getID().isEmpty() || !crudFrame.getID().equals(profesor.getCedula())) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un ID de profesor", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int rowsAffected = connection.eliminarProfesor(crudFrame.getID());
 
         if (rowsAffected > 0) {
@@ -205,6 +210,11 @@ public class CrudController implements ActionListener, Observer {
     }
 
     public void eliminarEstudiante() {
+        if ("ID".equals(crudFrame.getID()) || crudFrame.getID().isEmpty() || !crudFrame.getID().equals(estudiante.getCedula())) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un ID de estudiante", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int rowsAffected = connection.eliminarEstudiante(crudFrame.getID());
 
         if (rowsAffected > 0) {
@@ -217,15 +227,15 @@ public class CrudController implements ActionListener, Observer {
 
     //eliminar 
     public void eliminarUniversidad() {
-        if ("Cedula".equals(crudFrame.getID()) || crudFrame.getID().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debes ingresar un Id de universidad", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+        if ("ID".equals(crudFrame.getID()) || crudFrame.getID().isEmpty() || !crudFrame.getID().equals(universidad.getId())) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un ID de universidad", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int rowsAffected = connection.eliminarUniversidad(crudFrame.getID());
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "La universidad fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La universidad fue eliminada exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
             crudFrame.mostrarEstadoInicial();
         } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -233,15 +243,31 @@ public class CrudController implements ActionListener, Observer {
     }
 
     public void eliminarCarrera() {
-        if ("Cedula".equals(crudFrame.getID()) || crudFrame.getID().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debes ingresar un Id de carrera", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+        if ("ID".equals(crudFrame.getID()) || crudFrame.getID().isEmpty() || !crudFrame.getID().equals(carrera.getId())) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un ID de carrera", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int rowsAffected = connection.eliminarCarrera(crudFrame.getID());
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "La carrera fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La carrera fue eliminada exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            crudFrame.mostrarEstadoInicial();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void eliminarDecanato() {
+        if ("ID".equals(crudFrame.getID()) || crudFrame.getID().isEmpty() || !crudFrame.getID().equals(decanato.getId())) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un ID de decanato", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int rowsAffected = connection.eliminarDecanato(crudFrame.getID());
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "El decanato fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
             crudFrame.mostrarEstadoInicial();
         } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -260,6 +286,9 @@ public class CrudController implements ActionListener, Observer {
             }
             case "carrera" -> {
                 eliminarCarrera();
+            }
+            case "decanato" -> {
+                eliminarDecanato();
             }
             default ->
                 throw new AssertionError();
@@ -301,6 +330,9 @@ public class CrudController implements ActionListener, Observer {
             }
             case "estudiante" -> {
                 crudFrame.rellenarInfoEstudiante(estudiante);
+            }
+            case "decanato" -> {
+                crudFrame.rellenarInfoDecanato(decanato);
             }
         }
         crudFrame.mostrarEstadoInformacion();

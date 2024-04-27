@@ -33,8 +33,8 @@ CREATE TABLE "Decanatos" (
   "estado" bool,
   PRIMARY KEY ("id_decanato"),
   CONSTRAINT "FK_Decanatos.id_universidad"
-    FOREIGN KEY ("id_universidad")
-      REFERENCES "Universidad"("id_universidad")
+    FOREIGN KEY ("id_universidad") 
+      REFERENCES "Universidad"("id_universidad") ON DELETE CASCADE
 );
 
 INSERT INTO public."Decanatos" (id_decanato,id_universidad,nombre_decanato,direccion,estado) VALUES
@@ -50,7 +50,7 @@ CREATE TABLE "Carreras" (
   PRIMARY KEY ("id_carrera"),
   CONSTRAINT "FK_Carreras.id_decanato"
     FOREIGN KEY ("id_decanato")
-      REFERENCES "Decanatos"("id_decanato")
+      REFERENCES "Decanatos"("id_decanato") ON DELETE CASCADE
 );
 
 INSERT INTO public."Carreras" (id_carrera,id_decanato,nombre_carrera,modalidad,estado,duracion) VALUES
@@ -91,10 +91,10 @@ CREATE TABLE "Asignaturas_carrera" (
   PRIMARY KEY ("id_asignatura_carrera"),
   CONSTRAINT "FK_Asignaturas_carrera.id_carrera"
     FOREIGN KEY ("id_carrera")
-      REFERENCES "Carreras"("id_carrera"),
+      REFERENCES "Carreras"("id_carrera") ON DELETE CASCADE,
   CONSTRAINT "FK_Asignaturas_carrera.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura")
+      REFERENCES "Asignaturas"("id_asignatura") ON DELETE CASCADE
 );
 
 INSERT INTO public."Asignaturas_carrera" (id_asignatura_carrera,id_carrera,id_asignatura) VALUES
@@ -150,7 +150,7 @@ CREATE TABLE "Estudiantes" (
   PRIMARY KEY ("id_estudiante"),
   CONSTRAINT "FK_Estudiantes.id_carrera"
     FOREIGN KEY ("id_carrera")
-      REFERENCES "Carreras"("id_carrera")
+      REFERENCES "Carreras"("id_carrera") ON DELETE CASCADE
 );
 
 INSERT INTO public."Estudiantes" (id_estudiante,id_carrera,nombre_completo,edad,correo,direccion,sexo,estado) VALUES
@@ -250,13 +250,13 @@ CREATE TABLE "Profesor_asignatura_seccion" (
   PRIMARY KEY ("id_profesor_asignatura"),
   CONSTRAINT "FK_Profesor_asignatura_seccion.id_profesor"
     FOREIGN KEY ("id_profesor")
-      REFERENCES "Profesor"("id_profesor"),
+      REFERENCES "Profesor"("id_profesor") ON DELETE CASCADE,
   CONSTRAINT "FK_Profesor_asignatura_seccion.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura"),
+      REFERENCES "Asignaturas"("id_asignatura") ON DELETE CASCADE,
   CONSTRAINT "FK_Profesor_asignatura_seccion.id_seccion"
     FOREIGN KEY ("id_seccion")
-      REFERENCES "Secciones"("id_seccion")
+      REFERENCES "Secciones"("id_seccion") ON DELETE CASCADE
 );
 
 INSERT INTO public."Profesor_asignatura_seccion" (id_profesor_asignatura, id_profesor, id_asignatura, id_seccion) VALUES
@@ -332,10 +332,10 @@ CREATE TABLE "Semestre_Asignatura" (
   PRIMARY KEY ("id_semestre_asignatura"),
   CONSTRAINT "FK_Semestre_Asignatura.id_semestre"
     FOREIGN KEY ("id_semestre")
-      REFERENCES "Semestre"("id_semestre"),
+      REFERENCES "Semestre"("id_semestre") ON DELETE CASCADE,
   CONSTRAINT "FK_Semestre_Asignatura.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura")
+      REFERENCES "Asignaturas"("id_asignatura") ON DELETE CASCADE
 );
 
 INSERT INTO public."Semestre_Asignatura" (id_semestre_asignatura, id_semestre, id_asignatura) VALUES
@@ -365,16 +365,16 @@ CREATE TABLE "Inscripcion" (
   "estado" bool,
   CONSTRAINT "FK_Inscripcion.id_estudiante"
     FOREIGN KEY ("id_estudiante")
-      REFERENCES "Estudiantes"("id_estudiante"),
+      REFERENCES "Estudiantes"("id_estudiante") ON DELETE CASCADE,
   CONSTRAINT "FK_Inscripcion.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura"),
+      REFERENCES "Asignaturas"("id_asignatura") ON DELETE CASCADE,
   CONSTRAINT "FK_Inscripcion.id_periodo"
     FOREIGN KEY ("id_periodo")
-      REFERENCES "Periodo_academico"("id_periodo"),
+      REFERENCES "Periodo_academico"("id_periodo") ON DELETE CASCADE,
   CONSTRAINT "FK_Inscripcion.id_seccion"
     FOREIGN KEY ("id_seccion")
-      REFERENCES "Secciones"("id_seccion")
+      REFERENCES "Secciones"("id_seccion") ON DELETE CASCADE
 );
 
 WITH CTE AS (
@@ -426,13 +426,13 @@ CREATE TABLE "Nota_estudiante" (
   "nota" float,
   CONSTRAINT "FK_Nota_estudiante.id_estudiante"
     FOREIGN KEY ("id_estudiante")
-      REFERENCES "Estudiantes"("id_estudiante"),
+      REFERENCES "Estudiantes"("id_estudiante") ON DELETE CASCADE,
   CONSTRAINT "FK_Nota_estudiante.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura"),
+      REFERENCES "Asignaturas"("id_asignatura") ON DELETE CASCADE,
   CONSTRAINT "FK_Nota_estudiante.id_seccion"
     FOREIGN KEY ("id_seccion")
-      REFERENCES "Secciones"("id_seccion")
+      REFERENCES "Secciones"("id_seccion") ON DELETE CASCADE
 );
 
 -- Primero, asignamos notas aleatorias a los estudiantes existentes
@@ -456,8 +456,8 @@ CREATE TABLE "Retiro_materia_estudiante" (
   "id_asignatura" varchar(25) NOT NULL,
   CONSTRAINT "FK_Retiro_materia_estudiante.id_estudiante"
     FOREIGN KEY ("id_estudiante")
-      REFERENCES "Estudiantes"("id_estudiante"),
+      REFERENCES "Estudiantes"("id_estudiante") ON DELETE CASCADE,
   CONSTRAINT "FK_Retiro_materia_estudiante.id_asignatura"
     FOREIGN KEY ("id_asignatura")
-      REFERENCES "Asignaturas"("id_asignatura")
+      REFERENCES "Asignaturas"("id_asignatura") ON DELETE CASCADE
 );
