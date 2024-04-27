@@ -34,7 +34,7 @@ public class CrudFrame extends javax.swing.JFrame {
 
     private void agregarListener(ActionListener accion) {
         //dejalo como backbutton
-        back_button.addActionListener(accion);
+        botonBean1.addActionListener(accion);
         buscar_btn.addActionListener(accion);
         buscar_id_btn.addActionListener(accion);
         eliminar_btn.addActionListener(accion);
@@ -109,7 +109,7 @@ public class CrudFrame extends javax.swing.JFrame {
     }
 
     public JButton getBack_button() {
-        return back_button;
+        return botonBean1;
     }
 
     public JButton getBuscar_id_btn() {
@@ -139,14 +139,14 @@ public class CrudFrame extends javax.swing.JFrame {
     public JButton getRegistrar_btn() {
         return registrar_btn;
     }
-
+  
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         title_panel = new javax.swing.JPanel();
         main_title_label = new javax.swing.JLabel();
-        back_button = new javax.swing.JButton();
+        botonBean1 = new ComponenteBean.BotonBean();
         main_body_panel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -186,38 +186,31 @@ public class CrudFrame extends javax.swing.JFrame {
         main_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         main_title_label.setText("Gestionar titulo");
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("<Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
+        botonBean1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        botonBean1.setForeground(new java.awt.Color(58, 159, 220));
+        botonBean1.setToolTipText("");
 
         javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
         title_panel.setLayout(title_panelLayout);
         title_panelLayout.setHorizontalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(main_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(100, 100, 100))
+                .addGap(19, 19, 19)
+                .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(main_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                .addGap(146, 146, 146))
         );
         title_panelLayout.setVerticalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
-                .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(title_panelLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(title_panelLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(main_title_label)))
-                .addGap(16, 16, 16))
+                .addGap(16, 16, 16)
+                .addComponent(main_title_label)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, title_panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         main_body_panel.setBackground(new java.awt.Color(255, 255, 255));
@@ -557,9 +550,9 @@ public class CrudFrame extends javax.swing.JFrame {
         main_body_panelLayout.setVerticalGroup(
             main_body_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_body_panelLayout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
+                .addContainerGap(66, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -585,10 +578,6 @@ public class CrudFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_back_buttonActionPerformed
 
     private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
         // TODO add your handling code here:
@@ -616,7 +605,7 @@ public class CrudFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
+    private ComponenteBean.BotonBean botonBean1;
     private javax.swing.JButton buscar_btn;
     private javax.swing.JButton buscar_id_btn;
     private javax.swing.JLabel correo_prof_title_Label;

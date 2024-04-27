@@ -29,7 +29,7 @@ import views.CrudFrame;
  *
  * @author Usuario
  */
-public class CrudController implements ActionListener {
+public class CrudController implements ActionListener  {
 
     public Profesor profesor;
     public Estudiante estudiante;
@@ -39,7 +39,11 @@ public class CrudController implements ActionListener {
     public CrudFrame crudFrame;
     public InicioController inicioController;
     public GestionarCrudController gestionarCrudController;
+    
 
+    
+    
+    
     public CrudController() {
         crudFrame = new CrudFrame(this);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
@@ -57,12 +61,14 @@ public class CrudController implements ActionListener {
     public void showCrudFrame() {
         crudFrame.setVisible(true);
     }
-
-    private void showInicioFrame() {
+    
+    public void showInicioFrame() {
         crudFrame.setVisible(false);
         inicioController.showInicioFrame();
     }
 
+   
+   
     public void showGestionarCrudFrame(boolean esAgregar) {
         gestionarCrudController.esAgregar = esAgregar;
         gestionarCrudController.tipoCrud = tipoCrud;
@@ -144,12 +150,12 @@ public class CrudController implements ActionListener {
                 throw new AssertionError();
         }
     }
-
+    
     // Crear metodos de crear y eliminar estudiante.
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == crudFrame.getBack_button()) {
-            showInicioFrame();
+           showInicioFrame();
         } else if (event.getSource() == crudFrame.getBuscar_id_btn()) {
             manejarBusqueda();
         } else if (event.getSource() == crudFrame.getReestablecer_prof_Btn()) {

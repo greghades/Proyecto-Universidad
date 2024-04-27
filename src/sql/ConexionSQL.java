@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import models.*;
 
-public class ConexionSQL {
+ public class ConexionSQL {
 
     private static ConexionSQL instance = null;
     private Connection conn = null;
@@ -34,7 +34,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "1234";
+    private final String pass = "1502Luis*";
 
     public ConexionSQL() {
         conectar();
