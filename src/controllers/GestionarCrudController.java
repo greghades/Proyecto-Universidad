@@ -275,13 +275,10 @@ public class GestionarCrudController implements ActionListener, Observable {
     }
 
     private void configurarCamposUniversidad() {
-        gestionarCrudFrame.cedula_label.setVisible(false);
-        gestionarCrudFrame.cedula_textfield.setVisible(false);
-        gestionarCrudFrame.first_label.setVisible(true);
-        gestionarCrudFrame.first_textfield.setVisible(true);
         gestionarCrudFrame.first_label.setText("Nombre:");
         gestionarCrudFrame.second_label.setText("Direccion:");
-        gestionarCrudFrame.second_label.setVisible(true);
+        gestionarCrudFrame.cedula_label.setVisible(false);
+        gestionarCrudFrame.cedula_textfield.setVisible(false);
         gestionarCrudFrame.third_label.setVisible(false);
         gestionarCrudFrame.third_textfield.setVisible(false);
         gestionarCrudFrame.fourth_label.setVisible(false);
