@@ -362,6 +362,52 @@ public class ConexionSQL {
             return -1;
         }
     }
+    
+    
+        public Carrera obtenerCarrera(String id) {
+        String query;
+        try {
+            query = String.format("SELECT c.id_carrera, c.nombre_carrera, c.modalidad, c.duracion, c.estado, d.id_decanato, d.nombre_decanato FROM public.\"Carreras\" AS c INNER JOIN public.\"Decanatos\" AS d ON c.id_decanato = d.id_decanato WHERE c.id_carrera = '%s'", id);
+            ResultSet bigSet = statement.executeQuery(query);
+            System.out.println("query" + query);
+            Carrera carrera = null;
+
+            while (bigSet.next()) {
+                String idCarrera = bigSet.getString("id_carrera");
+                String nombreCar = bigSet.getString("nombre_carrera");
+                String modalidad = bigSet.getString("modalidad");
+                int duracion = bigSet.getInt("duracion");
+                String nombre_decanato = bigSet.getString("nombre_decanato");
+                String id_decanato = bigSet.getString("id_decanato");
+                Decanato decanato = new Decanato(id_decanato, nombre_decanato);
+                System.out.println("decanatoooo " + decanato.getNombre());
+               
+                carrera = new Carrera(idCarrera, decanato, nombreCar, modalidad, duracion);
+                 System.out.println("carrertita" + carrera);
+            }
+
+            return carrera;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+        public int agregarCarrera(Carrera carrera) {
+        try {
+            //obtener valores del formulario 
+            String idCarrera = carrera.getId();
+            String nombre = carrera.getNombre();
+            String id_decanato = carrera.getDecanato().getId();
+            String modalidad = carrera.getModalidad();
+            int duracion = carrera.getDuracion();
+
+            String query = String.format("INSERT INTO public.\"Carreras\" (id_carrera,id_decanato,nombre_carrera,modalidad,estado,duracion) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", idCarrera, id_decanato, nombre, modalidad,true, duracion);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarCarrera() error: " + e);
+            return -1;
+        }
+    }
 
     //ver profesor por asignatura 
     public Profesor obtenerProfesorPorAsignatura(String idProfesor) {
@@ -445,6 +491,48 @@ public class ConexionSQL {
             return -1;
         }
     }
+    
+        //eliminar carrera a partir de un id 
+    public int eliminarCarrera(String id) {
+        try {
+            String query5= String.format("DELETE FROM public.\"Inscripcion\" WHERE id_estudiante IN (SELECT id_estudiante FROM public.\"Estudiantes\" WHERE id_carrera = '%s');", id);
+            String query4 = String.format("DELETE FROM public.\"Nota_estudiante\" WHERE id_estudiante IN ( SELECT id_estudiante FROM public.\"Estudiantes\" WHERE id_carrera = '%s');", id);
+            String query3 = String.format("DELETE FROM public.\"Asignaturas_carrera\" WHERE id_carrera = '%s';", id);
+            String query2 = String.format("DELETE FROM public.\"Estudiantes\" WHERE id_carrera = '%s'", id);
+            String query1 = String.format("DELETE FROM public.\"Carreras\" WHERE id_carrera = '%s'", id);
+            
+            int contador1 = statement.executeUpdate(query1);
+            int contador2 = statement.executeUpdate(query2);
+            int contador3 = statement.executeUpdate(query3);
+            int contador4 = statement.executeUpdate(query4);
+            int contador5 = statement.executeUpdate(query5);
+            
+            boolean validacion1 = contador1 > 0;
+            boolean validacion2 = contador1 > 0 && contador2 > 0;
+            boolean validacion3 = contador1 > 0 && contador2 > 0 && contador3 > 0;
+            boolean validacion4 = contador1 > 0 && contador2 > 0 && contador3 > 0 && contador4 > 0;
+            boolean validacion5 = contador1 > 0 && contador2 > 0 && contador3 > 0 && contador4 > 0 && contador5 > 0;
+            
+            if(validacion5){
+                return 1;
+            }
+             else if (validacion4) {
+                return 1;
+            }
+            else if (validacion3) {
+                return 1;
+            } else if (validacion2) {
+                return 1;
+            } else if (validacion1) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.eliminarCarrera() error: " + e);
+            return -1;
+        }
+    }
 
     public int modificarProfesor(Profesor profesor, String id) {
         try {
@@ -506,6 +594,24 @@ public class ConexionSQL {
             return -1;
         }
     }
+    
+    public int modificarCarrera(Carrera carrera, String id) {
+        try {
+            //obtener valores del formulario 
+            String nombre = carrera.getNombre();
+            String id_decanato = carrera.getDecanato().getId();
+            String modalidad = carrera.getModalidad();
+            int duracion = carrera.getDuracion();
+
+            String query = String.format("UPDATE public.\"Carreras\" SET nombre_carrera = '%s', id_decanato = '%s', modalidad = '%s', duracion = '%s',  estado = '%s' WHERE id_carrera = '%s';", nombre, id_decanato, modalidad, duracion, true, id);
+            System.out.println("query carrera" + query);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.modificarCarrera() error: " + e);
+            return -1;
+        }
+    }
 
     //mostrar profesor
     public Profesor motrarDatosProfesor(String id) {
@@ -551,6 +657,26 @@ public class ConexionSQL {
             return null;
         }
     }
+    
+     public ArrayList<Decanato> obtenerDecanatos() {
+        try {
+            String query = "SELECT d.id_decanato, d.nombre_decanato FROM public.\"Decanatos\" d;";
+            System.out.println("query " + query);
+            ResultSet decanatoSet = statement.executeQuery(query);
+            
+            ArrayList<Decanato> decanatos = new ArrayList<>();
+            while (decanatoSet.next()) {
+                String id_decanato= decanatoSet.getString("id_decanato");
+                String nombre = decanatoSet.getString("nombre_decanato");
+                decanatos.add(new Decanato(id_decanato, nombre));
+            }
+            System.out.println("decanato " + decanatos);
+            return decanatos;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     public int agregarEstudiante(Estudiante estudiante) {
         try {
@@ -561,7 +687,6 @@ public class ConexionSQL {
             String correo = estudiante.getCorreo();
             String sexo = estudiante.getSexo();
 
-            System.out.println("estudiante: " + estudiante);
             String query = String.format("INSERT INTO public.\"Estudiantes\" (id_estudiante, id_carrera, nombre_completo, edad, correo, direccion, sexo, estado) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", id_estudiante, id_carrera, nombre, edad, correo, " ", sexo, true);
 
             int row = statement.executeUpdate(query);
@@ -895,6 +1020,11 @@ public class ConexionSQL {
                 prefijo = "PAS";
                 id = "id_profesor_asignatura";
                 tabla = "Profesor_asignatura_seccion";
+            }
+             case "carrera" -> {
+                prefijo = "CAR";
+                id = "id_carrera";
+                tabla = "Carreras";
             }
         }
 

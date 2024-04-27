@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import models.Carrera;
+import models.Decanato;
 import models.Estudiante;
 import models.Profesor;
 import models.Universidad;
@@ -41,7 +42,7 @@ public class GestionarCrudController implements ActionListener, Observable {
     public CrudController crudController;
     public boolean esAgregar;
     public String tipoCrud;
-    //combobox del sexo
+    //combobox
     private final List<String> opcionSexo = Arrays.asList(
             "Seleccionar ",
             "Femenino",
@@ -49,6 +50,7 @@ public class GestionarCrudController implements ActionListener, Observable {
     );
     //combobox carrera
     private ArrayList<Carrera> carreras;
+    private ArrayList<Decanato> decanato;
 
     public GestionarCrudController() {
         gestionarCrudFrame = new GestionarCrudFrame(this);
@@ -70,6 +72,7 @@ public class GestionarCrudController implements ActionListener, Observable {
         Profesor profesor = crudController.profesor;
         Universidad universidad = crudController.universidad;
         Estudiante estudiante = crudController.estudiante;
+        Carrera carrera = crudController.carrera;
 
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
@@ -82,6 +85,8 @@ public class GestionarCrudController implements ActionListener, Observable {
                 configurarCamposProfesor();
             case "universidad" ->
                 configurarCamposUniversidad();
+            case "carrera" ->
+                configurarCamposCarrera();
         }
 
         if (esAgregar) {
@@ -97,6 +102,9 @@ public class GestionarCrudController implements ActionListener, Observable {
                 }
                 case "estudiante" -> {
                     rellenarDatosEstudiante(estudiante);
+                }
+                case "carrera" -> {
+                    rellenarDatosCarrera(carrera);
                 }
                 default -> {
                     throw new AssertionError();
@@ -141,6 +149,12 @@ public class GestionarCrudController implements ActionListener, Observable {
                 gestionarCrudFrame.second_textfield.setText("Direccion");
 
             }
+             case "carrera" -> {
+                gestionarCrudFrame.first_textfield.setText("Nombre");
+                gestionarCrudFrame.second_textfield.setText("modalidad");
+                gestionarCrudFrame.third_textfield.setText("duracion");
+                gestionarCrudFrame.carrera_cmb.setSelectedIndex(0); 
+            }
             default ->
                 throw new AssertionError();
         }
@@ -164,6 +178,13 @@ public class GestionarCrudController implements ActionListener, Observable {
         System.out.println("Estudiante rellenar datos" + estudiante.getCarrera().getNombre());
     }
 
+    public void rellenarDatosCarrera(Carrera carrera) {
+        gestionarCrudFrame.first_textfield.setText(carrera.getNombre());
+        gestionarCrudFrame.second_textfield.setText(carrera.getModalidad());
+        gestionarCrudFrame.third_textfield.setText(String.valueOf(carrera.getDuracion()));
+        gestionarCrudFrame.carrera_cmb.setSelectedItem(carrera.getDecanato().getId());
+    }
+        
     public void mostrarCarreras() {
         carreras = connection.obtenerCarreras();
         List<String> opcionesCarrera = new ArrayList<>();
@@ -177,6 +198,38 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         gestionarCrudFrame.setupComboBox(opcionesCarrera, false);
     }
+    
+    public void mostrarDecanatos() {
+        decanato = connection.obtenerDecanatos();
+        List<String> opcionesDecanato = new ArrayList<>();
+
+        opcionesDecanato.add("Seleccionar");
+
+        System.out.println("decanatos: " + decanato.size());
+        for (int i = 0; i < decanato.size(); i++) {
+            opcionesDecanato.add(decanato.get(i).getNombre());
+        }
+
+        gestionarCrudFrame.setupComboBox(opcionesDecanato, false);
+    }
+    
+    private void configurarCamposCarrera() {
+        mostrarDecanatos();
+        gestionarCrudFrame.first_label.setText("nombre");
+        gestionarCrudFrame.first_textfield.setText("nombre");
+        gestionarCrudFrame.second_label.setText("modalidad");
+        gestionarCrudFrame.second_textfield.setText("modalidad");
+        gestionarCrudFrame.third_label.setText("duracion");
+        gestionarCrudFrame.third_textfield.setText("duracion");
+        gestionarCrudFrame.carrera_label.setText("Decanato:");       
+        gestionarCrudFrame.fourth_label.setVisible(false);
+        gestionarCrudFrame.cedula_textfield.setVisible(false);
+        gestionarCrudFrame.cedula_label.setVisible(false);
+        gestionarCrudFrame.fourth_cmb.setVisible(false);
+        gestionarCrudFrame.fifth_label.setVisible(false);
+        gestionarCrudFrame.fifth_textfield.setVisible(false);
+
+    }
 
     private void configurarCamposUniversidad() {
         gestionarCrudFrame.second_label.setText("Direccion:");
@@ -186,6 +239,8 @@ public class GestionarCrudController implements ActionListener, Observable {
         gestionarCrudFrame.third_textfield.setVisible(false);
         gestionarCrudFrame.fourth_cmb.setVisible(false);
         gestionarCrudFrame.fifth_textfield.setVisible(false);
+        gestionarCrudFrame.second_label.setVisible(false);
+        gestionarCrudFrame.second_textfield.setVisible(false);
     }
 
     private void configurarCamposProfesor() {
@@ -225,6 +280,10 @@ public class GestionarCrudController implements ActionListener, Observable {
         String especialidad = gestionarCrudFrame.fifth_textfield.getText();
         String cedula = gestionarCrudFrame.cedula_textfield.getText();
         String carrera = (String) gestionarCrudFrame.carrera_cmb.getSelectedItem();
+        String modalidad = gestionarCrudFrame.second_textfield.getText();
+        String duracion = gestionarCrudFrame.third_textfield.getText();
+        String decanato = (String) gestionarCrudFrame.carrera_cmb.getSelectedItem();
+        
         boolean contenidoValido = true;
 
         switch (tipoCrud) {
@@ -252,6 +311,16 @@ public class GestionarCrudController implements ActionListener, Observable {
             case "universidad" -> {
                 if (nombre.isEmpty() || nombre.equals("Nombre")
                         || correo.isEmpty() || correo.equals("Direccion")) {
+                    showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
+
+                    contenidoValido = false;
+                }
+            }
+            case "carrera" -> {
+                if (nombre.isEmpty() || nombre.equals("Nombre")
+                        || modalidad.isEmpty() || modalidad.equals("Modalidad")
+                        || duracion.isEmpty() || duracion.equals("Duracion")
+                        || carrera.equals("Seleccionar")){
                     showAlert("Espera un momento", esAgregar ? "Debes llenar todos los campos para continuar" : "Debes editar y llenar todos los campos para continuar", false);
 
                     contenidoValido = false;
@@ -436,6 +505,63 @@ public class GestionarCrudController implements ActionListener, Observable {
         }
         limpiarVista();
     }
+    
+        public void agregarCarrera() {
+        //obtener los datos del formulario 
+        String id_carrera = connection.obtenerNuevoID("carrera");
+        String nombre = gestionarCrudFrame.first_textfield.getText();
+        String modalidad = gestionarCrudFrame.second_textfield.getText();
+        int duracion = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
+        int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
+        Decanato decanatoSeleccionado = decanato.get(selectedIndex - 1);
+        Decanato decanato = decanatoSeleccionado;
+        
+        // nuevos valores
+        Carrera nuevaCarrera = new Carrera(id_carrera, decanato, nombre, modalidad, duracion);
+        nuevaCarrera.setId(id_carrera);
+        nuevaCarrera.setNombre(nombre);
+        nuevaCarrera.setDecanato(decanato);
+        nuevaCarrera.setDuracion(duracion);
+        nuevaCarrera.setModalidad(modalidad);
+
+        //consulta
+        int rowsAffected = connection.agregarCarrera(nuevaCarrera);
+
+        if (rowsAffected > 0) {
+            showAlert("Felicidades", "El registro ha sido realizado exitosamente", true);
+        } else {
+            showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
+        }
+        limpiarVista();
+    }
+        
+        public void modificarCarrera() {
+        Carrera carrera = crudController.carrera;
+
+        //datos que se van a actualizar
+        String id = crudController.crudFrame.getCedula();
+        String nombre = gestionarCrudFrame.first_textfield.getText();
+        String modalidad = gestionarCrudFrame.second_textfield.getText();
+        int duracion = Integer.parseInt(gestionarCrudFrame.third_textfield.getText());
+        int selectedIndex = gestionarCrudFrame.carrera_cmb.getSelectedIndex();
+        Decanato decanatoSeleccionado = decanato.get(selectedIndex - 1);
+        Decanato decanato = decanatoSeleccionado;
+
+        carrera.setNombre(nombre);
+        carrera.setDecanato(decanato);
+        carrera.setDuracion(duracion);
+        carrera.setModalidad(modalidad);
+
+        //consulta
+        int rowsAffected = connection.modificarCarrera(carrera, id);
+        if (rowsAffected > 0) {
+            crudController.carrera = carrera;
+            JOptionPane.showMessageDialog(null, "Las modificaciones fueron realizadas exitosamente", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        }
+        limpiarVista();
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -455,6 +581,8 @@ public class GestionarCrudController implements ActionListener, Observable {
                         agregarUniversidad();
                     case "estudiante" ->
                         agregarEstudiante();
+                        case "carrera" ->
+                        agregarCarrera();
                     default ->
                         throw new AssertionError();
                 }
@@ -466,6 +594,8 @@ public class GestionarCrudController implements ActionListener, Observable {
                         modificarUniversidad();
                     case "estudiante" ->
                         modificarEstudiante();
+                    case "carrera" ->
+                        modificarCarrera();
                     default ->
                         throw new AssertionError();
                 }

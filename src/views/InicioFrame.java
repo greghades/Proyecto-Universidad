@@ -42,6 +42,7 @@ public class InicioFrame extends javax.swing.JFrame {
         profesor_button.addActionListener(accion);
         universidad_button.addActionListener(accion);
         asignar_seccion_button.addActionListener(accion);
+        carrera_button.addActionListener(accion);
     }
 
     public JButton getInscripcion_button() {
@@ -79,6 +80,11 @@ public class InicioFrame extends javax.swing.JFrame {
     public JButton getAsignar_Seccion_Button() {
         return asignar_seccion_button;
     }
+    
+    public JButton getCarrera_Button() {
+        return carrera_button;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,6 +108,7 @@ public class InicioFrame extends javax.swing.JFrame {
         universidad_button = new javax.swing.JButton();
         profesor_button = new javax.swing.JButton();
         estudiante_button = new javax.swing.JButton();
+        carrera_button = new javax.swing.JButton();
         asignar_seccion_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -122,7 +129,7 @@ public class InicioFrame extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
         jPanel2Layout.columnWidths = new int[] {0, 16, 0, 16, 0, 16, 0};
-        jPanel2Layout.rowHeights = new int[] {0, 16, 0, 16, 0, 16, 0, 16, 0};
+        jPanel2Layout.rowHeights = new int[] {0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0};
         jPanel2.setLayout(jPanel2Layout);
 
         title_label3.setBackground(new java.awt.Color(153, 0, 51));
@@ -276,6 +283,22 @@ public class InicioFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(estudiante_button, gridBagConstraints);
 
+        carrera_button.setBackground(new java.awt.Color(58, 159, 220));
+        carrera_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        carrera_button.setForeground(new java.awt.Color(255, 255, 255));
+        carrera_button.setText("Gestionar carrera");
+        carrera_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        carrera_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        carrera_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carrera_buttonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        jPanel2.add(carrera_button, gridBagConstraints);
+
         asignar_seccion_button.setBackground(new java.awt.Color(58, 159, 220));
         asignar_seccion_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         asignar_seccion_button.setForeground(new java.awt.Color(255, 255, 255));
@@ -309,7 +332,7 @@ public class InicioFrame extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
 
@@ -348,6 +371,10 @@ public class InicioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_estudiante_buttonActionPerformed
 
+    private void carrera_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrera_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_carrera_buttonActionPerformed
+
     private void asignar_seccion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignar_seccion_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_asignar_seccion_buttonActionPerformed
@@ -356,6 +383,7 @@ public class InicioFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton asignar_nota_button;
     private javax.swing.JButton asignar_seccion_button;
+    private javax.swing.JButton carrera_button;
     private javax.swing.JButton estudiante_button;
     private javax.swing.JButton inscripcion_button;
     private javax.swing.JPanel jPanel2;
