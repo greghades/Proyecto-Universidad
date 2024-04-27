@@ -43,6 +43,7 @@ public class InicioFrame extends javax.swing.JFrame {
         universidad_button.addActionListener(accion);
         asignar_seccion_button.addActionListener(accion);
         carrera_button.addActionListener(accion);
+        decanato_button.addActionListener(accion);
     }
 
     public JButton getInscripcion_button() {
@@ -80,11 +81,14 @@ public class InicioFrame extends javax.swing.JFrame {
     public JButton getAsignar_Seccion_Button() {
         return asignar_seccion_button;
     }
-    
+
     public JButton getCarrera_Button() {
         return carrera_button;
     }
 
+    public JButton getDecanato_button() {
+        return decanato_button;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,6 +113,7 @@ public class InicioFrame extends javax.swing.JFrame {
         profesor_button = new javax.swing.JButton();
         estudiante_button = new javax.swing.JButton();
         carrera_button = new javax.swing.JButton();
+        decanato_button = new javax.swing.JButton();
         asignar_seccion_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -261,8 +266,8 @@ public class InicioFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(profesor_button, gridBagConstraints);
 
@@ -295,9 +300,26 @@ public class InicioFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
         jPanel2.add(carrera_button, gridBagConstraints);
+
+        decanato_button.setBackground(new java.awt.Color(58, 159, 220));
+        decanato_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        decanato_button.setForeground(new java.awt.Color(255, 255, 255));
+        decanato_button.setText("Gestionar decanato");
+        decanato_button.setToolTipText("");
+        decanato_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        decanato_button.setPreferredSize(new java.awt.Dimension(300, 70));
+        decanato_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decanato_buttonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 10;
+        jPanel2.add(decanato_button, gridBagConstraints);
 
         asignar_seccion_button.setBackground(new java.awt.Color(58, 159, 220));
         asignar_seccion_button.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -311,8 +333,8 @@ public class InicioFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
         jPanel2.add(asignar_seccion_button, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -379,11 +401,16 @@ public class InicioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_asignar_seccion_buttonActionPerformed
 
+    private void decanato_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decanato_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_decanato_buttonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton asignar_nota_button;
     private javax.swing.JButton asignar_seccion_button;
     private javax.swing.JButton carrera_button;
+    private javax.swing.JButton decanato_button;
     private javax.swing.JButton estudiante_button;
     private javax.swing.JButton inscripcion_button;
     private javax.swing.JPanel jPanel2;

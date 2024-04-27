@@ -45,7 +45,6 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
             fourth_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
         } else {
             carrera_cmb.setModel(new DefaultComboBoxModel<>(opciones.toArray()));
-            
         }
     }
 

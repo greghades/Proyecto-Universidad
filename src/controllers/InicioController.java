@@ -75,7 +75,7 @@ public class InicioController implements ActionListener {
         inicioFrame.setVisible(false);
         asignarNotaController.showAsignarNotaFrame();
     }
-    
+
     private void showAsignarSeccionFrame() {
         inicioFrame.setVisible(false);
         asignarSeccionController.showAsignarSeccionFrame();
@@ -111,7 +111,7 @@ public class InicioController implements ActionListener {
     public void setCrudController(CrudController crudController) {
         this.crudController = crudController;
     }
-    
+
     public void setAsignarSeccionController(AsignarSeccionController asignarSeccionController) {
         this.asignarSeccionController = asignarSeccionController;
     }
@@ -137,6 +137,8 @@ public class InicioController implements ActionListener {
             mostrarCrud("universidad");
         } else if (button.getSource() == inicioFrame.getCarrera_Button()) {
             mostrarCrud("carrera");
+        } else if (button.getSource() == inicioFrame.getDecanato_button()) {
+            mostrarCrud("decanato");
         } else if (button.getSource() == inicioFrame.getAsignar_Seccion_Button()) {
             showAsignarSeccionFrame();
         }
