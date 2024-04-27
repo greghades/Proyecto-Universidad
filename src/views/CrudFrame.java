@@ -20,6 +20,7 @@ import controllers.CrudController;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import models.Carrera;
 import models.Estudiante;
 import models.Profesor;
 import models.Universidad;
@@ -112,7 +113,21 @@ public class CrudFrame extends javax.swing.JFrame {
         info_panel.setVisible(true);
       
     }
-
+      public void rellenarInfoCarrera(Carrera carrera) {
+          first_crud_label.setText(carrera.getNombre());
+          correo_prof_title_Label.setText("Decanato: ");
+          second_label.setText(carrera.getDecanato().getNombre());
+          genero_title_prof_Label.setText("Modalidad: ");
+          fourth_label.setText(carrera.getModalidad());
+          fifth_title_label.setText("Duracion: ");
+          fifth_label.setText(Integer.toString(carrera.getDuracion()));
+          edad_title_prof_Label.setVisible(false);
+          third_label.setVisible(false);
+          info_panel.setVisible(true);
+      
+    }
+     
+     
     public void mostrarEstadoInformacion() {
         info_container_panel.setVisible(true);
     }

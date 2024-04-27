@@ -19,6 +19,7 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import models.Carrera;
 import models.Estudiante;
 import models.Profesor;
 import models.Universidad;
@@ -36,6 +37,7 @@ public class CrudController implements ActionListener, Observer {
     public Profesor profesor;
     public Estudiante estudiante;
     public Universidad universidad;
+    public Carrera carrera;
     public String tipoCrud;
     private static CrudController instance;
     public ConexionSQL connection = ConexionSQL.getInstance();
@@ -116,6 +118,7 @@ public class CrudController implements ActionListener, Observer {
             crudFrame.mostrarEstadoInformacion();
         }
     }
+    
 
     //eliminar 
     public void eliminarProfesor() {
@@ -166,7 +169,41 @@ public class CrudController implements ActionListener, Observer {
         int rowsAffected = connection.eliminarUniversidad(crudFrame.getCedula());
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "El profesor fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La universidad fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+            crudFrame.mostrarEstadoInicial();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+        public void buscarCarrera() {
+        if ("Cedula".equals(crudFrame.getCedula()) || crudFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "debes ingresar un id de carrera.", " Ten Cuidado.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        this.carrera = connection.obtenerCarrera(crudFrame.getCedula());
+          
+        if (carrera == null) {
+            JOptionPane.showMessageDialog(null, "No existe ninguna carrera con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            System.out.println("carrera buscar" + carrera.getModalidad() +" carrera " + carrera.getNombre() );
+            crudFrame.rellenarInfoCarrera(carrera);
+            crudFrame.mostrarEstadoInformacion();
+        }
+    }
+        
+        
+        public void eliminarCarrera() {
+        if ("Cedula".equals(crudFrame.getCedula()) || crudFrame.getCedula().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un Id de carrera", "Ten cuidado", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int rowsAffected = connection.eliminarCarrera(crudFrame.getCedula());
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "La carrera fue eliminado exitosamente de la base de datos", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
             crudFrame.mostrarEstadoInicial();
         } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
@@ -184,6 +221,9 @@ public class CrudController implements ActionListener, Observer {
             case "universidad" -> {
                 buscarUniversidad();
             }
+             case "carrera" -> {
+                buscarCarrera();
+            }
             default ->
                 throw new AssertionError();
         }
@@ -198,6 +238,9 @@ public class CrudController implements ActionListener, Observer {
             }
             case "universidad" -> {
                 eliminarUniversidad();
+            }
+            case "carrera" -> {
+                eliminarCarrera();
             }
             default ->
                 throw new AssertionError();
@@ -230,7 +273,9 @@ public class CrudController implements ActionListener, Observer {
         switch (tipoCrud) {
             case "universidad" -> {
                 crudFrame.rellenarInfoUniversidad(universidad);
-
+            }
+            case "carrera" -> {
+               crudFrame.rellenarInfoCarrera(carrera);
             }
             case "profesor" -> {
                 crudFrame.rellenarInfoProfesor(profesor);
