@@ -103,16 +103,17 @@ public class CrudFrame extends javax.swing.JFrame {
 
     public void rellenarInfoUniversidad(Universidad universidad) {
         first_label.setText(universidad.getNombre());
+        fourth_label.setVisible(true);
+        fourth_title_label.setVisible(true);
+        fourth_title_label.setText("Direccion: ");
+        fourth_label.setText(universidad.getDireccion());
         second_label.setVisible(false);
         second_title_label.setVisible(false);
         fifth_title_label.setVisible(false);
-        fourth_title_label.setText("Direccion: ");
         third_title_label.setVisible(false);
         third_label.setVisible(false);
-        fourth_label.setText(universidad.getDireccion());
         fifth_label.setVisible(false);
         info_panel.setVisible(true);
-
     }
 
     public void rellenarInfoCarrera(Carrera carrera) {
