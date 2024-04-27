@@ -941,10 +941,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="first_crud_label" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="nombre_prof_title_Label" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="first_label" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="first_title_label" alignment="1" max="32767" attributes="0"/>
                                   <Component id="fourth_label" max="32767" attributes="0"/>
-                                  <Component id="genero_title_prof_Label" max="32767" attributes="0"/>
+                                  <Component id="fourth_title_label" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -954,12 +954,12 @@
                                   </Group>
                                   <Component id="fifth_title_label" max="32767" attributes="0"/>
                                   <Component id="second_label" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="correo_prof_title_Label" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="second_title_label" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="third_label" max="32767" attributes="0"/>
-                                  <Component id="edad_title_prof_Label" max="32767" attributes="0"/>
+                                  <Component id="third_title_label" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           </Group>
@@ -970,19 +970,19 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="nombre_prof_title_Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="correo_prof_title_Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="edad_title_prof_Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="first_title_label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="second_title_label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="third_title_label" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="first_crud_label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="first_label" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="second_label" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="third_label" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="genero_title_prof_Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="fourth_title_label" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="fifth_title_label" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -996,7 +996,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="nombre_prof_title_Label">
+                    <Component class="javax.swing.JLabel" name="first_title_label">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="12" style="1"/>
@@ -1004,7 +1004,7 @@
                         <Property name="text" type="java.lang.String" value="Nombre:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="first_crud_label">
+                    <Component class="javax.swing.JLabel" name="first_label">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="12" style="0"/>
@@ -1012,7 +1012,7 @@
                         <Property name="text" type="java.lang.String" value="Nombre Profesor"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="correo_prof_title_Label">
+                    <Component class="javax.swing.JLabel" name="second_title_label">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="12" style="1"/>
@@ -1028,7 +1028,7 @@
                         <Property name="text" type="java.lang.String" value="Correo Profesor"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="edad_title_prof_Label">
+                    <Component class="javax.swing.JLabel" name="third_title_label">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="12" style="1"/>
@@ -1044,7 +1044,7 @@
                         <Property name="text" type="java.lang.String" value="Edad Profesor"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="genero_title_prof_Label">
+                    <Component class="javax.swing.JLabel" name="fourth_title_label">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="12" style="1"/>

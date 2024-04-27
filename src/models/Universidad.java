@@ -29,10 +29,8 @@ public class Universidad implements ComponenteUniversitario{
     private String direccion;
 
     private List<ComponenteUniversitario> componentes;
-
-  
-
-    public Universidad(String id, String nombre, String direccion/*, Decanato[] decanatos*/) {
+    
+    public Universidad(String id, String nombre, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;

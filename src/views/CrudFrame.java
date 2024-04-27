@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import models.Carrera;
+import models.Decanato;
 import models.Estudiante;
 import models.Profesor;
 import models.Universidad;
@@ -82,16 +83,16 @@ public class CrudFrame extends javax.swing.JFrame {
     }
 
     public void rellenarInfoProfesor(Profesor profesor) {
-        first_crud_label.setText(profesor.getNombre());
+        first_label.setText(profesor.getNombre());
         second_label.setText(profesor.getCorreo());
         third_label.setText(Integer.toString(profesor.getEdad()));
         fourth_label.setText(profesor.getSexo());
         fifth_label.setText(profesor.getEspecialidad());
         info_panel.setVisible(true);
     }
-    
-     public void rellenarInfoEstudiante(Estudiante estudiante) {
-        first_crud_label.setText(estudiante.getNombre());
+
+    public void rellenarInfoEstudiante(Estudiante estudiante) {
+        first_label.setText(estudiante.getNombre());
         second_label.setText(estudiante.getCorreo());
         third_label.setText(Integer.toString(estudiante.getEdad()));
         fourth_label.setText(estudiante.getSexo());
@@ -99,35 +100,47 @@ public class CrudFrame extends javax.swing.JFrame {
         fifth_label.setText(estudiante.getCarrera().getNombre());
         info_panel.setVisible(true);
     }
-     
-     public void rellenarInfoUniversidad(Universidad universidad) {
-        first_crud_label.setText(universidad.getNombre());
+
+    public void rellenarInfoUniversidad(Universidad universidad) {
+        first_label.setText(universidad.getNombre());
         second_label.setVisible(false);
-        correo_prof_title_Label.setVisible(false);
+        second_title_label.setVisible(false);
         fifth_title_label.setVisible(false);
-        genero_title_prof_Label.setText("Direccion: ");
-        edad_title_prof_Label.setVisible(false);
+        fourth_title_label.setText("Direccion: ");
+        third_title_label.setVisible(false);
         third_label.setVisible(false);
         fourth_label.setText(universidad.getDireccion());
         fifth_label.setVisible(false);
         info_panel.setVisible(true);
-      
+
     }
-      public void rellenarInfoCarrera(Carrera carrera) {
-          first_crud_label.setText(carrera.getNombre());
-          correo_prof_title_Label.setText("Decanato: ");
-          second_label.setText(carrera.getDecanato().getNombre());
-          genero_title_prof_Label.setText("Modalidad: ");
-          fourth_label.setText(carrera.getModalidad());
-          fifth_title_label.setText("Duracion: ");
-          fifth_label.setText(Integer.toString(carrera.getDuracion()));
-          edad_title_prof_Label.setVisible(false);
-          third_label.setVisible(false);
-          info_panel.setVisible(true);
-      
+
+    public void rellenarInfoCarrera(Carrera carrera) {
+        first_label.setText(carrera.getNombre());
+        second_title_label.setText("Decanato: ");
+        second_label.setText(carrera.getDecanato().getNombre());
+        fourth_title_label.setText("Modalidad: ");
+        fourth_label.setText(carrera.getModalidad());
+        fifth_title_label.setText("Duracion: ");
+        fifth_label.setText(Integer.toString(carrera.getDuracion()));
+        third_title_label.setVisible(false);
+        third_label.setVisible(false);
+        info_panel.setVisible(true);
     }
-     
-     
+
+    public void rellenarInfoDecanato(Decanato decanato) {
+        first_label.setText(decanato.getNombre());
+        second_title_label.setText("Universidad: ");
+        second_label.setText(decanato.getNombre_universidad());
+        fourth_title_label.setText("Direccion: ");
+        fourth_label.setText(decanato.getDireccion());
+        third_title_label.setVisible(false);
+        third_label.setVisible(false);
+        fifth_label.setVisible(false);
+        fifth_title_label.setVisible(false);
+        info_panel.setVisible(true);
+    }
+
     public void mostrarEstadoInformacion() {
         info_container_panel.setVisible(true);
     }
@@ -166,7 +179,7 @@ public class CrudFrame extends javax.swing.JFrame {
         return info_container_panel;
     }
 
-    public String getCedula() {
+    public String getID() {
         return id_textField.getText();
     }
 
@@ -223,13 +236,13 @@ public class CrudFrame extends javax.swing.JFrame {
         buscar_id_btn = new javax.swing.JButton();
         info_container_panel = new javax.swing.JPanel();
         info_panel = new javax.swing.JPanel();
-        nombre_prof_title_Label = new javax.swing.JLabel();
-        first_crud_label = new javax.swing.JLabel();
-        correo_prof_title_Label = new javax.swing.JLabel();
+        first_title_label = new javax.swing.JLabel();
+        first_label = new javax.swing.JLabel();
+        second_title_label = new javax.swing.JLabel();
         second_label = new javax.swing.JLabel();
-        edad_title_prof_Label = new javax.swing.JLabel();
+        third_title_label = new javax.swing.JLabel();
         third_label = new javax.swing.JLabel();
-        genero_title_prof_Label = new javax.swing.JLabel();
+        fourth_title_label = new javax.swing.JLabel();
         fourth_label = new javax.swing.JLabel();
         fifth_title_label = new javax.swing.JLabel();
         fifth_label = new javax.swing.JLabel();
@@ -471,26 +484,26 @@ public class CrudFrame extends javax.swing.JFrame {
         info_panel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
         info_panel.setPreferredSize(new java.awt.Dimension(400, 120));
 
-        nombre_prof_title_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        nombre_prof_title_Label.setText("Nombre:");
+        first_title_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        first_title_label.setText("Nombre:");
 
-        first_crud_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        first_crud_label.setText("Nombre Profesor");
+        first_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        first_label.setText("Nombre Profesor");
 
-        correo_prof_title_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        correo_prof_title_Label.setText("Correo:");
+        second_title_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        second_title_label.setText("Correo:");
 
         second_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         second_label.setText("Correo Profesor");
 
-        edad_title_prof_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        edad_title_prof_Label.setText("Edad:");
+        third_title_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        third_title_label.setText("Edad:");
 
         third_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         third_label.setText("Edad Profesor");
 
-        genero_title_prof_Label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        genero_title_prof_Label.setText("Género:");
+        fourth_title_label.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        fourth_title_label.setText("Género:");
 
         fourth_label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         fourth_label.setText("Género Profesor");
@@ -508,10 +521,10 @@ public class CrudFrame extends javax.swing.JFrame {
             .addGroup(info_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(first_crud_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nombre_prof_title_Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(first_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(first_title_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fourth_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(genero_title_prof_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fourth_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(info_panelLayout.createSequentialGroup()
@@ -519,11 +532,11 @@ public class CrudFrame extends javax.swing.JFrame {
                         .addGap(3, 3, 3))
                     .addComponent(fifth_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(second_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(correo_prof_title_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(second_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(third_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(edad_title_prof_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(third_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
         info_panelLayout.setVerticalGroup(
@@ -531,17 +544,17 @@ public class CrudFrame extends javax.swing.JFrame {
             .addGroup(info_panelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombre_prof_title_Label)
-                    .addComponent(correo_prof_title_Label)
-                    .addComponent(edad_title_prof_Label))
+                    .addComponent(first_title_label)
+                    .addComponent(second_title_label)
+                    .addComponent(third_title_label))
                 .addGap(6, 6, 6)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(first_crud_label)
+                    .addComponent(first_label)
                     .addComponent(second_label)
                     .addComponent(third_label))
                 .addGap(16, 16, 16)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(genero_title_prof_Label)
+                    .addComponent(fourth_title_label)
                     .addComponent(fifth_title_label))
                 .addGap(6, 6, 6)
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -681,15 +694,14 @@ public class CrudFrame extends javax.swing.JFrame {
     private javax.swing.JButton back_button;
     private javax.swing.JButton buscar_btn;
     private javax.swing.JButton buscar_id_btn;
-    private javax.swing.JLabel correo_prof_title_Label;
-    private javax.swing.JLabel edad_title_prof_Label;
     private javax.swing.JButton eliminar_btn;
     private javax.swing.JLabel fifth_label;
     private javax.swing.JLabel fifth_title_label;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.JLabel first_crud_label;
+    private javax.swing.JLabel first_label;
+    private javax.swing.JLabel first_title_label;
     private javax.swing.JLabel fourth_label;
-    private javax.swing.JLabel genero_title_prof_Label;
+    private javax.swing.JLabel fourth_title_label;
     private javax.swing.JPanel id_panel;
     public javax.swing.JTextField id_textField;
     private javax.swing.JPanel info_buttons_panel;
@@ -702,12 +714,13 @@ public class CrudFrame extends javax.swing.JFrame {
     private javax.swing.JPanel main_buttons_panel;
     private javax.swing.JLabel main_title_label;
     private javax.swing.JButton modificar_btn;
-    private javax.swing.JLabel nombre_prof_title_Label;
     private javax.swing.JLabel question_title_label;
     private javax.swing.JButton reestablecer_btn;
     private javax.swing.JButton registrar_btn;
     private javax.swing.JLabel second_label;
+    private javax.swing.JLabel second_title_label;
     private javax.swing.JLabel third_label;
+    private javax.swing.JLabel third_title_label;
     private javax.swing.JPanel title_panel;
     // End of variables declaration//GEN-END:variables
 }
