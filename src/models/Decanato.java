@@ -37,6 +37,14 @@ public class Decanato implements ComponenteUniversitario{
         this.nombre = nombre;
         this.componentes = new ArrayList<>();
     }
+    
+    public Decanato(String id, String nombre, String id_universidad, String direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.id_universidad = id_universidad;
+        this.direccion = direccion;
+        this.componentes = new ArrayList<>();
+    }
 
      public void agregarComponente(ComponenteUniversitario componente) {
         componentes.add(componente);

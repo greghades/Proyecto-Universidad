@@ -436,6 +436,23 @@ public class ConexionSQL {
             return -1;
         }
     }
+   
+    public int agregarDecanato(Decanato decanato) {
+        try {
+            //obtener valores del formulario 
+            String id_decanato = decanato.getId();
+            String nombre = decanato.getNombre();
+            String id_universidad = decanato.getId_universidad();
+            String direccion = decanato.getDireccion();
+
+            String query = String.format("INSERT INTO public.\"Decanatos\" (id_decanato,nombre,id_universidad,direccion,estado) VALUES ('%s', '%s', '%s', '%s', '%s');", id_decanato, nombre, id_universidad, direccion, true);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.agregarCarrera() error: " + e);
+            return -1;
+        }
+    }
 
     //ver profesor por asignatura 
     public Profesor obtenerProfesorPorAsignatura(String idProfesor) {
@@ -645,6 +662,23 @@ public class ConexionSQL {
 
             String query = String.format("UPDATE public.\"Carreras\" SET nombre_carrera = '%s', id_decanato = '%s', modalidad = '%s', duracion = '%s',  estado = '%s' WHERE id_carrera = '%s';", nombre, id_decanato, modalidad, duracion, true, id);
             System.out.println("query carrera" + query);
+            int row = statement.executeUpdate(query);
+            return row;
+        } catch (SQLException e) {
+            System.err.println("sql.ConexionSQL.modificarCarrera() error: " + e);
+            return -1;
+        }
+    }
+
+    public int modificarDecanato(Decanato decanato, String id) {
+        try {
+            //obtener valores del formulario 
+            String nombre = decanato.getNombre();
+            String id_universidad = decanato.getId_universidad();
+            String direccion = decanato.getDireccion();
+
+            String query = String.format("UPDATE public.\"Decanatos\" SET nombre_decanato = '%s', id_universidad = '%s', direccion = '%s',  estado = '%s' WHERE id_decanato = '%s';", nombre, id_universidad, direccion, true, id);
+            System.out.println("query decanato" + query);
             int row = statement.executeUpdate(query);
             return row;
         } catch (SQLException e) {
@@ -1050,6 +1084,11 @@ public class ConexionSQL {
                 prefijo = "CAR";
                 id = "id_carrera";
                 tabla = "Carreras";
+            }
+            case "decanato" -> {
+                prefijo = "DEC";
+                id = "id_decanato";
+                tabla = "Decanatos";
             }
         }
 
