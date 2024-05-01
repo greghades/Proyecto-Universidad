@@ -87,7 +87,7 @@ public class ListaSeccionFrame extends javax.swing.JFrame {
     }
 
     private void agregarListener(ActionListener accion) {
-        back_button.addActionListener(accion);
+        botonBean1.addActionListener(accion);
     }
 
     @SuppressWarnings("unchecked")
@@ -96,7 +96,7 @@ public class ListaSeccionFrame extends javax.swing.JFrame {
 
         title_panel = new javax.swing.JPanel();
         title_label = new javax.swing.JLabel();
-        back_button = new javax.swing.JButton();
+        botonBean1 = new ComponenteBean.BotonBean();
         conteiner_panel = new javax.swing.JPanel();
         table_panel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -112,37 +112,28 @@ public class ListaSeccionFrame extends javax.swing.JFrame {
         title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title_label.setText("Lista de secciones");
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("< Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
+        botonBean1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        botonBean1.setForeground(new java.awt.Color(58, 159, 220));
+        botonBean1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
         title_panel.setLayout(title_panelLayout);
         title_panelLayout.setHorizontalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95)
+                .addComponent(title_label, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         title_panelLayout.setVerticalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(title_panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(title_panelLayout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
-                        .addComponent(title_label)))
+                    .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title_label))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -225,13 +216,9 @@ public class ListaSeccionFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-
-    }//GEN-LAST:event_back_buttonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
+    private ComponenteBean.BotonBean botonBean1;
     private javax.swing.JPanel conteiner_panel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable secciones_table;

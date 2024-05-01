@@ -198,7 +198,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
 
     private void agregarListeners(ActionListener accion) {
         cedula_button.addActionListener(accion);
-        back_button.addActionListener(accion);
+        botonBean1.addActionListener(accion);
         inscripcion_button.addActionListener(accion);
     }
 
@@ -210,7 +210,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         title_panel = new javax.swing.JPanel();
         title_label = new javax.swing.JLabel();
-        back_button = new javax.swing.JButton();
+        botonBean1 = new ComponenteBean.BotonBean();
         jScrollPane2 = new javax.swing.JScrollPane();
         body_panel = new javax.swing.JPanel();
         info_panel = new javax.swing.JPanel();
@@ -258,37 +258,28 @@ public class InscripcionFrame extends javax.swing.JFrame {
         title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title_label.setText("Inscripción");
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("< Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
+        botonBean1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        botonBean1.setForeground(new java.awt.Color(58, 159, 220));
+        botonBean1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
         title_panel.setLayout(title_panelLayout);
         title_panelLayout.setHorizontalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(344, 344, 344)
                 .addComponent(title_label)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         title_panelLayout.setVerticalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(title_panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(title_panelLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(title_label)))
+                    .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title_label))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -624,7 +615,7 @@ public class InscripcionFrame extends javax.swing.JFrame {
     }
 
     public JButton getBack_button() {
-        return back_button;
+        return botonBean1;
     }
 
     public JButton getCedula_button() {
@@ -639,17 +630,13 @@ public class InscripcionFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cedula_buttonActionPerformed
 
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-
-    }//GEN-LAST:event_back_buttonActionPerformed
-
     private void inscripcion_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscripcion_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inscripcion_buttonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
     private javax.swing.JPanel body_panel;
+    private ComponenteBean.BotonBean botonBean1;
     private javax.swing.JLabel carrera_label;
     private javax.swing.JLabel carrera_title_label;
     private javax.swing.JButton cedula_button;

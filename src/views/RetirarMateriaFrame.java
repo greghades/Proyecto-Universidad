@@ -91,7 +91,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
 
     private void agregarListeners(ActionListener accion) {
         btn_buscar_retirar_materia.addActionListener(accion);
-        back_button.addActionListener(accion);
+        botonBean1.addActionListener(accion);
         btn_retirar_asignatura.addActionListener(accion);
     }
 
@@ -121,8 +121,8 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         materias_table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        back_button = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        botonBean1 = new ComponenteBean.BotonBean();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,7 +204,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
                 .addGroup(info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(carrera_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(carrera_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         info_panelLayout.setVerticalGroup(
             info_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,41 +371,32 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(58, 159, 220));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("<Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(242, 242, 242));
         jLabel1.setText("Retirar Materias");
+
+        botonBean1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 220), 2, true));
+        botonBean1.setForeground(new java.awt.Color(58, 159, 220));
+        botonBean1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel1)))
+                    .addComponent(jLabel1)
+                    .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -461,10 +452,6 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     private void btn_retirar_asignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retirar_asignaturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_retirar_asignaturaActionPerformed
-
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_back_buttonActionPerformed
     public void setCarrera(String text) {
         this.carrera_label.setText(text);
     }
@@ -490,7 +477,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
     }
 
     public JButton getBack_button() {
-        return back_button;
+        return botonBean1;
     }
 
     public JButton getCedula_button() {
@@ -503,7 +490,7 @@ public class RetirarMateriaFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
+    private ComponenteBean.BotonBean botonBean1;
     private javax.swing.JButton btn_buscar_retirar_materia;
     private javax.swing.JButton btn_retirar_asignatura;
     private javax.swing.JLabel carrera_label;

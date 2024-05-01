@@ -46,7 +46,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
     }
 
     private void agregarListener(ActionListener accion) {
-        back_button.addActionListener(accion);
+        botonBean1.addActionListener(accion);
         cedula_button.addActionListener(accion);
         cmb_asignatura.addActionListener(accion);
         save_button.addActionListener(accion);
@@ -132,7 +132,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
     }
 
     public JButton getBack_button() {
-        return back_button;
+        return botonBean1;
     }
 
     public JButton getCedula_button() {
@@ -152,7 +152,7 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
 
         title_panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        back_button = new javax.swing.JButton();
+        botonBean1 = new ComponenteBean.BotonBean();
         body_panel = new javax.swing.JPanel();
         cedula_panel = new javax.swing.JPanel();
         cedula_textfield = new javax.swing.JTextField();
@@ -183,36 +183,28 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Asignar notas");
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("< Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
+        botonBean1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        botonBean1.setForeground(new java.awt.Color(58, 159, 220));
+        botonBean1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout title_panelLayout = new javax.swing.GroupLayout(title_panel);
         title_panel.setLayout(title_panelLayout);
         title_panelLayout.setHorizontalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(title_panelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(botonBean1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                .addGap(244, 244, 244)
                 .addComponent(jLabel1)
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         title_panelLayout.setVerticalGroup(
             title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(title_panelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, title_panelLayout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGroup(title_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(23, 23, 23))
         );
 
@@ -491,10 +483,6 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-
-    }//GEN-LAST:event_back_buttonActionPerformed
-
     private void cedula_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedula_textfieldActionPerformed
 
     }//GEN-LAST:event_cedula_textfieldActionPerformed
@@ -513,8 +501,8 @@ public class AsignarNotaFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
     private javax.swing.JPanel body_panel;
+    private ComponenteBean.BotonBean botonBean1;
     private javax.swing.JButton cedula_button;
     private javax.swing.JLabel cedula_label;
     private javax.swing.JPanel cedula_panel;

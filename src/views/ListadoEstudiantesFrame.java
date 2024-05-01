@@ -51,7 +51,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     }
     
     private void agregarListener(ActionListener accion) {
-        back_button.addActionListener(accion);
+        botonBean1.addActionListener(accion);
         cmb_listado_estudiantes.addActionListener(accion);
         search_button.addActionListener(accion);
     }
@@ -144,7 +144,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         title_label = new javax.swing.JLabel();
-        back_button = new javax.swing.JButton();
+        botonBean1 = new ComponenteBean.BotonBean();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cmb_listado_estudiantes = new javax.swing.JComboBox<>();
@@ -166,36 +166,28 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title_label.setText("Listado de Estudiantes");
 
-        back_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        back_button.setForeground(new java.awt.Color(58, 159, 220));
-        back_button.setText("< Volver");
-        back_button.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
-        back_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                back_buttonActionPerformed(evt);
-            }
-        });
+        botonBean1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        botonBean1.setForeground(new java.awt.Color(58, 159, 220));
+        botonBean1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 121, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
                 .addComponent(title_label)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(back_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(title_label)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonBean1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title_label))
                 .addGap(23, 23, 23))
         );
 
@@ -367,10 +359,6 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void back_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_buttonActionPerformed
-
-    }//GEN-LAST:event_back_buttonActionPerformed
-
     private void cmb_listado_estudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_listado_estudiantesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_listado_estudiantesActionPerformed
@@ -380,7 +368,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_search_buttonActionPerformed
     
     public JButton getBack_button() {
-        return back_button;
+        return botonBean1;
     }
     
     public JButton getSearch_button() {
@@ -392,7 +380,7 @@ public class ListadoEstudiantesFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back_button;
+    private ComponenteBean.BotonBean botonBean1;
     private javax.swing.JComboBox<Object> cmb_listado_estudiantes;
     private javax.swing.JLabel estudiantes_title_label;
     private javax.swing.JLabel jLabel2;
