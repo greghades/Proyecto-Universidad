@@ -19,6 +19,7 @@ package models;
 import compose.ComponenteUniversitario;
 import java.util.ArrayList;
 import java.util.List;
+import sql.ConexionSQL;
 
 /**
  *
@@ -28,9 +29,10 @@ public class Decanato implements ComponenteUniversitario{
     private String id;
     private String nombre;
     private String nombre_universidad;
-    private String id_universidad;
+    private Universidad id_universidad;
     private String direccion;
     private List<ComponenteUniversitario> componentes;
+    public ConexionSQL connection = ConexionSQL.getInstance();
 
     public Decanato(String id, String nombre) {
         this.id = id;
@@ -38,7 +40,7 @@ public class Decanato implements ComponenteUniversitario{
         this.componentes = new ArrayList<>();
     }
     
-    public Decanato(String id, String nombre, String id_universidad, String direccion) {
+    public Decanato(String id, String nombre, Universidad id_universidad, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.id_universidad = id_universidad;
@@ -58,7 +60,7 @@ public class Decanato implements ComponenteUniversitario{
         this.nombre_universidad = nombre_universidad;
     }
 
-    public void setId_universidad(String id_universidad) {
+    public void setId_universidad(Universidad id_universidad) {
         this.id_universidad = id_universidad;
     }
 
@@ -70,7 +72,7 @@ public class Decanato implements ComponenteUniversitario{
         return nombre_universidad;
     }
 
-    public String getId_universidad() {
+    public Universidad getId_universidad() {
         return id_universidad;
     }
 
@@ -100,7 +102,32 @@ public class Decanato implements ComponenteUniversitario{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-}
+    public void cargarCarrerasDesdeBD(Decanato decanato) {
+        // Realizar la consulta a la base de datos para obtener las carreras asociadas al decanato
+        List<Carrera> carreras = connection.obtenerCarrerasPorDecanato(decanato);
+
+        // Agregar las carreras al decanato
+        for (Carrera carrera : carreras) {
+            agregarComponente(carrera);
+        }
+
+        // Mostrar mensaje de éxito o error
+        if (!carreras.isEmpty()) {
+            System.out.println("Se han cargado " + carreras.size() + " carreras asociadas al decanato desde la base de datos.");
+        } else {
+            System.out.println("No se encontraron carreras asociadas al decanato en la base de datos.");
+        }
+    }
+    public void mostrarComponentes() {
+        System.out.println("Componentes del decanato " + nombre + ":");
+        for (ComponenteUniversitario componente : componentes) {
+            System.out.println("- " + componente.getNombre());
+        }
+    }
+     public void limpiarComponentes() {
+        this.componentes.clear();
+    }
+}   
 
 
 

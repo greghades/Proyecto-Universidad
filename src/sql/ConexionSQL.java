@@ -25,6 +25,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import models.*;
+import java.sql.PreparedStatement;
+
 
 public class ConexionSQL {
 
@@ -34,7 +36,7 @@ public class ConexionSQL {
     private final String db = "universidad";
     private final String url = "jdbc:postgresql://localhost:5432/" + db;
     private final String user = "postgres";
-    private final String pass = "1502Luis*";
+    private final String pass = "gr3g0r1j053y3p3z4rt34g4";
 
     public ConexionSQL() {
         conectar();
@@ -380,7 +382,8 @@ public class ConexionSQL {
                 decanato = new Decanato(id_decanato, nombre_decanato);
                 decanato.setDireccion(direccion);
                 decanato.setNombre_universidad(nombre_universidad);
-                decanato.setId_universidad(id_universidad);
+                Universidad universidad = new Universidad(id_universidad);
+                decanato.setId_universidad(universidad);
 
                 System.out.println("decanato: " + decanato);
             }
@@ -442,14 +445,15 @@ public class ConexionSQL {
             //obtener valores del formulario 
             String id_decanato = decanato.getId();
             String nombre = decanato.getNombre();
-            String id_universidad = decanato.getId_universidad();
+            String id_universidad = decanato.getId_universidad().getId();
             String direccion = decanato.getDireccion();
+            System.out.println(id_universidad);
 
-            String query = String.format("INSERT INTO public.\"Decanatos\" (id_decanato,nombre,id_universidad,direccion,estado) VALUES ('%s', '%s', '%s', '%s', '%s');", id_decanato, nombre, id_universidad, direccion, true);
+            String query = String.format("INSERT INTO public.\"Decanatos\" (id_decanato,nombre_decanato,id_universidad,direccion,estado) VALUES ('%s', '%s', '%s', '%s', '%s');", id_decanato, nombre, id_universidad, direccion, true);
             int row = statement.executeUpdate(query);
             return row;
         } catch (SQLException e) {
-            System.err.println("sql.ConexionSQL.agregarCarrera() error: " + e);
+            System.err.println("sql.ConexionSQL.agregarDecanato() error: " + e);
             return -1;
         }
     }
@@ -674,7 +678,7 @@ public class ConexionSQL {
         try {
             //obtener valores del formulario 
             String nombre = decanato.getNombre();
-            String id_universidad = decanato.getId_universidad();
+            Universidad id_universidad = decanato.getId_universidad();
             String direccion = decanato.getDireccion();
 
             String query = String.format("UPDATE public.\"Decanatos\" SET nombre_decanato = '%s', id_universidad = '%s', direccion = '%s',  estado = '%s' WHERE id_decanato = '%s';", nombre, id_universidad, direccion, true, id);
@@ -730,6 +734,81 @@ public class ConexionSQL {
         } catch (SQLException e) {
             return null;
         }
+    }
+    public List<Carrera> obtenerCarrerasPorDecanato(Decanato decanato) {
+        List<Carrera> carreras = new ArrayList<>();
+        System.out.println(decanato.getId());
+        try {
+            // Consulta SQL para obtener las carreras asociadas al decanato
+            String query = "SELECT * FROM public.\"Carreras\" WHERE id_decanato = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, decanato.getId());
+           
+            // Ejecutar la consulta
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterar sobre los resultados y crear objetos Carrera
+             // Iterar sobre los resultados y crear objetos Carrera
+            while (resultSet.next()) {
+                String idCarrera = resultSet.getString("id_carrera");
+                String nombre = resultSet.getString("nombre_carrera");
+                String modalidad = resultSet.getString("modalidad");
+                int duracion = resultSet.getInt("duracion");
+
+                // Crear una nueva carrera sin necesidad de pasar el decanato
+                Carrera carrera = new Carrera(idCarrera,decanato, nombre, modalidad, duracion);
+                carreras.add(carrera);
+            }
+            
+            // Iterar sobre los resultados y obtener las IDs de las carreras
+            System.out.println(resultSet);
+
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejar cualquier error de SQL aquí
+        }
+
+        return carreras;
+    }
+    public List<Decanato> obtenerDecanatosPorUniversidad(Universidad universidad) {
+        List<Decanato> decanatos = new ArrayList<>();
+        System.out.println(universidad.getId());
+        try {
+            // Consulta SQL para obtener las carreras asociadas al decanato
+            String query = "SELECT * FROM public.\"Decanatos\" WHERE id_universidad = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, universidad.getId());
+           
+            // Ejecutar la consulta
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterar sobre los resultados y crear objetos Carrera
+             // Iterar sobre los resultados y crear objetos Carrera
+            while (resultSet.next()) {
+                String idDecanato = resultSet.getString("id_decanato");
+                String nombre = resultSet.getString("nombre_decanato");
+                String direccion = resultSet.getString("direccion");
+          
+                // Crear una nueva carrera sin necesidad de pasar el decanato
+                Decanato decanato = new Decanato(idDecanato, nombre,universidad, direccion);
+                decanatos.add(decanato);
+            }
+            
+            // Iterar sobre los resultados y obtener las IDs de las carreras
+            System.out.println(resultSet);
+
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejar cualquier error de SQL aquí
+        }
+
+        return decanatos;
     }
 
     public ArrayList<Decanato> obtenerDecanatos() {

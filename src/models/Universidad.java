@@ -18,6 +18,7 @@ package models;
 import compose.ComponenteUniversitario;
 import java.util.ArrayList;
 import java.util.List;
+import sql.ConexionSQL;
 /**
  *
  * @author User
@@ -29,12 +30,18 @@ public class Universidad implements ComponenteUniversitario{
     private String direccion;
 
     private List<ComponenteUniversitario> componentes;
+    public ConexionSQL connection = ConexionSQL.getInstance();
     
     public Universidad(String id, String nombre, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.componentes = new ArrayList<>();
+   }
+    
+    public Universidad(String id) {
+        this.id = id;
+  
    }
 
     @Override
@@ -70,5 +77,26 @@ public class Universidad implements ComponenteUniversitario{
     public void eliminarComponente(ComponenteUniversitario componente) {
         componentes.remove(componente);
     }
-   
+   public void cargarDecanatosDesdeBD(Universidad universidad) {
+        // Realizar la consulta a la base de datos para obtener las carreras asociadas al decanato
+        List<Decanato> decanatos = connection.obtenerDecanatosPorUniversidad(universidad);
+
+        // Agregar las carreras al decanato
+        for (Decanato decanato : decanatos) {
+            agregarComponente(decanato);
+        }
+
+        // Mostrar mensaje de éxito o error
+        if (!decanatos.isEmpty()) {
+            System.out.println("Se han cargado " + decanatos.size() + " carreras asociadas al decanato desde la base de datos.");
+        } else {
+            System.out.println("No se encontraron carreras asociadas al decanato en la base de datos.");
+        }
+    }
+    public void mostrarComponentes() {
+        System.out.println("Componentes del decanato " + nombre + ":");
+        for (ComponenteUniversitario componente : componentes) {
+            System.out.println("- " + componente.getNombre());
+        }
+    }
 }

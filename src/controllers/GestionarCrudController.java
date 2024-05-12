@@ -132,7 +132,7 @@ public class GestionarCrudController implements ActionListener, Observable {
     }
 
     private void limpiarVista() {
-        System.out.println(" tipoCrud2: " + tipoCrud);
+        
         switch (tipoCrud) {
             case "profesor" -> {
                 gestionarCrudFrame.first_textfield.setText("Nombre");
@@ -184,7 +184,7 @@ public class GestionarCrudController implements ActionListener, Observable {
         gestionarCrudFrame.third_textfield.setText(String.valueOf(estudiante.getEdad()));
         gestionarCrudFrame.fourth_cmb.setSelectedIndex("Femenino".equals(estudiante.getSexo()) ? 1 : 2);
         gestionarCrudFrame.carrera_cmb.setSelectedItem(estudiante.getCarrera().getNombre());
-        System.out.println("Estudiante rellenar datos" + estudiante.getCarrera().getNombre());
+        
     }
 
     public void rellenarDatosCarrera(Carrera carrera) {
@@ -206,7 +206,7 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         opcionesCarrera.add("Seleccionar");
 
-        System.out.println("carreras: " + carreras.size());
+       
         for (int i = 0; i < carreras.size(); i++) {
             opcionesCarrera.add(carreras.get(i).getNombre());
         }
@@ -220,7 +220,6 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         opcionesDecanato.add("Seleccionar");
 
-        System.out.println("decanatos: " + decanatos.size());
         for (int i = 0; i < decanatos.size(); i++) {
             opcionesDecanato.add(decanatos.get(i).getNombre());
         }
@@ -234,7 +233,7 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         opcionesUniversidad.add("Seleccionar");
 
-        System.out.println("universidades: " + universidades.size());
+       
         for (int i = 0; i < universidades.size(); i++) {
             opcionesUniversidad.add(universidades.get(i).getNombre());
         }
@@ -290,7 +289,7 @@ public class GestionarCrudController implements ActionListener, Observable {
     }
 
     private void configurarCamposProfesor() {
-        System.out.println("controllers.GestionarCrudController.configurarCamposProfesor()");
+       
         gestionarCrudFrame.third_textfield.setVisible(true);
         gestionarCrudFrame.third_label.setVisible(true);
         gestionarCrudFrame.fourth_cmb.setVisible(true);
@@ -567,8 +566,11 @@ public class GestionarCrudController implements ActionListener, Observable {
         String direccion = gestionarCrudFrame.second_textfield.getText();
         int selectedIndex = gestionarCrudFrame.fourth_cmb.getSelectedIndex();
         Universidad universidadSeleccionada = universidades.get(selectedIndex - 1);
-
-        Decanato nuevoDecanato = new Decanato(id_decanato, nombre_decanato, universidadSeleccionada.getId(), direccion);
+        Universidad universidad = universidadSeleccionada;
+        Decanato nuevoDecanato = new Decanato(id_decanato, nombre_decanato, universidad, direccion);
+        universidad.agregarComponente(nuevoDecanato);
+        universidad.cargarDecanatosDesdeBD(universidad);
+        universidad.mostrarComponentes();
         //consulta
         int rowsAffected = connection.agregarDecanato(nuevoDecanato);
 
@@ -597,7 +599,10 @@ public class GestionarCrudController implements ActionListener, Observable {
         nuevaCarrera.setDecanato(decanato);
         nuevaCarrera.setDuracion(duracion);
         nuevaCarrera.setModalidad(modalidad);
-
+        decanato.limpiarComponentes();
+        decanato.agregarComponente(nuevaCarrera);
+        decanato.cargarCarrerasDesdeBD(decanato);
+        decanato.mostrarComponentes();
         //consulta
         int rowsAffected = connection.agregarCarrera(nuevaCarrera);
 
@@ -646,7 +651,7 @@ public class GestionarCrudController implements ActionListener, Observable {
         int selectedIndex = gestionarCrudFrame.fourth_cmb.getSelectedIndex();
         Universidad universidadSeleccionado = universidades.get(selectedIndex - 1);
 
-        Decanato decanatoModificado = new Decanato(decanato.getId(), nombre, universidadSeleccionado.getId(), direccion);
+        Decanato decanatoModificado = new Decanato(decanato.getId(), nombre, universidadSeleccionado, direccion);
 
         //consulta
         int rowsAffected = connection.modificarDecanato(decanatoModificado, decanato.getId());
