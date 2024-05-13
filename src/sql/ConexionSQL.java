@@ -735,8 +735,8 @@ public class ConexionSQL {
             return null;
         }
     }
-    public List<Carrera> obtenerCarrerasPorDecanato(Decanato decanato) {
-        List<Carrera> carreras = new ArrayList<>();
+    public List<ListadoCarreraModel> obtenerCarrerasPorDecanato(Decanato decanato) {
+        List<ListadoCarreraModel> carreras = new ArrayList<>();
         System.out.println(decanato.getId());
         try {
             // Consulta SQL para obtener las carreras asociadas al decanato
@@ -754,9 +754,9 @@ public class ConexionSQL {
                 String nombre = resultSet.getString("nombre_carrera");
                 String modalidad = resultSet.getString("modalidad");
                 int duracion = resultSet.getInt("duracion");
-
+               
                 // Crear una nueva carrera sin necesidad de pasar el decanato
-                Carrera carrera = new Carrera(idCarrera,decanato, nombre, modalidad, duracion);
+                ListadoCarreraModel carrera = new ListadoCarreraModel(idCarrera, nombre, modalidad, duracion);
                 carreras.add(carrera);
             }
             
@@ -773,8 +773,8 @@ public class ConexionSQL {
 
         return carreras;
     }
-    public List<Decanato> obtenerDecanatosPorUniversidad(Universidad universidad) {
-        List<Decanato> decanatos = new ArrayList<>();
+    public List<ListadoDecanatoModel> obtenerDecanatosPorUniversidad(Universidad universidad) {
+        List<ListadoDecanatoModel> decanatos = new ArrayList<>();
         System.out.println(universidad.getId());
         try {
             // Consulta SQL para obtener las carreras asociadas al decanato
@@ -793,7 +793,7 @@ public class ConexionSQL {
                 String direccion = resultSet.getString("direccion");
           
                 // Crear una nueva carrera sin necesidad de pasar el decanato
-                Decanato decanato = new Decanato(idDecanato, nombre,universidad, direccion);
+                ListadoDecanatoModel decanato = new ListadoDecanatoModel(idDecanato, nombre, direccion);
                 decanatos.add(decanato);
             }
             

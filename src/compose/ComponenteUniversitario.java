@@ -11,4 +11,7 @@ package compose;
 public interface ComponenteUniversitario {
     String getId();
     String getNombre();
+    String getDireccion();
+    String getModalidad();
+    int getDuracion();
 }

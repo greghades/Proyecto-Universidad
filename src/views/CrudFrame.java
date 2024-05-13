@@ -45,12 +45,14 @@ public class CrudFrame extends javax.swing.JFrame {
         modificar_btn.addActionListener(accion);
         reestablecer_btn.addActionListener(accion);
         registrar_btn.addActionListener(accion);
+        listar_btn.addActionListener(accion);
     }
 
     public void mostrarEstadoInicial() {
         id_panel.setVisible(false);
         info_container_panel.setVisible(false);
         reestablecer_btn.setVisible(false);
+        listar_btn.setVisible(false);
         registrar_btn.setVisible(true);
         buscar_btn.setVisible(true);
         configurarTextos();
@@ -114,6 +116,8 @@ public class CrudFrame extends javax.swing.JFrame {
         third_label.setVisible(false);
         fifth_label.setVisible(false);
         info_panel.setVisible(true);
+        listar_btn.setVisible(true);
+        listar_btn.setText("Listar decanatos");
     }
         
       public void rellenarInfoCarrera(Carrera carrera) {
@@ -140,6 +144,8 @@ public class CrudFrame extends javax.swing.JFrame {
         fifth_label.setVisible(false);
         fifth_title_label.setVisible(false);
         info_panel.setVisible(true);
+        listar_btn.setVisible(true);
+        listar_btn.setText("Listar Carreras");
     }
      
     public void mostrarEstadoInformacion() {
@@ -215,7 +221,9 @@ public class CrudFrame extends javax.swing.JFrame {
     public JButton getRegistrar_btn() {
         return registrar_btn;
     }
-
+    public JButton getListar_btn(){
+        return listar_btn;
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
@@ -251,6 +259,7 @@ public class CrudFrame extends javax.swing.JFrame {
         info_buttons_panel = new javax.swing.JPanel();
         modificar_btn = new javax.swing.JButton();
         eliminar_btn = new javax.swing.JButton();
+        listar_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -565,7 +574,7 @@ public class CrudFrame extends javax.swing.JFrame {
         info_buttons_panel.setBackground(new java.awt.Color(255, 255, 255));
         info_buttons_panel.setPreferredSize(new java.awt.Dimension(482, 32));
         java.awt.GridBagLayout info_buttons_panelLayout = new java.awt.GridBagLayout();
-        info_buttons_panelLayout.columnWidths = new int[] {0, 16, 0};
+        info_buttons_panelLayout.columnWidths = new int[] {0, 16, 0, 16, 0};
         info_buttons_panelLayout.rowHeights = new int[] {0};
         info_buttons_panel.setLayout(info_buttons_panelLayout);
 
@@ -580,6 +589,8 @@ public class CrudFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipady = 12;
         gridBagConstraints.weightx = 1.0;
@@ -603,6 +614,25 @@ public class CrudFrame extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         info_buttons_panel.add(eliminar_btn, gridBagConstraints);
+
+        listar_btn.setBackground(new java.awt.Color(58, 159, 220));
+        listar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        listar_btn.setText("Listar");
+        listar_btn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 92, 125), 2, true));
+        listar_btn.setPreferredSize(new java.awt.Dimension(150, 20));
+        listar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listar_btnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 12;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        info_buttons_panel.add(listar_btn, gridBagConstraints);
 
         info_container_panel.add(info_buttons_panel);
 
@@ -679,6 +709,10 @@ public class CrudFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_eliminar_btnActionPerformed
 
+    private void listar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listar_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listar_btnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private ComponenteBean.BotonBean botonBean2;
@@ -700,6 +734,7 @@ public class CrudFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ingresar_label;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton listar_btn;
     private javax.swing.JPanel main_body_panel;
     private javax.swing.JPanel main_buttons_panel;
     private javax.swing.JLabel main_title_label;

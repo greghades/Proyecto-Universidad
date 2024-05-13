@@ -28,7 +28,6 @@ import observer.Observer;
 import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.CrudFrame;
-
 /**
  *
  * @author Usuario
@@ -46,12 +45,15 @@ public class CrudController implements ActionListener, Observer {
     public CrudFrame crudFrame;
     public InicioController inicioController;
     public GestionarCrudController gestionarCrudController;
-
+    public ListaDecanatosController listaDecanatosController;
+    public ListaCarrerasController listaCarrerasController;
     public CrudController() {
         crudFrame = new CrudFrame(this);
         PantallaCompleta pantallaCompleta = new PantallaCompleta();
         pantallaCompleta.setPantallaCompleta(crudFrame);
         crudFrame.setVisible(false);
+        listaDecanatosController = ListaDecanatosController.getInstance();
+        listaCarrerasController = ListaCarrerasController.getInstance();
     }
 
     public static CrudController getInstance() {
@@ -132,6 +134,8 @@ public class CrudController implements ActionListener, Observer {
         if (universidad == null) {
             JOptionPane.showMessageDialog(null, "No existe ninguna universidad con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
+            universidad.cargarDecanatosDesdeBD(universidad);
+            listaDecanatosController.decanatos = universidad.obtenerComponentes();
             crudFrame.rellenarInfoUniversidad(universidad);
             crudFrame.mostrarEstadoInformacion();
         }
@@ -166,6 +170,8 @@ public class CrudController implements ActionListener, Observer {
             JOptionPane.showMessageDialog(null, "No existe ningun decanato con ese ID.", " Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
             System.out.println("decanato buscar" + decanato.getNombre_universidad() + " decanato" + decanato.getNombre());
+            decanato.cargarCarrerasDesdeBD(decanato);
+            listaCarrerasController.carreras = decanato.obtenerComponentes();
             crudFrame.rellenarInfoDecanato(decanato);
             crudFrame.mostrarEstadoInformacion();
         }
@@ -313,6 +319,13 @@ public class CrudController implements ActionListener, Observer {
             showGestionarCrudFrame(true);
         } else if (event.getSource() == crudFrame.getBuscar_btn()) {
             crudFrame.mostrarEstadoBuscar();
+        }else if (event.getSource() == crudFrame.getListar_btn()) {
+            if (tipoCrud.equals("universidad")) {
+                listaDecanatosController.showListaDecanatosFrame();
+            }
+            else if (tipoCrud.equals("decanato")) {
+                listaCarrerasController.showListaCarrerasFrame();
+            }
         }
     }
 

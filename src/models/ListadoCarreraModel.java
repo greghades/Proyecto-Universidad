@@ -17,38 +17,28 @@ Yaslin Vreugdenhil.
 
 package models;
 
-import java.util.List;
 import compose.ComponenteUniversitario;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author User
+ * @author 58412
  */
-public class Carrera implements ComponenteUniversitario{
-    
+public class ListadoCarreraModel implements ComponenteUniversitario{
     private String id;
     private String nombre;
-    private Decanato decanato;
-    private String id_decanato;
-   private String modalidad;
-   private int duracion;
-//    private Seccion[] secciones;
-//    private PeriodoAcademico[] periodos;
-    
-    public Carrera(String id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+    private String modalidad;
+    private int duracion;
+    private List<ComponenteUniversitario> componentes;
 
-    }
-
-    public Carrera(String id, Decanato decanato, String nombre, String modalidad, int duracion) {
+    public ListadoCarreraModel(String id, String nombre, String modalidad, int duracion) {
         this.id = id;
         this.nombre = nombre;
         this.modalidad = modalidad;
         this.duracion = duracion;
-        this.decanato = decanato;
-
     }
-    @Override
+
     public String getModalidad() {
         return modalidad;
     }
@@ -57,7 +47,6 @@ public class Carrera implements ComponenteUniversitario{
         this.modalidad = modalidad;
     }
 
-    @Override
     public int getDuracion() {
         return duracion;
     }
@@ -66,33 +55,29 @@ public class Carrera implements ComponenteUniversitario{
         this.duracion = duracion;
     }
 
-    
-    
-
-    public Decanato getDecanato() {
-        return decanato;
+    public List<ComponenteUniversitario> getComponentes() {
+        return componentes;
     }
 
-    public void setDecanato(Decanato decanato) {
-        this.decanato = decanato;
+    public void setComponentes(List<ComponenteUniversitario> componentes) {
+        this.componentes = componentes;
     }
 
-    public String getId_decanato() {
-        return id_decanato;
-    }
-
-    public void setId_decanato(String id_decanato) {
-        this.id_decanato = id_decanato;
-    }
     
 
+    public void agregarComponente(ComponenteUniversitario componente) {
+        componentes.add(componente);
+    }
+
+    public void eliminarComponente(ComponenteUniversitario componente) {
+        componentes.remove(componente);
+    }
+    public void limpiarComponentes() {
+        this.componentes.clear();
+    }
     @Override
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Override
@@ -100,13 +85,15 @@ public class Carrera implements ComponenteUniversitario{
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     @Override
     public String getDireccion() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+  
+
+   
+
+ 
+    
     
 }

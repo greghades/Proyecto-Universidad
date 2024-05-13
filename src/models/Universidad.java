@@ -54,6 +54,7 @@ public class Universidad implements ComponenteUniversitario{
         return nombre;
     }
 
+    @Override
     public String getDireccion() {
         return direccion;
     }
@@ -77,12 +78,12 @@ public class Universidad implements ComponenteUniversitario{
     public void eliminarComponente(ComponenteUniversitario componente) {
         componentes.remove(componente);
     }
-   public void cargarDecanatosDesdeBD(Universidad universidad) {
+   public List<ListadoDecanatoModel> cargarDecanatosDesdeBD(Universidad universidad) {
         // Realizar la consulta a la base de datos para obtener las carreras asociadas al decanato
-        List<Decanato> decanatos = connection.obtenerDecanatosPorUniversidad(universidad);
+        List<ListadoDecanatoModel> decanatos = connection.obtenerDecanatosPorUniversidad(universidad);
 
         // Agregar las carreras al decanato
-        for (Decanato decanato : decanatos) {
+        for (ListadoDecanatoModel decanato : decanatos) {
             agregarComponente(decanato);
         }
 
@@ -92,11 +93,32 @@ public class Universidad implements ComponenteUniversitario{
         } else {
             System.out.println("No se encontraron carreras asociadas al decanato en la base de datos.");
         }
-    }
+        for (ComponenteUniversitario componente : componentes) {
+            System.out.println("- " + componente.getDireccion());
+            System.out.println("- " + componente.getDireccion());
+        }
+        return decanatos;
+   }
     public void mostrarComponentes() {
         System.out.println("Componentes del decanato " + nombre + ":");
         for (ComponenteUniversitario componente : componentes) {
-            System.out.println("- " + componente.getNombre());
+            System.out.println("- " + componente.getDireccion());
         }
+    }
+    public void limpiarComponentes() {
+        this.componentes.clear();
+    }
+
+    @Override
+    public String getModalidad() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int getDuracion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public List<ComponenteUniversitario> obtenerComponentes() {
+        return componentes;
     }
 }

@@ -533,8 +533,9 @@ public class GestionarCrudController implements ActionListener, Observable {
         Universidad universidadSeleccionada = universidades.get(selectedIndex - 1);
         Universidad universidad = universidadSeleccionada;
         Decanato nuevoDecanato = new Decanato(id_decanato, nombre_decanato, universidad, direccion);
+        universidad.limpiarComponentes();
         universidad.agregarComponente(nuevoDecanato);
-        universidad.cargarDecanatosDesdeBD(universidad);
+        universidad.cargarDecanatosDesdeBD(universidad); 
         universidad.mostrarComponentes();
         //consulta
         int rowsAffected = connection.agregarDecanato(nuevoDecanato);
