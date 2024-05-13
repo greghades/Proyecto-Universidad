@@ -124,10 +124,6 @@ public class Decanato implements ComponenteUniversitario {
         } else {
             System.out.println("No se encontraron carreras asociadas al decanato en la base de datos.");
         }
-        for (ComponenteUniversitario componente : componentes) {
-            System.out.println("- " + componente.getModalidad());
-            System.out.println("- " + componente.getDuracion());
-        }
     }
 
     public void mostrarComponentes() {

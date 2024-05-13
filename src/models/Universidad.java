@@ -78,7 +78,7 @@ public class Universidad implements ComponenteUniversitario{
     public void eliminarComponente(ComponenteUniversitario componente) {
         componentes.remove(componente);
     }
-   public List<ListadoDecanatoModel> cargarDecanatosDesdeBD(Universidad universidad) {
+   public void cargarDecanatosDesdeBD(Universidad universidad) {
         // Realizar la consulta a la base de datos para obtener las carreras asociadas al decanato
         List<ListadoDecanatoModel> decanatos = connection.obtenerDecanatosPorUniversidad(universidad);
 
@@ -93,11 +93,7 @@ public class Universidad implements ComponenteUniversitario{
         } else {
             System.out.println("No se encontraron carreras asociadas al decanato en la base de datos.");
         }
-        for (ComponenteUniversitario componente : componentes) {
-            System.out.println("- " + componente.getDireccion());
-            System.out.println("- " + componente.getDireccion());
-        }
-        return decanatos;
+        
    }
     public void mostrarComponentes() {
         System.out.println("Componentes del decanato " + nombre + ":");
