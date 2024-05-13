@@ -22,9 +22,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import models.ListadoCarreraModel;
-import models.Universidad;
-import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.ListaCarrerasFrame;
 
@@ -33,8 +30,7 @@ public class ListaCarrerasController implements ActionListener {
 
     private static ListaCarrerasController instance;
     public ListaCarrerasFrame listaCarrerasFrame;
-    public ConexionSQL connection = ConexionSQL.getInstance();
-    public InicioController inicioController;
+    public CrudController crudController;
     public List<ComponenteUniversitario> carreras = new ArrayList<>();;
 
     private ListaCarrerasController() {
@@ -60,11 +56,11 @@ public class ListaCarrerasController implements ActionListener {
 
     private void showInicioFrame() {
         listaCarrerasFrame.setVisible(false);
-        inicioController.showInicioFrame();
+        crudController.showCrudFrame();
     }
 
-    public void setInicioController(InicioController inicioController) {
-        this.inicioController = inicioController;
+    public void setCrudController(CrudController crudController) {
+        this.crudController = crudController;
     }
 
     @Override
@@ -75,7 +71,7 @@ public class ListaCarrerasController implements ActionListener {
     public void MostrarCarreras(){
         
         if (carreras == null) {
-            JOptionPane.showMessageDialog(null, "No se pudieron cargar las secciones correctamente", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las carreras correctamente", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
             listaCarrerasFrame.setupTable(carreras);
             listaCarrerasFrame.displayUI(true);

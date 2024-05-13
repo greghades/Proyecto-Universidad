@@ -22,9 +22,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import models.ListadoDecanatoModel;
-import models.Universidad;
-import sql.ConexionSQL;
 import util.PantallaCompleta;
 import views.ListaDecanatosFrame;
 
@@ -33,8 +30,7 @@ public class ListaDecanatosController implements ActionListener {
 
     private static ListaDecanatosController instance;
     public ListaDecanatosFrame listaDecanatosFrame;
-    public ConexionSQL connection = ConexionSQL.getInstance();
-    public InicioController inicioController;
+    public CrudController crudController;
     public List<ComponenteUniversitario> decanatos = new ArrayList<>();;
 
     private ListaDecanatosController() {
@@ -60,11 +56,11 @@ public class ListaDecanatosController implements ActionListener {
 
     private void showInicioFrame() {
         listaDecanatosFrame.setVisible(false);
-        inicioController.showInicioFrame();
+        crudController.showCrudFrame();
     }
 
-    public void setInicioController(InicioController inicioController) {
-        this.inicioController = inicioController;
+    public void setCrudController(CrudController crudController) {
+        this.crudController = crudController;
     }
 
     @Override
@@ -75,7 +71,7 @@ public class ListaDecanatosController implements ActionListener {
     public void MostrarDecanatos(){
         
         if (decanatos == null) {
-            JOptionPane.showMessageDialog(null, "No se pudieron cargar las secciones correctamente", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar los decanatos correctamente", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         } else {
             listaDecanatosFrame.setupTable(decanatos);
             listaDecanatosFrame.displayUI(true);

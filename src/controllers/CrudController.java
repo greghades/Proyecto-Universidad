@@ -87,6 +87,14 @@ public class CrudController implements ActionListener, Observer {
         this.gestionarCrudController = gestionarCrudController;
         this.gestionarCrudController.addObserver(this);
     }
+    
+    public void setListaCarrerasController(ListaCarrerasController listaCarrerasController) {
+        this.listaCarrerasController = listaCarrerasController;
+    }
+    
+    public void setListaDecanatosController(ListaDecanatosController listaDecanatosController) {
+        this.listaDecanatosController = listaDecanatosController;
+    }
 
     //mostrar datos del profesor de la base de datos
     public void buscarProfesor() {
@@ -136,6 +144,7 @@ public class CrudController implements ActionListener, Observer {
         } else {
             universidad.cargarDecanatosDesdeBD(universidad);
             listaDecanatosController.decanatos = universidad.obtenerComponentes();
+            System.out.println("decanatos obtenidos: " + listaDecanatosController.decanatos);
             crudFrame.rellenarInfoUniversidad(universidad);
             crudFrame.mostrarEstadoInformacion();
         }
@@ -172,6 +181,7 @@ public class CrudController implements ActionListener, Observer {
             System.out.println("decanato buscar" + decanato.getNombre_universidad() + " decanato" + decanato.getNombre());
             decanato.cargarCarrerasDesdeBD(decanato);
             listaCarrerasController.carreras = decanato.obtenerComponentes();
+            System.out.println("carreras obtenidas: " + listaCarrerasController.carreras);
             crudFrame.rellenarInfoDecanato(decanato);
             crudFrame.mostrarEstadoInformacion();
         }

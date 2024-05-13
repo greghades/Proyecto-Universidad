@@ -319,6 +319,7 @@ public class InicioFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(decanato_button, gridBagConstraints);
 
         asignar_seccion_button.setBackground(new java.awt.Color(58, 159, 220));

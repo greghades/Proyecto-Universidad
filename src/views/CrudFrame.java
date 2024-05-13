@@ -86,68 +86,122 @@ public class CrudFrame extends javax.swing.JFrame {
 
     public void rellenarInfoProfesor(Profesor profesor) {
         first_label.setText(profesor.getNombre());
+        second_title_label.setText("Correo: ");
         second_label.setText(profesor.getCorreo());
         third_label.setText(Integer.toString(profesor.getEdad()));
+        fourth_title_label.setText("Sexo: ");
         fourth_label.setText(profesor.getSexo());
         fifth_label.setText(profesor.getEspecialidad());
+
+        first_title_label.setVisible(true);
+        first_label.setVisible(true);
+        second_title_label.setVisible(true);
+        second_label.setVisible(true);
+        third_title_label.setVisible(true);
+        third_label.setVisible(true);
+        fourth_title_label.setVisible(true);
+        fourth_label.setVisible(true);
+        fifth_title_label.setVisible(true);
+        fifth_label.setVisible(true);
         info_panel.setVisible(true);
+        info_panel.setVisible(true);
+
+        listar_btn.setVisible(false);
     }
-    
-     public void rellenarInfoEstudiante(Estudiante estudiante) {
+
+    public void rellenarInfoEstudiante(Estudiante estudiante) {
         first_label.setText(estudiante.getNombre());
+        second_title_label.setText("Correo: ");
         second_label.setText(estudiante.getCorreo());
         third_label.setText(Integer.toString(estudiante.getEdad()));
+        fourth_title_label.setText("Sexo: ");
         fourth_label.setText(estudiante.getSexo());
         fifth_title_label.setText("Carrera:");
         fifth_label.setText(estudiante.getCarrera().getNombre());
-        info_panel.setVisible(true);
-    }
-     
-     public void rellenarInfoUniversidad(Universidad universidad) {
-        first_label.setText(universidad.getNombre());
-        fourth_label.setVisible(true);
+
+        first_title_label.setVisible(true);
+        first_label.setVisible(true);
+        second_title_label.setVisible(true);
+        second_label.setVisible(true);
+        third_title_label.setVisible(true);
+        third_label.setVisible(true);
         fourth_title_label.setVisible(true);
+        fourth_label.setVisible(true);
+        fifth_title_label.setVisible(true);
+        fifth_label.setVisible(true);
+        info_panel.setVisible(true);
+
+        listar_btn.setVisible(false);
+    }
+
+    public void rellenarInfoUniversidad(Universidad universidad) {
+        first_label.setText(universidad.getNombre());
         fourth_title_label.setText("Direccion: ");
         fourth_label.setText(universidad.getDireccion());
+        listar_btn.setText("Listar decanatos");
+        
+        first_title_label.setVisible(true);
+        first_label.setVisible(true);
+        fourth_label.setVisible(true);
+        fourth_title_label.setVisible(true);
+        info_panel.setVisible(true);
+        listar_btn.setVisible(true);
+        
         second_label.setVisible(false);
         second_title_label.setVisible(false);
         fifth_title_label.setVisible(false);
         third_title_label.setVisible(false);
         third_label.setVisible(false);
         fifth_label.setVisible(false);
+    }
+
+    public void rellenarInfoCarrera(Carrera carrera) {
+        first_label.setText(carrera.getNombre());
+        second_title_label.setText("Decanato: ");
+        second_label.setText(carrera.getDecanato().getNombre());
+        fourth_title_label.setText("Modalidad: ");
+        fourth_label.setText(carrera.getModalidad());
+        fifth_title_label.setText("Duracion: ");
+        fifth_label.setText(Integer.toString(carrera.getDuracion()));
+     
+        first_title_label.setVisible(true);
+        first_label.setVisible(true);
+        second_title_label.setVisible(true);
+        second_label.setVisible(true);
+        fourth_title_label.setVisible(true);
+        fourth_label.setVisible(true);
+        fifth_title_label.setVisible(true);
+        fifth_label.setVisible(true);
         info_panel.setVisible(true);
-        listar_btn.setVisible(true);
-        listar_btn.setText("Listar decanatos");
-    }
         
-      public void rellenarInfoCarrera(Carrera carrera) {
-          first_label.setText(carrera.getNombre());
-          second_title_label.setText("Decanato: ");
-          second_label.setText(carrera.getDecanato().getNombre());
-          fourth_title_label.setText("Modalidad: ");
-          fourth_label.setText(carrera.getModalidad());
-          fifth_title_label.setText("Duracion: ");
-          fifth_label.setText(Integer.toString(carrera.getDuracion()));
-          third_title_label.setVisible(false);
-          third_label.setVisible(false);
-          info_panel.setVisible(true);
+        third_title_label.setVisible(false);
+        third_label.setVisible(false);
+        listar_btn.setVisible(false);
     }
-      
-      public void rellenarInfoDecanato(Decanato decanato) {
+
+    public void rellenarInfoDecanato(Decanato decanato) {
         first_label.setText(decanato.getNombre());
         second_title_label.setText("Universidad: ");
         second_label.setText(decanato.getNombre_universidad());
         fourth_title_label.setText("Direccion: ");
         fourth_label.setText(decanato.getDireccion());
+        listar_btn.setText("Listar Carreras");
+
+        first_title_label.setVisible(true);
+        first_label.setVisible(true);
+        second_title_label.setVisible(true);
+        second_label.setVisible(true);
+        fourth_title_label.setVisible(true);
+        fourth_label.setVisible(true);
+        info_panel.setVisible(true);
+        listar_btn.setVisible(true);
+        
         third_title_label.setVisible(false);
         third_label.setVisible(false);
         fifth_label.setVisible(false);
         fifth_title_label.setVisible(false);
-        info_panel.setVisible(true);
-        listar_btn.setVisible(true);
-        listar_btn.setText("Listar Carreras");
     }
-     
+
     public void mostrarEstadoInformacion() {
         info_container_panel.setVisible(true);
     }
@@ -221,7 +275,8 @@ public class CrudFrame extends javax.swing.JFrame {
     public JButton getRegistrar_btn() {
         return registrar_btn;
     }
-    public JButton getListar_btn(){
+
+    public JButton getListar_btn() {
         return listar_btn;
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

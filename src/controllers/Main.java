@@ -25,12 +25,19 @@ public class Main {
         ListadoEstudiantesController listadoEstudiantesController = ListadoEstudiantesController.getInstance();
         RetirarMateriaController retirarMateriaController = RetirarMateriaController.getInstance();
         AsignarNotaController asignarNotaController = AsignarNotaController.getInstance();
+        AsignarSeccionController asignarSeccionController = AsignarSeccionController.getInstance();
+        
         CrudController crudController = CrudController.getInstance();
         GestionarCrudController gestionarCrudController = GestionarCrudController.getInstance();
         crudController.setGestionarCrudController(gestionarCrudController);
         gestionarCrudController.setCrudController(crudController);
-        AsignarSeccionController asignarSeccionController = AsignarSeccionController.getInstance();
-
+        ListaCarrerasController listaCarrerasController = ListaCarrerasController.getInstance();
+        crudController.setListaCarrerasController(listaCarrerasController);
+        listaCarrerasController.setCrudController(crudController);
+        ListaDecanatosController listaDecanatosController = ListaDecanatosController.getInstance();
+        crudController.setListaDecanatosController(listaDecanatosController);
+        listaDecanatosController.setCrudController(crudController);
+        
         inicioController.setInscripcionController(inscripcionController);
         inicioController.setListaSeccionController(listaSeccionController);
         inicioController.setListadoEstudiantesController(listadoEstudiantesController);
