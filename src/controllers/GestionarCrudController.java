@@ -80,6 +80,8 @@ public class GestionarCrudController implements ActionListener, Observable {
         pantallaCompleta.setPantallaCompleta(gestionarCrudFrame);
         gestionarCrudFrame.setVisible(true);
 
+        gestionarCrudFrame.configuracionInicial();
+
         switch (tipoCrud) {
             case "estudiante" ->
                 configurarCamposEstudiante();
@@ -95,7 +97,6 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         if (esAgregar) {
             gestionarCrudFrame.configurarRegistro();
-            limpiarVista();
         } else {
             switch (tipoCrud) {
                 case "profesor" -> {
@@ -131,44 +132,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         this.crudController = crudController;
     }
 
-    private void limpiarVista() {
-        
-        switch (tipoCrud) {
-            case "profesor" -> {
-                gestionarCrudFrame.first_textfield.setText("Nombre");
-                gestionarCrudFrame.second_textfield.setText("Correo");
-                gestionarCrudFrame.third_textfield.setText("Edad");
-                gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
-                gestionarCrudFrame.fifth_textfield.setText("Especialidad");
-            }
-            case "estudiante" -> {
-                gestionarCrudFrame.cedula_textfield.setText("Cedula");
-                gestionarCrudFrame.first_textfield.setText("Nombre");
-                gestionarCrudFrame.second_textfield.setText("Correo");
-                gestionarCrudFrame.third_textfield.setText("Edad");
-                gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
-                gestionarCrudFrame.carrera_cmb.setSelectedIndex(0);
-            }
-            case "universidad" -> {
-                gestionarCrudFrame.first_textfield.setText("Nombre");
-                gestionarCrudFrame.second_textfield.setText("Direccion");
-            }
-            case "carrera" -> {
-                gestionarCrudFrame.first_textfield.setText("Nombre");
-                gestionarCrudFrame.second_textfield.setText("Modalidad");
-                gestionarCrudFrame.third_textfield.setText("Duracion semestral");
-                gestionarCrudFrame.carrera_cmb.setSelectedIndex(0);
-            }
-            case "decanato" -> {
-                gestionarCrudFrame.first_textfield.setText("Nombre");
-                gestionarCrudFrame.third_textfield.setText("Direccion");
-                gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
-            }
-            default ->
-                throw new AssertionError();
-        }
-    }
-
     public void rellenarDatosProfesor(Profesor profesor) {
         gestionarCrudFrame.first_textfield.setText(profesor.getNombre());
         gestionarCrudFrame.second_textfield.setText(profesor.getCorreo());
@@ -184,7 +147,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         gestionarCrudFrame.third_textfield.setText(String.valueOf(estudiante.getEdad()));
         gestionarCrudFrame.fourth_cmb.setSelectedIndex("Femenino".equals(estudiante.getSexo()) ? 1 : 2);
         gestionarCrudFrame.carrera_cmb.setSelectedItem(estudiante.getCarrera().getNombre());
-        
     }
 
     public void rellenarDatosCarrera(Carrera carrera) {
@@ -206,7 +168,6 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         opcionesCarrera.add("Seleccionar");
 
-       
         for (int i = 0; i < carreras.size(); i++) {
             opcionesCarrera.add(carreras.get(i).getNombre());
         }
@@ -233,7 +194,6 @@ public class GestionarCrudController implements ActionListener, Observable {
 
         opcionesUniversidad.add("Seleccionar");
 
-       
         for (int i = 0; i < universidades.size(); i++) {
             opcionesUniversidad.add(universidades.get(i).getNombre());
         }
@@ -243,73 +203,82 @@ public class GestionarCrudController implements ActionListener, Observable {
 
     private void configurarCamposDecanato() {
         mostrarUniversidades();
-        gestionarCrudFrame.first_textfield.setText("Nombre");
         gestionarCrudFrame.second_label.setText("Direccion");
+        gestionarCrudFrame.second_textfield.setText("Direccion");
         gestionarCrudFrame.fourth_label.setText("Universidad");
-        gestionarCrudFrame.third_label.setVisible(false);
-        gestionarCrudFrame.third_textfield.setVisible(false);
-        gestionarCrudFrame.carrera_label.setVisible(false);
-        gestionarCrudFrame.carrera_cmb.setVisible(false);
-        gestionarCrudFrame.cedula_label.setVisible(false);
-        gestionarCrudFrame.cedula_textfield.setVisible(false);
-        gestionarCrudFrame.fifth_label.setVisible(false);
-        gestionarCrudFrame.fifth_textfield.setVisible(false);
+        gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
+
+        gestionarCrudFrame.second_textfield.setVisible(true);
+        gestionarCrudFrame.second_label.setVisible(true);
+        gestionarCrudFrame.fourth_cmb.setVisible(true);
+        gestionarCrudFrame.fourth_label.setVisible(true);
     }
 
     private void configurarCamposCarrera() {
         mostrarDecanatos();
-        gestionarCrudFrame.first_label.setText("Nombre");
-        gestionarCrudFrame.first_textfield.setText("Nombre");
         gestionarCrudFrame.second_label.setText("Modalidad");
         gestionarCrudFrame.second_textfield.setText("Modalidad");
         gestionarCrudFrame.third_label.setText("Duracion");
-        gestionarCrudFrame.third_textfield.setText("Duracion");
-        gestionarCrudFrame.carrera_label.setText("Decanato:");
-        gestionarCrudFrame.fourth_label.setVisible(false);
-        gestionarCrudFrame.cedula_textfield.setVisible(false);
-        gestionarCrudFrame.cedula_label.setVisible(false);
-        gestionarCrudFrame.fourth_cmb.setVisible(false);
-        gestionarCrudFrame.fifth_label.setVisible(false);
-        gestionarCrudFrame.fifth_textfield.setVisible(false);
+        gestionarCrudFrame.third_textfield.setText("Duracion semestral");
+        gestionarCrudFrame.carrera_label.setText("Decanato");
+        gestionarCrudFrame.carrera_cmb.setSelectedIndex(0);
+
+        gestionarCrudFrame.second_textfield.setVisible(true);
+        gestionarCrudFrame.second_label.setVisible(true);
+        gestionarCrudFrame.third_textfield.setVisible(true);
+        gestionarCrudFrame.third_label.setVisible(true);
+        gestionarCrudFrame.carrera_cmb.setVisible(true);
+        gestionarCrudFrame.carrera_label.setVisible(true);
     }
 
     private void configurarCamposUniversidad() {
-        gestionarCrudFrame.first_label.setText("Nombre:");
-        gestionarCrudFrame.second_label.setText("Direccion:");
-        gestionarCrudFrame.cedula_label.setVisible(false);
-        gestionarCrudFrame.cedula_textfield.setVisible(false);
-        gestionarCrudFrame.third_label.setVisible(false);
-        gestionarCrudFrame.third_textfield.setVisible(false);
-        gestionarCrudFrame.fourth_label.setVisible(false);
-        gestionarCrudFrame.fourth_cmb.setVisible(false);
-        gestionarCrudFrame.fifth_label.setVisible(false);
-        gestionarCrudFrame.fifth_textfield.setVisible(false);
-        gestionarCrudFrame.carrera_label.setVisible(false);
-        gestionarCrudFrame.carrera_cmb.setVisible(false);
+        gestionarCrudFrame.second_label.setText("Direccion");
+        gestionarCrudFrame.second_textfield.setText("Direccion");
+        gestionarCrudFrame.second_label.setVisible(true);
+        gestionarCrudFrame.second_textfield.setVisible(true);
     }
 
     private void configurarCamposProfesor() {
-       
+        gestionarCrudFrame.second_label.setText("Correo");
+        gestionarCrudFrame.second_textfield.setText("Correo");
+        gestionarCrudFrame.third_label.setText("Edad");
+        gestionarCrudFrame.third_textfield.setText("Edad");
+        gestionarCrudFrame.fifth_label.setText("Especialidad");
+        gestionarCrudFrame.fifth_textfield.setText("Especialidad");
+        gestionarCrudFrame.fourth_label.setText("Sexo");
+        gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
+
+        gestionarCrudFrame.second_textfield.setVisible(true);
+        gestionarCrudFrame.second_label.setVisible(true);
         gestionarCrudFrame.third_textfield.setVisible(true);
         gestionarCrudFrame.third_label.setVisible(true);
         gestionarCrudFrame.fourth_cmb.setVisible(true);
         gestionarCrudFrame.fourth_label.setVisible(true);
         gestionarCrudFrame.fifth_textfield.setVisible(true);
         gestionarCrudFrame.fifth_label.setVisible(true);
-        gestionarCrudFrame.carrera_cmb.setVisible(false);
-        gestionarCrudFrame.carrera_label.setVisible(false);
-        gestionarCrudFrame.cedula_label.setVisible(false);
-        gestionarCrudFrame.cedula_textfield.setVisible(false);
     }
 
     private void configurarCamposEstudiante() {
+        gestionarCrudFrame.second_label.setText("Correo");
+        gestionarCrudFrame.second_textfield.setText("Correo");
+        gestionarCrudFrame.third_label.setText("Edad");
+        gestionarCrudFrame.third_textfield.setText("Edad");
+        gestionarCrudFrame.fourth_label.setText("Sexo");
+        gestionarCrudFrame.fourth_cmb.setSelectedIndex(0);
+        gestionarCrudFrame.carrera_label.setText("Carrera");
+        gestionarCrudFrame.carrera_cmb.setSelectedIndex(0);
+
         mostrarCarreras();
-        gestionarCrudFrame.fifth_textfield.setVisible(false);
-        gestionarCrudFrame.fifth_label.setVisible(false);
         gestionarCrudFrame.cedula_label.setVisible(true);
         gestionarCrudFrame.cedula_textfield.setVisible(true);
-        gestionarCrudFrame.carrera_label.setVisible(true);
+        gestionarCrudFrame.second_textfield.setVisible(true);
+        gestionarCrudFrame.second_label.setVisible(true);
+        gestionarCrudFrame.third_textfield.setVisible(true);
+        gestionarCrudFrame.third_label.setVisible(true);
+        gestionarCrudFrame.fourth_cmb.setVisible(true);
+        gestionarCrudFrame.fourth_label.setVisible(true);
         gestionarCrudFrame.carrera_cmb.setVisible(true);
+        gestionarCrudFrame.carrera_label.setVisible(true);
     }
 
     public void rellenarDatosUniversidad(Universidad universidad) {
@@ -431,7 +400,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
         }
-        limpiarVista();
     }
 
     public void agregarEstudiante() {
@@ -455,7 +423,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
         }
-        limpiarVista();
     }
 
     public void modificarProfesor() {
@@ -534,7 +501,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarVista();
     }
 
     public void agregarUniversidad() {
@@ -557,9 +523,8 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
         }
-        limpiarVista();
     }
-    
+
     public void agregarDecanato() {
         String id_decanato = connection.obtenerNuevoID("decanato");
         String nombre_decanato = gestionarCrudFrame.first_textfield.getText();
@@ -579,9 +544,8 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
         }
-        limpiarVista();
     }
-    
+
     public void agregarCarrera() {
         //obtener los datos del formulario 
         String id_carrera = connection.obtenerNuevoID("carrera");
@@ -611,7 +575,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             showAlert("Lo sentimos", "Ha ocurrido un error con el registro", false);
         }
-        limpiarVista();
     }
 
     public void modificarCarrera() {
@@ -639,9 +602,8 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarVista();
     }
-    
+
     public void modificarDecanato() {
         Decanato decanato = crudController.decanato;
 
@@ -661,7 +623,6 @@ public class GestionarCrudController implements ActionListener, Observable {
         } else {
             JOptionPane.showMessageDialog(null, "Error al Modificar", "Lo sentimos", JOptionPane.ERROR_MESSAGE);
         }
-        limpiarVista();
     }
 
     @Override
@@ -707,7 +668,7 @@ public class GestionarCrudController implements ActionListener, Observable {
                 this.notifyObservers();
             }
         } else if (event.getSource() == gestionarCrudFrame.getLimpiar_campos_btn()) {
-            limpiarVista();
+            showGestionarFrame();
         }
     }
 

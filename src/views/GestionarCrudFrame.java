@@ -32,6 +32,21 @@ public class GestionarCrudFrame extends javax.swing.JFrame {
         agregarListener(controller);
     }
 
+    public void configuracionInicial() {
+        cedula_label.setVisible(false);
+        cedula_textfield.setVisible(false);
+        second_label.setVisible(false);
+        second_textfield.setVisible(false);
+        third_label.setVisible(false);
+        third_textfield.setVisible(false);
+        fourth_label.setVisible(false);
+        fourth_cmb.setVisible(false);
+        fifth_label.setVisible(false);
+        fifth_textfield.setVisible(false);
+        carrera_label.setVisible(false);
+        carrera_cmb.setVisible(false);
+    }
+
     private void agregarListener(ActionListener accion) {
         botonBean1.addActionListener(accion);
         fourth_cmb.addActionListener(accion);
